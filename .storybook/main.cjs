@@ -1,3 +1,6 @@
+const path = require("path");
+const { mergeConfig } = require("vite");
+
 module.exports = {
   stories: [
     "../src/*.stories.@(js|jsx|ts|tsx)",
@@ -13,6 +16,8 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-viewport",
+    "storybook-addon-breakpoints",
   ],
   framework: "@storybook/react",
   core: {
@@ -20,5 +25,20 @@ module.exports = {
   },
   features: {
     storyStoreV7: true,
+  },
+  async viteFinal(config, { configType }) {
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          "@USupport-components-library": path.resolve(
+            path.dirname(__dirname),
+            "./USupport-components-library"
+          ),
+          "#blocks": path.resolve(__dirname, "../src/blocks"),
+          "#pages": path.resolve(__dirname, "../src/pages"),
+          "#services": path.resolve(__dirname, "../src/services"),
+        },
+      },
+    });
   },
 };
