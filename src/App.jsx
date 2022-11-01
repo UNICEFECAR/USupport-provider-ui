@@ -5,7 +5,7 @@ import {
   ContactUs,
   NotificationPreferencesPage,
   Login,
-} from "./pages/NotFound";
+} from "./pages";
 
 import "./App.scss";
 
