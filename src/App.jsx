@@ -7,6 +7,7 @@ import {
   NotificationPreferencesPage,
   Login,
   PrivacyPolicy,
+  FAQ,
 } from "./pages";
 
 import "./App.scss";
@@ -41,6 +42,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
