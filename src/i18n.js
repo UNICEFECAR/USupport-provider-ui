@@ -14,6 +14,7 @@ import {
   NotificationPreferences as NotificationPreferencesPage,
   ContactUs as ContactUsPage,
   PrivacyPolicy as PrivacyPolicyPage,
+  FAQ as FAQPage,
 } from "#pages/locales.js";
 
 const resources = {
@@ -30,6 +31,7 @@ const resources = {
     "notification-preferences-page": NotificationPreferencesPage.en,
     "login-page": LoginPage.en,
     "privacy-policy-page": PrivacyPolicyPage.en,
+    "faq-page": FAQPage.en,
   },
 };
 
