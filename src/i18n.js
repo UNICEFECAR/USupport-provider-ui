@@ -13,6 +13,7 @@ import {
   Login as LoginPage,
   NotificationPreferences as NotificationPreferencesPage,
   ContactUs as ContactUsPage,
+  PrivacyPolicy as PrivacyPolicyPage,
 } from "#pages/locales.js";
 
 const resources = {
@@ -28,6 +29,7 @@ const resources = {
     "contact-us-page": ContactUsPage.en,
     "notification-preferences-page": NotificationPreferencesPage.en,
     "login-page": LoginPage.en,
+    "privacy-policy-page": PrivacyPolicyPage.en,
   },
 };
 
