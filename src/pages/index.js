@@ -1,4 +1,5 @@
-export * from "./NotFound";
+export * from "./PrivacyPolicy";
 export * from "./ContactUs";
-export * from "./NotificationPreferences";
 export * from "./Login";
+export * from "./NotFound";
+export * from "./NotificationPreferences";
