@@ -7,6 +7,7 @@ import {
   NotificationPreferences,
   ContactUs,
   PrivacyPolicy,
+  FAQ,
 } from "#blocks/locales.js";
 
 import {
@@ -26,6 +27,7 @@ const resources = {
     "notification-preferences": NotificationPreferences.en,
     login: Login.en,
     "privacy-policy": PrivacyPolicy.en,
+    faq: FAQ.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
