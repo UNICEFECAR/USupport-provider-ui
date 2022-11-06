@@ -33,7 +33,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+      <Router basename="/provider">
         <Routes>
           <Route path="/contact-us" element={<ContactUs />} />
           <Route
