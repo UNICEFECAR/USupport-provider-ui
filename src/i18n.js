@@ -6,6 +6,7 @@ import {
   Login,
   NotificationPreferences,
   ContactUs,
+  PrivacyPolicy,
 } from "#blocks/locales.js";
 
 import {
@@ -13,8 +14,8 @@ import {
   Login as LoginPage,
   NotificationPreferences as NotificationPreferencesPage,
   ContactUs as ContactUsPage,
-  PrivacyPolicy as PrivacyPolicyPage,
   FAQ as FAQPage,
+  PrivacyPolicy as PrivacyPolicyPage,
 } from "#pages/locales.js";
 
 const resources = {
@@ -24,14 +25,15 @@ const resources = {
     "contact-us-block": ContactUs.en,
     "notification-preferences": NotificationPreferences.en,
     login: Login.en,
+    "privacy-policy": PrivacyPolicy.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
     "contact-us-page": ContactUsPage.en,
     "notification-preferences-page": NotificationPreferencesPage.en,
     "login-page": LoginPage.en,
-    "privacy-policy-page": PrivacyPolicyPage.en,
     "faq-page": FAQPage.en,
+    "privacy-policy-page": PrivacyPolicyPage.en,
   },
 };
 

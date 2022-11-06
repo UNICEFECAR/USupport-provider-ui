@@ -1,0 +1,56 @@
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Block,
+  Grid,
+  GridItem,
+  Loading,
+  Markdown,
+} from "@USupport-components-library/src";
+import { useTranslation } from "react-i18next";
+
+import { cmsSvc } from "@USupport-components-library/services";
+
+import "./privacy-policy.scss";
+
+/**
+ * PrivacyPolicy
+ *
+ * PrivacyPolicy Block
+ *
+ * @return {jsx}
+ */
+export const PrivacyPolicy = () => {
+  const { i18n, t } = useTranslation("privacy-policy");
+
+  const countryAlpha2 = "KZ"; // TODO: get country code
+
+  const getPolicies = async () => {
+    const { data } = await cmsSvc.getPolicies(
+      i18n.language,
+      countryAlpha2,
+      "provider"
+    );
+
+    return data;
+  };
+
+  const {
+    data: policiesData,
+    isLoading: policiesLoading,
+    isFetched: isPoliciesFetched,
+  } = useQuery(["policies"], getPolicies);
+  return (
+    <Block classes="privacy-policy">
+      <Grid>
+        <GridItem xs={4} md={8} lg={12} classes="privacy-policy__text-item">
+          {policiesData && <Markdown markDownText={policiesData}></Markdown>}
+          {!policiesData && policiesLoading && <Loading />}
+          {!policiesData && !policiesLoading && isPoliciesFetched && (
+            <h3 className="privacy-policy__no-results">{t("no_results")}</h3>
+          )}
+        </GridItem>
+      </Grid>
+    </Block>
+  );
+};
