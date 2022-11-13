@@ -7,6 +7,7 @@ import {
   Footer,
   Icon,
 } from "@USupport-components-library/src";
+import { useIsLoggedIn } from "@USupport-components-library/hooks";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
@@ -21,10 +22,11 @@ import "./page.scss";
  */
 export const Page = ({
   additionalPadding,
-  showNavbar,
-  showFooter,
   showGoBackArrow,
   showEmergencyButton,
+  showNavbar = null,
+  showFooter = null,
+  handleGoBack,
   heading,
   subheading,
   headingButton,
@@ -32,7 +34,10 @@ export const Page = ({
   children,
 }) => {
   const navigateTo = useNavigate();
-  const { t } = useTranslation("page");
+  const { t, i18n } = useTranslation("page");
+  const isLoggedIn = useIsLoggedIn();
+  const isNavbarShown = showNavbar !== null ? showNavbar : isLoggedIn;
+  const isFooterShown = showFooter !== null ? showFooter : isLoggedIn;
   const pages = [
     { name: t("page_1"), url: "/", exact: true },
     { name: t("page_2"), url: "/how-it-works" },
@@ -69,11 +74,12 @@ export const Page = ({
 
   return (
     <>
-      {showNavbar && (
+      {isNavbarShown === true && (
         <Navbar
           pages={pages}
           showProfile
           yourProfileText={t("your_profile_text")}
+          i18n={i18n}
         />
       )}
       <div
@@ -91,6 +97,7 @@ export const Page = ({
                 name="arrow-chevron-back"
                 size="md"
                 color="#20809E"
+                onClick={handleGoBack}
               />
             )}
             {heading && <h3 className="page__header-heading">{heading}</h3>}
@@ -108,7 +115,7 @@ export const Page = ({
           label={t("emergency_button")}
         />
       )}
-      {showFooter && (
+      {isFooterShown && (
         <Footer lists={footerLists} contactUsText={t("contact_us")} />
       )}
     </>
@@ -167,8 +174,6 @@ Page.propTypes = {
 
 Page.defaultProps = {
   additionalPadding: true,
-  showNavbar: true,
-  showFooter: true,
   showGoBackArrow: true,
   showEmergencyButton: true,
 };
