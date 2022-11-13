@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { NotificationPreferencesPage } from "./NotificationPreferences";
+import { Welcome } from "./Welcome";
 
 export default {
-  title: "Client UI/pages/NotificationPreferences",
-  component: NotificationPreferencesPage,
+  title: "Client UI/pages/Welcome",
+  component: Welcome,
   argTypes: {},
 };
 
 const Template = (props) => (
   <Router>
-    <NotificationPreferencesPage {...props} />
+    <Welcome {...props} />
   </Router>
 );
 

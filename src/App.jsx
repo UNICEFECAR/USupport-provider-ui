@@ -8,6 +8,9 @@ import {
   Login,
   PrivacyPolicy,
   FAQ,
+  Welcome,
+  ForgotPassword,
+  ResetPassword,
 } from "./pages";
 
 import "./App.scss";
@@ -37,12 +40,15 @@ function App() {
         <Routes>
           <Route path="/contact-us" element={<ContactUs />} />
           <Route
-            path="/settings/notifications"
+            path="/notification-preferences"
             element={<NotificationPreferencesPage />}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/" element={<Welcome />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

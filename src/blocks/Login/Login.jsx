@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Block,
+  Error,
   Input,
   Grid,
   GridItem,
   InputPassword,
   Button,
-  ButtonOnlyIcon,
+  // ButtonOnlyIcon,
 } from "@USupport-components-library/src";
-import { useTranslation } from "react-i18next";
+import { userSvc } from "@USupport-components-library/services";
+import { useError } from "@USupport-components-library/hooks";
+import { getCountryFromTimezone } from "@USupport-components-library/utils";
 
 import "./login.scss";
 
@@ -21,10 +27,52 @@ import "./login.scss";
  */
 export const Login = () => {
   const { t } = useTranslation("login");
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const [data, setData] = React.useState({
+  const [data, setData] = useState({
     email: "",
     password: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const login = async () => {
+    const usersCountry = getCountryFromTimezone();
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const field = data.email.includes("@") ? "email" : "userAccessToken";
+    const payload = {
+      [field]: data.email,
+      password: data.password,
+      userType: "provider",
+      location: timezone + ", " + usersCountry,
+    };
+    return await userSvc.login(payload);
+  };
+
+  const loginMutation = useMutation(login, {
+    onSuccess: (response) => {
+      const { user: userData, token: tokenData } = response.data;
+      const { token, expiresIn, refreshToken } = tokenData;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("token-expires-in", expiresIn);
+      localStorage.setItem("refresh-token", refreshToken);
+
+      // TODO: Maybe instead of using setQueryData, we should use prefetch the query
+      queryClient.invalidateQueries({ queryKey: ["provider-data"] });
+
+      setErrors({});
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      const { message: errorMessage } = useError(error);
+      setErrors({ submit: errorMessage });
+    },
+    onSettled: () => {
+      setIsSubmitting(false);
+    },
   });
 
   const handleChange = (field, value) => {
@@ -35,20 +83,13 @@ export const Login = () => {
     setData(newData);
   };
 
+  const handleLogin = () => {
+    setIsSubmitting(true);
+    loginMutation.mutate();
+  };
+
   const handleForgotPassowrd = () => {
-    console.log("Forgot password");
-  };
-
-  const handleOAuthLogin = (platform) => {
-    console.log("platform");
-  };
-
-  const handleOnLogin = () => {
-    console.log("Login");
-  };
-
-  const handleRegisterRedirect = () => {
-    console.log("Register");
+    navigate("/forgot-password");
   };
 
   return (
@@ -61,6 +102,7 @@ export const Login = () => {
               handleChange("email", value.currentTarget.value)
             }
             placeholder={t("email_placeholder")}
+            value={data.email}
           />
           <InputPassword
             classes="login__grid__inputs-item__input--password"
@@ -69,6 +111,7 @@ export const Login = () => {
               handleChange("password", value.currentTarget.value)
             }
             placeholder={t("password_placeholder")}
+            value={data.password}
           />
           <Button
             type="ghost"
@@ -77,15 +120,16 @@ export const Login = () => {
             label={t("forgot_password_label")}
             onClick={() => handleForgotPassowrd()}
           />
+          {errors.submit ? <Error message={errors.submit} /> : null}
           <Button
             label={t("login_label")}
             size="lg"
             classes="login-button"
-            onClick={() => handleOnLogin()}
-            disabled={!data.email || !data.password}
+            onClick={handleLogin}
+            disabled={!data.email || !data.password || isSubmitting}
           />
         </GridItem>
-        <GridItem md={8} lg={12} classes="login__grid__content-item">
+        {/* <GridItem md={8} lg={12} classes="login__grid__content-item">
           <div>
             <p className="text">{t("paragraph")}</p>
             <div className="login__grid__content-item__buttons-container">
@@ -106,12 +150,7 @@ export const Login = () => {
               />
             </div>
           </div>
-          <Button
-            type="ghost"
-            label={t("register_button_label")}
-            onClick={() => handleRegisterRedirect()}
-          />
-        </GridItem>
+        </GridItem> */}
       </Grid>
     </Block>
   );

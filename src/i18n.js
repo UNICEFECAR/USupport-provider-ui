@@ -8,6 +8,9 @@ import {
   ContactUs,
   PrivacyPolicy,
   FAQ,
+  Welcome,
+  ForgotPassword,
+  ResetPassword,
 } from "#blocks/locales.js";
 
 import {
@@ -17,6 +20,9 @@ import {
   ContactUs as ContactUsPage,
   FAQ as FAQPage,
   PrivacyPolicy as PrivacyPolicyPage,
+  Welcome as WelcomePage,
+  ForgotPassword as ForgotPasswordPage,
+  ResetPassword as ResetPasswordPage,
 } from "#pages/locales.js";
 
 const resources = {
@@ -27,7 +33,10 @@ const resources = {
     "notification-preferences": NotificationPreferences.en,
     login: Login.en,
     "privacy-policy": PrivacyPolicy.en,
+    welcome: Welcome.en,
     faq: FAQ.en,
+    "forgot-password": ForgotPassword.en,
+    "reset-password": ResetPassword.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -36,6 +45,9 @@ const resources = {
     "login-page": LoginPage.en,
     "faq-page": FAQPage.en,
     "privacy-policy-page": PrivacyPolicyPage.en,
+    "welcome-page": WelcomePage.en,
+    "forgot-password-page": ForgotPasswordPage.en,
+    "reset-password-page": ResetPasswordPage.en,
   },
 };
 

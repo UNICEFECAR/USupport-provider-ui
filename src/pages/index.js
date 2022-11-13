@@ -4,3 +4,6 @@ export * from "./Login";
 export * from "./NotFound";
 export * from "./NotificationPreferences";
 export * from "./PrivacyPolicy";
+export * from "./Welcome";
+export * from "./ForgotPassword";
+export * from "./ResetPassword";

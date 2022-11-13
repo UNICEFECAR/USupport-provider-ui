@@ -3,7 +3,7 @@ import React from "react";
 import { NotificationPreferences } from "./NotificationPreferences";
 
 export default {
-  title: "Provider UI/blocks/NotificationPreferences",
+  title: "Client UI/blocks/NotificationPreferences",
   component: NotificationPreferences,
   argTypes: {},
 };
