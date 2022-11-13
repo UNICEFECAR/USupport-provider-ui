@@ -27,22 +27,20 @@ export const FAQ = () => {
   const getFAQs = async () => {
     // Request faq ids from the master DB based for provider platform
     const faqIds = await adminSvc.getFAQs("provider");
-
-    console.log("FAQ ids", faqIds);
-
-    let { data } = await cmsSvc.getFAQs("all", true, faqIds);
-
-    data = getFilteredData(data, i18n.language);
-
     const faqs = [];
-    data.forEach((faq) => {
-      faqs.push({
-        question: faq.attributes.question,
-        answer: faq.attributes.answer,
-      });
-    });
 
-    console.log(faqs);
+    if (faqIds?.length > 0) {
+      let { data } = await cmsSvc.getFAQs("all", true, faqIds);
+
+      data = getFilteredData(data, i18n.language);
+
+      data.forEach((faq) => {
+        faqs.push({
+          question: faq.attributes.question,
+          answer: faq.attributes.answer,
+        });
+      });
+    }
     return faqs;
   };
 
