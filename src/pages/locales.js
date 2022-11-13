@@ -4,3 +4,6 @@ export * as Login from "./Login/locales.js";
 export * as NotFoundPage from "./NotFound/locales.js";
 export * as NotificationPreferences from "./NotificationPreferences/locales.js";
 export * as PrivacyPolicy from "./PrivacyPolicy/locales.js";
+export * as Welcome from "./Welcome/locales.js";
+export * as ForgotPassword from "./ForgotPassword/locales.js";
+export * as ResetPassword from "./ResetPassword/locales.js";
