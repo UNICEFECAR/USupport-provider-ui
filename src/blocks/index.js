@@ -7,3 +7,5 @@ export * from "./FAQ";
 export * from "./Welcome";
 export * from "./ForgotPassword";
 export * from "./ResetPassword";
+export * from "./EditProfileDetails";
+export * from "./ProviderOverview";
