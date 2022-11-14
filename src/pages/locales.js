@@ -7,3 +7,5 @@ export * as PrivacyPolicy from "./PrivacyPolicy/locales.js";
 export * as Welcome from "./Welcome/locales.js";
 export * as ForgotPassword from "./ForgotPassword/locales.js";
 export * as ResetPassword from "./ResetPassword/locales.js";
+export * as EditProfileDetails from "./EditProfileDetails/locales.js";
+export * as ProviderOverview from "./ProviderOverview/locales.js";
