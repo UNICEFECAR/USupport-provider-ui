@@ -9,3 +9,4 @@ export * from "./ForgotPassword";
 export * from "./ResetPassword";
 export * from "./EditProfileDetails";
 export * from "./ProviderOverview";
+export * from "./ProviderProfile";
