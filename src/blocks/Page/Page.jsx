@@ -197,5 +197,5 @@ Page.propTypes = {
 Page.defaultProps = {
   additionalPadding: true,
   showGoBackArrow: true,
-  showEmergencyButton: true,
+  showEmergencyButton: false,
 };
