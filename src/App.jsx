@@ -13,6 +13,7 @@ import {
   ResetPassword,
   EditProfileDetails,
   ProviderOverview,
+  ProviderProfile,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -64,6 +65,14 @@ function App() {
               <CountryValidationRoute>
                 <Login />
               </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProviderProfile />
+              </ProtectedRoute>
             }
           />
           <Route
