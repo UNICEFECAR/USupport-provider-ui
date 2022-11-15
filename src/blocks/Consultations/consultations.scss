@@ -1,0 +1,42 @@
+@import "@USupport-components-library/styles";
+
+.consultations {
+  &__grid {
+    padding-top: $spacing_2_4;
+    padding-bottom: $spacing_6_4;
+    place-items: center;
+
+    &__tabs-item {
+      justify-self: center;
+      margin-top: $spacing_2_4;
+    }
+
+    &__consultations-item {
+      margin-top: $spacing_2_4;
+
+      &__grid {
+        place-items: center;
+      }
+    }
+  }
+
+  &__heading-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+
+    &__heading-text {
+      margin-top: $spacing_2_4;
+    }
+
+    @media screen and (min-width: $screen_md) {
+      flex-direction: row;
+      align-items: center;
+
+      &__heading-text {
+        margin-top: 0;
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Consultations,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -123,6 +124,12 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/consultations" element={<Consultations />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/" element={<Welcome />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
