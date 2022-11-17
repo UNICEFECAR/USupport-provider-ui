@@ -1,0 +1,98 @@
+@import "@USupport-components-library/styles";
+
+.scheduler-template {
+  &__grid {
+    place-items: center;
+
+    &__week-selector {
+      display: flex;
+      padding-top: $spacing_3_2;
+      text-align: center;
+
+      & .dropdown {
+        width: 15rem;
+        &:first-of-type {
+          margin-right: $spacing_1_2;
+        }
+      }
+
+      & .dropdown-content {
+        width: 13.4rem;
+      }
+    }
+
+    &__day {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding-top: $spacing_2_4;
+
+      @media screen and (min-width: $screen-md) {
+        justify-content: flex-start;
+        padding-top: $spacing_3_2;
+      }
+
+      &-heading {
+        text-align: left;
+      }
+
+      &-time-selector {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding-top: $spacing_1_6;
+        width: 100%;
+
+        @media screen and (min-width: $screen-md) {
+          flex-direction: row;
+          justify-content: flex-start;
+        }
+
+        &__single {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: $spacing_1_6;
+          text-align: left;
+          width: 70%;
+          max-width: 25rem;
+          padding: 0 $spacing_5_6;
+
+          @media screen and (min-width: $screen-md) {
+            padding: 0;
+            justify-content: flex-start;
+            &:nth-of-type(2) {
+              margin-left: $spacing_2_4;
+            }
+          }
+
+          & .dropdown {
+            width: 15rem;
+            @media screen and (min-width: $screen-md) {
+              margin-left: $spacing_1_2;
+            }
+          }
+
+          & .dropdown-content {
+            width: 13.5rem;
+          }
+        }
+      }
+
+      &__checkbox {
+        align-self: center;
+        padding-top: $spacing_1_6;
+
+        @media screen and (min-width: $screen-md) {
+          align-self: flex-start;
+        }
+      }
+    }
+
+    &__save-button {
+      margin-top: $spacing_3_2;
+      margin-bottom: $spacing_5_6;
+    }
+  }
+}

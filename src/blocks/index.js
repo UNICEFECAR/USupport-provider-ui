@@ -10,3 +10,5 @@ export * from "./ResetPassword";
 export * from "./EditProfileDetails";
 export * from "./ProviderOverview";
 export * from "./ProviderProfile";
+export * from './Scheduler';
+export * from './SchedulerTemplate';
