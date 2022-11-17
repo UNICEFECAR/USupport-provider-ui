@@ -231,7 +231,7 @@ export const ActivityHistory = () => {
                   <Icon
                     name="three-dots-vertical"
                     color="#20809E"
-                    onClick={() => setIsMenuOpen(true)}
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
                   />
                 </div>
                 <div className="activity-history__consultation-container__consultation__messages">
