@@ -14,9 +14,14 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Scheduler,
+  SchedulerTemplate,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.scss";
 
@@ -92,6 +97,22 @@ function App() {
             }
           />
           <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <Scheduler />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar/template"
+            element={
+              <ProtectedRoute>
+                <SchedulerTemplate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/privacy-policy"
             element={
               <CountryValidationRoute>
@@ -127,6 +148,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
