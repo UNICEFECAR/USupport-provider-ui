@@ -84,9 +84,7 @@ export const ProviderOverview = ({
                     {provider.name} {provider.patronym ? provider.patronym : ""}{" "}
                     {provider.surname}
                   </h4>
-                  <p className="small-text">
-                    {allOptionsToString("specializations")}
-                  </p>
+                  <p className="small-text">{renderSpecializations()}</p>
                 </div>
               </div>
             </div>
@@ -127,14 +125,6 @@ export const ProviderOverview = ({
               </p>
               <p className="small-text provider-profile__information-container__text">
                 {provider.earliestAvailable}
-              </p>
-            </div>
-            <div className="provider-profile__information-container">
-              <p className="small-text provider-profile__information-container__heading">
-                {t("specializations_label")}
-              </p>
-              <p className="small-text provider-profile__information-container__text">
-                {renderSpecializations()}
               </p>
             </div>
             <div className="provider-profile__information-container">
