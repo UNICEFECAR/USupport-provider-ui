@@ -1,0 +1,82 @@
+@import "@USupport-components-library/styles";
+
+.scheduler {
+  position: relative;
+
+  &__heading-grid {
+    padding-top: $spacing_3_2;
+
+    &__edit {
+      display: flex;
+      text-align: left;
+      color: $color_secondary_9749fa;
+      align-items: center;
+      cursor: pointer;
+
+      & .icon {
+        margin-right: $spacing_0_8;
+      }
+    }
+  }
+
+  &__days-grid {
+    grid-template-columns: repeat(8, 1fr);
+    margin-top: $spacing_1_6;
+    padding-bottom: $spacing_6_0;
+    max-height: calc(100vh - 26.8rem);
+    overflow-y: scroll;
+
+    &__days-of-week-item {
+      position: sticky;
+      top: 0;
+      z-index: $z_index_emergency_button;
+      background: $color_white_ff;
+      padding: $spacing_1_2 0;
+      grid-column: span 8;
+
+      &__grid {
+        grid-template-columns: repeat(8, 1fr);
+      }
+    }
+
+    &__hour-item {
+      place-self: center;
+    }
+  }
+
+  &__day-of-week {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: $spacing_1_2;
+
+    @media screen and (min-width: 1150px) {
+      width: 14rem;
+    }
+
+    &--today {
+      color: $color_primary_20809e;
+    }
+
+    &__day {
+      text-decoration: underline;
+    }
+  }
+
+  &__change-week {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: $spacing_3_0;
+
+    @media screen and (min-width: $screen-md) {
+      justify-content: flex-end;
+      margin-top: 0;
+    }
+
+    &__date > p {
+      color: $color_secondary_9749fa;
+      padding: 0 $spacing_2_4;
+    }
+  }
+}
