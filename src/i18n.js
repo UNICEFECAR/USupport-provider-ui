@@ -14,6 +14,8 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Scheduler,
+  SchedulerTemplate,
 } from "#blocks/locales.js";
 
 import {
@@ -29,6 +31,7 @@ import {
   EditProfileDetails as EditProfileDetailsPage,
   ProviderOverview as ProviderOverviewPage,
   ProviderProfile as ProviderProfilePage,
+  SchedulerTemplate as SchedulerTemplatePage,
 } from "#pages/locales.js";
 
 import {
@@ -53,6 +56,8 @@ const resources = {
     "edit-profile-details": EditProfileDetails.en,
     "provider-overview": ProviderOverview.en,
     "provider-profile": ProviderProfile.en,
+    scheduler: Scheduler.en,
+    "scheduler-template": SchedulerTemplate.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -67,6 +72,7 @@ const resources = {
     "edit-profile-details-page": EditProfileDetailsPage.en,
     "provider-profile-page": ProviderProfilePage.en,
     "provider-overview-page": ProviderOverviewPage.en,
+    "scheduler-template-page": SchedulerTemplatePage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,
