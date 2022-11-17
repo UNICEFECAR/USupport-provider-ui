@@ -10,3 +10,4 @@ export * as ResetPassword from "./ResetPassword/locales.js";
 export * as EditProfileDetails from "./EditProfileDetails/locales.js";
 export * as ProviderOverview from "./ProviderOverview/locales.js";
 export * as ProviderProfile from "./ProviderProfile/locales.js";
+export * as ActivityHistory from './ActivityHistory/locales.js';

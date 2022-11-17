@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  ActivityHistory,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -51,6 +52,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/activity-history" element={<ActivityHistory />} />
           <Route
             path="/notification-preferences"
             element={
