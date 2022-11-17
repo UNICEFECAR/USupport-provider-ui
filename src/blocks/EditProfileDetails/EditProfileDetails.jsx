@@ -144,7 +144,7 @@ export const EditProfileDetails = ({
         const category = workWithQuery.data[i];
         // Construct the new object
         newWorkWith.value = category.work_with_id;
-        newWorkWith.label = t(category.topic); // TODO: add translation
+        newWorkWith.label = t(category.topic.replaceAll("-", "_"));
         newWorkWith.selected = providerWorkWith.includes(category.work_with_id);
         newWorkWith.selectedIndex = providerWorkWith.indexOf(
           category.work_with_id
