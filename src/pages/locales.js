@@ -10,3 +10,5 @@ export * as ResetPassword from "./ResetPassword/locales.js";
 export * as EditProfileDetails from "./EditProfileDetails/locales.js";
 export * as ProviderOverview from "./ProviderOverview/locales.js";
 export * as ProviderProfile from "./ProviderProfile/locales.js";
+export * as Scheduler from "./Scheduler/locales.js";
+export * as SchedulerTemplate from './SchedulerTemplate/locales.js';
