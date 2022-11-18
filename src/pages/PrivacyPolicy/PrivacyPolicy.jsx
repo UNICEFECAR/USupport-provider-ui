@@ -11,8 +11,13 @@ import { useTranslation } from "react-i18next";
  */
 export const PrivacyPolicy = () => {
   const { t } = useTranslation("privacy-policy-page");
+
   return (
-    <Page classes="page__privacy-policy" heading={t("heading")}>
+    <Page
+      classes="page__privacy-policy"
+      showGoBackArrow={false}
+      heading={t("heading")}
+    >
       <PrivacyPolicyBlock />
     </Page>
   );
