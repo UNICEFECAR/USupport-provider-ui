@@ -253,7 +253,7 @@ export const Scheduler = () => {
           </Grid>
         </div>
       </Block>
-      <Block classes="scheduler" reference={blockRef}>
+      <Block classes="scheduler">
         {availableSlotsQuery.isLoading ? (
           <Loading />
         ) : (
