@@ -58,7 +58,7 @@ export const ProviderOverview = ({
 
   const renderLanguages = useCallback(() => {
     if (provider) {
-      return provider.languages.map((x) => x.name).join(" ");
+      return provider.languages.map((x) => x.name).join(", ");
     }
   }, [provider]);
 
@@ -116,7 +116,7 @@ export const ProviderOverview = ({
                 classes="provider-profile__information-container-with-icon__icon"
               />
               <p className="small-text">
-                {provider.price}$ for 1 hour consultation
+                {provider.consultationPrice}$ for 1 hour consultation
               </p>
             </div>
             <div className="provider-profile__information-container">
