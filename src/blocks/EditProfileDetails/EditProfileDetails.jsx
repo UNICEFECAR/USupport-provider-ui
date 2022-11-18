@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import {
   Block,
   Button,
@@ -182,6 +183,7 @@ export const EditProfileDetails = ({
 
   const onUpdateSuccess = () => {
     setIsProcessing(false);
+    toast(t("edit_succes"));
   };
 
   const onUpdateError = (err) => {
@@ -197,7 +199,6 @@ export const EditProfileDetails = ({
     setIsProcessing(true);
     if ((await validate(providerData, schema, setErrors)) === null) {
       updateProviderMutation.mutate(providerData);
-      setIsProcessing(false);
     } else {
       setIsProcessing(false);
     }
