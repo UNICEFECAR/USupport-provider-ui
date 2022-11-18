@@ -2,6 +2,19 @@
 
 .scheduler {
   position: relative;
+  padding-top: 20.2rem;
+
+  @media screen and (min-width: $screen-md) {
+    padding-top: 13.2rem;
+  }
+
+  &__heading-block {
+    position: fixed;
+    background-color: $color_white_ff;
+    left: 0;
+    right: 0;
+    z-index: $z_index_2;
+  }
 
   &__heading-grid {
     padding-top: $spacing_3_2;
@@ -23,8 +36,6 @@
     grid-template-columns: repeat(8, 1fr);
     margin-top: $spacing_1_6;
     padding-bottom: $spacing_6_0;
-    max-height: calc(100vh - 26.8rem);
-    overflow-y: scroll;
 
     &__days-of-week-item {
       position: sticky;

@@ -43,6 +43,7 @@ export const Scheduler = () => {
   const todayText = t("today");
   const today = new Date();
   const currentHourRef = useRef(null);
+  // const blockRef = useRef(null);
 
   const { first: startDate, last: endDate } = getStartAndEndOfWeek(today);
   const [weekStartDate, setWeekStartDate] = useState(startDate);
@@ -213,86 +214,88 @@ export const Scheduler = () => {
 
   const handleEditClick = () => navigate("/calendar/template");
 
-  useEffect(() => {
-    currentHourRef.current?.scrollIntoView({ block: "nearest" });
-  }, [currentHourRef.current]);
-
   return (
-    <Block classes="scheduler">
-      <Heading
-        handleWeekChange={handleWeekChange}
-        handleEditClick={handleEditClick}
-        startDate={weekStartDate}
-        endDate={weekEndDate}
-        width={width}
-        t={t}
-      />
-      {availableSlotsQuery.isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Grid classes="scheduler__days-grid">
-            <div className="scheduler__days-grid__days-of-week-item">
-              <Grid classes="scheduler__days-grid__days-of-week-item__grid">
-                {weekDays.map((day, index) => {
-                  const isToday = isDateToday(day);
-                  const date = getDateView(day);
-                  const displayDate = width < 1366 ? date.slice(0, -3) : date;
-                  return (
-                    <React.Fragment key={"heading" + index}>
-                      {index === 0 && <GridItem xs={1} />}
-                      <GridItem xs={1}>
-                        <div
-                          className={[
-                            "scheduler__day-of-week",
-                            isToday ? "scheduler__day-of-week--today" : "",
-                          ].join(" ")}
-                        >
-                          <p className="scheduler__day-of-week__day">
-                            {isToday ? todayText : t(namesOfDays[day.getDay()])}
-                          </p>
-                          <p>{displayDate}</p>
-                        </div>
-                      </GridItem>
-                    </React.Fragment>
-                  );
-                })}
-              </Grid>
-            </div>
-            {hours.map((hour, index) => {
+    <>
+      <Block classes="scheduler__heading-block">
+        <Heading
+          handleWeekChange={handleWeekChange}
+          handleEditClick={handleEditClick}
+          startDate={weekStartDate}
+          endDate={weekEndDate}
+          width={width}
+          t={t}
+        />
+        <div className="scheduler__days-grid__days-of-week-item">
+          <Grid classes="scheduler__days-grid__days-of-week-item__grid">
+            {weekDays.map((day, index) => {
+              const isToday = isDateToday(day);
+              const date = getDateView(day);
+              const displayDate = width < 1366 ? date.slice(0, -3) : date;
               return (
-                <React.Fragment
-                  key={"week" + hour.toString() + index.toString()}
-                >
-                  <GridItem xs={1} classes="scheduler__days-grid__hour-item">
-                    {hour === "13:00" && <div ref={currentHourRef} />}
-                    <p className="small-text">{hour}</p>
+                <React.Fragment key={"heading" + index}>
+                  {index === 0 && <GridItem xs={1} />}
+                  <GridItem xs={1}>
+                    <div
+                      className={[
+                        "scheduler__day-of-week",
+                        isToday ? "scheduler__day-of-week--today" : "",
+                      ].join(" ")}
+                    >
+                      <p className="scheduler__day-of-week__day">
+                        {isToday ? todayText : t(namesOfDays[day.getDay()])}
+                      </p>
+                      <p>{displayDate}</p>
+                    </div>
                   </GridItem>
-                  {weekDays.map((day, dayIndex) => {
-                    return (
-                      <ProviderAvailability
-                        key={"slot" + day.toString() + dayIndex.toString()}
-                        isAvailable={checkIsAvailable(day, hour)}
-                        handleSetUnavailable={() =>
-                          handleSetUnavailable(day, hour)
-                        }
-                        handleSetAvailable={() => handleSetAvailable(day, hour)}
-                        handleProposeConsultation={handleProposeConsultation}
-                        handleCancelConsultation={handleCancelConsultation}
-                        handleViewProfile={handleViewProfile}
-                        handleJoinConsultation={handleJoinConsultation}
-                      />
-                    );
-                  })}
                 </React.Fragment>
               );
             })}
-            {/* </Grid> */}
-            {/* </GridItem> */}
           </Grid>
-        </>
-      )}
-    </Block>
+        </div>
+      </Block>
+      <Block classes="scheduler" reference={blockRef}>
+        {availableSlotsQuery.isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <Grid classes="scheduler__days-grid">
+              {hours.map((hour, index) => {
+                return (
+                  <React.Fragment
+                    key={"week" + hour.toString() + index.toString()}
+                  >
+                    <GridItem xs={1} classes="scheduler__days-grid__hour-item">
+                      {hour === "07:00" && <div ref={currentHourRef} />}
+                      <p className="small-text">{hour}</p>
+                    </GridItem>
+                    {weekDays.map((day, dayIndex) => {
+                      return (
+                        <ProviderAvailability
+                          key={"slot" + day.toString() + dayIndex.toString()}
+                          isAvailable={checkIsAvailable(day, hour)}
+                          handleSetUnavailable={() =>
+                            handleSetUnavailable(day, hour)
+                          }
+                          handleSetAvailable={() =>
+                            handleSetAvailable(day, hour)
+                          }
+                          handleProposeConsultation={handleProposeConsultation}
+                          handleCancelConsultation={handleCancelConsultation}
+                          handleViewProfile={handleViewProfile}
+                          handleJoinConsultation={handleJoinConsultation}
+                        />
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              })}
+              {/* </Grid> */}
+              {/* </GridItem> */}
+            </Grid>
+          </>
+        )}
+      </Block>
+    </>
   );
 };
 
