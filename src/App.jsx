@@ -16,6 +16,8 @@ import {
   ProviderProfile,
   Scheduler,
   SchedulerTemplate,
+  CookiePolicy,
+  TermsOfUse,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -117,6 +119,22 @@ function App() {
             element={
               <CountryValidationRoute>
                 <PrivacyPolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/cookie-policy"
+            element={
+              <CountryValidationRoute>
+                <CookiePolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/terms-of-use"
+            element={
+              <CountryValidationRoute>
+                <TermsOfUse />
               </CountryValidationRoute>
             }
           />
