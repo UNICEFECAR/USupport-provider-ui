@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { Page, ProviderOverview as ProviderOverviewBlock } from "#blocks";
 import { useWindowDimensions } from "@USupport-components-library/src/utils";
 import { RadialCircle, Button } from "@USupport-components-library/src";
@@ -15,7 +16,10 @@ import { ChangePassword, DeleteAccount } from "../../backdrops";
  * @returns {JSX.Element}
  */
 export const ProviderOverview = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation("provider-overview-page");
+  const { width } = useWindowDimensions();
+
   const [isChangePasswordBackdropOpen, setIsChangePasswordBackdropOpen] =
     useState(false);
   const [isDeleteAccountBackdropOpen, setIsDeleteAccountBackdropOpen] =
@@ -30,10 +34,17 @@ export const ProviderOverview = () => {
   const closeDeleteAccountBackdrop = () =>
     setIsDeleteAccountBackdropOpen(false);
 
-  const { width } = useWindowDimensions();
-
+  const handleGoBack = () => navigate(-1);
+  const handleRedirectToActivityHistory = () => {
+    console.log("Redirect to activity history");
+    // navigate("/provider/activity");
+  };
   return (
-    <Page classes="page__provider-overview" heading={t("heading")}>
+    <Page
+      classes="page__provider-overview"
+      heading={t("heading")}
+      handleGoBack={handleGoBack}
+    >
       <ProviderOverviewBlock
         {...{ openChangePasswordBackdrop, openDeleteAccountBackdrop }}
       />
@@ -42,7 +53,7 @@ export const ProviderOverview = () => {
           label={t("button_label")}
           color="purple"
           size="md"
-          onClick={() => handleSchedule()}
+          onClick={handleRedirectToActivityHistory}
         />
       </div>
       {width < 768 && <RadialCircle />}
