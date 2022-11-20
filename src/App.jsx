@@ -11,7 +11,19 @@ import {
   Welcome,
   ForgotPassword,
   ResetPassword,
+  EditProfileDetails,
+  ProviderOverview,
+  ProviderProfile,
+  Scheduler,
+  SchedulerTemplate,
+  CookiePolicy,
+  TermsOfUse,
 } from "./pages";
+
+import { ProtectedRoute, CountryValidationRoute } from "./routes";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.scss";
 
@@ -38,20 +50,123 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router basename="/provider">
         <Routes>
-          <Route path="/contact-us" element={<ContactUs />} />
+          <Route
+            path="/contact-us"
+            element={
+              <ProtectedRoute>
+                <ContactUs />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/notification-preferences"
-            element={<NotificationPreferencesPage />}
+            element={
+              <ProtectedRoute>
+                <NotificationPreferencesPage />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/faq" element={<FAQ />} />
+          <Route
+            path="/login"
+            element={
+              <CountryValidationRoute>
+                <Login />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProviderProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/details"
+            element={
+              <ProtectedRoute>
+                <ProviderOverview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/details/edit"
+            element={
+              <ProtectedRoute>
+                <EditProfileDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <Scheduler />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar/template"
+            element={
+              <ProtectedRoute>
+                <SchedulerTemplate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/privacy-policy"
+            element={
+              <CountryValidationRoute>
+                <PrivacyPolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/cookie-policy"
+            element={
+              <CountryValidationRoute>
+                <CookiePolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/terms-of-use"
+            element={
+              <CountryValidationRoute>
+                <TermsOfUse />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <CountryValidationRoute>
+                <ForgotPassword />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <CountryValidationRoute>
+                <ResetPassword />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/faq"
+            element={
+              <ProtectedRoute>
+                <FAQ />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Welcome />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }

@@ -1,8 +1,9 @@
 {
-  "page_1": "Home",
-  "page_2": "How it works?",
-  "page_3": "About Us",
-  "page_4": "Contact Us",
+  "page_1": "Dashboard",
+  "page_2": "Calendar",
+  "page_3": "Activity history",
+  "page_4": "Consultations",
+  "page_5": "Clients",
 
   "country_1": "",
   "country_2": "",
@@ -15,12 +16,14 @@
   "language_5": "",
   "language_6": "",
 
-  "footer_1": "About Us",
-  "footer_2": "Information portal",
-  "footer_3": "How it works?",
-  "footer_4": "Terms of Service",
-  "footer_5": "Privacy Policy",
-  "footer_6": "Cookie Settings",
+  "footer_1": "Dashboard",
+  "footer_2": "Calendar",
+  "footer_3": "Activity history",
+  "footer_4": "Consultations",
+  "footer_5": "Clients",
+  "footer_6": "Terms of Service",
+  "footer_7": "Privacy Policy",
+  "footer_8": "Cookie Settings",
 
   "emergency_button": "SOS Center",
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   Navbar,
@@ -34,29 +35,49 @@ export const Page = ({
   children,
 }) => {
   const navigateTo = useNavigate();
+  const queryClient = useQueryClient();
   const { t, i18n } = useTranslation("page");
   const isLoggedIn = useIsLoggedIn();
   const isNavbarShown = showNavbar !== null ? showNavbar : isLoggedIn;
   const isFooterShown = showFooter !== null ? showFooter : isLoggedIn;
+
+  const image = useQuery(
+    ["provider-image"],
+    async () => {
+      const data = queryClient.getQueryData(["provider-data"]);
+      if (!data) {
+        queryClient.invalidateQueries({ queryKey: ["provider-data"] });
+      }
+      await new Promise((resolve) => resolve());
+      return data?.image || "default";
+    },
+    {
+      initialData: "default",
+    }
+  );
+
   const pages = [
-    { name: t("page_1"), url: "/", exact: true },
-    { name: t("page_2"), url: "/how-it-works" },
-    { name: t("page_3"), url: "/about-us" },
+    { name: t("page_1"), url: "/dashboard", exact: true },
+    { name: t("page_2"), url: "/calendar" },
+    { name: t("page_3"), url: "/activity-history" },
     // TODO: bring it back once the informaiton portal is ready
     // { name: "Information portal", url: "/information-portal" },
-    { name: t("page_4"), url: "/contact-us" },
+    { name: t("page_4"), url: "/consultations" },
+    { name: t("page_5"), url: "/clients" },
   ];
 
   const footerLists = {
     list1: [
-      { name: t("footer_1"), url: "/about-us" },
-      { name: t("footer_2"), url: "/information-portal" },
-      { name: t("footer_3"), url: "/how-it-works" },
+      { name: t("footer_1"), url: "/dashboard" },
+      { name: t("footer_2"), url: "/calendar" },
+      { name: t("footer_3"), url: "/activity-history" },
+      { name: t("footer_4"), url: "/consultations" },
     ],
     list2: [
-      { name: t("footer_4"), url: "/terms-of-service", exact: true },
-      { name: t("footer_5"), url: "/privacy-policy" },
-      { name: t("footer_6"), url: "/cookie-settings" },
+      { name: t("footer_5"), url: "/clients", exact: true },
+      { name: t("footer_6"), url: "/terms-of-service", exact: true },
+      { name: t("footer_7"), url: "/privacy-policy" },
+      { name: t("footer_8"), url: "/cookie-settings" },
     ],
     list3: [
       { value: "+359 888 888 888", iconName: "call-filled", onClick: "phone" },
@@ -80,6 +101,7 @@ export const Page = ({
           showProfile
           yourProfileText={t("your_profile_text")}
           i18n={i18n}
+          image={image?.data || "default"}
         />
       )}
       <div
@@ -175,5 +197,5 @@ Page.propTypes = {
 Page.defaultProps = {
   additionalPadding: true,
   showGoBackArrow: true,
-  showEmergencyButton: true,
+  showEmergencyButton: false,
 };

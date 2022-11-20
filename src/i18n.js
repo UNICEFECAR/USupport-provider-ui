@@ -11,6 +11,13 @@ import {
   Welcome,
   ForgotPassword,
   ResetPassword,
+  EditProfileDetails,
+  ProviderOverview,
+  ProviderProfile,
+  Scheduler,
+  SchedulerTemplate,
+  CookiePolicy,
+  TermsOfUse,
 } from "#blocks/locales.js";
 
 import {
@@ -23,7 +30,20 @@ import {
   Welcome as WelcomePage,
   ForgotPassword as ForgotPasswordPage,
   ResetPassword as ResetPasswordPage,
+  EditProfileDetails as EditProfileDetailsPage,
+  ProviderOverview as ProviderOverviewPage,
+  ProviderProfile as ProviderProfilePage,
+  SchedulerTemplate as SchedulerTemplatePage,
+  CookiePolicy as CookiePolicyPage,
+  TermsOfUse as TermsOfUsePage,
 } from "#pages/locales.js";
+
+import {
+  UploadPicture,
+  DeleteProfilePicture,
+  ChangePassword,
+  DeleteAccount,
+} from "#backdrops/locales.js";
 
 const resources = {
   en: {
@@ -37,6 +57,13 @@ const resources = {
     faq: FAQ.en,
     "forgot-password": ForgotPassword.en,
     "reset-password": ResetPassword.en,
+    "edit-profile-details": EditProfileDetails.en,
+    "provider-overview": ProviderOverview.en,
+    "provider-profile": ProviderProfile.en,
+    scheduler: Scheduler.en,
+    "scheduler-template": SchedulerTemplate.en,
+    "cookie-policy": CookiePolicy.en,
+    "terms-of-use": TermsOfUse.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -48,6 +75,18 @@ const resources = {
     "welcome-page": WelcomePage.en,
     "forgot-password-page": ForgotPasswordPage.en,
     "reset-password-page": ResetPasswordPage.en,
+    "edit-profile-details-page": EditProfileDetailsPage.en,
+    "provider-profile-page": ProviderProfilePage.en,
+    "provider-overview-page": ProviderOverviewPage.en,
+    "scheduler-template-page": SchedulerTemplatePage.en,
+    "cookie-policy-page": CookiePolicyPage.en,
+    "terms-of-use-page": TermsOfUsePage.en,
+
+    // Backdrops
+    "upload-picture": UploadPicture.en,
+    "delete-profile-picture": DeleteProfilePicture.en,
+    "change-password-backdrop": ChangePassword.en,
+    "delete-account": DeleteAccount.en,
   },
 };
 
