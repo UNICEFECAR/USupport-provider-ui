@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Clients,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -43,6 +44,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router basename="/provider">
         <Routes>
+          <Route path="/clients" element={<Clients />} />
           <Route
             path="/contact-us"
             element={

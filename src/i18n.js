@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Clients,
 } from "#blocks/locales.js";
 
 import {
@@ -53,6 +54,7 @@ const resources = {
     "edit-profile-details": EditProfileDetails.en,
     "provider-overview": ProviderOverview.en,
     "provider-profile": ProviderProfile.en,
+    clients: Clients.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
