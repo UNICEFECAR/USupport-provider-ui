@@ -15,6 +15,10 @@ import {
   ProviderOverview,
   ProviderProfile,
   Clients,
+  Scheduler,
+  SchedulerTemplate,
+  CookiePolicy,
+  TermsOfUse,
 } from "#blocks/locales.js";
 
 import {
@@ -30,6 +34,9 @@ import {
   EditProfileDetails as EditProfileDetailsPage,
   ProviderOverview as ProviderOverviewPage,
   ProviderProfile as ProviderProfilePage,
+  SchedulerTemplate as SchedulerTemplatePage,
+  CookiePolicy as CookiePolicyPage,
+  TermsOfUse as TermsOfUsePage,
 } from "#pages/locales.js";
 
 import {
@@ -55,6 +62,10 @@ const resources = {
     "provider-overview": ProviderOverview.en,
     "provider-profile": ProviderProfile.en,
     clients: Clients.en,
+    scheduler: Scheduler.en,
+    "scheduler-template": SchedulerTemplate.en,
+    "cookie-policy": CookiePolicy.en,
+    "terms-of-use": TermsOfUse.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -69,6 +80,9 @@ const resources = {
     "edit-profile-details-page": EditProfileDetailsPage.en,
     "provider-profile-page": ProviderProfilePage.en,
     "provider-overview-page": ProviderOverviewPage.en,
+    "scheduler-template-page": SchedulerTemplatePage.en,
+    "cookie-policy-page": CookiePolicyPage.en,
+    "terms-of-use-page": TermsOfUsePage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,

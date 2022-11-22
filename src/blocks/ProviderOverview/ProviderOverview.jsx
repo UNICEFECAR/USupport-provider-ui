@@ -58,7 +58,7 @@ export const ProviderOverview = ({
 
   const renderLanguages = useCallback(() => {
     if (provider) {
-      return provider.languages.map((x) => x.name).join(" ");
+      return provider.languages.map((x) => x.name).join(", ");
     }
   }, [provider]);
 
@@ -84,9 +84,7 @@ export const ProviderOverview = ({
                     {provider.name} {provider.patronym ? provider.patronym : ""}{" "}
                     {provider.surname}
                   </h4>
-                  <p className="small-text">
-                    {allOptionsToString("specializations")}
-                  </p>
+                  <p className="small-text">{renderSpecializations()}</p>
                 </div>
               </div>
             </div>
@@ -118,7 +116,7 @@ export const ProviderOverview = ({
                 classes="provider-profile__information-container-with-icon__icon"
               />
               <p className="small-text">
-                {provider.price}$ for 1 hour consultation
+                {provider.consultationPrice}$ for 1 hour consultation
               </p>
             </div>
             <div className="provider-profile__information-container">
@@ -127,14 +125,6 @@ export const ProviderOverview = ({
               </p>
               <p className="small-text provider-profile__information-container__text">
                 {provider.earliestAvailable}
-              </p>
-            </div>
-            <div className="provider-profile__information-container">
-              <p className="small-text provider-profile__information-container__heading">
-                {t("specializations_label")}
-              </p>
-              <p className="small-text provider-profile__information-container__text">
-                {renderSpecializations()}
               </p>
             </div>
             <div className="provider-profile__information-container">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Block,
@@ -8,8 +8,7 @@ import {
   Loading,
 } from "@USupport-components-library/src";
 import { useTranslation } from "react-i18next";
-import { getFilteredData } from "@USupport-components-library/utils";
-
+import { useEventListener } from "@USupport-components-library/hooks";
 import { cmsSvc, adminSvc } from "@USupport-components-library/services";
 
 import "./faq.scss";
@@ -24,23 +23,44 @@ import "./faq.scss";
 export const FAQ = () => {
   const { i18n, t } = useTranslation("faq");
 
-  const getFAQs = async () => {
-    // Request faq ids from the master DB based for provider platform
+  //--------------------- Country Change Event Listener ----------------------//
+  const [currentCountry, setCurrentCountry] = useState(
+    localStorage.getItem("country")
+  );
+
+  const handler = useCallback(() => {
+    setCurrentCountry(localStorage.getItem("country"));
+  }, []);
+
+  // Add event listener
+  useEventListener("countryChanged", handler);
+
+  //--------------------- FAQs ----------------------//
+
+  const getFAQIds = async () => {
+    // Request faq ids from the master DB for provider platform
     const faqIds = await adminSvc.getFAQs("provider");
+
+    return faqIds;
+  };
+
+  const faqIdsQuerry = useQuery(["faqIds", currentCountry], getFAQIds);
+
+  const getFAQs = async () => {
     const faqs = [];
 
-    if (faqIds?.length > 0) {
-      let { data } = await cmsSvc.getFAQs("all", true, faqIds);
+    let { data } = await cmsSvc.getFAQs({
+      locale: i18n.language,
+      ids: faqIdsQuerry.data,
+    });
 
-      data = getFilteredData(data, i18n.language);
-
-      data.forEach((faq) => {
-        faqs.push({
-          question: faq.attributes.question,
-          answer: faq.attributes.answer,
-        });
+    data.data.forEach((faq) => {
+      faqs.push({
+        question: faq.attributes.question,
+        answer: faq.attributes.answer,
       });
-    }
+    });
+
     return faqs;
   };
 
@@ -48,17 +68,23 @@ export const FAQ = () => {
     data: FAQsData,
     isLoading: FAQsLoading,
     isFetched: isFAQsFetched,
-  } = useQuery(["FAQs", i18n.language], getFAQs);
+  } = useQuery(["FAQs", faqIdsQuerry.data, i18n.language], getFAQs, {
+    // Run the query when the getCategories and getAgeGroups queries have finished running
+    enabled: !faqIdsQuerry.isLoading && faqIdsQuerry.data?.length > 0,
+  });
 
   return (
     <Block classes="faq">
       <Grid>
         <GridItem md={8} lg={12}>
           {FAQsData && <CollapsibleFAQ data={FAQsData} />}
-          {!FAQsData && FAQsLoading && <Loading />}
-          {!FAQsData?.length && !FAQsLoading && isFAQsFetched && (
-            <h3 className="faq__no-results">{t("no_results")}</h3>
+          {faqIdsQuerry.data?.length > 0 && !FAQsData && FAQsLoading && (
+            <Loading />
           )}
+          {(!FAQsData?.length && !FAQsLoading && isFAQsFetched) ||
+            (faqIdsQuerry.data?.length === 0 && (
+              <h3 className="page__faq__no-results">{t("no_results")}</h3>
+            ))}
         </GridItem>
       </Grid>
     </Block>

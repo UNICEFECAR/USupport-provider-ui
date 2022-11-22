@@ -15,9 +15,16 @@ import {
   ProviderOverview,
   ProviderProfile,
   Clients,
+  Scheduler,
+  SchedulerTemplate,
+  CookiePolicy,
+  TermsOfUse,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.scss";
 
@@ -44,7 +51,14 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router basename="/provider">
         <Routes>
-          <Route path="/clients" element={<Clients />} />
+          <Route
+            path="/clients"
+            element={
+              <ProtectedRoute>
+                <Clients />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/contact-us"
             element={
@@ -94,10 +108,42 @@ function App() {
             }
           />
           <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <Scheduler />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar/template"
+            element={
+              <ProtectedRoute>
+                <SchedulerTemplate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/privacy-policy"
             element={
               <CountryValidationRoute>
                 <PrivacyPolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/cookie-policy"
+            element={
+              <CountryValidationRoute>
+                <CookiePolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/terms-of-use"
+            element={
+              <CountryValidationRoute>
+                <TermsOfUse />
               </CountryValidationRoute>
             }
           />
@@ -129,6 +175,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }

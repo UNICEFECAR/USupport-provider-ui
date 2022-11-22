@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Page, ProviderProfile as ProviderProfileBlock } from "#blocks";
 import { ButtonWithIcon, RadialCircle } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
-
+import { userSvc } from "@USupport-components-library/services";
 import "./provider-profile.scss";
 
 /**
@@ -20,7 +20,7 @@ export const ProviderProfile = () => {
   const { width } = useWindowDimensions();
 
   const handleLogout = () => {
-    providerSvc.logout();
+    userSvc.logout("provider");
     navigate("/");
   };
 
