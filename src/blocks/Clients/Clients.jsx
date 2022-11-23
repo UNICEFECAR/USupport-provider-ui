@@ -37,6 +37,16 @@ export const Clients = ({}) => {
 
   const [selectedConsultationId, setSelectedConsultationId] = useState("");
 
+  const daysOfWeekTranslations = {
+    monday: t("monday"),
+    tuesday: t("tuesday"),
+    wednesday: t("wednesday"),
+    thursday: t("thursday"),
+    friday: t("friday"),
+    saturday: t("saturday"),
+    sunday: t("sunday"),
+  };
+
   const fetchClients = async () => {};
   const clientsQuery = useQuery(["clients"], fetchClients, {
     enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
@@ -90,6 +100,14 @@ export const Clients = ({}) => {
 
   return (
     <Block classes="clients">
+      {selectedClientId && !selectedConsultationId && (
+        <Icon
+          onClick={() => setSelectedClientId(null)}
+          classes="clients__go-back-icon"
+          name="arrow-chevron-back"
+          color="#20809E"
+        />
+      )}
       {!selectedClientId && (
         <div className="clients__clients-container">
           <div className="clients__clients-container__header">
@@ -113,6 +131,7 @@ export const Clients = ({}) => {
               clientName={clientsQuery.data[selectedClientId].name}
               handleConsultationClick={handleConsultationClick}
               proposeConsultationLabel={t("propose_consultation_label")}
+              daysOfWeekTranslations={daysOfWeekTranslations}
             />
           )}
           {((width < 1366 && selectedConsultationId) || width >= 1366) && (
@@ -274,6 +293,7 @@ const ConsultationsHistory = ({
   handleConsultationClick,
   clientName,
   proposeConsultationLabel,
+  daysOfWeekTranslations,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -284,8 +304,7 @@ const ConsultationsHistory = ({
       return {
         id: x,
         name: "Joanna Doe " + x.toString(),
-        startDate: new Date("2022-11-1 15:00"),
-        endDate: new Date("2022-11-1 16:00"),
+        timestamp: 1669154966251 + 3600000 * x,
         overview: true,
       };
     }),
@@ -297,9 +316,9 @@ const ConsultationsHistory = ({
         <GridItem key={index} md={8} lg={12}>
           <Consultation
             name={consultation.name}
-            startDate={consultation.startDate}
-            endDate={consultation.endDate}
+            timestamp={consultation.timestamp}
             overview={consultation.overview}
+            daysOfWeekTranslations={daysOfWeekTranslations}
             renderIn="client"
             onClick={() => handleConsultationClick(consultation.id)}
           />

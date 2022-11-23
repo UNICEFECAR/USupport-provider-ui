@@ -1,8 +1,17 @@
 @import "@USupport-components-library/styles";
 
 .clients {
+  display: flex;
   padding-top: $spacing_3_2;
   padding-bottom: $spacing_3_2;
+
+  & .container {
+    display: flex;
+  }
+
+  &__go-back-icon {
+    margin-right: $spacing_2_8;
+  }
 
   &__clients-container {
     padding: $spacing_3_2 0;
@@ -68,16 +77,28 @@
       border-radius: $border_radius_1_2;
     }
 
+    .consultation {
+      cursor: pointer;
+    }
+
     &__header {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      width: calc(100% - 2 * $spacing_1_6);
+      width: calc(34.3rem - 2 * $spacing_1_6);
+      margin: 0 auto;
       margin-top: $spacing_3_2;
       padding: $spacing_1_6;
-      position: sticky;
-      top: $spacing_3_2;
+      position: relative;
       z-index: 2;
+
+      @media screen and (min-width: $screen-md) {
+        width: calc(36.8rem - 2 * $spacing_1_6);
+      }
+
+      & .icon {
+        cursor: pointer;
+      }
 
       &__client-container {
         display: flex;
@@ -107,8 +128,8 @@
       border-radius: $border_radius_1_6;
       background-color: $color_white_ff;
       position: absolute;
-      right: 1%;
-      top: 7%;
+      right: calc(50% - calc(33.4rem / 2));
+      top: 8%;
       z-index: $z_index_2;
 
       & .menu-option {
@@ -169,6 +190,10 @@
       &__header {
         display: flex;
         align-items: center;
+
+        & .icon {
+          cursor: pointer;
+        }
       }
 
       &__messages {
