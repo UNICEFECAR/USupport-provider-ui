@@ -102,6 +102,7 @@ export const Page = ({
           yourProfileText={t("your_profile_text")}
           i18n={i18n}
           image={image?.data || "default"}
+          navigate={navigateTo}
         />
       )}
       <div
@@ -138,7 +139,11 @@ export const Page = ({
         />
       )}
       {isFooterShown && (
-        <Footer lists={footerLists} contactUsText={t("contact_us")} />
+        <Footer
+          lists={footerLists}
+          contactUsText={t("contact_us")}
+          navigate={navigateTo}
+        />
       )}
     </>
   );
