@@ -8,7 +8,7 @@ import {
   Footer,
   Icon,
 } from "@USupport-components-library/src";
-import { useIsLoggedIn } from "@USupport-components-library/hooks";
+import { useIsLoggedIn } from "#hooks";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
