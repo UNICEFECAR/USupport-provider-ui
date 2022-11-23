@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Clients,
   Scheduler,
   SchedulerTemplate,
   CookiePolicy,
@@ -50,6 +51,14 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router basename="/provider">
         <Routes>
+          <Route
+            path="/clients"
+            element={
+              <ProtectedRoute>
+                <Clients />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/contact-us"
             element={
