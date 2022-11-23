@@ -11,3 +11,8 @@ export * from "./EditProfileDetails";
 export * from "./ProviderOverview";
 export * from "./ProviderProfile";
 export * from "./Consultations";
+export * from "./Clients";
+export * from "./Scheduler";
+export * from "./SchedulerTemplate";
+export * from "./CookiePolicy";
+export * from "./TermsOfUse";

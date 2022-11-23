@@ -57,12 +57,12 @@ export const Page = ({
   );
 
   const pages = [
-    { name: t("page_1"), url: "/", exact: true },
-    { name: t("page_2"), url: "/dashboard" },
-    { name: t("page_3"), url: "/calendar" },
+    { name: t("page_1"), url: "/dashboard", exact: true },
+    { name: t("page_2"), url: "/calendar" },
+    { name: t("page_3"), url: "/activity-history" },
     // TODO: bring it back once the informaiton portal is ready
     // { name: "Information portal", url: "/information-portal" },
-    { name: t("page_4"), url: "/activity-history" },
+    { name: t("page_4"), url: "/consultations" },
     { name: t("page_5"), url: "/clients" },
   ];
 
@@ -102,6 +102,7 @@ export const Page = ({
           yourProfileText={t("your_profile_text")}
           i18n={i18n}
           image={image?.data || "default"}
+          navigate={navigateTo}
         />
       )}
       <div
@@ -138,7 +139,11 @@ export const Page = ({
         />
       )}
       {isFooterShown && (
-        <Footer lists={footerLists} contactUsText={t("contact_us")} />
+        <Footer
+          lists={footerLists}
+          contactUsText={t("contact_us")}
+          navigate={navigateTo}
+        />
       )}
     </>
   );

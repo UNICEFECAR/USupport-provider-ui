@@ -11,7 +11,7 @@ export const ProtectedRoute = ({ children }) => {
   const isLoggedIn = useIsLoggedIn();
 
   //   if (isLoggedIn === "loading") return <Loading size="lg" />;
-  if (!isLoggedIn && !isProvider) return <Navigate to="/" />;
+  if (!isLoggedIn || !isProvider) return <Navigate to="/" />;
 
   return children;
 };

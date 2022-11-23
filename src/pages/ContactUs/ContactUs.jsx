@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { RadialCircle } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
@@ -14,13 +15,18 @@ import "./contact-us.scss";
  * @returns {JSX.Element}
  */
 export const ContactUs = () => {
+  const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const { t } = useTranslation("contact-us-page");
+
+  const handleGoBack = () => navigate(-1);
+
   return (
     <Page
       classes="page__contact-us"
       heading={t("heading")}
       subheading={t("subheading")}
+      handleGoBack={handleGoBack}
     >
       {width < 768 && (
         <RadialCircle

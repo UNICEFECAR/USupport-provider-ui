@@ -55,5 +55,16 @@
   "add_more_specializations": "Add more specializations",
 
   "button_text": "Save changes",
-  "button_secondary_text": "Discard changes"
+  "button_secondary_text": "Discard changes",
+
+  "addiction": "Addiction",
+  "stress": "Stress",
+  "burnout": "Burnout",
+  "eating_disorder": "Eating disorder",
+  "depression": "Depression",
+  "anxiety": "Anxiety",
+  "panic_attack": "Panic attack",
+  "relationship": "Relationship",
+  "personal_development": "Personal development",
+  "edit_succes": "Profile updated successfully"
 }
