@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import {
   Navbar,
   CircleIconButton,
@@ -103,6 +103,7 @@ export const Page = ({
           i18n={i18n}
           image={image?.data || "default"}
           navigate={navigateTo}
+          NavLink={NavLink}
         />
       )}
       <div
@@ -143,6 +144,7 @@ export const Page = ({
           lists={footerLists}
           contactUsText={t("contact_us")}
           navigate={navigateTo}
+          Link={Link}
         />
       )}
     </>
