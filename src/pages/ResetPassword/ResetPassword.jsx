@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Page, ResetPassword as ResetPasswordBlock } from "#blocks";
 import { Loading } from "@USupport-components-library/src";
 
-import { useIsLoggedIn } from "@USupport-components-library/hooks";
+import { useIsLoggedIn } from "#hooks";
 
 import "./reset-password.scss";
 
