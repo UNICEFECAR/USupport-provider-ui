@@ -23,7 +23,7 @@ import {
   hours,
 } from "@USupport-components-library/src/utils/date";
 import { useWindowDimensions } from "@USupport-components-library/utils";
-import { useError } from "@USupport-components-library/hooks";
+import { useError } from "#hooks";
 import { providerSvc } from "@USupport-components-library/services";
 
 import "./scheduler.scss";

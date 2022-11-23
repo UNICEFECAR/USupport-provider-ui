@@ -22,7 +22,7 @@ import {
   useGetCountryAndLanguages,
   useGetWorkWithCategories,
   useUpdateProviderData,
-} from "@USupport-components-library/hooks";
+} from "#hooks";
 import countryCodes from "country-codes-list";
 import Joi from "joi";
 
