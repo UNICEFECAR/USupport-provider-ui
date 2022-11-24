@@ -1,6 +1,8 @@
 @import "@USupport-components-library/styles";
 
 .clients {
+  @include full-height-page-navbar;
+
   display: flex;
   padding-top: $spacing_3_2;
   padding-bottom: $spacing_3_2;
