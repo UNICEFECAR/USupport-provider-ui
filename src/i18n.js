@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  Consultations,
   Clients,
   Scheduler,
   SchedulerTemplate,
@@ -44,6 +45,8 @@ import {
   DeleteProfilePicture,
   ChangePassword,
   DeleteAccount,
+  CancelConsultation,
+  JoinConsultation,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -61,6 +64,7 @@ const resources = {
     "edit-profile-details": EditProfileDetails.en,
     "provider-overview": ProviderOverview.en,
     "provider-profile": ProviderProfile.en,
+    consultations: Consultations.en,
     clients: Clients.en,
     scheduler: Scheduler.en,
     "scheduler-template": SchedulerTemplate.en,
@@ -89,6 +93,8 @@ const resources = {
     "delete-profile-picture": DeleteProfilePicture.en,
     "change-password-backdrop": ChangePassword.en,
     "delete-account": DeleteAccount.en,
+    "cancel-consultation": CancelConsultation.en,
+    "join-consultation": JoinConsultation.en,
   },
 };
 
