@@ -16,6 +16,12 @@ import classNames from "classnames";
 
 import "./page.scss";
 
+const kazakhstanCountry = {
+  value: "KZ",
+  label: "Kazakhstan",
+  iconName: "KZ",
+};
+
 /**
  * Page
  *
