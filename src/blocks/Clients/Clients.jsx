@@ -50,19 +50,23 @@ export const Clients = ({}) => {
   const fetchClients = async () => {};
   const clientsQuery = useQuery(["clients"], fetchClients, {
     enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
-    placeholderData: [1, 2, 3, 4, 5, 6, 7, 8].map((x) => {
-      if (x > 1 && x < 6) {
+    placeholderData: [1, 2, 3].map((x) => {
+      if (x === 1) {
         return {
           name: "Dr. Joanna Doe" + x.toString(),
-          startDate: new Date(new Date().setHours(new Date().getHours() + 1)),
-          endDate: new Date(new Date().setHours(new Date().getHours() + 2)),
+          nextConsultation: 1669301797000,
           pastConsultations: 5,
         };
-      } else if (x === 1) {
+      } else if (x === 2) {
         return {
           name: "Dr. Joanna Doe",
-          startDate: new Date(new Date().setHours(new Date().getHours() - 1)),
-          endDate: new Date(new Date().setHours(new Date().getHours() + 1)),
+          nextConsultation: 1749154966251,
+          pastConsultations: 5,
+        };
+      } else if (x === 3) {
+        return {
+          name: "Dr. Joanna Doe",
+          nextConsultation: null,
           pastConsultations: 5,
         };
       } else {
@@ -88,10 +92,10 @@ export const Clients = ({}) => {
         <GridItem lg={6} key={index}>
           <ClientHistory
             name={client.name}
-            startDate={client.startDate}
-            endDate={client.endDate}
+            timestamp={client.nextConsultation}
             pastConsultations={client.pastConsultations}
             handleClick={() => setSelectedClientId(index)}
+            daysOfWeekTranslations={daysOfWeekTranslations}
           />
         </GridItem>
       );
