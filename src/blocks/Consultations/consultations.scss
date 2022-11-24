@@ -1,10 +1,16 @@
 @import "@USupport-components-library/styles";
 
 .consultations {
+  @include full-height-page-navbar;
+
   &__grid {
     padding-top: $spacing_2_4;
     padding-bottom: $spacing_6_4;
     place-items: center;
+
+    &__heading-item {
+      width: 100%;
+    }
 
     &__tabs-item {
       justify-self: center;
@@ -31,8 +37,9 @@
     }
 
     @media screen and (min-width: $screen_md) {
-      flex-direction: row;
+      flex-direction: row-reverse;
       align-items: center;
+      justify-content: space-around;
 
       &__heading-text {
         margin-top: 0;

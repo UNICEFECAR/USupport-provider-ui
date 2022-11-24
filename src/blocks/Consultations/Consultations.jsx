@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import {
@@ -19,80 +19,54 @@ import "./consultations.scss";
  *
  * @return {jsx}
  */
-export const Consultations = ({}) => {
-  let today = new Date();
-
+export const Consultations = ({
+  openJoinConsultation,
+  openCancelConsultation,
+}) => {
   const { t } = useTranslation("consultations");
 
   const [searchValue, setSearchValue] = useState("");
 
-  const [tabsOptions, setTabsOptions] = useState([
+  const tabsOptions = [
     { label: t("upcoming_tab_label"), value: "upcoming", isSelected: true },
-    { label: t("past_tab_label"), value: "past", isSelected: false },
-  ]);
+  ];
 
-  const [filter, setFilter] = useState("upcoming");
+  const daysOfWeekTranslations = {
+    monday: t("monday"),
+    tuesday: t("tuesday"),
+    wednesday: t("wednesday"),
+    thursday: t("thursday"),
+    friday: t("friday"),
+    saturday: t("saturday"),
+    sunday: t("sunday"),
+  };
+
+  const handleCancelConsultation = (providerId, consultationId) => {
+    openCancelConsultation();
+  };
 
   const fetchConsultations = async () => {};
 
   const consultationsQuery = useQuery(["consultations"], fetchConsultations, {
     enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
-    placeholderData: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((x) => {
-      return {
-        id: x,
-        specialistName: "Dr. Joanna Doe " + x.toString(),
-        startDate:
-          x < 4
-            ? new Date("2022-11-1 15:00")
-            : x === 4
-            ? new Date(today.setHours(today.getHours() - 1))
-            : new Date(today.setDate(today.getDate() + 3)),
-        endDate:
-          x < 4
-            ? new Date("2022-11-1 16:00")
-            : x === 4
-            ? new Date(today.setHours(today.getHours() + 4))
-            : new Date(today.setDate(today.getDate() + 3)),
+    placeholderData: [
+      {
+        id: 1,
+        clientName: "Dr. Joanna doe 1",
+        timestamp: 1669308022892,
         overview: false,
-      };
-    }),
+      },
+      {
+        id: 5,
+        clientName: "Dr. Joanna doe 5",
+        timestamp: 1669832519000,
+        overview: false,
+      },
+    ],
   });
 
-  const handleTabClick = (index) => {
-    const optionsCopy = [...tabsOptions];
-
-    for (let i = 0; i < optionsCopy.length; i++) {
-      if (i === index) {
-        optionsCopy[i].isSelected = true;
-      } else {
-        optionsCopy[i].isSelected = false;
-      }
-    }
-
-    setTabsOptions(optionsCopy);
-    setFilter(optionsCopy[index].value);
-  };
-
-  const filterConsultations = useCallback(() => {
-    const currentDate = new Date();
-
-    return consultationsQuery.data?.filter((consultation) => {
-      if (filter === "upcoming") {
-        return (
-          consultation.startDate >= currentDate ||
-          (currentDate >= consultation.startDate &&
-            currentDate <= consultation.endDate)
-        );
-      } else {
-        return consultation.endDate < currentDate;
-      }
-    });
-  }, [consultationsQuery.data, filter]);
-
   const renderAllConsultations = useMemo(() => {
-    const filteredConsultations = filterConsultations();
-
-    return filteredConsultations.map((consultation, index) => {
+    return consultationsQuery.data?.map((consultation, index) => {
       return (
         <GridItem
           key={index}
@@ -101,22 +75,24 @@ export const Consultations = ({}) => {
           classes="consultations__grid__consultations-item__grid__consultation"
         >
           <Consultation
-            name={consultation.specialistName}
-            startDate={consultation.startDate}
-            endDate={consultation.endDate}
+            name={consultation.clientName}
+            timestamp={consultation.timestamp}
             overview={consultation.overview}
             renderIn="provider"
             hasMenu={true}
+            daysOfWeekTranslations={daysOfWeekTranslations}
+            handleJoinClick={openJoinConsultation}
+            handleCancelConsultation={handleCancelConsultation}
           />
         </GridItem>
       );
     });
-  }, [consultationsQuery.data, filter]);
+  }, [consultationsQuery.data]);
 
   return (
     <Block classes="consultations">
       <Grid classes="consultations__grid">
-        <GridItem md={8} lg={12}>
+        <GridItem md={8} lg={12} classes="consultations__grid__heading-item">
           <div className="consultations__heading-container">
             <InputSearch
               value={searchValue}
@@ -130,7 +106,7 @@ export const Consultations = ({}) => {
           </div>
         </GridItem>
         <GridItem md={8} lg={12} classes="consultations__grid__tabs-item">
-          <TabsUnderlined options={tabsOptions} handleSelect={handleTabClick} />
+          <TabsUnderlined options={tabsOptions} handleSelect={() => {}} />
         </GridItem>
         <GridItem
           md={8}

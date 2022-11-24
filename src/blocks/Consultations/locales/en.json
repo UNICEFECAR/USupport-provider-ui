@@ -1,6 +1,14 @@
 {
-    "heading": "Consultations",
-    "upcoming_tab_label": "Upcoming",
-    "past_tab_label": "Past",
-    "input_search_label": "Search"
+  "heading": "Consultations",
+  "upcoming_tab_label": "Upcoming",
+  "past_tab_label": "Past",
+  "input_search_label": "Search",
+  "sunday": "Sun",
+  "monday": "Mon",
+  "tuesday": "Tue",
+  "wednesday": "Wed",
+  "thursday": "Thu",
+  "friday": "Fri",
+  "saturday": "Sat",
+  "no_consultations": "You have no upcoming consultations"
 }
