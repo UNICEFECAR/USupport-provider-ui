@@ -45,6 +45,8 @@ import {
   DeleteProfilePicture,
   ChangePassword,
   DeleteAccount,
+  CancelConsultation,
+  JoinConsultation,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -91,6 +93,8 @@ const resources = {
     "delete-profile-picture": DeleteProfilePicture.en,
     "change-password-backdrop": ChangePassword.en,
     "delete-account": DeleteAccount.en,
+    "cancel-consultation": CancelConsultation.en,
+    "join-consultation": JoinConsultation.en,
   },
 };
 
