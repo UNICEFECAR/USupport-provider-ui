@@ -1,0 +1,13 @@
+{
+  "start_date": "Start date",
+  "end_date": "End date",
+  "monday": "Monday",
+  "tuesday": "Tuesdau",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "save": "Add template availability",
+  "unavailable": "Set the day as unavailable"
+}

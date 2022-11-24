@@ -12,9 +12,9 @@ import {
   Loading,
 } from "@USupport-components-library/src";
 import { languageSvc, countrySvc } from "@USupport-components-library/services";
-import "./welcome.scss";
-
 import { logoVerticalSvg } from "@USupport-components-library/assets";
+
+import "./welcome.scss";
 
 /**
  * Welcome
@@ -78,8 +78,6 @@ export const Welcome = () => {
     retry: false,
   });
 
-  console.log(countriesQuery.data);
-  console.log(selectedCountry, "selected");
   const handleContinue = () => {
     const country = selectedCountry;
     const language = selectedLanguage;

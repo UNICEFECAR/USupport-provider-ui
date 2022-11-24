@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
   Block,
@@ -10,7 +11,7 @@ import {
   Modal,
 } from "@USupport-components-library/src";
 import { validate } from "@USupport-components-library/utils";
-import { useTranslation } from "react-i18next";
+import { useSendIssueEmail } from "#hooks";
 import Joi from "joi";
 
 import "./contact-us.scss";
@@ -46,10 +47,8 @@ export const ContactUs = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const schema = Joi.object({
-    issue: Joi.object({ label: Joi.string(), selected: Joi.boolean() }).label(
-      "Please select an issue"
-    ),
-    message: Joi.string().min(5).label("Please enter your message"),
+    issue: Joi.string().label(t("issue_error")),
+    message: Joi.string().min(5).label(t("message_error")),
   });
 
   useEffect(() => {
@@ -63,6 +62,7 @@ export const ContactUs = () => {
   const handleModalSuccessCtaClick = () => {
     navigate("/dashboard");
   };
+
   const closeSuccessModal = () => setIsSuccessModalOpen(false);
 
   const handleChange = (field, value) => {
@@ -75,7 +75,7 @@ export const ContactUs = () => {
   const handleIssueChange = (issue) => {
     const issuesCopy = [...issues];
     for (let i = 0; i < issuesCopy.length; i++) {
-      if (issuesCopy[i].label === issue.label) {
+      if (issuesCopy[i].value === issue) {
         issuesCopy[i].selected = true;
       } else {
         issuesCopy[i].selected = false;
@@ -88,14 +88,36 @@ export const ContactUs = () => {
     });
   };
 
+  const onSendEmailSuccess = () => {
+    setIsSuccessModalOpen(true);
+    setIsSubmitting(false);
+    setData({ ...initialData });
+  };
+  const onSendEmailError = (error) => {
+    setErrors({ submit: error });
+    setIsSubmitting(false);
+  };
+  const sendIssueEmailMutation = useSendIssueEmail(
+    onSendEmailSuccess,
+    onSendEmailError
+  );
+
   const handleSubmit = async () => {
     if (!isSubmitting) {
-      if ((await validate(data, schema, setErrors)) === null) {
-        setIsSubmitting(true);
-        setTimeout(() => {
-          setIsSubmitting(false);
-          setIsSuccessModalOpen(true);
-        }, 500);
+      setIsSubmitting(true);
+      const dataToValidate = {
+        issue: data.issue,
+        message: data.message,
+      };
+      if ((await validate(dataToValidate, schema, setErrors)) === null) {
+        const payload = {
+          subject: "Technical issue",
+          title: issues.find((x) => x.value === data.issue)?.label,
+          text: data.message,
+        };
+        sendIssueEmailMutation.mutate(payload);
+      } else {
+        setIsSubmitting(false);
       }
     }
   };
@@ -126,6 +148,7 @@ export const ContactUs = () => {
             onChange={(value) => handleChange("message", value)}
             errorMessage={errors.message}
             classes="contact-us__message-input"
+            value={data.message}
           />
         </GridItem>
 
@@ -144,7 +167,7 @@ export const ContactUs = () => {
       <Modal
         isOpen={isSuccessModalOpen}
         closeModal={closeSuccessModal}
-        title={t("modal_title")}
+        heading={t("modal_title")}
         text={t("modal_text")}
         ctaLabel={t("modal_cta_label")}
         ctaHandleClick={handleModalSuccessCtaClick}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import {
   Block,
   Button,
@@ -21,7 +22,7 @@ import {
   useGetCountryAndLanguages,
   useGetWorkWithCategories,
   useUpdateProviderData,
-} from "@USupport-components-library/hooks";
+} from "#hooks";
 import countryCodes from "country-codes-list";
 import Joi from "joi";
 
@@ -144,7 +145,7 @@ export const EditProfileDetails = ({
         const category = workWithQuery.data[i];
         // Construct the new object
         newWorkWith.value = category.work_with_id;
-        newWorkWith.label = t(category.topic); // TODO: add translation
+        newWorkWith.label = t(category.topic.replaceAll("-", "_"));
         newWorkWith.selected = providerWorkWith.includes(category.work_with_id);
         newWorkWith.selectedIndex = providerWorkWith.indexOf(
           category.work_with_id
@@ -182,6 +183,7 @@ export const EditProfileDetails = ({
 
   const onUpdateSuccess = () => {
     setIsProcessing(false);
+    toast(t("edit_succes"));
   };
 
   const onUpdateError = (err) => {
@@ -197,7 +199,6 @@ export const EditProfileDetails = ({
     setIsProcessing(true);
     if ((await validate(providerData, schema, setErrors)) === null) {
       updateProviderMutation.mutate(providerData);
-      setIsProcessing(false);
     } else {
       setIsProcessing(false);
     }

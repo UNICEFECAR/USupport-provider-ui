@@ -15,9 +15,18 @@ import {
   ProviderOverview,
   ProviderProfile,
   ActivityHistory,
+  Consultations,
+  Clients,
+  Scheduler,
+  SchedulerTemplate,
+  CookiePolicy,
+  TermsOfUse,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.scss";
 
@@ -45,6 +54,14 @@ function App() {
       <Router basename="/provider">
         <Routes>
           <Route
+            path="/clients"
+            element={
+              <ProtectedRoute>
+                <Clients />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/contact-us"
             element={
               <ProtectedRoute>
@@ -52,7 +69,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/activity-history" element={<ActivityHistory />} />
+          <Route
+            path="/activity-history"
+            element={
+              <ProtectedRoute>
+                <ActivityHistory />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/notification-preferences"
             element={
@@ -94,10 +118,42 @@ function App() {
             }
           />
           <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <Scheduler />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar/template"
+            element={
+              <ProtectedRoute>
+                <SchedulerTemplate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/privacy-policy"
             element={
               <CountryValidationRoute>
                 <PrivacyPolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/cookie-policy"
+            element={
+              <CountryValidationRoute>
+                <CookiePolicy />
+              </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/terms-of-use"
+            element={
+              <CountryValidationRoute>
+                <TermsOfUse />
               </CountryValidationRoute>
             }
           />
@@ -125,10 +181,24 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/consultations"
+            element={
+              <ProtectedRoute>
+                <Consultations />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/" element={<Welcome />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
