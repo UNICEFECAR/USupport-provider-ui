@@ -48,6 +48,7 @@ import {
   DeleteAccount,
   CancelConsultation,
   JoinConsultation,
+  SelectConsultation,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -97,6 +98,7 @@ const resources = {
     "delete-account": DeleteAccount.en,
     "cancel-consultation": CancelConsultation.en,
     "join-consultation": JoinConsultation.en,
+    "select-consultation": SelectConsultation.en,
   },
 };
 
