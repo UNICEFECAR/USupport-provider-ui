@@ -65,7 +65,7 @@ export const EditProfileDetails = ({
   }, [providerData, providersQuery.data]);
 
   const schema = Joi.object({
-    providerDetailID: Joi.string(),
+    providerDetailId: Joi.string(),
     name: Joi.string().label(t("name_error")),
     patronym: Joi.string().allow("", null).label(t("patronym_error")),
     surname: Joi.string().label(t("surname_error")),
