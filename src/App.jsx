@@ -14,6 +14,7 @@ import {
   EditProfileDetails,
   ProviderOverview,
   ProviderProfile,
+  ActivityHistory,
   Consultations,
   Clients,
   Scheduler,
@@ -65,6 +66,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ContactUs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/activity-history"
+            element={
+              <ProtectedRoute>
+                <ActivityHistory />
               </ProtectedRoute>
             }
           />
