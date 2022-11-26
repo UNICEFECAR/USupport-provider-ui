@@ -4,3 +4,4 @@ export * from "./ChangePassword";
 export * from "./DeleteAccount";
 export * from "./CancelConsultation";
 export * from "./JoinConsultation";
+export * from "./SelectConsultation";

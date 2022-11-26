@@ -9,12 +9,14 @@ import { useError } from "./useError";
  */
 export default function useBlockSlot(onSuccess, onError) {
   /**
-   * @param {string} providerId the id of the provider
+   * @param {string} clientId either the clientId or the providerId
    * @param {number} slot the timestamp of the slot
    * @returns {Promise} resolving to the "consultation_id"
    */
   const blockSlot = async (data) => {
-    const response = await providerSvc.blockSlot(data.providerId, data.slot);
+    let response;
+    response = await providerSvc.blockSlot(data.clientId, null, data.slot);
+
     return response.data.consultation_id;
   };
 

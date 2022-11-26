@@ -10,6 +10,7 @@ export * from "./ResetPassword";
 export * from "./EditProfileDetails";
 export * from "./ProviderOverview";
 export * from "./ProviderProfile";
+export * from "./ActivityHistory";
 export * from "./Consultations";
 export * from "./Clients";
 export * from "./Scheduler";

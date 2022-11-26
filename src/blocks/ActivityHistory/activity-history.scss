@@ -1,0 +1,187 @@
+@import "@USupport-components-library/styles";
+
+.activity-history {
+  @media screen and (min-width: $screen-lg) {
+    padding-top: $spacing_4_8;
+    padding-bottom: $spacing_4_8;
+  }
+  &__content {
+    padding-top: $spacing_3_2;
+
+    @media screen and (min-width: $screen-lg) {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      height: 75vh;
+    }
+  }
+
+  &__main-container {
+    padding-bottom: $spacing_10_0;
+    overflow: scroll;
+
+    @media screen and (min-width: $screen-lg) {
+      padding: $spacing_2_4;
+      padding-top: 0;
+      border: 0.1rem solid $color_primary_20809e;
+      border-radius: $border_radius_1_2;
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding-top: $spacing_3_2;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: $color_white_ff;
+    }
+
+    &__grid {
+      margin-top: $spacing_1_6;
+      place-items: center;
+      grid-gap: $spacing_1_5;
+    }
+  }
+
+  &__consultation-container {
+    display: flex;
+    flex: 1;
+    border-radius: $border_radius_1_2;
+
+    @media screen and (min-width: $screen-lg) {
+      margin-left: $spacing_1_6;
+      padding: $spacing_2_4;
+      padding-bottom: 0;
+      border: 0.1rem solid $color_primary_20809e;
+    }
+
+    &__no-selected {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 $spacing_10_0;
+
+      & .mascot {
+        width: 16.7rem;
+        height: 14.2rem;
+      }
+
+      &__text {
+        margin-top: $spacing_4_2;
+        font-size: 2.2rem;
+        line-height: 3rem;
+        letter-spacing: 0.1rem;
+        color: $color_black_00;
+      }
+    }
+
+    &__consultation {
+      width: 100%;
+      position: relative;
+      overflow: scroll;
+
+      &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: $color_white_ff;
+
+        &__client-container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          & .avatar {
+            margin-left: $spacing_0_8;
+          }
+
+          & .client-name {
+            margin-left: $spacing_1_6;
+          }
+        }
+
+        & .icon {
+          padding: 0 $spacing_0_4;
+        }
+      }
+
+      &__messages {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        width: 100%;
+        padding-top: $spacing_3_2;
+        padding-bottom: $spacing_10_0;
+
+        .system-message {
+          align-self: center;
+        }
+
+        .message-sent {
+          align-self: flex-end;
+        }
+
+        & .message,
+        & .system-message {
+          margin-top: $spacing_1_6;
+        }
+
+        @media screen and (min-width: $screen_md) {
+          & .message,
+          & .system-message {
+            margin-top: $spacing_2_4;
+          }
+        }
+      }
+
+      &__menu {
+        border: 0.1rem solid $color_primary_20809e;
+        display: flex;
+        flex-direction: column;
+        padding: $spacing_1_6;
+        width: calc(19rem - 2 * $spacing_1_6);
+        border-radius: $border_radius_1_6;
+        background-color: $color_white_ff;
+        position: absolute;
+        right: 1%;
+        top: 7%;
+        z-index: $z_index_2;
+
+        & .menu-option {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          &:not(:first-of-type) {
+            margin-top: $spacing_2_2;
+          }
+
+          &__icon {
+            margin-right: $spacing_1_0;
+          }
+        }
+      }
+
+      &__button {
+        position: sticky;
+        bottom: 3%;
+        left: calc(50% - 34.3rem / 2);
+        z-index: $z_index_2;
+
+        @media screen and (min-width: $screen_lg) {
+          left: calc(50% - 36.8rem / 2);
+        }
+      }
+    }
+  }
+}

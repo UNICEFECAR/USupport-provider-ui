@@ -4,3 +4,4 @@ export * as ChangePassword from "./ChangePassword/locales.js";
 export * as DeleteAccount from "./DeleteAccount/locales.js";
 export * as CancelConsultation from "./CancelConsultation/locales.js";
 export * as JoinConsultation from "./JoinConsultation/locales.js";
+export * as SelectConsultation from "./SelectConsultation/locales.js";
