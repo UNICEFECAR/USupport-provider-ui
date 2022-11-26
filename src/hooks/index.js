@@ -16,3 +16,6 @@ export * from "./useScheduleConsultation.js";
 export * from "./useCancelConsultation.js";
 export * from "./useGetConsultationData.js";
 export * from "./useSuggestConsultation.js";
+export * from "./useGetAllClients.js";
+export * from "./useGetPastConsultationsByClientId.js";
+export * from "./useGetAllConsultationsByFilter.js";
