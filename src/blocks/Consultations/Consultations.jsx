@@ -9,6 +9,7 @@ import {
   Consultation,
   InputSearch,
 } from "@USupport-components-library/src";
+import { useGetAllConsultationsByFilter } from "#hooks";
 
 import "./consultations.scss";
 
@@ -45,25 +46,7 @@ export const Consultations = ({
     openCancelConsultation();
   };
 
-  const fetchConsultations = async () => {};
-
-  const consultationsQuery = useQuery(["consultations"], fetchConsultations, {
-    enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
-    placeholderData: [
-      {
-        id: 1,
-        clientName: "Dr. Joanna doe 1",
-        timestamp: 1669308022892,
-        overview: false,
-      },
-      {
-        id: 5,
-        clientName: "Dr. Joanna doe 5",
-        timestamp: 1669832519000,
-        overview: false,
-      },
-    ],
-  });
+  const consultationsQuery = useGetAllConsultationsByFilter("upcoming");
 
   const renderAllConsultations = useMemo(() => {
     return consultationsQuery.data?.map((consultation, index) => {
@@ -75,9 +58,8 @@ export const Consultations = ({
           classes="consultations__grid__consultations-item__grid__consultation"
         >
           <Consultation
-            name={consultation.clientName}
-            timestamp={consultation.timestamp}
-            overview={consultation.overview}
+            consultation={consultation}
+            overview={false}
             renderIn="provider"
             hasMenu={true}
             daysOfWeekTranslations={daysOfWeekTranslations}
