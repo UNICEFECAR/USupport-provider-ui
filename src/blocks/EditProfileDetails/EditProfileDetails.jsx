@@ -77,13 +77,18 @@ export const EditProfileDetails = ({
     phonePrefix: Joi.string().label(t("phone_prefix_error")),
     phone: Joi.string().label(t("phone_error")),
     image: Joi.string(),
-    address: Joi.string().label(t("address_error")),
+    street: Joi.string().label(t("street_error")),
+    city: Joi.string().label(t("city_error")),
+    postcode: Joi.string().label(t("postcode_error")),
+
     specializations: Joi.array().min(1).label(t("specializations_error")),
     consultationPrice: Joi.number().label(t("consultation_price_error")),
     languages: Joi.array().min(1).label(t("languages_error")),
     education: Joi.array().min(1).label(t("education_error")),
     workWith: Joi.array().min(1).label(t("work_with_error")),
     description: Joi.string().label(t("description_error")),
+    totalConsultations: Joi.any(),
+    earliestAvailableSlot: Joi.any(),
   });
 
   const sexOptions = [
@@ -289,12 +294,28 @@ export const EditProfileDetails = ({
               onBlur={() => handleBlur("email")}
             />
             <Input
-              value={providerData.address}
-              onChange={(e) => handleChange("address", e.currentTarget.value)}
-              errorMessage={errors.address}
-              label={t("address_label")}
-              placeholder={t("address_placeholder")}
-              onBlur={() => handleBlur("address")}
+              value={providerData.street}
+              onChange={(e) => handleChange("street", e.currentTarget.value)}
+              errorMessage={errors.street}
+              label={t("street_label")}
+              placeholder={t("street_placeholder")}
+              onBlur={() => handleBlur("street")}
+            />
+            <Input
+              value={providerData.city}
+              onChange={(e) => handleChange("city", e.currentTarget.value)}
+              errorMessage={errors.city}
+              label={t("city_label")}
+              placeholder={t("city_placeholder")}
+              onBlur={() => handleBlur("city")}
+            />
+            <Input
+              value={providerData.postcode}
+              onChange={(e) => handleChange("postcode", e.currentTarget.value)}
+              errorMessage={errors.postcode}
+              label={t("postcode_label")}
+              placeholder={t("postcode_placeholder")}
+              onBlur={() => handleBlur("postcode")}
             />
             <DropdownGroup
               label={t("specialization_label")}

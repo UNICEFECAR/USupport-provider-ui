@@ -39,6 +39,11 @@
 
     & .dropdown-group {
       margin-top: $spacing_2_4;
+      width: 34.3rem;
+
+      @media screen and (min-width: $screen_md) {
+        width: 36.8rem;
+      }
     }
 
     &__save-button {

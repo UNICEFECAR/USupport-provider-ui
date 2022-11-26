@@ -32,6 +32,8 @@ export default function useUpdateProviderData(onSuccess, onError) {
     delete newPayload.languages;
     delete newPayload.providerDetailId;
     delete newPayload.image;
+    delete newPayload.totalConsultations;
+    delete newPayload.earliestAvailableSlot;
     return newPayload;
   };
 
