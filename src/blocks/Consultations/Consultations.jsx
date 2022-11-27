@@ -65,6 +65,7 @@ export const Consultations = ({
             daysOfWeekTranslations={daysOfWeekTranslations}
             handleJoinClick={openJoinConsultation}
             handleCancelConsultation={handleCancelConsultation}
+            suggested={consultation.status === "suggested"}
           />
         </GridItem>
       );
