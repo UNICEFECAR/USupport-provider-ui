@@ -13,12 +13,17 @@ import "./consultations.scss";
 export const Consultations = () => {
   const [isCancelConsultationOpen, setIsCancelConsultationOpen] =
     useState(false);
-  const openCancelConsultation = () => setIsCancelConsultationOpen(true);
+  const openCancelConsultation = (consultation) => {
+    setIsCancelConsultationOpen(true);
+    setSelectedConsultation(consultation);
+  };
   const closeCancelConsultation = () => setIsCancelConsultationOpen(false);
 
   const [isJoinConsultationOpen, setIsJoinConsultationOpen] = useState(false);
   const openJoinConsultation = () => setIsJoinConsultationOpen(true);
   const closeJoinConsultation = () => setIsJoinConsultationOpen(false);
+
+  const [selectedConsultation, setSelectedConsultation] = useState();
 
   return (
     <Page classes="page__consultations" showNavbar={true} showFooter={true}>
@@ -26,10 +31,13 @@ export const Consultations = () => {
         openJoinConsultation={openJoinConsultation}
         openCancelConsultation={openCancelConsultation}
       />
-      <CancelConsultation
-        isOpen={isCancelConsultationOpen}
-        onClose={closeCancelConsultation}
-      />
+      {selectedConsultation && (
+        <CancelConsultation
+          isOpen={isCancelConsultationOpen}
+          onClose={closeCancelConsultation}
+          consultation={selectedConsultation}
+        />
+      )}
       <JoinConsultation
         isOpen={isJoinConsultationOpen}
         onClose={closeJoinConsultation}

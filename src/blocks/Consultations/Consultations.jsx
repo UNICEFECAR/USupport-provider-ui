@@ -42,8 +42,8 @@ export const Consultations = ({
     sunday: t("sunday"),
   };
 
-  const handleCancelConsultation = (providerId, consultationId) => {
-    openCancelConsultation();
+  const handleCancelConsultation = (consultation) => {
+    openCancelConsultation(consultation);
   };
 
   const consultationsQuery = useGetAllConsultationsByFilter("upcoming");

@@ -32,7 +32,7 @@ const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
  *
  * @return {jsx}
  */
-export const Clients = ({}) => {
+export const Clients = ({ openCancelConsultation }) => {
   const { t } = useTranslation("clients");
 
   const { width } = useWindowDimensions();
@@ -60,6 +60,10 @@ export const Clients = ({}) => {
     setSelectedConsultationId(id);
   };
 
+  const handleCancelConsultation = (consultation) => {
+    openCancelConsultation(consultation);
+  };
+
   const renderAllClients = () => {
     return clientsQuery.data?.map((client, index) => {
       return (
@@ -68,8 +72,10 @@ export const Clients = ({}) => {
             name={client.name}
             image={client.image}
             timestamp={client.nextConsultation}
+            nextConsultationId={client.nextConsultationId}
             pastConsultations={client.pastConsultations}
             handleClick={() => setSelectedClient(client)}
+            cancelConsultation={handleCancelConsultation}
             daysOfWeekTranslations={daysOfWeekTranslations}
           />
         </GridItem>
