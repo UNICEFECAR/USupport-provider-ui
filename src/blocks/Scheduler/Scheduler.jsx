@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -63,6 +63,7 @@ export const Scheduler = () => {
   ];
 
   const [slots, setSlots] = useState([]);
+  const [consultations, setConsultations] = useState();
 
   // Get provider availability
   const fetchAvailableSlots = async () => {
@@ -77,6 +78,23 @@ export const Scheduler = () => {
     {
       onSuccess: (data) => {
         setSlots(data);
+      },
+    }
+  );
+
+  // Get provider availability
+  const fetchConsultations = async () => {
+    const response = await providerSvc.getConsultationsForWeek(
+      getTimestampFromUTC(weekStartDate)
+    );
+    return response.data;
+  };
+  const consultationQuery = useQuery(
+    ["consultations-single-week", weekStartDate],
+    fetchConsultations,
+    {
+      onSuccess: (data) => {
+        setConsultations(data);
       },
     }
   );
@@ -138,6 +156,23 @@ export const Scheduler = () => {
     });
 
     return !!slot;
+  };
+
+  const getConsultation = (day, hour) => {
+    const date = getDateAsFullString(day, hour);
+    const consultation = consultations?.find((consultation) => {
+      const dateStr = new Date(consultation.time).toString();
+      return dateStr === date;
+    });
+    if (!consultation) return null;
+    return {
+      consultationId: consultation.consultation_id,
+      clientDetailId: consultation.client_detail_id,
+      image: consultation.client_image,
+      name: consultation.client_name,
+      status: consultation.status,
+      time: consultation.time,
+    };
   };
 
   const handleToggleAvailable = async (date, hour, newStatus) => {
@@ -254,7 +289,7 @@ export const Scheduler = () => {
         </div>
       </Block>
       <Block classes="scheduler">
-        {availableSlotsQuery.isLoading ? (
+        {availableSlotsQuery.isLoading || consultationQuery.isLoading ? (
           <Loading />
         ) : (
           <>
@@ -283,6 +318,7 @@ export const Scheduler = () => {
                           handleCancelConsultation={handleCancelConsultation}
                           handleViewProfile={handleViewProfile}
                           handleJoinConsultation={handleJoinConsultation}
+                          consultation={getConsultation(day, hour)}
                         />
                       );
                     })}
