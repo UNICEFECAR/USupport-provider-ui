@@ -9,7 +9,7 @@ export default function useGetPastConsultationsByClientId(clientId) {
       clientDetailId: consultation.client_detail_id,
       clientName: consultation.client_name,
       image: consultation.client_image,
-      timestamp: consultation.time,
+      timestamp: new Date(consultation.time).getTime(),
       status: consultation.status,
     }));
   };

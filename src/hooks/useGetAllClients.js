@@ -8,7 +8,8 @@ export default function useGetAllClients() {
       clientDetailId: client.client_detail_id,
       name: client.client_name,
       image: client.client_image,
-      nextConsultation: client.next_consultation,
+      nextConsultation: new Date(client.next_consultation).getTime(),
+      nextConsultationId: client.next_consultation_id,
       pastConsultations: client.past_consultations,
     }));
   };
