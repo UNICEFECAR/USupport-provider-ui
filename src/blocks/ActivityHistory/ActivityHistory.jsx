@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useTranslation } from "react-i18next";
 import {
+  Avatar,
   Block,
+  Button,
   Consultation,
   Grid,
   GridItem,
-  Button,
+  Icon,
+  Loading,
   Message,
   SystemMessage,
-  Avatar,
-  Icon,
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
-import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/assets";
+import { useGetAllConsultationsByFilter } from "#hooks";
 
 import "./activity-history.scss";
+
+import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/assets";
 
 /**
  * ActivityHistory
@@ -33,8 +35,6 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
   const [selectedConsultation, setSelectedConsultation] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const fetchConsultations = async () => {};
-
   const daysOfWeekTranslations = {
     monday: t("monday"),
     tuesday: t("tuesday"),
@@ -45,18 +45,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
     sunday: t("sunday"),
   };
 
-  const consultationsQuery = useQuery(["consultations"], fetchConsultations, {
-    enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
-    placeholderData: [1, 2, 3, 4, 5, 6, 7, 8].map((x) => {
-      return {
-        providerId: "e04e0f50-6676-425d-997d-f790a030d7a3",
-        clientId: "225de85c-76b3-41db-8292-9ee27678f124",
-        name: "Joanna Doe " + x.toString(),
-        timestamp: new Date().getTime() + x * 60 * 60 * 1000,
-        overview: true,
-      };
-    }),
-  });
+  const consultationsQuery = useGetAllConsultationsByFilter("past");
 
   const consultationsMessages = [
     {
@@ -132,7 +121,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
 
   const handleProposeConsultation = () => {
     setIsMenuOpen(false);
-    openSelectConsultation(selectedConsultation.clientId);
+    openSelectConsultation(selectedConsultation.clientDetailId);
   };
 
   const renderMenuOptions = () => {
@@ -168,17 +157,21 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
   };
 
   const renderAllConsultations = () => {
-    return consultationsQuery.data.map((consultation, index) => {
+    if (consultationsQuery.isLoading)
+      return (
+        <GridItem md={8} lg={12}>
+          <Loading size="lg" />
+        </GridItem>
+      );
+    return consultationsQuery.data?.map((consultation, index) => {
       return (
         <GridItem key={"consultation-" + index} md={8} lg={12}>
           <Consultation
-            name={consultation.name}
-            timestamp={consultation.timestamp}
-            overview={consultation.overview}
+            consultation={consultation}
+            overview={true}
             renderIn="client"
             onClick={() => handleConsultationClick(consultation)}
             daysOfWeekTranslations={daysOfWeekTranslations}
-            providerId={consultation.providerId}
           />
         </GridItem>
       );
