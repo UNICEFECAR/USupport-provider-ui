@@ -121,10 +121,10 @@ export const ProviderOverview = ({
             </div>
             <div className="provider-profile__information-container">
               <p className="small-text provider-profile__information-container__heading">
-                {t("earliest_spot_label")}
+                {t("earliest_slot_label")}
               </p>
               <p className="small-text provider-profile__information-container__text">
-                {provider.earliestAvailable}
+                {provider.earliestAvailableSlot}
               </p>
             </div>
             <div className="provider-profile__information-container">
@@ -156,7 +156,7 @@ export const ProviderOverview = ({
                 {t("done_consultations_label")}
               </p>
               <p className="small-text provider-profile__information-container__text">
-                {provider.consultations} consultations
+                {provider.totalConsultations} consultations
               </p>
             </div>
             <div className="provider-profile__information-container">

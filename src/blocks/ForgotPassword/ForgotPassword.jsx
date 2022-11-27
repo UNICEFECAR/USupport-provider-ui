@@ -40,11 +40,11 @@ export const ForgotPassword = () => {
     if ((await validate(data, schema, setErrors)) == null) {
       try {
         await userSvc.generateForgotPasswordLink(data.email, "provider");
+        setIsModalOpen(true);
       } catch (error) {
         const { message: errorMessage } = useError(error);
         setErrors({ submit: errorMessage });
       }
-      setIsModalOpen(true);
     }
   };
 
@@ -64,7 +64,7 @@ export const ForgotPassword = () => {
               }
               errorMessage={errors.email}
             />
-            {errors.submit ? <Error message={errorMessage} /> : null}
+            {errors.submit ? <Error message={errors.submit} /> : null}
             <Button
               label={t("reset_password_button_label")}
               size="lg"

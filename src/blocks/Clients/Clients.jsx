@@ -1,25 +1,29 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import OutsideClickHandler from "react-outside-click-handler";
 import {
+  Avatar,
   Block,
-  InputSearch,
-  Grid,
-  GridItem,
+  Box,
+  Button,
   ClientHistory,
   Consultation,
+  Grid,
+  GridItem,
   Icon,
-  SystemMessage,
+  InputSearch,
+  Loading,
   Message,
-  Button,
-  Avatar,
-  Box,
+  SystemMessage,
 } from "@USupport-components-library/src";
-import { useWindowDimensions } from "@USupport-components-library/src/utils";
 import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/assets";
+import { useGetAllClients, useGetPastConsultationsByClientId } from "#hooks";
 
 import "./clients.scss";
+
+import { useWindowDimensions } from "@USupport-components-library/src/utils";
+
+const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
 /**
  * Clients
@@ -28,12 +32,12 @@ import "./clients.scss";
  *
  * @return {jsx}
  */
-export const Clients = ({}) => {
+export const Clients = ({ openCancelConsultation }) => {
   const { t } = useTranslation("clients");
 
   const { width } = useWindowDimensions();
 
-  const [selectedClientId, setSelectedClientId] = useState(null);
+  const [selectedClient, setSelectedClient] = useState(null);
 
   const [selectedConsultationId, setSelectedConsultationId] = useState("");
 
@@ -47,37 +51,7 @@ export const Clients = ({}) => {
     sunday: t("sunday"),
   };
 
-  const fetchClients = async () => {};
-  const clientsQuery = useQuery(["clients"], fetchClients, {
-    enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
-    placeholderData: [1, 2, 3].map((x) => {
-      if (x === 1) {
-        return {
-          name: "Dr. Joanna Doe" + x.toString(),
-          nextConsultation: 1669301797000,
-          pastConsultations: 5,
-        };
-      } else if (x === 2) {
-        return {
-          name: "Dr. Joanna Doe",
-          nextConsultation: 1749154966251,
-          pastConsultations: 5,
-        };
-      } else if (x === 3) {
-        return {
-          name: "Dr. Joanna Doe",
-          nextConsultation: null,
-          pastConsultations: 5,
-        };
-      } else {
-        return {
-          name: "Dr. Joanna Doe",
-          pastConsultations: 5,
-        };
-      }
-    }),
-  });
-
+  const clientsQuery = useGetAllClients();
   const handleProposeConsultation = () => {
     console.log("Propose consultation");
   };
@@ -86,15 +60,22 @@ export const Clients = ({}) => {
     setSelectedConsultationId(id);
   };
 
+  const handleCancelConsultation = (consultation) => {
+    openCancelConsultation(consultation);
+  };
+
   const renderAllClients = () => {
-    return clientsQuery.data.map((client, index) => {
+    return clientsQuery.data?.map((client, index) => {
       return (
         <GridItem lg={6} key={index}>
           <ClientHistory
             name={client.name}
+            image={client.image}
             timestamp={client.nextConsultation}
+            nextConsultationId={client.nextConsultationId}
             pastConsultations={client.pastConsultations}
-            handleClick={() => setSelectedClientId(index)}
+            handleClick={() => setSelectedClient(client)}
+            cancelConsultation={handleCancelConsultation}
             daysOfWeekTranslations={daysOfWeekTranslations}
           />
         </GridItem>
@@ -104,15 +85,15 @@ export const Clients = ({}) => {
 
   return (
     <Block classes="clients">
-      {selectedClientId && !selectedConsultationId && (
+      {selectedClient && !selectedConsultationId ? (
         <Icon
-          onClick={() => setSelectedClientId(null)}
+          onClick={() => setSelectedClient(null)}
           classes="clients__go-back-icon"
           name="arrow-chevron-back"
           color="#20809E"
         />
-      )}
-      {!selectedClientId && (
+      ) : null}
+      {!selectedClient ? (
         <div className="clients__clients-container">
           <div className="clients__clients-container__header">
             <h3 className="clients__clients-container__header__text">
@@ -127,15 +108,17 @@ export const Clients = ({}) => {
             {renderAllClients()}
           </Grid>
         </div>
-      )}
-      {selectedClientId && (
+      ) : null}
+      {selectedClient ? (
         <div className="clients__content">
           {((width < 1366 && !selectedConsultationId) || width >= 1366) && (
             <ConsultationsHistory
-              clientName={clientsQuery.data[selectedClientId].name}
+              clientName={selectedClient.name}
+              image={selectedClient.image}
               handleConsultationClick={handleConsultationClick}
               proposeConsultationLabel={t("propose_consultation_label")}
               daysOfWeekTranslations={daysOfWeekTranslations}
+              selectedClient={selectedClient}
             />
           )}
           {((width < 1366 && selectedConsultationId) || width >= 1366) && (
@@ -149,7 +132,7 @@ export const Clients = ({}) => {
             />
           )}
         </div>
-      )}
+      ) : null}
     </Block>
   );
 };
@@ -292,39 +275,37 @@ const ConsultationDetails = ({
     </div>
   );
 };
-
 const ConsultationsHistory = ({
   handleConsultationClick,
   clientName,
+  image,
   proposeConsultationLabel,
   daysOfWeekTranslations,
+  selectedClient,
 }) => {
+  const imageUrl = AMAZON_S3_BUCKET + "/" + (image || "default");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const fetchConsultations = async () => {};
-  const consultationsQuery = useQuery(["consultations"], fetchConsultations, {
-    enabled: false, // TODO: Enable this when the API is ready and remove the placeholder data
-    placeholderData: [1, 2, 3, 4, 5, 6, 7, 8].map((x) => {
-      return {
-        id: x,
-        name: "Joanna Doe " + x.toString(),
-        timestamp: 1669154966251 + 3600000 * x,
-        overview: true,
-      };
-    }),
-  });
+  const consultationsQuery = useGetPastConsultationsByClientId(
+    selectedClient.clientDetailId
+  );
 
   const renderAllConsultations = () => {
-    return consultationsQuery.data.map((consultation, index) => {
+    if (consultationsQuery.isLoading)
+      return (
+        <GridItem md={8} lg={12} classes="clients__consultation-loading">
+          <Loading size="lg" />
+        </GridItem>
+      );
+    return consultationsQuery.data?.map((consultation, index) => {
       return (
         <GridItem key={index} md={8} lg={12}>
           <Consultation
-            name={consultation.name}
-            timestamp={consultation.timestamp}
-            overview={consultation.overview}
+            overview={true}
+            consultation={consultation}
             daysOfWeekTranslations={daysOfWeekTranslations}
             renderIn="client"
-            onClick={() => handleConsultationClick(consultation.id)}
+            onClick={() => handleConsultationClick(consultation.consultationId)}
           />
         </GridItem>
       );
@@ -364,7 +345,7 @@ const ConsultationsHistory = ({
     <div className="clients__main-container">
       <Box classes="clients__main-container__header">
         <div className="clients__main-container__header__client-container">
-          <Avatar size="sm" />
+          <Avatar image={imageUrl} size="sm" />
           <p className="name-text">{clientName}</p>
         </div>
         <Icon
