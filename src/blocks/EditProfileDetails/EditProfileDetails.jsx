@@ -266,16 +266,21 @@ export const EditProfileDetails = ({
                 }
                 setSelected={(value) => handleChange("phonePrefix", value)}
                 placeholder={t("phone_prefix_placeholder")}
-                errorMessage={errors.phonePrefix}
               />
               <Input
                 value={providerData.phone}
                 onChange={(e) => handleChange("phone", e.currentTarget.value)}
                 placeholder={t("phone_placeholder")}
-                errorMessage={errors.phone}
                 onBlur={() => handleBlur("phone")}
+                classes="edit-profile-details__grid__phone-container__phone-input"
               />
             </div>
+            {errors.phone || errors.phonePrefix ? (
+              <Error
+                classes="edit-profile-details__grid__phone-error"
+                message={errors.phone || errors.phonePrefix}
+              />
+            ) : null}
             <DropdownWithLabel
               label={t("sex_label")}
               placeholder={t("sex_placeholder")}

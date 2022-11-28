@@ -1,0 +1,14 @@
+{
+  "next_weeks": "Next 5 weeks",
+  "calendar": "Calendar",
+  "monday": "Mo",
+  "tuesday": "Tu",
+  "wednesday": "We",
+  "thursday": "Th",
+  "friday": "Fr",
+  "saturday": "Sa",
+  "sunday": "Su",
+  "today": "Today",
+  "no_consultations": "There are no consultations for this day",
+  "no_availability": "You are not available on this day"
+}

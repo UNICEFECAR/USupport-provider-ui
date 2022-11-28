@@ -21,6 +21,7 @@ import {
   SchedulerTemplate,
   CookiePolicy,
   TermsOfUse,
+  Dashboard,
 } from "#blocks/locales.js";
 
 import {
@@ -39,6 +40,8 @@ import {
   SchedulerTemplate as SchedulerTemplatePage,
   CookiePolicy as CookiePolicyPage,
   TermsOfUse as TermsOfUsePage,
+  ActivityHistory as ActivityHistoryPage,
+  Clients as ClientsPage,
 } from "#pages/locales.js";
 
 import {
@@ -73,6 +76,7 @@ const resources = {
     "scheduler-template": SchedulerTemplate.en,
     "cookie-policy": CookiePolicy.en,
     "terms-of-use": TermsOfUse.en,
+    dashboard: Dashboard.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -90,6 +94,8 @@ const resources = {
     "scheduler-template-page": SchedulerTemplatePage.en,
     "cookie-policy-page": CookiePolicyPage.en,
     "terms-of-use-page": TermsOfUsePage.en,
+    "activity-history-page": ActivityHistoryPage.en,
+    "clients-page": ClientsPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,

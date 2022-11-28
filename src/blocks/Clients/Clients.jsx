@@ -32,7 +32,7 @@ const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
  *
  * @return {jsx}
  */
-export const Clients = ({ openCancelConsultation }) => {
+export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
   const { t } = useTranslation("clients");
 
   const { width } = useWindowDimensions();
@@ -64,6 +64,10 @@ export const Clients = ({ openCancelConsultation }) => {
     openCancelConsultation(consultation);
   };
 
+  const handleSuggestConsultation = () => {
+    openSelectConsultation(selectedClient.clientDetailId);
+  };
+
   const renderAllClients = () => {
     return clientsQuery.data?.map((client, index) => {
       return (
@@ -72,10 +76,13 @@ export const Clients = ({ openCancelConsultation }) => {
             name={client.name}
             image={client.image}
             timestamp={client.nextConsultation}
+            clientId={client.clientDetailId}
             nextConsultationId={client.nextConsultationId}
             pastConsultations={client.pastConsultations}
             handleClick={() => setSelectedClient(client)}
             cancelConsultation={handleCancelConsultation}
+            suggestConsultation={handleSuggestConsultation}
+            suggested={client.nextConsultationStatus === "suggested"}
             daysOfWeekTranslations={daysOfWeekTranslations}
           />
         </GridItem>
@@ -127,7 +134,7 @@ export const Clients = ({ openCancelConsultation }) => {
               handleGoBack={() => setSelectedConsultationId("")}
               screenWidth={width}
               proposeConsultationLabel={t("propose_consultation_label")}
-              handleProposeConsultation={handleProposeConsultation}
+              handleSuggestConsultation={handleSuggestConsultation}
               noConsultationHeading={t("no_consultation_selected")}
             />
           )}
@@ -142,7 +149,7 @@ const ConsultationDetails = ({
   handleGoBack,
   screenWidth,
   proposeConsultationLabel,
-  handleProposeConsultation,
+  handleSuggestConsultation,
   noConsultationHeading,
 }) => {
   const renderAllMessages = () => {
@@ -267,7 +274,7 @@ const ConsultationDetails = ({
           <Button
             size="lg"
             label={proposeConsultationLabel}
-            onClick={handleProposeConsultation}
+            onClick={handleSuggestConsultation}
             classes="clients__consultation-container__consultation__button"
           />
         </div>

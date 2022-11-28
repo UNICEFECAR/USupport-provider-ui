@@ -13,6 +13,10 @@ import {
   Icon,
   Loading,
 } from "@USupport-components-library/src";
+import {
+  getDateView,
+  getTimeFromDate,
+} from "@USupport-components-library/utils";
 import { useGetProviderData } from "#hooks";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
@@ -65,6 +69,13 @@ export const ProviderOverview = ({
   const handleEditRedirect = () => {
     navigate("edit");
   };
+
+  let earliestAvailableSlot;
+  if (provider) {
+    earliestAvailableSlot = `${getDateView(
+      provider.earliestAvailableSlot
+    )} - ${getTimeFromDate(new Date(provider.earliestAvailableSlot))}`;
+  }
 
   return (
     <Block classes="provider-profile">
@@ -124,7 +135,9 @@ export const ProviderOverview = ({
                 {t("earliest_slot_label")}
               </p>
               <p className="small-text provider-profile__information-container__text">
-                {provider.earliestAvailableSlot}
+                {provider.earliestAvailableSlot
+                  ? earliestAvailableSlot
+                  : t("no_available_slot")}
               </p>
             </div>
             <div className="provider-profile__information-container">

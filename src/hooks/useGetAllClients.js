@@ -10,6 +10,7 @@ export default function useGetAllClients() {
       image: client.client_image,
       nextConsultation: new Date(client.next_consultation).getTime(),
       nextConsultationId: client.next_consultation_id,
+      nextConsultationStatus: client.next_consultation_status,
       pastConsultations: client.past_consultations,
     }));
   };

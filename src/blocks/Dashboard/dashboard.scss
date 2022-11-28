@@ -1,0 +1,62 @@
+@import "@USupport-components-library/styles";
+
+.dashboard {
+  @include full-height-page-navbar;
+
+  &__grid {
+    padding-top: $spacing_3_2;
+    padding-bottom: $spacing_3_2;
+
+    &__next-weeks {
+      justify-self: start;
+    }
+
+    &__calendar-text {
+      justify-self: end;
+      color: $color_secondary_9749fa;
+
+      & > p {
+        font-weight: $font_bold;
+      }
+    }
+
+    &__consultations-grid {
+      &__item {
+        justify-self: center;
+      }
+    }
+
+    &__calendar-item,
+    &__day-item {
+      border: 0.1rem solid $color_primary_20809e;
+      border-radius: $border_radius_1_2;
+      padding: $spacing_1_6;
+
+      &__heading {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: $spacing_2_4;
+        padding-top: $spacing_0_8;
+      }
+    }
+
+    &__calendar-item {
+      &__weekdays-grid,
+      &__days-grid {
+        column-gap: 0;
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      &__weekdays-grid {
+        padding-top: $spacing_0_8;
+        &__days {
+          justify-self: start;
+          & p {
+            text-align: left;
+            padding-left: $spacing_0_4;
+          }
+        }
+      }
+    }
+  }
+}

@@ -21,6 +21,7 @@ import {
   SchedulerTemplate,
   CookiePolicy,
   TermsOfUse,
+  Dashboard,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -91,6 +92,14 @@ function App() {
               <CountryValidationRoute>
                 <Login />
               </CountryValidationRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
             }
           />
           <Route

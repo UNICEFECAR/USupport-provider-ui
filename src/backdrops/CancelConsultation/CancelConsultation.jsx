@@ -25,6 +25,7 @@ export const CancelConsultation = ({
   isOpen,
   onClose,
   consultation,
+  onSuccess,
   provider,
 }) => {
   const queryClient = useQueryClient();
@@ -38,7 +39,8 @@ export const CancelConsultation = ({
   const startDate = new Date(timestamp);
   const endDate = new Date(timestamp + ONE_HOUR);
   const onCancelSuccess = () => {
-    queryClient.invalidateQueries(["all-consultations"]);
+    onSuccess();
+    queryClient.invalidateQueries({ queryKey: ["all-consultations"] });
     onClose();
     toast(t("cancel_success"));
   };
