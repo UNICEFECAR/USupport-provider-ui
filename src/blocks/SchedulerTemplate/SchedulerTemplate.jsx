@@ -248,7 +248,6 @@ export const SchedulerTemplate = () => {
             options={getMondayOptions}
             selected={templateStartDate}
             setSelected={(value) => {
-              console.log(value);
               setTemplateStartDate(value);
             }}
             label={t("start_date")}
