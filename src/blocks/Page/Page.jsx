@@ -150,9 +150,9 @@ export const Page = ({
     ],
     list2: [
       { name: t("footer_5"), url: "/clients", exact: true },
-      { name: t("footer_6"), url: "/terms-of-service", exact: true },
+      { name: t("footer_6"), url: "/terms-of-use" },
       { name: t("footer_7"), url: "/privacy-policy" },
-      { name: t("footer_8"), url: "/cookie-settings" },
+      { name: t("footer_8"), url: "/cookie-policy" },
     ],
     list3: [
       { value: "+359 888 888 888", iconName: "call-filled", onClick: "phone" },
