@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import {
   Block,
@@ -40,6 +41,7 @@ const days = [
  */
 export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
   const { t } = useTranslation("dashboard");
+  const navigate = useNavigate();
   const today = new Date();
 
   const weekDays = [];
@@ -144,7 +146,12 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
               {isLoading ? (
                 <Loading size="sm" padding="0" />
               ) : (
-                <p className="small-text">{t("calendar")}</p>
+                <p
+                  className="small-text "
+                  onClick={() => navigate("/calendar")}
+                >
+                  {t("calendar")}
+                </p>
               )}
             </GridItem>
             {days.map((day) => {
