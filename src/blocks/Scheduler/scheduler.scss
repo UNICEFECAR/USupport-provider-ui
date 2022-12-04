@@ -1,6 +1,8 @@
 @import "@USupport-components-library/styles";
 
 .scheduler {
+  @include full-height-page-navbar;
+
   position: relative;
   padding-top: 20.2rem;
 
