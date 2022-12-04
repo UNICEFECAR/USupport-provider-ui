@@ -1,6 +1,8 @@
 @import "@USupport-components-library/styles";
 
 .provider-profile {
+  @include full-height-page-navbar;
+
   &__grid {
     text-align: left;
     place-items: center;
