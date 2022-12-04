@@ -93,12 +93,14 @@ export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
   return (
     <Block classes="clients">
       {selectedClient && !selectedConsultationId ? (
-        <Icon
-          onClick={() => setSelectedClient(null)}
-          classes="clients__go-back-icon"
-          name="arrow-chevron-back"
-          color="#20809E"
-        />
+        <div className="clients__go-back-arrow-container">
+          <Icon
+            onClick={() => setSelectedClient(null)}
+            classes="clients__go-back-icon"
+            name="arrow-chevron-back"
+            color="#20809E"
+          />
+        </div>
       ) : null}
       {!selectedClient ? (
         <div className="clients__clients-container">

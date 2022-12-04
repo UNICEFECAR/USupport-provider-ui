@@ -7,12 +7,18 @@
   padding-top: $spacing_3_2;
   padding-bottom: $spacing_3_2;
 
-  & .container {
-    display: flex;
+  @media screen and (min-width: $screen_lg) {
+    & .container {
+      display: flex;
+    }
+
+    & .clients__go-back-arrow-container {
+      margin-right: $spacing_3_2;
+    }
   }
 
-  &__go-back-icon {
-    margin-right: $spacing_2_8;
+  &__go-back-arrow-container {
+    display: flex;
   }
 
   &__clients-container {
@@ -89,7 +95,7 @@
       justify-content: space-between;
       width: calc(34.3rem - 2 * $spacing_1_6);
       margin: 0 auto;
-      margin-top: $spacing_3_2;
+      margin: $spacing_3_2 $spacing_0_4 0;
       padding: $spacing_1_6;
       position: relative;
       z-index: 2;
