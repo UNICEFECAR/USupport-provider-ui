@@ -25,7 +25,7 @@ export const CancelConsultation = ({
   isOpen,
   onClose,
   consultation,
-  onSuccess,
+  onSuccess = () => {},
   provider,
 }) => {
   const queryClient = useQueryClient();

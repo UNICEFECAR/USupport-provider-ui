@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Backdrop, InputPassword } from "@USupport-components-library/src";
 import { validateProperty } from "@USupport-components-library/utils";
 import { useError } from "#hooks";
-import { clientSvc, userSvc } from "@USupport-components-library/services";
+import { userSvc, providerSvc } from "@USupport-components-library/services";
 import Joi from "joi";
 
 import "./delete-account.scss";
@@ -28,7 +28,7 @@ export const DeleteAccount = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const deleteAccount = async () => {
-    const res = await clientSvc.deleteClientProfile(data.password);
+    const res = await providerSvc.deleteProvider(data.password);
     if (res.status === 200) {
       return true;
     }
@@ -36,7 +36,7 @@ export const DeleteAccount = ({ isOpen, onClose }) => {
   const deleteAccountMutation = useMutation(deleteAccount, {
     onSuccess: () => {
       setIsSubmitting(false);
-      userSvc.logout();
+      userSvc.logout("provider");
     },
     onError: (error) => {
       const { message: errorMessage } = useError(error);
