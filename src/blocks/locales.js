@@ -17,4 +17,4 @@ export * as Scheduler from "./Scheduler/locales.js";
 export * as SchedulerTemplate from "./SchedulerTemplate/locales.js";
 export * as CookiePolicy from "./CookiePolicy/locales.js";
 export * as TermsOfUse from "./TermsOfUse/locales.js";
-export * as Dashboard from './Dashboard/locales.js';
+export * as Dashboard from "./Dashboard/locales.js";

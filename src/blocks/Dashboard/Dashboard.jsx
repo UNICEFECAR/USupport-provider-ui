@@ -100,6 +100,19 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
     openCancelConsultation(consultation);
   };
 
+  const handleViewProfile = (consultation, isPast) => {
+    navigate("/clients", {
+      state: {
+        clientInformation: {
+          clientDetailId: consultation.clientDetailId,
+          image: consultation.image,
+          name: consultation.name,
+        },
+        consultationInformation: isPast ? consultation : null,
+      },
+    });
+  };
+
   const renderConsultations = useCallback(() => {
     const { isAvailable } = checkStateOfDate(selectedDay);
     if (!consultationsData || consultationsData.length === 0)
@@ -112,12 +125,13 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
           {<p>{isAvailable ? t("no_consultations") : t("no_availability")}</p>}
         </GridItem>
       );
-    return consultationsData.map((consultation) => {
+    return consultationsData.map((consultation, index) => {
       return (
         <GridItem
           md={8}
           lg={12}
           classes="dashboard__grid__consultations-grid__item"
+          key={index + "- consultation"}
         >
           <Consultation
             consultation={consultation}
@@ -128,6 +142,8 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             hasMenu
             handleJoinClick={openJoinConsultation}
             handleCancelConsultation={handleCancelConsultation}
+            handleViewProfile={handleViewProfile}
+            t={t}
           />
         </GridItem>
       );

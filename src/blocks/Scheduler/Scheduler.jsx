@@ -23,8 +23,9 @@ import {
   hours,
 } from "@USupport-components-library/src/utils/date";
 import { useWindowDimensions } from "@USupport-components-library/utils";
-import { useError } from "#hooks";
 import { providerSvc } from "@USupport-components-library/services";
+
+import { useError } from "#hooks";
 
 import "./scheduler.scss";
 
@@ -35,7 +36,7 @@ import "./scheduler.scss";
  *
  * @return {jsx}
  */
-export const Scheduler = () => {
+export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const { t } = useTranslation("scheduler");
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -168,6 +169,7 @@ export const Scheduler = () => {
     return {
       consultationId: consultation.consultation_id,
       clientDetailId: consultation.client_detail_id,
+      chatId: consultation.chat_id,
       image: consultation.client_image,
       name: consultation.client_name,
       status: consultation.status,
@@ -213,20 +215,25 @@ export const Scheduler = () => {
     handleToggleAvailable(date, hour, "unavailable");
   };
 
-  const handleProposeConsultation = () => {
-    console.log("propose consultation");
+  const handleCancelConsultation = (consultation) => {
+    openCancelConsultation(consultation);
   };
 
-  const handleCancelConsultation = () => {
-    console.log("cancel consultation");
+  const handleViewProfile = (consultation, isPast) => {
+    navigate("/clients", {
+      state: {
+        clientInformation: {
+          clientDetailId: consultation.clientDetailId,
+          image: consultation.image,
+          name: consultation.name,
+        },
+        consultationInformation: isPast ? consultation : null,
+      },
+    });
   };
 
-  const handleViewProfile = () => {
-    console.log("view profile");
-  };
-
-  const handleJoinConsultation = () => {
-    console.log("join consultation");
+  const handleJoinConsultation = (consultation) => {
+    openJoinConsultation(consultation);
   };
 
   const handleWeekChange = (direction) => {
@@ -314,11 +321,11 @@ export const Scheduler = () => {
                           handleSetAvailable={() =>
                             handleSetAvailable(day, hour)
                           }
-                          handleProposeConsultation={handleProposeConsultation}
                           handleCancelConsultation={handleCancelConsultation}
                           handleViewProfile={handleViewProfile}
                           handleJoinConsultation={handleJoinConsultation}
                           consultation={getConsultation(day, hour)}
+                          t={t}
                         />
                       );
                     })}

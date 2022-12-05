@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -42,6 +42,10 @@ export const Page = ({
   classes,
   children,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const navigateTo = useNavigate();
   const queryClient = useQueryClient();
   const { t, i18n } = useTranslation("page");
@@ -135,8 +139,6 @@ export const Page = ({
     { name: t("page_1"), url: "/dashboard", exact: true },
     { name: t("page_2"), url: "/calendar" },
     { name: t("page_3"), url: "/activity-history" },
-    // TODO: bring it back once the informaiton portal is ready
-    // { name: "Information portal", url: "/information-portal" },
     { name: t("page_4"), url: "/consultations" },
     { name: t("page_5"), url: "/clients" },
   ];
@@ -155,9 +157,9 @@ export const Page = ({
       { name: t("footer_8"), url: "/cookie-policy" },
     ],
     list3: [
-      { value: "+359 888 888 888", iconName: "call-filled", onClick: "phone" },
+      { value: "+7 717 232 28 78", iconName: "call-filled", onClick: "phone" },
       {
-        value: `ul. "Oborishte" 5, ет. 3, 1504 Sofia `,
+        value: `Beibitshilik St 10а, Astana 010000, Kazakhstan`,
         iconName: "pin",
       },
       {

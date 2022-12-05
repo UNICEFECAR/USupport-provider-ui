@@ -10,5 +10,9 @@
   "thursday": "Thu",
   "friday": "Fri",
   "saturday": "Sat",
-  "no_consultations": "You have no upcoming consultations"
+  "no_consultations": "You have no upcoming consultations",
+  "cancel_consultation": "Cancel consultation",
+  "suggested": "Suggested",
+  "view_profile": "View profile",
+  "active": "Live"
 }

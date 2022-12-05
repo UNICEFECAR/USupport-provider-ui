@@ -29,7 +29,6 @@ export const UploadPicture = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log(providerData);
     if (!image && providerData) {
       setImage(AMAZON_S3_BUCKET + "/" + providerData.image);
     }
@@ -46,7 +45,7 @@ export const UploadPicture = ({ isOpen, onClose }) => {
     onSuccess: () => {
       setIsLoading(false);
       queryClient.invalidateQueries({ queryKey: ["provider-data"] });
-      // onClose();
+      onClose();
     },
     onError: (error) => {
       setIsLoading(false);
@@ -62,9 +61,16 @@ export const UploadPicture = ({ isOpen, onClose }) => {
     content.append("fileContent", files[0]);
 
     const reader = new FileReader();
-    reader.onabort = () => console.log("file reading was aborted");
-    reader.onerror = () => console.log("file reading has failed");
+    reader.onabort = () => setError(t("upload_error"));
+    reader.onerror = () => setError(t("upload_error"));
     reader.readAsDataURL(files[0]);
+
+    const sizeInKB = files[0].size / 1000;
+    if (sizeInKB > 1000) {
+      setError(t("file_size_error"));
+      setIsLoading(false);
+      return;
+    }
 
     reader.onload = (e) => {
       setImage(e.target.result);

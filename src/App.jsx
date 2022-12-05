@@ -22,6 +22,7 @@ import {
   CookiePolicy,
   TermsOfUse,
   Dashboard,
+  Consultation,
 } from "./pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "./routes";
@@ -99,6 +100,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/consultation"
+            element={
+              <ProtectedRoute>
+                <Consultation />
               </ProtectedRoute>
             }
           />

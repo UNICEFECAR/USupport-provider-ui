@@ -15,6 +15,7 @@ export const useGetConsultationsForSingleDay = (date) => {
     });
     return filtered?.map((consultation) => ({
       consultationId: consultation.consultation_id,
+      chatId: consultation.chat_id,
       clientDetailId: consultation.client_detail_id,
       clientName: consultation.client_name,
       image: consultation.client_image,
