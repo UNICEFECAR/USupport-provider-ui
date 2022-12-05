@@ -18,3 +18,4 @@ export * from "./SchedulerTemplate";
 export * from "./CookiePolicy";
 export * from "./TermsOfUse";
 export * from './Dashboard';
+export * from './Consultation';

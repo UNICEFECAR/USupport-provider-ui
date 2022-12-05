@@ -35,10 +35,7 @@ export const ProviderOverview = () => {
     setIsDeleteAccountBackdropOpen(false);
 
   const handleGoBack = () => navigate(-1);
-  const handleRedirectToActivityHistory = () => {
-    console.log("Redirect to activity history");
-    // navigate("/provider/activity");
-  };
+
   return (
     <Page
       classes="page__provider-overview"
@@ -48,14 +45,6 @@ export const ProviderOverview = () => {
       <ProviderOverviewBlock
         {...{ openChangePasswordBackdrop, openDeleteAccountBackdrop }}
       />
-      <div className="page__provider-overview__button-container">
-        <Button
-          label={t("button_label")}
-          color="purple"
-          size="md"
-          onClick={handleRedirectToActivityHistory}
-        />
-      </div>
       {width < 768 && <RadialCircle />}
       <ChangePassword
         isOpen={isChangePasswordBackdropOpen}

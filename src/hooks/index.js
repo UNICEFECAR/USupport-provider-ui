@@ -21,3 +21,5 @@ export * from "./useGetPastConsultationsByClientId.js";
 export * from "./useGetAllConsultationsByFilter.js";
 export * from "./useGetCalendarData.js";
 export * from "./useGetConsultationsForSingleDay.js";
+export * from "./useGetChatData.js";
+export * from "./useSendMessage.js";

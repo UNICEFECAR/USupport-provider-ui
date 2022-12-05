@@ -32,15 +32,14 @@ export const CancelConsultation = ({
   const { t } = useTranslation("cancel-consultation");
   const [error, setError] = useState();
 
-  const { providerName, providerId, consultationId, timestamp, image } =
-    consultation;
+  const { providerName, timestamp, time, image } = consultation;
 
-  const imageUrl = AMAZON_S3_BUCKET + "/" + (image || "default");
-  const startDate = new Date(timestamp);
-  const endDate = new Date(timestamp + ONE_HOUR);
+  const startDate = new Date(time || timestamp);
+  const endDate = new Date(new Date(time || timestamp).getTime() + ONE_HOUR);
   const onCancelSuccess = () => {
     onSuccess();
     queryClient.invalidateQueries({ queryKey: ["all-consultations"] });
+    queryClient.invalidateQueries({ queryKey: ["consultations-single-week"] });
     onClose();
     toast(t("cancel_success"));
   };
@@ -73,8 +72,9 @@ export const CancelConsultation = ({
         startDate={startDate}
         endDate={endDate}
         providerName={providerName}
-        providerImage={imageUrl}
+        providerImage={image || "default"}
         classes="cancel-consultation__provider-consultation"
+        t={t}
       />
     </Backdrop>
   );

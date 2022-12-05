@@ -10,8 +10,10 @@ export default function useGetAllConsultationsByFilter(filter) {
       response = await providerSvc.getAllPastConsultations();
     }
     const data = response.data;
+
     return data?.map((consultation) => ({
       consultationId: consultation.consultation_id,
+      chatId: consultation.chat_id,
       clientDetailId: consultation.client_detail_id,
       clientName: consultation.client_name,
       image: consultation.client_image,

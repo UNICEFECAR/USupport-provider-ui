@@ -87,6 +87,10 @@
       margin-top: 0;
     }
 
+    & .icon {
+      cursor: pointer;
+    }
+
     &__date > p {
       color: $color_secondary_9749fa;
       padding: 0 $spacing_2_4;

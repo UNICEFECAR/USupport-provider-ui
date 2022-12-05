@@ -10,5 +10,6 @@
   "wednesday": "Wed",
   "thursday": "Thu",
   "friday": "Fri",
-  "saturday": "Sat"
+  "saturday": "Sat",
+  "no_messages": "There are no messages in this consultation"
 }

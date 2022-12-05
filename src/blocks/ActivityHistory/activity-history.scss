@@ -1,6 +1,8 @@
 @import "@USupport-components-library/styles";
 
 .activity-history {
+  @include full-height-page-navbar;
+
   @media screen and (min-width: $screen-lg) {
     padding-top: $spacing_4_8;
     padding-bottom: $spacing_4_8;
@@ -96,6 +98,10 @@
         z-index: 2;
         background-color: $color_white_ff;
 
+        & .icon {
+          cursor: pointer;
+        }
+
         &__client-container {
           display: flex;
           flex-direction: row;
@@ -120,6 +126,7 @@
         flex-direction: column;
         flex: 1;
         width: 100%;
+        // height: 100%;
         padding-top: $spacing_3_2;
         padding-bottom: $spacing_10_0;
 
@@ -145,22 +152,23 @@
       }
 
       &__menu {
+        background-color: $color_white_ff;
+        border-radius: $border_radius_1_6;
         border: 0.1rem solid $color_primary_20809e;
         display: flex;
         flex-direction: column;
         padding: $spacing_1_6;
-        width: calc(19rem - 2 * $spacing_1_6);
-        border-radius: $border_radius_1_6;
-        background-color: $color_white_ff;
         position: absolute;
         right: 1%;
         top: 7%;
+        width: calc(19rem - 2 * $spacing_1_6);
         z-index: $z_index_2;
 
         & .menu-option {
           display: flex;
           flex-direction: row;
           align-items: center;
+          cursor: pointer;
 
           &:not(:first-of-type) {
             margin-top: $spacing_2_2;

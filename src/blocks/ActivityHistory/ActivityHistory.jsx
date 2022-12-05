@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 import {
   Avatar,
   Block,
@@ -14,9 +16,12 @@ import {
   SystemMessage,
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
-import { useGetAllConsultationsByFilter } from "#hooks";
+
+import { useGetAllConsultationsByFilter, useGetChatData } from "#hooks";
 
 import "./activity-history.scss";
+
+const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
 import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/assets";
 
@@ -28,86 +33,15 @@ import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/as
  * @return {jsx}
  */
 export const ActivityHistory = ({ openSelectConsultation }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation("activity-history");
 
   const { width } = useWindowDimensions();
 
-  const [selectedConsultation, setSelectedConsultation] = useState("");
+  const [selectedConsultation, setSelectedConsultation] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const daysOfWeekTranslations = {
-    monday: t("monday"),
-    tuesday: t("tuesday"),
-    wednesday: t("wednesday"),
-    thursday: t("thursday"),
-    friday: t("friday"),
-    saturday: t("saturday"),
-    sunday: t("sunday"),
-  };
-
   const consultationsQuery = useGetAllConsultationsByFilter("past");
-
-  const consultationsMessages = [
-    {
-      type: "system-message",
-      message: "Consultation started",
-      date: new Date("10.25.2022 14:30"),
-    },
-    {
-      type: "message",
-      senderId: "1",
-      receiverId: "2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:32"),
-    },
-    {
-      type: "message",
-      senderId: "2",
-      receiverId: "1",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:35"),
-    },
-    {
-      type: "message",
-      senderId: "1",
-      receiverId: "2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:32"),
-    },
-    {
-      type: "message",
-      senderId: "2",
-      receiverId: "1",
-      message: "yes.",
-      date: new Date("10.25.2022 14:35"),
-    },
-    {
-      type: "message",
-      senderId: "1",
-      receiverId: "2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:32"),
-    },
-    {
-      type: "message",
-      senderId: "2",
-      receiverId: "1",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:35"),
-    },
-    {
-      type: "system-message",
-      message: "Consultation ended",
-      date: new Date("10.25.2022 15:30"),
-    },
-  ];
-
-  const id = "1";
+  const chatQuery = useGetChatData(selectedConsultation?.chatId);
 
   const handleConsultationClick = (consultation) => {
     window.scrollTo(0, 0);
@@ -134,7 +68,16 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
       {
         iconName: "person",
         text: t("button_view_profile_label"),
-        onClick: () => {},
+        onClick: () =>
+          navigate("/clients", {
+            state: {
+              clientInformation: {
+                clientDetailId: selectedConsultation.clientDetailId,
+                name: selectedConsultation.clientName,
+                image: selectedConsultation.image,
+              },
+            },
+          }),
       },
     ];
 
@@ -171,7 +114,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
             overview={true}
             renderIn="client"
             onClick={() => handleConsultationClick(consultation)}
-            daysOfWeekTranslations={daysOfWeekTranslations}
+            t={t}
           />
         </GridItem>
       );
@@ -179,38 +122,43 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
   };
 
   const renderAllMessages = () => {
-    return consultationsMessages.map((message) => {
+    if (chatQuery.isLoading) return <Loading size="lg" />;
+    if (chatQuery.data?.messages.length === 0) return <p>{t("no_messages")}</p>;
+    return chatQuery.data.messages.map((message) => {
       if (message.type === "system-message") {
         return (
           <SystemMessage
-            key={message.date.getTime()}
-            title={message.message}
-            date={message.date}
+            key={message.time}
+            title={message.content}
+            date={new Date(message.time)}
           />
         );
       } else {
-        if (message.senderId === id) {
+        if (message.senderId === chatQuery.data.providerDetailId) {
           return (
             <Message
-              key={message.date.getTime()}
-              message={message.message}
+              key={message.time}
+              message={message.content}
               sent
-              date={message.date}
+              date={new Date(message.time)}
             />
           );
         } else {
           return (
             <Message
-              key={message.date.getTime()}
-              message={message.message}
+              key={message.time}
+              message={message.content}
               received
-              date={message.date}
+              date={new Date(message.time)}
             />
           );
         }
       }
     });
   };
+
+  const selectedClientImage =
+    AMAZON_S3_BUCKET + "/" + (selectedConsultation?.image || "default");
 
   return (
     <Block classes="activity-history">
@@ -252,9 +200,10 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
                         onClick={() => handleGoBack()}
                       />
                     )}
-                    {/* TODO: refactor to display the name and image of the client  */}
-                    <Avatar size="sm" />
-                    <h4 className="client-name">{selectedConsultation.name}</h4>
+                    <Avatar size="sm" image={selectedClientImage} />
+                    <h4 className="client-name">
+                      {selectedConsultation.clientName}
+                    </h4>
                   </div>
                   <Icon
                     name="three-dots-vertical"
@@ -263,7 +212,11 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
                   />
                 </div>
                 <div className="activity-history__consultation-container__consultation__messages">
-                  {renderAllMessages()}
+                  {chatQuery.isLoading ? (
+                    <Loading size="lg" />
+                  ) : (
+                    renderAllMessages()
+                  )}
                 </div>
                 <Button
                   size="lg"

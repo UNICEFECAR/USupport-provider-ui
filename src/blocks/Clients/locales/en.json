@@ -10,5 +10,14 @@
   "wednesday": "Wed",
   "thursday": "Thu",
   "friday": "Fri",
-  "saturday": "Sat"
+  "saturday": "Sat",
+  "cancel_consultation": "Cancel consultation",
+  "suggest_consultation": "Suggest consultation",
+  "see_profile": "See profile",
+  "past_consultations": "past consultations",
+  "no_scheduled": "No consultation scheduled",
+  "suggested": "Suggested",
+  "join": "Join",
+  "no_consultations": "You have no consultations with this client",
+  "no_messages": "There are no messages in this consultation"
 }

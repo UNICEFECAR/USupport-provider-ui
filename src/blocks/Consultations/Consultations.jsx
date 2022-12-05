@@ -12,6 +12,7 @@ import {
 import { useGetAllConsultationsByFilter } from "#hooks";
 
 import "./consultations.scss";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Consultations
@@ -24,6 +25,7 @@ export const Consultations = ({
   openJoinConsultation,
   openCancelConsultation,
 }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation("consultations");
 
   const [searchValue, setSearchValue] = useState("");
@@ -32,18 +34,12 @@ export const Consultations = ({
     { label: t("upcoming_tab_label"), value: "upcoming", isSelected: true },
   ];
 
-  const daysOfWeekTranslations = {
-    monday: t("monday"),
-    tuesday: t("tuesday"),
-    wednesday: t("wednesday"),
-    thursday: t("thursday"),
-    friday: t("friday"),
-    saturday: t("saturday"),
-    sunday: t("sunday"),
-  };
-
   const handleCancelConsultation = (consultation) => {
     openCancelConsultation(consultation);
+  };
+
+  const handleViewProfile = (clientInformation) => {
+    navigate("/clients", { state: { clientInformation } });
   };
 
   const consultationsQuery = useGetAllConsultationsByFilter("upcoming");
@@ -59,13 +55,14 @@ export const Consultations = ({
         >
           <Consultation
             consultation={consultation}
+            handleCancelConsultation={handleCancelConsultation}
+            handleJoinClick={openJoinConsultation}
+            handleViewProfile={handleViewProfile}
+            hasMenu={true}
             overview={false}
             renderIn="provider"
-            hasMenu={true}
-            daysOfWeekTranslations={daysOfWeekTranslations}
-            handleJoinClick={openJoinConsultation}
-            handleCancelConsultation={handleCancelConsultation}
             suggested={consultation.status === "suggested"}
+            t={t}
           />
         </GridItem>
       );

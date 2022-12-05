@@ -9,5 +9,16 @@
   "wednesday": "We",
   "thursday": "Th",
   "friday": "Fr",
-  "saturday": "Sa"
+  "saturday": "Sa",
+
+  "consultation_details": "View details",
+  "available": "You are available",
+  "not_available": "You are unavailable",
+  "set_available": "Set as available",
+  "set_not_available": "Set as unavailable",
+  "view_profile": "View profile",
+  "suggest_consultation": "Suggest consultation",
+  "cancel": "Cancel appointment",
+  "suggested": "Suggested",
+  "join_consultation": "Join consultation"
 }
