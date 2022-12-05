@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import {
   Block,
@@ -40,6 +41,7 @@ const days = [
  */
 export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
   const { t } = useTranslation("dashboard");
+  const navigate = useNavigate();
   const today = new Date();
 
   const weekDays = [];
@@ -98,6 +100,19 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
     openCancelConsultation(consultation);
   };
 
+  const handleViewProfile = (consultation, isPast) => {
+    navigate("/clients", {
+      state: {
+        clientInformation: {
+          clientDetailId: consultation.clientDetailId,
+          image: consultation.image,
+          name: consultation.name,
+        },
+        consultationInformation: isPast ? consultation : null,
+      },
+    });
+  };
+
   const renderConsultations = useCallback(() => {
     const { isAvailable } = checkStateOfDate(selectedDay);
     if (!consultationsData || consultationsData.length === 0)
@@ -110,12 +125,13 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
           {<p>{isAvailable ? t("no_consultations") : t("no_availability")}</p>}
         </GridItem>
       );
-    return consultationsData.map((consultation) => {
+    return consultationsData.map((consultation, index) => {
       return (
         <GridItem
           md={8}
           lg={12}
           classes="dashboard__grid__consultations-grid__item"
+          key={index + "- consultation"}
         >
           <Consultation
             consultation={consultation}
@@ -126,6 +142,8 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             hasMenu
             handleJoinClick={openJoinConsultation}
             handleCancelConsultation={handleCancelConsultation}
+            handleViewProfile={handleViewProfile}
+            t={t}
           />
         </GridItem>
       );
@@ -144,7 +162,12 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
               {isLoading ? (
                 <Loading size="sm" padding="0" />
               ) : (
-                <p className="small-text">{t("calendar")}</p>
+                <p
+                  className="small-text "
+                  onClick={() => navigate("/calendar")}
+                >
+                  {t("calendar")}
+                </p>
               )}
             </GridItem>
             {days.map((day) => {

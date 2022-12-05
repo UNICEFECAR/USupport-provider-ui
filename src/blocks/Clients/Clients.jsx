@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import {
   Avatar,
   Block,
@@ -17,11 +19,15 @@ import {
   SystemMessage,
 } from "@USupport-components-library/src";
 import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/assets";
-import { useGetAllClients, useGetPastConsultationsByClientId } from "#hooks";
+import { useWindowDimensions } from "@USupport-components-library/src/utils";
+
+import {
+  useGetAllClients,
+  useGetPastConsultationsByClientId,
+  useGetChatData,
+} from "#hooks";
 
 import "./clients.scss";
-
-import { useWindowDimensions } from "@USupport-components-library/src/utils";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
@@ -34,38 +40,30 @@ const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
  */
 export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
   const { t } = useTranslation("clients");
-
   const { width } = useWindowDimensions();
 
-  const [selectedClient, setSelectedClient] = useState(null);
+  const location = useLocation();
+  const initiallySelectedClient = location.state?.clientInformation || null;
+  const [selectedClient, setSelectedClient] = useState(initiallySelectedClient);
 
-  const [selectedConsultationId, setSelectedConsultationId] = useState("");
-
-  const daysOfWeekTranslations = {
-    monday: t("monday"),
-    tuesday: t("tuesday"),
-    wednesday: t("wednesday"),
-    thursday: t("thursday"),
-    friday: t("friday"),
-    saturday: t("saturday"),
-    sunday: t("sunday"),
-  };
+  const initiallySelectedConsultation =
+    location.state?.consultationInformation || null;
+  const [selectedConsultation, setSelectedConsultation] = useState(
+    initiallySelectedConsultation
+  );
 
   const clientsQuery = useGetAllClients();
-  const handleProposeConsultation = () => {
-    console.log("Propose consultation");
-  };
 
-  const handleConsultationClick = (id) => {
-    setSelectedConsultationId(id);
+  const handleConsultationClick = (consultation) => {
+    setSelectedConsultation(consultation);
   };
 
   const handleCancelConsultation = (consultation) => {
     openCancelConsultation(consultation);
   };
 
-  const handleSuggestConsultation = () => {
-    openSelectConsultation(selectedClient.clientDetailId);
+  const handleSuggestConsultation = (clientId) => {
+    openSelectConsultation(clientId);
   };
 
   const renderAllClients = () => {
@@ -73,17 +71,17 @@ export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
       return (
         <GridItem lg={6} key={index}>
           <ClientHistory
-            name={client.name}
-            image={client.image}
-            timestamp={client.nextConsultation}
+            cancelConsultation={handleCancelConsultation}
             clientId={client.clientDetailId}
+            handleClick={() => setSelectedClient(client)}
+            image={client.image}
+            name={client.name}
             nextConsultationId={client.nextConsultationId}
             pastConsultations={client.pastConsultations}
-            handleClick={() => setSelectedClient(client)}
-            cancelConsultation={handleCancelConsultation}
             suggestConsultation={handleSuggestConsultation}
             suggested={client.nextConsultationStatus === "suggested"}
-            daysOfWeekTranslations={daysOfWeekTranslations}
+            t={t}
+            timestamp={client.nextConsultation}
           />
         </GridItem>
       );
@@ -92,13 +90,21 @@ export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
 
   return (
     <Block classes="clients">
-      {selectedClient && !selectedConsultationId ? (
-        <Icon
-          onClick={() => setSelectedClient(null)}
-          classes="clients__go-back-icon"
-          name="arrow-chevron-back"
-          color="#20809E"
-        />
+      {selectedClient ? (
+        <div className="clients__go-back-arrow-container">
+          <Icon
+            onClick={() => {
+              if (selectedConsultation) {
+                setSelectedConsultation("");
+              } else {
+                setSelectedClient(null);
+              }
+            }}
+            classes="clients__go-back-icon"
+            name="arrow-chevron-back"
+            color="#20809E"
+          />
+        </div>
       ) : null}
       {!selectedClient ? (
         <div className="clients__clients-container">
@@ -117,67 +123,77 @@ export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
         </div>
       ) : null}
       {selectedClient ? (
-        <div className="clients__content">
-          {((width < 1366 && !selectedConsultationId) || width >= 1366) && (
+        <Grid classes="clients__content">
+          {((width < 1366 && !selectedConsultation) || width >= 1366) && (
             <ConsultationsHistory
               clientName={selectedClient.name}
-              image={selectedClient.image}
               handleConsultationClick={handleConsultationClick}
+              handleSuggestConsultation={handleSuggestConsultation}
+              image={selectedClient.image}
               proposeConsultationLabel={t("propose_consultation_label")}
-              daysOfWeekTranslations={daysOfWeekTranslations}
               selectedClient={selectedClient}
+              screenWidth={width}
+              t={t}
             />
           )}
-          {((width < 1366 && selectedConsultationId) || width >= 1366) && (
+          {((width < 1366 && selectedConsultation) || width >= 1366) && (
             <ConsultationDetails
-              consultationId={selectedConsultationId}
-              handleGoBack={() => setSelectedConsultationId("")}
-              screenWidth={width}
-              proposeConsultationLabel={t("propose_consultation_label")}
+              consultation={selectedConsultation}
+              handleGoBack={() => setSelectedConsultation("")}
               handleSuggestConsultation={handleSuggestConsultation}
               noConsultationHeading={t("no_consultation_selected")}
+              proposeConsultationLabel={t("propose_consultation_label")}
+              selectedClient={selectedClient}
+              t={t}
             />
           )}
-        </div>
+        </Grid>
       ) : null}
     </Block>
   );
 };
 
 const ConsultationDetails = ({
-  consultationId,
-  handleGoBack,
-  screenWidth,
+  consultation,
   proposeConsultationLabel,
   handleSuggestConsultation,
   noConsultationHeading,
+  selectedClient,
+  t,
 }) => {
+  const chatQuery = useGetChatData(consultation?.chatId);
+
   const renderAllMessages = () => {
-    return consultationsMessages.map((message, index) => {
+    if (chatQuery.data.messages.length === 0) return <p>{t("no_messages")}</p>;
+    return [
+      ...chatQuery.data.messages,
+      ...chatQuery.data.messages,
+      ...chatQuery.data.messages,
+    ].map((message, index) => {
       if (message.type === "system-message") {
         return (
           <SystemMessage
-            title={message.message}
-            date={message.date}
+            message={message.content}
+            date={new Date(message.date)}
             key={index}
           />
         );
       } else {
-        if (message.senderId === id) {
+        if (message.senderId === chatQuery.data.providerDetailId) {
           return (
             <Message
-              message={message.message}
+              message={message.content}
+              date={new Date(message.date)}
               sent
-              date={message.date}
               key={index}
             />
           );
         } else {
           return (
             <Message
-              message={message.message}
+              message={message.content}
+              date={new Date(message.date)}
               received
-              date={message.date}
               key={index}
             />
           );
@@ -186,71 +202,9 @@ const ConsultationDetails = ({
     });
   };
 
-  const consultationsMessages = [
-    {
-      type: "system-message",
-      message: "Consultation started",
-      date: new Date("10.25.2022 14:30"),
-    },
-    {
-      type: "message",
-      senderId: "1",
-      receiverId: "2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:32"),
-    },
-    {
-      type: "message",
-      senderId: "2",
-      receiverId: "1",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:35"),
-    },
-    {
-      type: "message",
-      senderId: "1",
-      receiverId: "2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:32"),
-    },
-    {
-      type: "message",
-      senderId: "2",
-      receiverId: "1",
-      message: "yes.",
-      date: new Date("10.25.2022 14:35"),
-    },
-    {
-      type: "message",
-      senderId: "1",
-      receiverId: "2",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:32"),
-    },
-    {
-      type: "message",
-      senderId: "2",
-      receiverId: "1",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra mattis lectus turpis mauris odio vestibulum urna.",
-      date: new Date("10.25.2022 14:35"),
-    },
-    {
-      type: "system-message",
-      message: "Consultation ended",
-      date: new Date("10.25.2022 15:30"),
-    },
-  ];
-  //TODO: get id from user
-  const id = "1";
-
   return (
-    <div className="clients__consultation-container">
-      {!consultationId ? (
+    <GridItem md={8} lg={8} classes="clients__consultation-container">
+      {!consultation ? (
         <div className="clients__consultation-container__no-selected">
           <img src={mascot} alt="Mascot" className="mascot" />
           <h4 className="clients__consultation-container__no-selected__text">
@@ -259,7 +213,7 @@ const ConsultationDetails = ({
         </div>
       ) : (
         <div className="clients__consultation-container__consultation">
-          {screenWidth < 1366 && (
+          {/* {screenWidth < 1366 && (
             <div className="clients__consultation-container__consultation__header">
               <Icon
                 name="arrow-chevron-back"
@@ -267,28 +221,34 @@ const ConsultationDetails = ({
                 color="#20809E"
               />
             </div>
-          )}
+          )} */}
           <div className="clients__consultation-container__consultation__messages">
-            {renderAllMessages()}
+            {chatQuery.isLoading ? <Loading size="lg" /> : renderAllMessages()}
           </div>
-          <Button
-            size="lg"
-            label={proposeConsultationLabel}
-            onClick={handleSuggestConsultation}
-            classes="clients__consultation-container__consultation__button"
-          />
+          <div>
+            <Button
+              size="lg"
+              label={proposeConsultationLabel}
+              onClick={() =>
+                handleSuggestConsultation(selectedClient.clientDetailId)
+              }
+              classes="clients__consultation-container__consultation__button"
+            />
+          </div>
         </div>
       )}
-    </div>
+    </GridItem>
   );
 };
+
 const ConsultationsHistory = ({
   handleConsultationClick,
   clientName,
   image,
   proposeConsultationLabel,
-  daysOfWeekTranslations,
   selectedClient,
+  handleSuggestConsultation,
+  t,
 }) => {
   const imageUrl = AMAZON_S3_BUCKET + "/" + (image || "default");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -304,15 +264,21 @@ const ConsultationsHistory = ({
           <Loading size="lg" />
         </GridItem>
       );
+    if (consultationsQuery.data.length === 0)
+      return (
+        <GridItem md={8} lg={12} classes="clients__no-consultations">
+          <h4>{t("no_consultations")}</h4>
+        </GridItem>
+      );
     return consultationsQuery.data?.map((consultation, index) => {
       return (
         <GridItem key={index} md={8} lg={12}>
           <Consultation
             overview={true}
             consultation={consultation}
-            daysOfWeekTranslations={daysOfWeekTranslations}
             renderIn="client"
-            onClick={() => handleConsultationClick(consultation.consultationId)}
+            onClick={() => handleConsultationClick(consultation)}
+            t={t}
           />
         </GridItem>
       );
@@ -320,15 +286,13 @@ const ConsultationsHistory = ({
   };
 
   const renderMenuOptions = () => {
-    let menuOptions = [];
-
-    if (true) {
-      menuOptions.push({
-        iconName: "close-x",
+    const menuOptions = [
+      {
+        iconName: "share-front",
         text: proposeConsultationLabel,
-        onClick: () => handleCancelConsultation(),
-      });
-    }
+        onClick: () => handleSuggestConsultation(selectedClient.clientDetailId),
+      },
+    ];
 
     return menuOptions.map((option, index) => {
       return (
@@ -349,7 +313,7 @@ const ConsultationsHistory = ({
   };
 
   return (
-    <div className="clients__main-container">
+    <GridItem md={8} lg={4} classes="clients__main-container">
       <Box classes="clients__main-container__header">
         <div className="clients__main-container__header__client-container">
           <Avatar image={imageUrl} size="sm" />
@@ -371,6 +335,6 @@ const ConsultationsHistory = ({
           </div>
         </OutsideClickHandler>
       )}
-    </div>
+    </GridItem>
   );
 };

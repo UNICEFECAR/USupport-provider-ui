@@ -10,5 +10,12 @@
   "sunday": "Su",
   "today": "Today",
   "no_consultations": "There are no consultations for this day",
-  "no_availability": "You are not available on this day"
+  "no_availability": "You are not available on this day",
+  "cancel_consultation": "Cancel consultation",
+  "view_profile": "View personal profile",
+  "join": "Join",
+  "not_conducted": "Not conducted",
+  "conducted": "Conducted",
+  "suggested": "Suggested",
+  "active": "Live"
 }

@@ -2,6 +2,9 @@ import React from "react";
 import { Backdrop, ButtonSelector } from "@USupport-components-library/src";
 
 import "./join-consultation.scss";
+import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 /**
  * JoinConsultation
@@ -10,13 +13,14 @@ import "./join-consultation.scss";
  *
  * @return {jsx}
  */
-export const JoinConsultation = ({ isOpen, onClose }) => {
+export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
+  const { t } = useTranslation("join-consultation");
+  const navigate = useNavigate();
+
   const handleClick = (redirectTo) => {
-    if (redirectTo === "video") {
-      console.log("video");
-    } else if (redirectTo === "chat") {
-      console.log("chat");
-    }
+    navigate("/consultation", {
+      state: { consultation, videoOn: redirectTo === "video" },
+    });
 
     onClose();
   };
@@ -27,19 +31,17 @@ export const JoinConsultation = ({ isOpen, onClose }) => {
       title="JoinConsultation"
       isOpen={isOpen}
       onClose={onClose}
-      heading={"Choose how you want to communicate"}
-      text={
-        "Select the communication form which fits your needs the best and receive the help you want."
-      }
+      heading={t("heading")}
+      text={t("modal_paragraph")}
     >
       <ButtonSelector
-        label="Video/audio consulation"
+        label={t("button_label_1")}
         iconName="video"
         classes="join-consultation__button-selector"
         onClick={() => handleClick("video")}
       />
       <ButtonSelector
-        label="Text consultation"
+        label={t("button_label_2")}
         iconName="comment"
         classes="join-consultation__button-selector"
         onClick={() => handleClick("chat")}

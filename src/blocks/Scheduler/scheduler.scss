@@ -1,6 +1,8 @@
 @import "@USupport-components-library/styles";
 
 .scheduler {
+  @include full-height-page-navbar;
+
   position: relative;
   padding-top: 20.2rem;
 
@@ -83,6 +85,10 @@
     @media screen and (min-width: $screen-md) {
       justify-content: flex-end;
       margin-top: 0;
+    }
+
+    & .icon {
+      cursor: pointer;
     }
 
     &__date > p {

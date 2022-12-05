@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   Block,
@@ -32,6 +33,7 @@ import "./scheduler-template.scss";
  */
 export const SchedulerTemplate = () => {
   const { t } = useTranslation("scheduler-template");
+  const navigate = useNavigate();
   const daysOfWeek = [
     "monday",
     "tuesday",
@@ -112,6 +114,7 @@ export const SchedulerTemplate = () => {
   const addTemplateAvailabilityMutation = useMutation(addTemplateAvailability, {
     onSuccess: () => {
       toast("Template availability added successfully");
+      navigate("/calendar");
     },
     onError: (error) => {
       const { message: errorMessage } = useError(error);
