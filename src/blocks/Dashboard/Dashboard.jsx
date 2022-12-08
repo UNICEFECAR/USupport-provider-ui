@@ -196,6 +196,11 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
                   handleClick={() => handleDaySelect(day)}
                   numberOfConsultations={dayConsultations}
                   isAvailable={isAvailable}
+                  consultationsLabel={
+                    dayConsultations === 1
+                      ? t("consultation")
+                      : t("consultations")
+                  }
                 />
               );
             })}
