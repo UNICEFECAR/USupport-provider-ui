@@ -6,6 +6,7 @@ export default function useGetAllClients() {
     const { data } = await providerSvc.getAllClients();
     return data?.map((client) => ({
       clientDetailId: client.client_detail_id,
+      chatId: client.chat_id,
       name: client.client_name,
       image: client.client_image,
       nextConsultation: new Date(client.next_consultation).getTime(),

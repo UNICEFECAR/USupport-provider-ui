@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+
 import { userSvc } from "@USupport-components-library/services";
+
 import { Page, Clients as ClientsBlock } from "#blocks";
-import { CancelConsultation, SelectConsultation } from "#backdrops";
+import {
+  CancelConsultation,
+  SelectConsultation,
+  JoinConsultation,
+} from "#backdrops";
 import { useBlockSlot, useSuggestConsultation } from "#hooks";
 
 import "./clients.scss";
@@ -28,6 +34,12 @@ export const Clients = () => {
 
   const [blockSlotError, setBlockSlotError] = useState();
   const [isBlockSlotSubmitting, setIsBlockSlotSubmitting] = useState(false);
+
+  const [isJoinConsultationOpen, setIsJoinConsultationOpen] = useState(false);
+  const openJoinConsultation = (consultation) => {
+    setSelectedConsultation(consultation);
+    setIsJoinConsultationOpen(true);
+  };
 
   const closeSelectConsultation = () => setIsSelectConsultationOpen(false);
 
@@ -87,6 +99,7 @@ export const Clients = () => {
       <ClientsBlock
         openCancelConsultation={openCancelConsultation}
         openSelectConsultation={openSelectConsultation}
+        openJoinConsultation={openJoinConsultation}
       />
       {selectedConsultation && (
         <>
@@ -105,6 +118,11 @@ export const Clients = () => {
         handleBlockSlot={handleBlockSlot}
         errorMessage={blockSlotError}
         isCtaDisabled={isBlockSlotSubmitting}
+      />
+      <JoinConsultation
+        isOpen={isJoinConsultationOpen}
+        onClose={() => setIsJoinConsultationOpen(false)}
+        consultation={selectedConsultation}
       />
     </Page>
   );
