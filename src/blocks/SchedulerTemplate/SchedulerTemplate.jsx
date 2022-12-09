@@ -105,6 +105,11 @@ export const SchedulerTemplate = () => {
       .filter((x) => x.value > (templateStartDate || 0)); // Show only sundays later than start date
   }, [templateStartDate]);
 
+  const getEndHoursOptions = (startHour) => {
+    const startHourIndex = hoursOptions.findIndex((x) => x.value === startHour);
+    return hoursOptions.slice(startHourIndex + 1);
+  };
+
   const addTemplateAvailability = async (timestamps) => {
     const res = await providerSvc.addTemplateAvailability({
       template: timestamps,
@@ -291,7 +296,7 @@ export const SchedulerTemplate = () => {
                     <p>to</p>
                     <Dropdown
                       disabled={template[day].unavailable}
-                      options={hoursOptions}
+                      options={getEndHoursOptions(template[day].start)}
                       selected={template[day].end || ""}
                       setSelected={(value) =>
                         handleHourChange(value, day, "end")
