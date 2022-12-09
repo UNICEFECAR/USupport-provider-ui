@@ -25,7 +25,7 @@ export default function useToggleCamera({ room, initialState }) {
             room.localParticipant.publishTrack(track);
           });
         }
-        console.log(room.localParticipant.videoTracks, "videoTracks");
+        // console.log(room.localParticipant.videoTracks, "videoTracks");
         // turn on
         room.localParticipant.videoTracks.forEach((publication) => {
           publication.track.enable();

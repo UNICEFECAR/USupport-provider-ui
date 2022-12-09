@@ -13,7 +13,7 @@ import {
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 
-import { useGetChatData, useSendMessage } from "#hooks";
+import { useGetChatData, useSendMessage, useLeaveConsultation } from "#hooks";
 import { Page, VideoRoom } from "#blocks";
 
 import "./consultation.scss";
@@ -52,6 +52,7 @@ export const Consultation = () => {
     toast(err, { type: "error" });
   };
   const sendMessageMutation = useSendMessage(onSendSuccess, onSendError);
+  const leaveConsultationMutation = useLeaveConsultation();
 
   const chatDataQuery = useGetChatData(consultation?.chatId, (data) =>
     setMessages(data.messages)
@@ -156,19 +157,16 @@ export const Consultation = () => {
     });
   };
 
-  const showChat = width < 768;
+  // const showChat = width < 768;
 
   const toggleChat = () => setIsChatShownOnMobile(!isChatShownOnMobile);
 
   const leaveConsultation = () => {
-    socketRef.current.emit("leave chat", {
-      country,
-      language,
-      chatId: consultation.chatId,
+    leaveConsultationMutation.mutate({
+      consultationId: consultation.consultationId,
       userType: "provider",
     });
 
-    navigate("/consultations");
     sendMessageMutation.mutate({
       chatId: consultation.chatId,
       message: {
@@ -177,6 +175,8 @@ export const Consultation = () => {
         type: "system",
       },
     });
+
+    navigate("/consultations");
   };
 
   return (

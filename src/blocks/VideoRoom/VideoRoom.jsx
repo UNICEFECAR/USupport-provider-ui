@@ -70,8 +70,8 @@ export function VideoRoom({
             <Participant participant={localParticipant} />
           </div>
           <div className="video-room__remote-participant">
-            {remoteParticipants.map((p) => (
-              <Participant participant={p} />
+            {remoteParticipants.map((p, index) => (
+              <Participant key={"participant" + index} participant={p} />
             ))}
           </div>
         </div>

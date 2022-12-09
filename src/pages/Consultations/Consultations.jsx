@@ -20,7 +20,10 @@ export const Consultations = () => {
   const closeCancelConsultation = () => setIsCancelConsultationOpen(false);
 
   const [isJoinConsultationOpen, setIsJoinConsultationOpen] = useState(false);
-  const openJoinConsultation = () => setIsJoinConsultationOpen(true);
+  const openJoinConsultation = (consultation) => {
+    setIsJoinConsultationOpen(true);
+    setSelectedConsultation(consultation);
+  };
   const closeJoinConsultation = () => setIsJoinConsultationOpen(false);
 
   const [selectedConsultation, setSelectedConsultation] = useState();
@@ -41,6 +44,7 @@ export const Consultations = () => {
       <JoinConsultation
         isOpen={isJoinConsultationOpen}
         onClose={closeJoinConsultation}
+        consultation={selectedConsultation}
       />
     </Page>
   );
