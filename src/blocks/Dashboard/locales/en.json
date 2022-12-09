@@ -1,13 +1,13 @@
 {
   "next_weeks": "Next 5 weeks",
   "calendar": "Calendar",
-  "monday": "Mo",
-  "tuesday": "Tu",
-  "wednesday": "We",
-  "thursday": "Th",
-  "friday": "Fr",
-  "saturday": "Sa",
-  "sunday": "Su",
+  "monday": "Mon",
+  "tuesday": "Tue",
+  "wednesday": "Wed",
+  "thursday": "Thu",
+  "friday": "Fri",
+  "saturday": "Sat",
+  "sunday": "Sun",
   "today": "Today",
   "no_consultations": "There are no consultations for this day",
   "no_availability": "You are not available on this day",
@@ -17,5 +17,7 @@
   "not_conducted": "Not conducted",
   "conducted": "Conducted",
   "suggested": "Suggested",
-  "active": "Live"
+  "active": "Live",
+  "consultation": "Consultation",
+  "consultations": "Consultations"
 }

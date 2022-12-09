@@ -38,7 +38,11 @@ const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
  *
  * @return {jsx}
  */
-export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
+export const Clients = ({
+  openCancelConsultation,
+  openSelectConsultation,
+  openJoinConsultation,
+}) => {
   const { t } = useTranslation("clients");
   const { width } = useWindowDimensions();
 
@@ -73,6 +77,8 @@ export const Clients = ({ openCancelConsultation, openSelectConsultation }) => {
           <ClientHistory
             cancelConsultation={handleCancelConsultation}
             clientId={client.clientDetailId}
+            joinConsultation={openJoinConsultation}
+            consultationChatId={client.chatId}
             handleClick={() => setSelectedClient(client)}
             image={client.image}
             name={client.name}

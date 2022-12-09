@@ -78,6 +78,7 @@
     padding-bottom: $spacing_10_0;
     overflow: scroll;
     position: relative;
+    min-width: 36rem;
 
     @media screen and (min-width: $screen-lg) {
       padding: $spacing_2_4;

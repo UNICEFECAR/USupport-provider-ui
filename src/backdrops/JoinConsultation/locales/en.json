@@ -2,5 +2,6 @@
   "heading": "Choose how you want to communicate",
   "modal_paragraph": "Select the communication type that fits you best.",
   "button_label_1": "Video/audio consulation",
-  "button_label_2": "Text consultation"
+  "button_label_2": "Text consultation",
+  "provider_joined": "Provider joined the consultation"
 }

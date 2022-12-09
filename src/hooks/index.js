@@ -23,3 +23,4 @@ export * from "./useGetCalendarData.js";
 export * from "./useGetConsultationsForSingleDay.js";
 export * from "./useGetChatData.js";
 export * from "./useSendMessage.js";
+export * from "./useLeaveConsultation.js";

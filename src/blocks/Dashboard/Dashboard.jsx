@@ -72,11 +72,13 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
   const checkStateOfDate = (date) => {
     if (!data) return {};
     const currentDate = date.toLocaleDateString();
-    const isAvailable = data.get("slots").has(currentDate);
 
     const dayConsultations = data.get("consultations").has(currentDate)
       ? data.get("consultations").get(currentDate)
       : 0;
+
+    const isAvailable =
+      data.get("slots").has(currentDate) || dayConsultations > 0;
 
     return { isAvailable, dayConsultations };
   };
@@ -173,6 +175,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             {days.map((day) => {
               return (
                 <GridItem
+                  key={day + "- day"}
                   xs={1}
                   classes="dashboard__grid__calendar-item__weekdays-grid__days"
                 >
@@ -196,6 +199,11 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
                   handleClick={() => handleDaySelect(day)}
                   numberOfConsultations={dayConsultations}
                   isAvailable={isAvailable}
+                  consultationsLabel={
+                    dayConsultations === 1
+                      ? t("consultation")
+                      : t("consultations")
+                  }
                 />
               );
             })}
