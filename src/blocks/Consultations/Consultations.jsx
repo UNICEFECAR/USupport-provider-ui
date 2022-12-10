@@ -55,7 +55,12 @@ export const Consultations = ({
           <p>{t("no_upcoming_consultations")}</p>
         </GridItem>
       );
-    return consultationsQuery.data?.map((consultation, index) => {
+
+    const sortedConsultations = consultationsQuery.data.sort((a, b) => {
+      return a.timestamp - b.timestamp;
+    });
+    console.log(sortedConsultations, "sorted");
+    return sortedConsultations.map((consultation, index) => {
       return (
         <GridItem
           key={index}
