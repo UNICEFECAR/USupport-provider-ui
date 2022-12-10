@@ -11,5 +11,6 @@
   "thursday": "Thu",
   "friday": "Fri",
   "saturday": "Sat",
-  "no_messages": "There are no messages in this consultation"
+  "no_messages": "There are no messages in this consultation",
+  "no_activity_history": "No activity has been recorded so far"
 }

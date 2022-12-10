@@ -106,6 +106,13 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
           <Loading size="lg" />
         </GridItem>
       );
+    if (consultationsQuery.data?.length === 0)
+      return (
+        <GridItem md={8} lg={12}>
+          <p className="">{t("no_activity_history")}</p>
+        </GridItem>
+      );
+
     return consultationsQuery.data?.map((consultation, index) => {
       return (
         <GridItem key={"consultation-" + index} md={8} lg={12}>
@@ -125,12 +132,12 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
     if (chatQuery.isLoading) return <Loading size="lg" />;
     if (chatQuery.data?.messages.length === 0) return <p>{t("no_messages")}</p>;
     return chatQuery.data.messages.map((message) => {
-      if (message.type === "system-message") {
+      if (message.type === "system") {
         return (
           <SystemMessage
             key={message.time}
             title={message.content}
-            date={new Date(message.time)}
+            date={new Date(Number(message.time))}
           />
         );
       } else {
@@ -140,7 +147,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
               key={message.time}
               message={message.content}
               sent
-              date={new Date(message.time)}
+              date={new Date(Number(message.time))}
             />
           );
         } else {
@@ -149,7 +156,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
               key={message.time}
               message={message.content}
               received
-              date={new Date(message.time)}
+              date={new Date(Number(message.time))}
             />
           );
         }

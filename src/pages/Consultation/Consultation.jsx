@@ -64,9 +64,6 @@ export const Consultation = () => {
   const country = localStorage.getItem("country");
   const socketRef = useRef();
 
-  // TODO: Send a consultation join request for
-  // TODO: Send a system message when the user joins the consultation
-  // TODO: Send a leave request when the user leaves the consultation
   // TODO: Send a system message when the user leaves the consultation
   // TODO: Send a consultation add services request only when the provider leaves the consultation
   // TODO: Send a system message when the client/provider toggles camera
@@ -105,12 +102,12 @@ export const Consultation = () => {
   const renderAllMessages = () => {
     if (chatDataQuery.isLoading) return <Loading size="lg" />;
     return messages.map((message) => {
-      if (message.type === "system-message") {
+      if (message.type === "system") {
         return (
           <SystemMessage
             key={message.time}
             title={message.content}
-            date={new Date(message.time)}
+            date={new Date(Number(message.time))}
           />
         );
       } else {
@@ -120,7 +117,7 @@ export const Consultation = () => {
               key={message.time}
               message={message.content}
               sent
-              date={new Date(message.time)}
+              date={new Date(Number(message.time))}
             />
           );
         } else {
@@ -129,7 +126,7 @@ export const Consultation = () => {
               key={message.time}
               message={message.content}
               received
-              date={new Date(message.time)}
+              date={new Date(Number(message.time))}
             />
           );
         }
@@ -167,13 +164,23 @@ export const Consultation = () => {
       userType: "provider",
     });
 
+    const leaveMessage = {
+      time: JSON.stringify(new Date().getTime()),
+      content: t("provider_left"),
+      type: "system",
+    };
+
     sendMessageMutation.mutate({
       chatId: consultation.chatId,
-      message: {
-        time: JSON.stringify(new Date().getTime()),
-        content: t("provider_left"),
-        type: "system",
-      },
+      message: leaveMessage,
+    });
+
+    socketRef.current.emit("send message", {
+      language,
+      country,
+      chatId: consultation.chatId,
+      to: "client",
+      message: leaveMessage,
     });
 
     navigate("/consultations");
@@ -196,14 +203,13 @@ export const Consultation = () => {
           token={token}
           t={t}
         />
-        {width >= 1024 ? (
-          <div>
-            <div className="page__consultation__container__messages__messages-container">
-              {renderAllMessages()}
-            </div>
-            <SendMessage handleSubmit={handleSendMessage} />
-          </div>
-        ) : null}
+        <MessageList
+          messages={messages}
+          isLoading={chatDataQuery.isLoading}
+          handleSendMessage={handleSendMessage}
+          providerId={providerId}
+          width={width}
+        />
       </div>
       <Backdrop
         classes="page__consultation__chat-backdrop"
@@ -219,4 +225,74 @@ export const Consultation = () => {
       </Backdrop>
     </Page>
   );
+};
+
+const MessageList = ({
+  messages,
+  isLoading,
+  width,
+  handleSendMessage,
+  providerId,
+}) => {
+  const messagesContainerRef = useRef();
+
+  useEffect(() => {
+    if (
+      messages?.length > 0 &&
+      messagesContainerRef.current &&
+      messagesContainerRef.current.scrollHeight > 0
+    ) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current?.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages, messagesContainerRef.current?.scrollHeight]);
+
+  const renderAllMessages = () => {
+    if (isLoading) return <Loading size="lg" />;
+    return messages.map((message) => {
+      if (message.type === "system") {
+        return (
+          <SystemMessage
+            key={message.time}
+            title={message.content}
+            date={new Date(Number(message.time))}
+          />
+        );
+      } else {
+        if (message.senderId === providerId) {
+          return (
+            <Message
+              key={message.time}
+              message={message.content}
+              sent
+              date={new Date(Number(message.time))}
+            />
+          );
+        } else {
+          return (
+            <Message
+              key={message.time}
+              message={message.content}
+              received
+              date={new Date(Number(message.time))}
+            />
+          );
+        }
+      }
+    });
+  };
+
+  return width >= 1024 ? (
+    <div>
+      <div
+        ref={messagesContainerRef}
+        className="page__consultation__container__messages__messages-container"
+      >
+        {renderAllMessages()}
+      </div>
+      <SendMessage handleSubmit={handleSendMessage} />
+    </div>
+  ) : null;
 };

@@ -22,7 +22,7 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
   const handleClick = async (redirectTo) => {
     const sytemMessage = {
       type: "system",
-      content: t("client_joined"),
+      content: t("provider_joined"),
       time: JSON.stringify(new Date().getTime()),
     };
 
@@ -41,9 +41,6 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
         getConsultationTokenPromise,
       ]);
       const token = result[1].data.token;
-
-      // const token =
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2MwYTc1ZjRmYzljMTFlMTY4YjEyMmMwNTcwZjA4YmZkLTE2NzA1ODY3OTIiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ0ZXN0IiwidmlkZW8iOnt9fSwiaWF0IjoxNjcwNTg2NzkyLCJleHAiOjE2NzA1OTAzOTIsImlzcyI6IlNLYzBhNzVmNGZjOWMxMWUxNjhiMTIyYzA1NzBmMDhiZmQiLCJzdWIiOiJBQzM1OTAwZjliM2U5ZWZkOTAwYzc3NmNmNzMyOWEyMWJmIn0.hVpajR92rBWhLjw2TA_ymHP_kgUy-5VMet8UIS6eHBw";
 
       navigate("/consultation", {
         state: { consultation, videoOn: redirectTo === "video", token },

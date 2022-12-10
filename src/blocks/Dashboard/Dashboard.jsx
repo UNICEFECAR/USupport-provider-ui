@@ -212,7 +212,6 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
         <GridItem md={8} lg={4} classes="dashboard__grid__day-item">
           <div className="dashboard__grid__day-item__heading">
             <h4>{dayText}</h4>
-            <Icon name="three-dots-vertical" size="lg" />
           </div>
           <Grid classes="dashboard__consultations-grid">
             {isConsultationLoading ? (
