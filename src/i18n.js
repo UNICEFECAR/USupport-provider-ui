@@ -42,6 +42,7 @@ import {
   TermsOfUse as TermsOfUsePage,
   ActivityHistory as ActivityHistoryPage,
   Clients as ClientsPage,
+  Consultation as ConsultationPage,
 } from "#pages/locales.js";
 
 import {
@@ -96,6 +97,7 @@ const resources = {
     "terms-of-use-page": TermsOfUsePage.en,
     "activity-history-page": ActivityHistoryPage.en,
     "clients-page": ClientsPage.en,
+    "consultation-page": ConsultationPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,

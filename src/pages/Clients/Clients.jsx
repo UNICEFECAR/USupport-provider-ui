@@ -60,7 +60,6 @@ export const Clients = () => {
     setIsBlockSlotSubmitting(false);
     // setConsultationId(consultationId);
     closeSelectConsultation();
-    openConfirmConsultationBackdrop();
     setBlockSlotError(null);
   };
   const onSuggestConsultationError = (error) => {

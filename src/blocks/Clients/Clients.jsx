@@ -176,11 +176,11 @@ const ConsultationDetails = ({
       ...chatQuery.data.messages,
       ...chatQuery.data.messages,
     ].map((message, index) => {
-      if (message.type === "system-message") {
+      if (message.type === "system") {
         return (
           <SystemMessage
-            message={message.content}
-            date={new Date(message.date)}
+            title={message.content}
+            date={new Date(Number(message.time))}
             key={index}
           />
         );
@@ -189,7 +189,7 @@ const ConsultationDetails = ({
           return (
             <Message
               message={message.content}
-              date={new Date(message.date)}
+              date={new Date(Number(message.time))}
               sent
               key={index}
             />
@@ -198,7 +198,7 @@ const ConsultationDetails = ({
           return (
             <Message
               message={message.content}
-              date={new Date(message.date)}
+              date={new Date(Number(message.time))}
               received
               key={index}
             />

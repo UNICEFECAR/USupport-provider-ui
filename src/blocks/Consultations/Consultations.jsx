@@ -45,6 +45,16 @@ export const Consultations = ({
   const consultationsQuery = useGetAllConsultationsByFilter("upcoming");
 
   const renderAllConsultations = useMemo(() => {
+    if (!consultationsQuery.data || consultationsQuery.data?.length === 0)
+      return (
+        <GridItem
+          md={8}
+          lg={12}
+          classes="consultations__grid__consultations-item__grid__consultation"
+        >
+          <p>{t("no_upcoming_consultations")}</p>
+        </GridItem>
+      );
     return consultationsQuery.data?.map((consultation, index) => {
       return (
         <GridItem
