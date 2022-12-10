@@ -32,6 +32,7 @@ export const Consultation = () => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const location = useLocation();
+  const backdropMessagesContainerRef = useRef();
 
   const consultation = location.state?.consultation;
   const joinWithVideo = location.state?.videoOn;
@@ -44,6 +45,19 @@ export const Consultation = () => {
   );
 
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    if (
+      messages?.length > 0 &&
+      backdropMessagesContainerRef.current &&
+      backdropMessagesContainerRef.current.scrollHeight > 0
+    ) {
+      backdropMessagesContainerRef.current.scrollTo({
+        top: backdropMessagesContainerRef.current?.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages, backdropMessagesContainerRef.current?.scrollHeight]);
 
   const onSendSuccess = (data) => {
     setMessages([...data.messages]);
@@ -134,10 +148,10 @@ export const Consultation = () => {
     });
   };
 
-  const handleSendMessage = (content) => {
+  const handleSendMessage = (content, type = "text") => {
     const message = {
       content,
-      type: "text",
+      type,
       time: JSON.stringify(new Date().getTime()),
     };
     sendMessageMutation.mutate({
@@ -156,7 +170,17 @@ export const Consultation = () => {
 
   // const showChat = width < 768;
 
-  const toggleChat = () => setIsChatShownOnMobile(!isChatShownOnMobile);
+  const toggleChat = () => {
+    if (!isChatShownOnMobile) {
+      setTimeout(() => {
+        backdropMessagesContainerRef.current?.scrollTo({
+          top: backdropMessagesContainerRef.current?.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 200);
+    }
+    setIsChatShownOnMobile(!isChatShownOnMobile);
+  };
 
   const leaveConsultation = () => {
     leaveConsultationMutation.mutate({
@@ -200,6 +224,7 @@ export const Consultation = () => {
           consultation={consultation}
           toggleChat={toggleChat}
           leaveConsultation={leaveConsultation}
+          handleSendMessage={handleSendMessage}
           token={token}
           t={t}
         />
@@ -215,6 +240,7 @@ export const Consultation = () => {
         classes="page__consultation__chat-backdrop"
         isOpen={isChatShownOnMobile}
         onClose={() => setIsChatShownOnMobile(false)}
+        reference={backdropMessagesContainerRef}
       >
         <div className="page__consultation__chat-backdrop__conatiner">
           <div className="page__consultation__container__messages__messages-container">

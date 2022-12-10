@@ -171,11 +171,7 @@ const ConsultationDetails = ({
 
   const renderAllMessages = () => {
     if (chatQuery.data.messages.length === 0) return <p>{t("no_messages")}</p>;
-    return [
-      ...chatQuery.data.messages,
-      ...chatQuery.data.messages,
-      ...chatQuery.data.messages,
-    ].map((message, index) => {
+    return chatQuery.data.messages.map((message, index) => {
       if (message.type === "system") {
         return (
           <SystemMessage
