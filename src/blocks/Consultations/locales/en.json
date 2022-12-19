@@ -15,5 +15,6 @@
   "suggested": "Suggested",
   "view_profile": "View profile",
   "active": "Live",
-  "no_upcoming_consultations": "You have no upcoming consultations"
+  "no_upcoming_consultations": "You have no upcoming consultations",
+  "no_upcoming_consultations_search": "There are no consultations matching your search"
 }

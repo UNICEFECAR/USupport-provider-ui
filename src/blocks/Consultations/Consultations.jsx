@@ -59,8 +59,26 @@ export const Consultations = ({
     const sortedConsultations = consultationsQuery.data.sort((a, b) => {
       return a.timestamp - b.timestamp;
     });
-    console.log(sortedConsultations, "sorted");
-    return sortedConsultations.map((consultation, index) => {
+
+    let consultations = sortedConsultations;
+    if (searchValue) {
+      consultations = sortedConsultations.filter((consultation) =>
+        consultation.clientName.toLowerCase().includes(searchValue)
+      );
+    }
+
+    if (searchValue && consultations.length === 0)
+      return (
+        <GridItem
+          md={8}
+          lg={12}
+          classes="consultations__grid__consultations-item__grid__consultation"
+        >
+          <p>{t("no_upcoming_consultations_search")}</p>
+        </GridItem>
+      );
+
+    return consultations.map((consultation, index) => {
       return (
         <GridItem
           key={index}
@@ -82,7 +100,7 @@ export const Consultations = ({
         </GridItem>
       );
     });
-  }, [consultationsQuery.data]);
+  }, [consultationsQuery.data, searchValue]);
 
   return (
     <Block classes="consultations">
@@ -91,7 +109,7 @@ export const Consultations = ({
           <div className="consultations__heading-container">
             <InputSearch
               value={searchValue}
-              onChange={(e) => setSearchValue(e.currentTarget.value)}
+              onChange={(value) => setSearchValue(value.toLowerCase())}
               placeholder={t("input_search_label")}
               classes="consultations__heading-container__search"
             />
