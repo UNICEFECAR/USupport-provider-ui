@@ -20,5 +20,6 @@
   "suggest_consultation": "Suggest consultation",
   "cancel": "Cancel appointment",
   "suggested": "Suggested",
-  "join_consultation": "Join consultation"
+  "join_consultation": "Join consultation",
+  "slot_added": "Slot added successfully"
 }

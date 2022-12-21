@@ -116,6 +116,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     },
     onSuccess: () => {
       availableSlotsQuery.refetch();
+      toast(t("slot_added"));
     },
     onError: (error, variables, rollback) => {
       rollback();

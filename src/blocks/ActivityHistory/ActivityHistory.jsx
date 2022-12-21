@@ -174,13 +174,6 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
           <div className="activity-history__main-container">
             <div className="activity-history__main-container__header">
               <h4>{t("activity_history_heading")}</h4>
-              {/* <ButtonWithIcon
-                iconName="filter"
-                iconColor="#fff"
-                color="purple"
-                label={t("button_filter_label")}
-                circleSize="sm"
-              /> */}
             </div>
             <Grid classes="activity-history__main-container__grid">
               {renderAllConsultations()}
