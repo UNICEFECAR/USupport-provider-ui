@@ -5,3 +5,4 @@ export * from "./DeleteAccount";
 export * from "./CancelConsultation";
 export * from "./JoinConsultation";
 export * from "./SelectConsultation";
+export * from './CodeVerification';

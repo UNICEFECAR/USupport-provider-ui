@@ -53,6 +53,7 @@ import {
   CancelConsultation,
   JoinConsultation,
   SelectConsultation,
+  CodeVerification,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -107,6 +108,7 @@ const resources = {
     "cancel-consultation": CancelConsultation.en,
     "join-consultation": JoinConsultation.en,
     "select-consultation": SelectConsultation.en,
+    "code-verification": CodeVerification.en,
   },
 };
 
