@@ -19,5 +19,22 @@
   "suggested": "Suggested",
   "active": "Live",
   "consultation": "Consultation",
-  "consultations": "Consultations"
+  "consultations": "Consultations",
+
+  "month_1": "Jan",
+  "month_2": "Feb",
+  "month_3": "Mar",
+  "month_4": "Apr",
+  "month_5": "May",
+  "month_6": "Jun",
+  "month_7": "Jul",
+  "month_8": "Aug",
+  "month_9": "Sep",
+  "month_10": "Oct",
+  "month_11": "Nov",
+  "month_12": "Dec",
+  "ordinal_st": "st",
+  "ordinal_nd": "nd",
+  "ordinal_rd": "rd",
+  "ordinal_th": "th"
 }
