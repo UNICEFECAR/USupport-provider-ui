@@ -10,8 +10,6 @@ import { useCancelConsultation } from "#hooks";
 
 import { ONE_HOUR } from "@USupport-components-library/utils";
 
-const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
-
 import "./cancel-consultation.scss";
 
 /**
@@ -32,7 +30,7 @@ export const CancelConsultation = ({
   const { t } = useTranslation("cancel-consultation");
   const [error, setError] = useState();
 
-  const { providerName, timestamp, time, image } = consultation;
+  const { clientName, timestamp, time, image } = consultation;
 
   const startDate = new Date(time || timestamp);
   const endDate = new Date(new Date(time || timestamp).getTime() + ONE_HOUR);
@@ -71,7 +69,7 @@ export const CancelConsultation = ({
       <ConsultationInformation
         startDate={startDate}
         endDate={endDate}
-        providerName={providerName}
+        providerName={clientName}
         providerImage={image || "default"}
         classes="cancel-consultation__provider-consultation"
         t={t}

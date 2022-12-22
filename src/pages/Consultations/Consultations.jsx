@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Page, Consultations as ConsultationsBlock } from "#blocks";
 import { CancelConsultation, JoinConsultation } from "#backdrops";
 import "./consultations.scss";
@@ -11,6 +12,7 @@ import "./consultations.scss";
  * @returns {JSX.Element}
  */
 export const Consultations = () => {
+  const navigate = useNavigate();
   const [isCancelConsultationOpen, setIsCancelConsultationOpen] =
     useState(false);
   const openCancelConsultation = (consultation) => {
@@ -29,7 +31,12 @@ export const Consultations = () => {
   const [selectedConsultation, setSelectedConsultation] = useState();
 
   return (
-    <Page classes="page__consultations" showNavbar={true} showFooter={true}>
+    <Page
+      classes="page__consultations"
+      showNavbar={true}
+      showFooter={true}
+      handleGoBack={() => navigate(-1)}
+    >
       <ConsultationsBlock
         openJoinConsultation={openJoinConsultation}
         openCancelConsultation={openCancelConsultation}

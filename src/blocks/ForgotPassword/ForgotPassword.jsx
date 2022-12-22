@@ -39,7 +39,10 @@ export const ForgotPassword = () => {
   const handleResetPassword = async () => {
     if ((await validate(data, schema, setErrors)) == null) {
       try {
-        await userSvc.generateForgotPasswordLink(data.email, "provider");
+        await userSvc.generateForgotPasswordLink(
+          data.email.toLowerCase(),
+          "provider"
+        );
         setIsModalOpen(true);
       } catch (error) {
         const { message: errorMessage } = useError(error);

@@ -172,7 +172,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       clientDetailId: consultation.client_detail_id,
       chatId: consultation.chat_id,
       image: consultation.client_image,
-      name: consultation.client_name,
+      clientName: consultation.client_name,
       status: consultation.status,
       time: consultation.time,
     };
@@ -226,7 +226,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
         clientInformation: {
           clientDetailId: consultation.clientDetailId,
           image: consultation.image,
-          name: consultation.name,
+          name: consultation.clientName,
         },
         consultationInformation: isPast ? consultation : null,
       },

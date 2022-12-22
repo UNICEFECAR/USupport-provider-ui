@@ -43,7 +43,7 @@ export const Login = () => {
 
     const field = data.email.includes("@") ? "email" : "userAccessToken";
     const payload = {
-      [field]: data.email,
+      [field]: data.email.toLowerCase(),
       password: data.password,
       userType: "provider",
       location: timezone + ", " + usersCountry,
