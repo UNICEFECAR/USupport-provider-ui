@@ -22,6 +22,7 @@ import {
   TermsOfUse,
   Dashboard,
   Consultation,
+  Notifications,
 } from "../pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../routes";
@@ -71,6 +72,22 @@ export default function Root() {
             <CountryValidationRoute>
               <Login />
             </CountryValidationRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
           }
         />
         <Route

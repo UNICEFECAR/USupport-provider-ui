@@ -22,6 +22,7 @@ import {
   CookiePolicy,
   TermsOfUse,
   Dashboard,
+  Notifications,
 } from "#blocks/locales.js";
 
 import {
@@ -78,6 +79,7 @@ const resources = {
     "cookie-policy": CookiePolicy.en,
     "terms-of-use": TermsOfUse.en,
     dashboard: Dashboard.en,
+    notifications: Notifications.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
