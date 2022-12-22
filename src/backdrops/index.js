@@ -6,3 +6,4 @@ export * from "./CancelConsultation";
 export * from "./JoinConsultation";
 export * from "./SelectConsultation";
 export * from './CodeVerification';
+export * from './CancelPaidConsultation';
