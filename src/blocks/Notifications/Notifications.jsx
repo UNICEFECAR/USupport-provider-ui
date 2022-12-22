@@ -357,9 +357,9 @@ export const Notifications = () => {
           initialScrollY={20}
           scrollThreshold={0}
         >
-          <Grid key="loading" classes="notifications__grid">
+          <Grid classes="notifications__grid">
             {notificationsQuery.isLoading ? (
-              <GridItem md={8} lg={12} key="loading">
+              <GridItem md={8} lg={12}>
                 <Loading size="lg" />
               </GridItem>
             ) : null}
@@ -377,7 +377,7 @@ export const Notifications = () => {
 
             {notificationsQuery.data?.pages.map((notifications, key) => {
               return (
-                <React.Fragment>
+                <React.Fragment key={key}>
                   {notifications?.map((notification) => {
                     const notificationToDisplay =
                       renderNotification(notification);
