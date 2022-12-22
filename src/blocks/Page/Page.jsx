@@ -120,6 +120,10 @@ export const Page = ({
   const { data: countries } = useQuery(["countries"], fetchCountries);
   const { data: languages } = useQuery(["languages"], fetchLanguages);
 
+  const hasUnreadNotifications = queryClient.getQueryData([
+    "has-unread-notifications",
+  ]);
+
   const image = queryClient.getQueryData(["provider-data"])?.image;
 
   const pages = [
@@ -172,6 +176,7 @@ export const Page = ({
           languages={languages}
           initialCountry={selectedCountry}
           initialLanguage={selectedLanguage}
+          hasUnreadNotifications={hasUnreadNotifications}
         />
       )}
       <div

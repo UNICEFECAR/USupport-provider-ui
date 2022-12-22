@@ -26,10 +26,11 @@ import {
 } from "../pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../routes";
-import { useGetProviderData } from "#hooks";
+import { useGetProviderData, useCheckHasUnreadNotifications } from "#hooks";
 
 export default function Root() {
   useGetProviderData();
+  useCheckHasUnreadNotifications();
 
   return (
     <Router basename="/provider">
