@@ -24,7 +24,6 @@ export const CancelConsultation = ({
   onClose,
   consultation,
   onSuccess = () => {},
-  provider,
 }) => {
   const queryClient = useQueryClient();
   const { t } = useTranslation("cancel-consultation");
@@ -66,14 +65,26 @@ export const CancelConsultation = ({
       secondaryCtaHandleClick={onClose}
       errorMessage={error}
     >
-      <ConsultationInformation
-        startDate={startDate}
-        endDate={endDate}
-        providerName={clientName}
-        providerImage={image || "default"}
-        classes="cancel-consultation__provider-consultation"
-        t={t}
-      />
+      <div className="cancel-consultation__content-container">
+        <ConsultationInformation
+          startDate={startDate}
+          endDate={endDate}
+          providerName={clientName}
+          providerImage={image || "default"}
+          classes="cancel-consultation__provider-consultation"
+          t={t}
+        />
+        <div
+          className={[
+            "cancel-consultation__price-badge",
+            //TODO: refactor if price === 0, then free
+            1 !== 1 && "cancel-consultation__price-badge--free",
+          ].join(" ")}
+        >
+          {/* TODO: refactor to show the real price */}
+          <p className="small-text">$50</p>
+        </div>
+      </div>
     </Backdrop>
   );
 };
