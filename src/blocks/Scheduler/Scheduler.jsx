@@ -326,6 +326,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                           handleViewProfile={handleViewProfile}
                           handleJoinConsultation={handleJoinConsultation}
                           consultation={getConsultation(day, hour)}
+                          dayIndex={dayIndex}
                           t={t}
                         />
                       );
