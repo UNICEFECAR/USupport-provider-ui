@@ -50,11 +50,14 @@
   }
 
   &__consultation-container {
+    border-radius: $border_radius_1_2;
     display: flex;
     flex: 1;
-    border-radius: $border_radius_1_2;
+    height: 75vh;
+    padding-bottom: $spacing_2_2;
 
     @media screen and (min-width: $screen-lg) {
+      height: unset;
       margin-left: $spacing_1_6;
       padding: $spacing_2_4;
       padding-bottom: 0;
