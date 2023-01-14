@@ -21,6 +21,12 @@
       }
     }
 
+    &__item {
+      @media screen and (min-width: $screen_lg) {
+        justify-self: end;
+      }
+    }
+
     &__day {
       display: flex;
       justify-content: center;
