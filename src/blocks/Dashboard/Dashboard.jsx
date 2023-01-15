@@ -46,11 +46,14 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
 
   const weekDays = [];
   let startDay = today;
-  let firstMonday;
+  let firstMonday, lastFriday;
   for (let i = 0; i < 5; i++) {
     const { first, last } = getStartAndEndOfWeek(new Date(startDay));
     if (!firstMonday) {
       firstMonday = first;
+    }
+    if (i === 4) {
+      lastFriday = last;
     }
     startDay = new Date(new Date(first).setDate(new Date(first).getDate() + 7));
     weekDays.push(...getDatesInRange(first, last));
@@ -158,7 +161,9 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
         <GridItem md={8} classes="dashboard__grid__calendar-item">
           <Grid classes="dashboard__grid__calendar-item__weekdays-grid">
             <GridItem xs={3} classes="dashboard__grid__next-weeks">
-              <h4>{t("next_weeks")}</h4>
+              <h4>{`${getDateView(firstMonday)} - ${getDateView(
+                lastFriday
+              )}`}</h4>
             </GridItem>
             <GridItem xs={4} classes="dashboard__grid__calendar-text">
               {isLoading ? (
@@ -199,6 +204,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
                   handleClick={() => handleDaySelect(day)}
                   numberOfConsultations={dayConsultations}
                   isAvailable={isAvailable}
+                  t={t}
                   consultationsLabel={
                     dayConsultations === 1
                       ? t("consultation")

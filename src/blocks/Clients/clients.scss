@@ -54,9 +54,14 @@
       margin-top: $spacing_2_4;
       place-items: center;
 
+      @media screen and (min-width: $screen_md) {
+        min-width: 72rem;
+      }
+
       @media screen and (min-width: $screen_lg) {
         margin-top: $spacing_3_2;
         place-items: end;
+        min-width: 75.6rem;
 
         & .grid-item:nth-child(even) {
           place-self: start;
@@ -263,5 +268,9 @@
 
   &__no-consultations {
     margin-top: $spacing_6_4;
+  }
+
+  &__no-clients-item {
+    padding-top: $spacing_2_4;
   }
 }

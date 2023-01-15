@@ -1,16 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
 
-export default function useGetAllConsultationsByFilter(filter) {
-  const fetchAllConsultations = async () => {
-    let response;
-    if (filter === "upcoming") {
-      response = await providerSvc.getAllUpcomingConsultations();
-    } else {
-      response = await providerSvc.getAllPastConsultations();
-    }
-    const data = response.data;
+export default function useGetAllPastConsultations() {
+  const fetchAllPastConsultations = async () => {
+    const response = await providerSvc.getAllPastConsultations();
 
+    const data = response.data;
     return data?.map((consultation) => ({
       consultationId: consultation.consultation_id,
       chatId: consultation.chat_id,
@@ -19,11 +14,13 @@ export default function useGetAllConsultationsByFilter(filter) {
       image: consultation.client_image,
       timestamp: new Date(consultation.time).getTime(),
       status: consultation.status,
+      price: consultation.price,
     }));
   };
-  const query = useQuery(["all-consultations", filter], fetchAllConsultations);
+
+  const query = useQuery(["all-past-consultations"], fetchAllPastConsultations);
 
   return query;
 }
 
-export { useGetAllConsultationsByFilter };
+export { useGetAllPastConsultations };

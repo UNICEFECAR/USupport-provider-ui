@@ -1,6 +1,9 @@
 import React, { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 import {
   Block,
   Grid,
@@ -8,11 +11,16 @@ import {
   TabsUnderlined,
   Consultation,
   InputSearch,
+  Loading,
 } from "@USupport-components-library/src";
-import { useGetAllConsultationsByFilter } from "#hooks";
+import { getTimestampFromUTC } from "@USupport-components-library/utils";
+
+import {
+  useGetConsultationsForSingleDay,
+  useGetAllUpcomingConsultations,
+} from "#hooks";
 
 import "./consultations.scss";
-import { useNavigate } from "react-router-dom";
 
 /**
  * Consultations
@@ -29,10 +37,12 @@ export const Consultations = ({
   const { t } = useTranslation("consultations");
 
   const [searchValue, setSearchValue] = useState("");
+  const [filter, setFilter] = useState("today");
 
-  const tabsOptions = [
-    { label: t("upcoming_tab_label"), value: "upcoming", isSelected: true },
-  ];
+  const [tabsOptions, setTabsOptions] = useState([
+    { label: t("today_tab_label"), value: "today", isSelected: true },
+    { label: t("upcoming_tab_label"), value: "upcoming", isSelected: false },
+  ]);
 
   const handleCancelConsultation = (consultation) => {
     openCancelConsultation(consultation);
@@ -42,25 +52,66 @@ export const Consultations = ({
     navigate("/clients", { state: { clientInformation } });
   };
 
-  const consultationsQuery = useGetAllConsultationsByFilter("upcoming");
+  const handleTabClick = (index) => {
+    const optionsCopy = [...tabsOptions];
 
-  const renderAllConsultations = useMemo(() => {
-    if (!consultationsQuery.data || consultationsQuery.data?.length === 0)
+    for (let i = 0; i < optionsCopy.length; i++) {
+      if (i === index) {
+        optionsCopy[i].isSelected = true;
+      } else {
+        optionsCopy[i].isSelected = false;
+      }
+    }
+
+    setTabsOptions(optionsCopy);
+    setFilter(optionsCopy[index].value);
+  };
+
+  const consultationsQuery = useGetConsultationsForSingleDay(
+    getTimestampFromUTC(new Date())
+  );
+
+  const [upcomingConsultationsQuery, currentPage, totalCount] =
+    useGetAllUpcomingConsultations();
+
+  const renderUpcomingConsultations = () => {
+    if (
+      !upcomingConsultationsQuery.data?.pages ||
+      upcomingConsultationsQuery.data.pages.flat().length === 0
+    ) {
       return (
         <GridItem
           md={8}
           lg={12}
           classes="consultations__grid__consultations-item__grid__consultation"
         >
-          <p>{t("no_upcoming_consultations")}</p>
+          <p>{t(`no_upcoming_consultations_${filter}`)}</p>
+        </GridItem>
+      );
+    }
+    let consultations = upcomingConsultationsQuery.data.pages.flat();
+
+    const sortedConsultations = consultations.sort(
+      (a, b) => a.timestamp - b.timestamp
+    );
+
+    if (searchValue) {
+      consultations = sortedConsultations.filter((consultation) =>
+        consultation.clientName.toLowerCase().includes(searchValue)
+      );
+    }
+    if (searchValue && consultations.length === 0)
+      return (
+        <GridItem
+          md={8}
+          lg={12}
+          classes="consultations__grid__consultations-item__grid__consultation"
+        >
+          <p>{t("no_upcoming_consultations_search")}</p>
         </GridItem>
       );
 
-    const sortedConsultations = consultationsQuery.data.sort((a, b) => {
-      return a.timestamp - b.timestamp;
-    });
-    console.log(sortedConsultations, "sorted");
-    return sortedConsultations.map((consultation, index) => {
+    return consultations.map((consultation, index) => {
       return (
         <GridItem
           key={index}
@@ -82,7 +133,76 @@ export const Consultations = ({
         </GridItem>
       );
     });
-  }, [consultationsQuery.data]);
+  };
+
+  const renderAllConsultations = useMemo(() => {
+    if (!consultationsQuery.data || consultationsQuery.data?.length === 0)
+      return (
+        <GridItem
+          md={8}
+          lg={12}
+          classes="consultations__grid__consultations-item__grid__consultation"
+        >
+          <p>{t(`no_upcoming_consultations_${filter}`)}</p>
+        </GridItem>
+      );
+
+    const sortedConsultations = consultationsQuery.data.sort((a, b) => {
+      return a.timestamp - b.timestamp;
+    });
+
+    let consultations = sortedConsultations;
+    if (searchValue) {
+      consultations = sortedConsultations.filter((consultation) =>
+        consultation.clientName.toLowerCase().includes(searchValue)
+      );
+    }
+
+    if (searchValue && consultations.length === 0)
+      return (
+        <GridItem
+          md={8}
+          lg={12}
+          classes="consultations__grid__consultations-item__grid__consultation"
+        >
+          <p>{t("no_upcoming_consultations_search")}</p>
+        </GridItem>
+      );
+
+    return consultations.map((consultation, index) => {
+      return (
+        <GridItem
+          key={index}
+          md={4}
+          lg={6}
+          classes="consultations__grid__consultations-item__grid__consultation"
+        >
+          <Consultation
+            consultation={consultation}
+            handleCancelConsultation={handleCancelConsultation}
+            handleJoinClick={openJoinConsultation}
+            handleViewProfile={handleViewProfile}
+            hasMenu={true}
+            overview={false}
+            renderIn="provider"
+            suggested={consultation.status === "suggested"}
+            t={t}
+          />
+        </GridItem>
+      );
+    });
+  }, [consultationsQuery.data, searchValue, filter]);
+
+  let hasMore;
+  const hasLessThanSixConsultations =
+    totalCount === undefined ? false : totalCount <= 6;
+
+  if (currentPage === 1) {
+    hasMore = !hasLessThanSixConsultations;
+  } else {
+    const totalPages = Math.ceil(totalCount / 6);
+    hasMore = totalPages > currentPage;
+  }
 
   return (
     <Block classes="consultations">
@@ -91,7 +211,7 @@ export const Consultations = ({
           <div className="consultations__heading-container">
             <InputSearch
               value={searchValue}
-              onChange={(e) => setSearchValue(e.currentTarget.value)}
+              onChange={(value) => setSearchValue(value.toLowerCase())}
               placeholder={t("input_search_label")}
               classes="consultations__heading-container__search"
             />
@@ -101,16 +221,32 @@ export const Consultations = ({
           </div>
         </GridItem>
         <GridItem md={8} lg={12} classes="consultations__grid__tabs-item">
-          <TabsUnderlined options={tabsOptions} handleSelect={() => {}} />
+          <TabsUnderlined options={tabsOptions} handleSelect={handleTabClick} />
         </GridItem>
         <GridItem
           md={8}
           lg={12}
           classes="consultations__grid__consultations-item"
         >
-          <Grid classe="consultations__grid__consultations-item__grid">
-            {renderAllConsultations}
-          </Grid>
+          {filter === "upcoming" ? (
+            <InfiniteScroll
+              dataLength={upcomingConsultationsQuery.data?.pages?.length || 0}
+              hasMore={hasMore}
+              next={() => upcomingConsultationsQuery.fetchNextPage()}
+              loader={<Loading />}
+              initialScrollY={200}
+              scrollThreshold={0}
+              style={{ paddingBottom: "18px" }}
+            >
+              <Grid classes="consultations__grid__consultations-item__grid">
+                {renderUpcomingConsultations()}
+              </Grid>
+            </InfiniteScroll>
+          ) : (
+            <Grid classes="consultations__grid__consultations-item__grid">
+              {renderAllConsultations}
+            </Grid>
+          )}
         </GridItem>
       </Grid>
     </Block>

@@ -10,8 +10,6 @@ import { useCancelConsultation } from "#hooks";
 
 import { ONE_HOUR } from "@USupport-components-library/utils";
 
-const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
-
 import "./cancel-consultation.scss";
 
 /**
@@ -26,13 +24,12 @@ export const CancelConsultation = ({
   onClose,
   consultation,
   onSuccess = () => {},
-  provider,
 }) => {
   const queryClient = useQueryClient();
   const { t } = useTranslation("cancel-consultation");
   const [error, setError] = useState();
 
-  const { providerName, timestamp, time, image } = consultation;
+  const { clientName, timestamp, time, image } = consultation;
 
   const startDate = new Date(time || timestamp);
   const endDate = new Date(new Date(time || timestamp).getTime() + ONE_HOUR);
@@ -68,14 +65,26 @@ export const CancelConsultation = ({
       secondaryCtaHandleClick={onClose}
       errorMessage={error}
     >
-      <ConsultationInformation
-        startDate={startDate}
-        endDate={endDate}
-        providerName={providerName}
-        providerImage={image || "default"}
-        classes="cancel-consultation__provider-consultation"
-        t={t}
-      />
+      <div className="cancel-consultation__content-container">
+        <ConsultationInformation
+          startDate={startDate}
+          endDate={endDate}
+          providerName={clientName}
+          providerImage={image || "default"}
+          classes="cancel-consultation__provider-consultation"
+          t={t}
+        />
+        <div
+          className={[
+            "cancel-consultation__price-badge",
+            //TODO: refactor if price === 0, then free
+            1 !== 1 && "cancel-consultation__price-badge--free",
+          ].join(" ")}
+        >
+          {/* TODO: refactor to show the real price */}
+          <p className="small-text">$50</p>
+        </div>
+      </div>
     </Backdrop>
   );
 };

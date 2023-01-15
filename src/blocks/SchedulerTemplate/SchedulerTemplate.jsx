@@ -19,6 +19,7 @@ import {
   getTimestamp,
   getTimestampFromUTC,
   hours,
+  useWindowDimensions,
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
@@ -34,6 +35,7 @@ import "./scheduler-template.scss";
 export const SchedulerTemplate = () => {
   const { t } = useTranslation("scheduler-template");
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
   const daysOfWeek = [
     "monday",
     "tuesday",
@@ -267,9 +269,17 @@ export const SchedulerTemplate = () => {
             label={t("end_date")}
           />
         </GridItem>
-        <GridItem md={8} lg={12}>
-          {daysOfWeek.map((day, index) => {
-            return (
+        {daysOfWeek.map((day, index) => {
+          return (
+            <GridItem
+              md={width < 900 ? 8 : 4}
+              lg={index === 6 ? 12 : 6}
+              classes={
+                index % 2 === 0 &&
+                index !== 6 &&
+                "scheduler-template__grid__item"
+              }
+            >
               <div key={day + index} className="scheduler-template__grid__day">
                 <h4 className="scheduler-template__grid__day-heading">
                   {t(day)}
@@ -305,8 +315,10 @@ export const SchedulerTemplate = () => {
                   </div>
                 </div>
               </div>
-            );
-          })}
+            </GridItem>
+          );
+        })}
+        <GridItem md={8} lg={12}>
           <Button
             onClick={handleSubmit}
             type="primary"

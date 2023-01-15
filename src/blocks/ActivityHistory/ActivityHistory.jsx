@@ -17,7 +17,7 @@ import {
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 
-import { useGetAllConsultationsByFilter, useGetChatData } from "#hooks";
+import { useGetAllPastConsultations, useGetChatData } from "#hooks";
 
 import "./activity-history.scss";
 
@@ -40,7 +40,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
 
   const [selectedConsultation, setSelectedConsultation] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const consultationsQuery = useGetAllConsultationsByFilter("past");
+  const consultationsQuery = useGetAllPastConsultations();
   const chatQuery = useGetChatData(selectedConsultation?.chatId);
 
   const handleConsultationClick = (consultation) => {
@@ -174,13 +174,6 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
           <div className="activity-history__main-container">
             <div className="activity-history__main-container__header">
               <h4>{t("activity_history_heading")}</h4>
-              {/* <ButtonWithIcon
-                iconName="filter"
-                iconColor="#fff"
-                color="purple"
-                label={t("button_filter_label")}
-                circleSize="sm"
-              /> */}
             </div>
             <Grid classes="activity-history__main-container__grid">
               {renderAllConsultations()}

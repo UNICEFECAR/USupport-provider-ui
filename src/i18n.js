@@ -22,6 +22,7 @@ import {
   CookiePolicy,
   TermsOfUse,
   Dashboard,
+  Notifications,
 } from "#blocks/locales.js";
 
 import {
@@ -53,6 +54,8 @@ import {
   CancelConsultation,
   JoinConsultation,
   SelectConsultation,
+  CodeVerification,
+  CancelPaidConsultation,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -78,6 +81,7 @@ const resources = {
     "cookie-policy": CookiePolicy.en,
     "terms-of-use": TermsOfUse.en,
     dashboard: Dashboard.en,
+    notifications: Notifications.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -107,6 +111,8 @@ const resources = {
     "cancel-consultation": CancelConsultation.en,
     "join-consultation": JoinConsultation.en,
     "select-consultation": SelectConsultation.en,
+    "code-verification": CodeVerification.en,
+    "cancel-paid-consultation": CancelPaidConsultation.en,
   },
 };
 

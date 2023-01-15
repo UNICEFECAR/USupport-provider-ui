@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { providerSvc } from "@USupport-components-library/services";
 
@@ -6,7 +6,6 @@ import { providerSvc } from "@USupport-components-library/services";
  * Reuseable hook to get and transform the provider data in a desired format
  */
 export default function useGetProviderData(id = null) {
-  const queryClient = useQueryClient();
   const [providersData, setProvidersData] = useState();
   const fetchProvidersData = async () => {
     let data;
@@ -40,6 +39,7 @@ export default function useGetProviderData(id = null) {
       workWith: data.work_with || [],
       totalConsultations: data.total_consultations || 0,
       earliestAvailableSlot: data.earliest_available_slot || "",
+      videoLink: data.video_link || "",
     };
     return formattedData;
   };
@@ -49,7 +49,7 @@ export default function useGetProviderData(id = null) {
       const dataCopy = JSON.parse(JSON.stringify(data));
       setProvidersData({ ...dataCopy });
     },
-    onError: (err) => console.log(err, "err"),
+    // onError: (err) => console.log(err, "err"),
     notifyOnChangeProps: ["data"],
   });
 

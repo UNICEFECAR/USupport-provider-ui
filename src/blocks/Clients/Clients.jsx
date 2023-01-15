@@ -49,6 +49,7 @@ export const Clients = ({
   const location = useLocation();
   const initiallySelectedClient = location.state?.clientInformation || null;
   const [selectedClient, setSelectedClient] = useState(initiallySelectedClient);
+  const [searchValue, setSearchValue] = useState("");
 
   const initiallySelectedConsultation =
     location.state?.consultationInformation || null;
@@ -70,8 +71,32 @@ export const Clients = ({
     openSelectConsultation(clientId);
   };
 
+  const handleSearch = (value) => {
+    setSearchValue(value.toLowerCase());
+  };
+
   const renderAllClients = () => {
-    return clientsQuery.data?.map((client, index) => {
+    let clientsData = clientsQuery.data;
+    if (searchValue) {
+      clientsData = clientsQuery.data?.filter((client) => {
+        return client.name.toLowerCase().includes(searchValue);
+      });
+    }
+
+    if (searchValue && clientsData.length === 0)
+      return (
+        <GridItem md={8} lg={12} classes="clients__no-clients-item">
+          {t("no_clients_search")}
+        </GridItem>
+      );
+    if (!clientsData || clientsData.length === 0)
+      return (
+        <GridItem md={8} lg={12} classes="clients__no-clients-item">
+          {t("no_clients")}
+        </GridItem>
+      );
+
+    return clientsData?.map((client, index) => {
       return (
         <GridItem lg={6} key={index}>
           <ClientHistory
@@ -121,6 +146,8 @@ export const Clients = ({
             <InputSearch
               placeholder={t("input_search_placeholder")}
               classes="clients__clients-container__header__input"
+              onChange={handleSearch}
+              value={searchValue}
             />
           </div>
           <Grid classes="clients__clients-container__grid">
@@ -227,16 +254,15 @@ const ConsultationDetails = ({
           <div className="clients__consultation-container__consultation__messages">
             {chatQuery.isLoading ? <Loading size="lg" /> : renderAllMessages()}
           </div>
-          <div>
-            <Button
-              size="lg"
-              label={proposeConsultationLabel}
-              onClick={() =>
-                handleSuggestConsultation(selectedClient.clientDetailId)
-              }
-              classes="clients__consultation-container__consultation__button"
-            />
-          </div>
+
+          <Button
+            size="lg"
+            label={proposeConsultationLabel}
+            onClick={() =>
+              handleSuggestConsultation(selectedClient.clientDetailId)
+            }
+            classes="clients__consultation-container__consultation__button"
+          />
         </div>
       )}
     </GridItem>

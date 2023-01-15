@@ -120,20 +120,11 @@ export const Page = ({
   const { data: countries } = useQuery(["countries"], fetchCountries);
   const { data: languages } = useQuery(["languages"], fetchLanguages);
 
-  const image = useQuery(
-    ["provider-image"],
-    async () => {
-      const data = queryClient.getQueryData(["provider-data"]);
-      if (!data) {
-        queryClient.invalidateQueries({ queryKey: ["provider-data"] });
-      }
-      await new Promise((resolve) => resolve());
-      return data?.image || "default";
-    },
-    {
-      initialData: "default",
-    }
-  );
+  const hasUnreadNotifications = queryClient.getQueryData([
+    "has-unread-notifications",
+  ]);
+
+  const image = queryClient.getQueryData(["provider-data"])?.image;
 
   const pages = [
     { name: t("page_1"), url: "/dashboard", exact: true },
@@ -178,13 +169,14 @@ export const Page = ({
           showProfile
           yourProfileText={t("your_profile_text")}
           i18n={i18n}
-          image={image?.data || "default"}
+          image={image || "default"}
           navigate={navigateTo}
           NavLink={NavLink}
           countries={countries}
           languages={languages}
           initialCountry={selectedCountry}
           initialLanguage={selectedLanguage}
+          hasUnreadNotifications={hasUnreadNotifications}
         />
       )}
       <div

@@ -34,6 +34,9 @@ export default function useUpdateProviderData(onSuccess, onError) {
     delete newPayload.image;
     delete newPayload.totalConsultations;
     delete newPayload.earliestAvailableSlot;
+
+    newPayload.email = newPayload.email.toLowerCase();
+
     return newPayload;
   };
 

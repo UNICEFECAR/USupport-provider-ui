@@ -12,6 +12,7 @@ export default function useGetPastConsultationsByClientId(clientId) {
       image: consultation.client_image,
       timestamp: new Date(consultation.time).getTime(),
       status: consultation.status,
+      price: consultation.price,
     }));
   };
   const query = useQuery(

@@ -33,6 +33,8 @@
       border: 0.1rem solid $color_primary_20809e;
       border-radius: $border_radius_1_2;
       padding: $spacing_1_6;
+      max-height: 65rem;
+      overflow-y: auto;
 
       &__heading {
         display: flex;

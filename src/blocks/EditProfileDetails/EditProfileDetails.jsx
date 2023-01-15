@@ -88,6 +88,7 @@ export const EditProfileDetails = ({
     description: Joi.string().label(t("description_error")),
     totalConsultations: Joi.any(),
     earliestAvailableSlot: Joi.any(),
+    videoLink: Joi.string().uri().allow("", null),
   });
 
   const sexOptions = [
@@ -227,7 +228,7 @@ export const EditProfileDetails = ({
         <Loading size="lg" />
       ) : (
         <Grid classes="edit-profile-details__grid">
-          <GridItem md={8} lg={12}>
+          <GridItem md={8} lg={4}>
             <ProfilePicturePreview
               image={providerData.image}
               handleDeleteClick={openDeletePictureBackdrop}
@@ -255,6 +256,23 @@ export const EditProfileDetails = ({
               label={t("surname_label")}
               placeholder={t("surname_placeholder")}
             />
+            <Textarea
+              value={providerData.description}
+              onChange={(value) => handleChange("description", value)}
+              errorMessage={errors.description}
+              label={t("description_label")}
+              placeholder={t("description_placeholder")}
+              onBlur={() => handleBlur("description")}
+            />
+            <Input
+              value={providerData.videoLink}
+              onChange={(e) => handleChange("videoLink", e.currentTarget.value)}
+              label={t("video_link_label")}
+              placeholder={t("video_link_placeholder")}
+            />
+          </GridItem>
+
+          <GridItem md={8} lg={4}>
             <div className="edit-profile-details__grid__phone-container">
               <DropdownWithLabel
                 options={phonePrefixes}
@@ -280,6 +298,14 @@ export const EditProfileDetails = ({
                 message={errors.phone || errors.phonePrefix}
               />
             ) : null}
+            <Input
+              value={providerData.email}
+              onChange={(e) => handleChange("email", e.currentTarget.value)}
+              errorMessage={errors.email}
+              label={t("email_label")}
+              placeholder={t("email_placeholder")}
+              onBlur={() => handleBlur("email")}
+            />
             <DropdownWithLabel
               label={t("sex_label")}
               placeholder={t("sex_placeholder")}
@@ -290,20 +316,14 @@ export const EditProfileDetails = ({
               errorMessage={errors.sex}
             />
             <Input
-              value={providerData.email}
-              onChange={(e) => handleChange("email", e.currentTarget.value)}
-              errorMessage={errors.email}
-              label={t("email_label")}
-              placeholder={t("email_placeholder")}
-              onBlur={() => handleBlur("email")}
-            />
-            <Input
-              value={providerData.street}
-              onChange={(e) => handleChange("street", e.currentTarget.value)}
-              errorMessage={errors.street}
-              label={t("street_label")}
-              placeholder={t("street_placeholder")}
-              onBlur={() => handleBlur("street")}
+              value={providerData.consultationPrice}
+              onChange={(e) =>
+                handleChange("consultationPrice", e.currentTarget.value)
+              }
+              errorMessage={errors.consultationPrice}
+              label={t("consultation_price_label")}
+              placeholder={t("consultation_price_placeholder")}
+              onBlur={() => handleBlur("consultationPrice")}
             />
             <Input
               value={providerData.city}
@@ -321,26 +341,17 @@ export const EditProfileDetails = ({
               placeholder={t("postcode_placeholder")}
               onBlur={() => handleBlur("postcode")}
             />
-            <DropdownGroup
-              label={t("specialization_label")}
-              options={getSpecializationsOptions()}
-              handleChange={(options) =>
-                handleWorkWithAndLanguageSelect("specializations", options)
-              }
-              maxShown={specializationOptions.length}
-              addMoreText={t("add_more_specializations")}
-              errorMessage={errors.specializations}
-            />
             <Input
-              value={providerData.consultationPrice}
-              onChange={(e) =>
-                handleChange("consultationPrice", e.currentTarget.value)
-              }
-              errorMessage={errors.consultationPrice}
-              label={t("consultation_price_label")}
-              placeholder={t("consultation_price_placeholder")}
-              onBlur={() => handleBlur("consultationPrice")}
+              value={providerData.street}
+              onChange={(e) => handleChange("street", e.currentTarget.value)}
+              errorMessage={errors.street}
+              label={t("street_label")}
+              placeholder={t("street_placeholder")}
+              onBlur={() => handleBlur("street")}
             />
+          </GridItem>
+
+          <GridItem md={8} lg={4}>
             <DropdownGroup
               options={getLanguageOptions()}
               handleChange={(languages) =>
@@ -350,6 +361,16 @@ export const EditProfileDetails = ({
               maxShown={5}
               addMoreText={t("add_more_languages")}
               errorMessage={errors.languages}
+            />
+            <DropdownGroup
+              label={t("specialization_label")}
+              options={getSpecializationsOptions()}
+              handleChange={(options) =>
+                handleWorkWithAndLanguageSelect("specializations", options)
+              }
+              maxShown={specializationOptions.length}
+              addMoreText={t("add_more_specializations")}
+              errorMessage={errors.specializations}
             />
             <InputGroup
               maxShown={5}
@@ -369,15 +390,13 @@ export const EditProfileDetails = ({
               addMoreText={t("add_more_work_with")}
               errorMessage={errors.workWith}
             />
-            <Textarea
-              value={providerData.description}
-              onChange={(value) => handleChange("description", value)}
-              errorMessage={errors.description}
-              label={t("description_label")}
-              placeholder={t("description_placeholder")}
-              onBlur={() => handleBlur("description")}
-            />
-            {errors.submit ? <Error message={errors.submit} /> : null}
+          </GridItem>
+          {errors.submit ? <Error message={errors.submit} /> : null}
+          <GridItem
+            md={8}
+            lg={12}
+            classes="edit-profile-details__grid__buttons-item"
+          >
             <Button
               classes="edit-profile-details__grid__save-button"
               type="primary"
