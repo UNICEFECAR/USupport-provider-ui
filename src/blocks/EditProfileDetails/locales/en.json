@@ -15,6 +15,7 @@
   "education_label": "Education",
   "change_photo": "Change photo",
   "work_with_label": "Specialties",
+  "video_link_label": "Video representation",
 
   "name_placeholder": "Enter your name",
   "patronym_placeholder": "Enter you patronym",
@@ -28,6 +29,7 @@
   "postcode_placeholder": "Enter your postcode",
   "consultation_price_placeholder": "Consultation price",
   "description_placeholder": "Enter description",
+  "video_link_placeholder": "https://video.link",
 
   "sex_male": "Male",
   "sex_female": "Female",
@@ -54,6 +56,7 @@
   "education_error": "Education is required",
   "description_error": "Description is required",
   "sex_error": "Select your sex",
+  "consultation_price_error": "The price must be 0 or a positive number",
 
   "add_more_languages": "Add more languages",
   "add_more_work_with": "Add more categories",
