@@ -17,7 +17,7 @@ import {
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 
-import { useGetAllConsultationsByFilter, useGetChatData } from "#hooks";
+import { useGetAllPastConsultations, useGetChatData } from "#hooks";
 
 import "./activity-history.scss";
 
@@ -40,7 +40,7 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
 
   const [selectedConsultation, setSelectedConsultation] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const consultationsQuery = useGetAllConsultationsByFilter("past");
+  const consultationsQuery = useGetAllPastConsultations();
   const chatQuery = useGetChatData(selectedConsultation?.chatId);
 
   const handleConsultationClick = (consultation) => {
