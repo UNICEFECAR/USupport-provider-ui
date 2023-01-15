@@ -39,6 +39,7 @@ export default function useGetProviderData(id = null) {
       workWith: data.work_with || [],
       totalConsultations: data.total_consultations || 0,
       earliestAvailableSlot: data.earliest_available_slot || "",
+      videoLink: data.video_link || "",
     };
     return formattedData;
   };
@@ -48,7 +49,7 @@ export default function useGetProviderData(id = null) {
       const dataCopy = JSON.parse(JSON.stringify(data));
       setProvidersData({ ...dataCopy });
     },
-    onError: (err) => console.log(err, "err"),
+    // onError: (err) => console.log(err, "err"),
     notifyOnChangeProps: ["data"],
   });
 
