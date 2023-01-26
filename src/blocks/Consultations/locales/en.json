@@ -18,5 +18,6 @@
   "no_upcoming_consultations_today": "You have no consultations today",
   "no_upcoming_consultations_upcoming": "You have no upcoming consultations",
   "no_upcoming_consultations_search": "There are no consultations matching your search",
-  "not_conducted": "Not conducted"
+  "not_conducted": "Not conducted",
+  "conducted": "Conducted"
 }
