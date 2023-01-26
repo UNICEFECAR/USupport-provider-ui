@@ -33,10 +33,14 @@ export const CancelConsultation = ({
 
   const startDate = new Date(time || timestamp);
   const endDate = new Date(new Date(time || timestamp).getTime() + ONE_HOUR);
+
+  const isConsultationLessThan24HoursBefore =
+    new Date().getTime() + 24 * ONE_HOUR >= startDate.getTime();
+
   const onCancelSuccess = () => {
     onSuccess();
-    queryClient.invalidateQueries({ queryKey: ["all-consultations"] });
-    queryClient.invalidateQueries({ queryKey: ["consultations-single-week"] });
+    queryClient.invalidateQueries({ queryKey: ["upcoming-consultations"] });
+    queryClient.invalidateQueries({ queryKey: ["consultations-single-day"] });
     onClose();
     toast(t("cancel_success"));
   };
@@ -49,7 +53,11 @@ export const CancelConsultation = ({
   );
 
   const handleCancelClick = () => {
-    cancelConsultationMutation.mutate(consultation.consultationId);
+    cancelConsultationMutation.mutate({
+      consultationId: consultation.consultationId,
+      price: consultation.price,
+      shouldRefund: isConsultationLessThan24HoursBefore ? false : true,
+    });
   };
 
   return (
@@ -58,11 +66,19 @@ export const CancelConsultation = ({
       title="CancelConsultation"
       isOpen={isOpen}
       onClose={onClose}
-      heading={t("heading")}
-      ctaLabel={t("cancel_button_label")}
-      ctaHandleClick={handleCancelClick}
-      secondaryCtaLabel={t("keep_button_label")}
-      secondaryCtaHandleClick={onClose}
+      heading={
+        consultation.price > 0
+          ? t("paid_heading", { price: consultation.price })
+          : t("heading")
+      }
+      text={consultation.price > 0 ? t("paid_subheading") : ""}
+      ctaHandleClick={onClose}
+      ctaLabel={t("keep_button_label")}
+      secondaryCtaLabel={t("cancel_button_label")}
+      secondaryCtaHandleClick={handleCancelClick}
+      secondaryCtaColor={consultation.price > 0 ? "red" : "green"}
+      showLoadingIfDisabled
+      isSecondaryCtaDisabled={cancelConsultationMutation.isLoading}
       errorMessage={error}
     >
       <div className="cancel-consultation__content-container">
@@ -82,7 +98,7 @@ export const CancelConsultation = ({
           ].join(" ")}
         >
           {/* TODO: refactor to show the real price */}
-          <p className="small-text">$50</p>
+          <p className="small-text">{consultation.price}</p>
         </div>
       </div>
     </Backdrop>
