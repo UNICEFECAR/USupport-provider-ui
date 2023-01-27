@@ -71,9 +71,7 @@ export const CodeVerification = ({ isOpen, onClose, data }) => {
       navigate("/dashboard");
     },
     onError: (err) => {
-      console.log(err, "error");
       const { message: errorMessage } = useError(err);
-      console.log(errorMessage);
       setErrors({ submit: errorMessage });
     },
     onSettled: () => {
