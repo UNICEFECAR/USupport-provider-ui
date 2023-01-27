@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import PinInput from "react-pin-input";
+
 import {
   Backdrop,
   ButtonWithIcon,
   Button,
+  Error,
 } from "@USupport-components-library/src";
 
+import { userSvc } from "@USupport-components-library/services";
+
+import {
+  useCountdownTimer,
+  useError,
+} from "@USupport-components-library/hooks";
+
 import "./code-verification.scss";
-import { useCountdownTimer } from "@USupport-components-library/hooks";
 
 /**
  * CodeVerification
@@ -17,11 +27,15 @@ import { useCountdownTimer } from "@USupport-components-library/hooks";
  *
  * @return {jsx}
  */
-export const CodeVerification = ({ isOpen, onClose }) => {
+export const CodeVerification = ({ isOpen, onClose, data }) => {
   const { t } = useTranslation("code-verification");
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [isCodeHidden, setIsCodeHidden] = useState(true);
   const [canRequestNewEmail, setCanRequestNewEmail] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState();
 
   const timeToRequestNewEmail = useCountdownTimer(3);
 
@@ -34,17 +48,45 @@ export const CodeVerification = ({ isOpen, onClose }) => {
   const time = useCountdownTimer();
   const [code, setCode] = useState("");
 
+  const login = async () => {
+    const payload = {
+      userType: "provider",
+      otp: code,
+      ...data,
+    };
+    return await userSvc.login(payload);
+  };
+  const loginMutation = useMutation(login, {
+    onSuccess: (response) => {
+      const { token: tokenData } = response.data;
+      const { token, expiresIn, refreshToken } = tokenData;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("token-expires-in", expiresIn);
+      localStorage.setItem("refresh-token", refreshToken);
+
+      queryClient.invalidateQueries({ queryKey: ["provider-data"] });
+
+      setErrors({});
+      navigate("/dashboard");
+    },
+    onError: (err) => {
+      console.log(err, "error");
+      const { message: errorMessage } = useError(err);
+      console.log(errorMessage);
+      setErrors({ submit: errorMessage });
+    },
+    onSettled: () => {
+      setIsSubmitting(false);
+    },
+  });
+
   const handleCodeChange = (value) => {
     setCode(value);
   };
 
   const handleSend = () => {
-    console.log("send", code);
-    onClose();
-  };
-
-  const handleResendEmail = () => {
-    console.log("must be implemented");
+    loginMutation.mutate();
   };
 
   return (
@@ -86,6 +128,7 @@ export const CodeVerification = ({ isOpen, onClose }) => {
           disabled={code.length === 4 ? false : true}
           onClick={handleSend}
         />
+        {errors.submit && <Error message={errors.submit} />}
         <div className="code-verification__resend-code-container">
           <p className="small-text">{t("didnt_get_code")}</p>
           <Button
@@ -93,7 +136,7 @@ export const CodeVerification = ({ isOpen, onClose }) => {
             label={t("resend_code_button_label")}
             type="link"
             classes="code-verification__resend-code-container__button"
-            onClick={handleResendEmail}
+            onClick={handleSend}
           />
         </div>
       </div>
