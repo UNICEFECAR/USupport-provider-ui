@@ -23,6 +23,7 @@ import {
   TermsOfUse,
   Dashboard,
   Notifications,
+  Reports,
 } from "#blocks/locales.js";
 
 import {
@@ -44,6 +45,7 @@ import {
   ActivityHistory as ActivityHistoryPage,
   Clients as ClientsPage,
   Consultation as ConsultationPage,
+  Reports as ReportsPage,
 } from "#pages/locales.js";
 
 import {
@@ -82,6 +84,7 @@ const resources = {
     "terms-of-use": TermsOfUse.en,
     dashboard: Dashboard.en,
     notifications: Notifications.en,
+    reports: Reports.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -102,6 +105,7 @@ const resources = {
     "activity-history-page": ActivityHistoryPage.en,
     "clients-page": ClientsPage.en,
     "consultation-page": ConsultationPage.en,
+    "reports-page": ReportsPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,

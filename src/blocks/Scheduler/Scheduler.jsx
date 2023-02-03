@@ -175,6 +175,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       clientName: consultation.client_name,
       status: consultation.status,
       time: consultation.time,
+      price: consultation.price,
     };
   };
 

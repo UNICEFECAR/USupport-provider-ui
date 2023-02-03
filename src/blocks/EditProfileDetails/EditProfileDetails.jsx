@@ -39,6 +39,8 @@ export const EditProfileDetails = ({
   openUploadPictureBackdrop,
   openDeletePictureBackdrop,
 }) => {
+  const currencySymbol = localStorage.getItem("currency_symbol");
+
   const { t } = useTranslation("edit-profile-details");
   const [providersQuery, providerData, setProviderData] = useGetProviderData();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -321,7 +323,7 @@ export const EditProfileDetails = ({
                 handleChange("consultationPrice", e.currentTarget.value)
               }
               errorMessage={errors.consultationPrice}
-              label={t("consultation_price_label")}
+              label={t("consultation_price_label", { currencySymbol })}
               placeholder={t("consultation_price_placeholder")}
               onBlur={() => handleBlur("consultationPrice")}
             />

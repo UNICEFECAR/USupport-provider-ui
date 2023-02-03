@@ -11,18 +11,10 @@ import {
   Modal,
 } from "@USupport-components-library/src";
 import { validate } from "@USupport-components-library/utils";
-import { useSendIssueEmail } from "#hooks";
+import { useSendIssueEmail, useGetProviderData } from "#hooks";
 import Joi from "joi";
 
 import "./contact-us.scss";
-
-const initialIssues = [
-  { label: "Reason 1", value: "reason-1", selected: false },
-  { label: "Reason 2", value: "reason-2", selected: false },
-  { label: "Reason 3", value: "reason-3", selected: false },
-  { label: "Reason 4", value: "reason-4", selected: false },
-  { label: "Reason 5", value: "reason-5", selected: false },
-];
 
 const initialData = {
   issue: null,
@@ -39,12 +31,23 @@ const initialData = {
 export const ContactUs = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("contact-us-block");
+
+  const initialIssues = [
+    { value: "information", label: t("contact_reason_1") },
+    { value: "technical-problem", label: t("contact_reason_2") },
+    { value: "join-as-provider", label: t("contact_reason_3") },
+    { value: "partnerships", label: t("contact_reason_4") },
+    { value: "other", label: t("contact_reason_5") },
+  ];
+
   const [data, setData] = useState({ ...initialData });
   const [issues, setIssues] = useState([...initialIssues]);
   const [errors, setErrors] = useState({});
   const [canSubmit, setCanSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const [providerDataQuery] = useGetProviderData();
 
   const schema = Joi.object({
     issue: Joi.string().label(t("issue_error")),
@@ -111,9 +114,11 @@ export const ContactUs = () => {
       };
       if ((await validate(dataToValidate, schema, setErrors)) === null) {
         const payload = {
-          subject: "Technical issue",
+          subjectValue: data.issue,
+          subjectLabel: "Technical issue",
           title: issues.find((x) => x.value === data.issue)?.label,
           text: data.message,
+          email: providerDataQuery.data.email,
         };
         sendIssueEmailMutation.mutate(payload);
       } else {

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+
 import {
   Block,
   Error,
@@ -10,9 +11,9 @@ import {
   GridItem,
   InputPassword,
   Button,
-  // ButtonOnlyIcon,
 } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
+
 import { useError } from "#hooks";
 import { getCountryFromTimezone } from "@USupport-components-library/utils";
 
@@ -25,9 +26,8 @@ import "./login.scss";
  *
  * @return {jsx}
  */
-export const Login = () => {
+export const Login = ({ openCodeVerification, setLoginCredentials }) => {
   const { t } = useTranslation("login");
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -37,39 +37,47 @@ export const Login = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const login = async () => {
-    const usersCountry = getCountryFromTimezone();
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const [showTimer, setShowTimer] = useState(false);
+  const [seconds, setSeconds] = useState(60);
 
-    const field = data.email.includes("@") ? "email" : "userAccessToken";
-    const payload = {
-      [field]: data.email.toLowerCase(),
-      password: data.password.trim(),
-      userType: "provider",
-      location: timezone + ", " + usersCountry,
-    };
-    return await userSvc.login(payload);
+  const disableLoginButtonFor60Sec = () => {
+    setShowTimer(true);
+    const interval = setInterval(() => {
+      setSeconds((sec) => {
+        if (sec - 1 === 0) {
+          clearInterval(interval);
+          setIsSubmitting(false);
+          setShowTimer(false);
+          setSeconds(60);
+        }
+        return sec - 1;
+      });
+    }, 1000);
   };
 
-  const loginMutation = useMutation(login, {
-    onSuccess: (response) => {
-      const { user: userData, token: tokenData } = response.data;
-      const { token, expiresIn, refreshToken } = tokenData;
+  const requestOtp = async () => {
+    const payload = {
+      email: data.email.toLowerCase(),
+      password: data.password.trim(),
+    };
+    return await userSvc.requestOTP(payload);
+  };
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("token-expires-in", expiresIn);
-      localStorage.setItem("refresh-token", refreshToken);
-
-      queryClient.invalidateQueries({ queryKey: ["provider-data"] });
-
-      setErrors({});
-      navigate("/dashboard");
+  const requestOtpMutation = useMutation(requestOtp, {
+    onSuccess: () => {
+      const usersCountry = getCountryFromTimezone();
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      setLoginCredentials({
+        email: data.email.toLocaleLowerCase(),
+        password: data.password.trim(),
+        location: timezone + ", " + usersCountry,
+      });
+      openCodeVerification();
+      disableLoginButtonFor60Sec();
     },
     onError: (error) => {
       const { message: errorMessage } = useError(error);
       setErrors({ submit: errorMessage });
-    },
-    onSettled: () => {
       setIsSubmitting(false);
     },
   });
@@ -85,7 +93,7 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    loginMutation.mutate();
+    requestOtpMutation.mutate();
   };
 
   const handleForgotPassowrd = () => {
@@ -121,6 +129,7 @@ export const Login = () => {
               label={t("forgot_password_label")}
               onClick={() => handleForgotPassowrd()}
             />
+
             {errors.submit ? <Error message={errors.submit} /> : null}
             <Button
               label={t("login_label")}
@@ -130,6 +139,11 @@ export const Login = () => {
               disabled={!data.email || !data.password || isSubmitting}
               isSubmit
             />
+            {showTimer && (
+              <p className="login__try-again">
+                {t("try_again")} {seconds} {t("seconds")}
+              </p>
+            )}
           </form>
         </GridItem>
         {/* <GridItem md={8} lg={12} classes="login__grid__content-item">

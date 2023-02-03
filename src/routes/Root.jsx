@@ -23,6 +23,7 @@ import {
   Dashboard,
   Consultation,
   Notifications,
+  Reports,
 } from "../pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../routes";
@@ -200,6 +201,14 @@ export default function Root() {
           element={
             <ProtectedRoute>
               <Consultations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <Reports />
             </ProtectedRoute>
           }
         />

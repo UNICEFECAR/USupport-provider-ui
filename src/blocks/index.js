@@ -20,3 +20,4 @@ export * from "./TermsOfUse";
 export * from "./Dashboard";
 export * from "./VideoRoom";
 export * from "./Notifications";
+export * from './Reports';
