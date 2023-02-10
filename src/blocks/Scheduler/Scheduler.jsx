@@ -63,7 +63,11 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     "saturday",
   ];
 
-  const [slots, setSlots] = useState([]);
+  const [slotsData, setSlots] = useState({
+    slots: [],
+    campaignSlots: [],
+  });
+  const [campaignsData, setCampaignsData] = useState({});
   const [consultations, setConsultations] = useState();
 
   // Get provider availability
@@ -78,7 +82,34 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     fetchAvailableSlots,
     {
       onSuccess: (data) => {
-        setSlots(data);
+        const campaignsDataCopy = {};
+        data.campaigns_data = data.campaigns_data?.map((x) => {
+          return {
+            campaignId: x.campaign_id,
+            campaignName: x.campaign_name,
+            couponCode: x.coupon_code,
+            campaignStartDate: new Date(x.campaign_start_date),
+            campaignEndDate: new Date(x.campaign_end_date),
+            sponsorName: x.sponsor_name,
+            sponsorImage: x.sponsor_image,
+          };
+        });
+        weekDays.map((day) => {
+          const dayTimestamp = getTimestamp(day) * 1000;
+          const validCampaigns = data.campaigns_data?.filter((x) => {
+            return (
+              new Date(x.campaignStartDate).getTime() <= dayTimestamp &&
+              new Date(x.campaignEndDate).getTime() >= dayTimestamp
+            );
+          });
+          campaignsDataCopy[dayTimestamp.toString()] = validCampaigns;
+        });
+
+        setCampaignsData(campaignsDataCopy);
+        setSlots({
+          slots: data.slots,
+          campaignSlots: data.campaign_slots,
+        });
       },
     }
   );
@@ -101,17 +132,33 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   );
 
   // Add available slot mutation
-  const addAvailableSlot = async ({ startDate, timestampSlot }) => {
-    await providerSvc.addAvailableSlot(startDate, timestampSlot);
+  const addAvailableSlot = async ({ startDate, timestampSlot, campaignId }) => {
+    await providerSvc.addAvailableSlot(startDate, timestampSlot, campaignId);
     return timestampSlot;
   };
   const addAvailableSlotMutation = useMutation(addAvailableSlot, {
-    onMutate: ({ timestampSlot }) => {
+    onMutate: ({ timestampSlot, campaignId }) => {
       const newSlot = new Date(timestampSlot * 1000).toISOString();
-      setSlots([...slots, newSlot]);
+      if (campaignId) {
+        setSlots({
+          slots: [...slotsData.slots],
+          campaignSlots: [
+            ...slotsData.campaignSlots,
+            { campaignId, time: newSlot },
+          ],
+        });
+      } else {
+        setSlots({
+          slots: [...slotsData.slots, newSlot],
+          campaignSlots: [...slotsData.campaignSlots],
+        });
+      }
 
       return () => {
-        setSlots(slots.filter((slot) => slot !== newSlot));
+        setSlots({
+          slots: slotsData.slots.filter((slot) => slot !== newSlot),
+          campaignSlots: slotsData.campaignSlots,
+        });
       };
     },
     onSuccess: () => {
@@ -126,18 +173,35 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   });
 
   // Remove available slot mutation
-  const removeAvailableSlot = async ({ startDate, timestampSlot }) => {
-    await providerSvc.removeAvailableSlot(startDate, timestampSlot);
+  const removeAvailableSlot = async ({
+    startDate,
+    timestampSlot,
+    campaignId,
+  }) => {
+    await providerSvc.removeAvailableSlot(startDate, timestampSlot, campaignId);
     return timestampSlot;
   };
   const removeAvailableSlotMutation = useMutation(removeAvailableSlot, {
-    onMutate: ({ timestampSlot }) => {
+    onMutate: ({ timestampSlot, campaignId }) => {
       const newSlot = new Date(timestampSlot * 1000).toISOString();
-      setSlots(slots.filter((slot) => slot !== newSlot));
+      if (!campaignId) {
+        setSlots({
+          slots: slotsData.slots.filter((slot) => slot !== newSlot),
+          campaignSlots: [...slotsData.campaignSlots],
+        });
+      } else {
+        setSlots({
+          slots: [...slotsData.slots],
+          campaignSlots: [
+            ...slotsData.campaignSlots,
+            { campaignId, time: newSlot },
+          ],
+        });
+      }
 
-      return () => {
-        setSlots([...slots, newSlot]);
-      };
+      // return () => {
+      //   setSlots([...slots, newSlot]);
+      // };
     },
     onSuccess: () => {
       availableSlotsQuery.refetch();
@@ -150,14 +214,18 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
 
   // When rendering every single slot check if
   // it exists in the provider's availability
-  const checkIsAvailable = (day, hour) => {
-    const date = getDateAsFullString(day, hour);
-    const slot = slots.find((slot) => {
+  const checkIsAvailable = (date) => {
+    const slot = slotsData.slots.find((slot) => {
       const dateStr = new Date(slot).toString();
       return dateStr === date;
     });
+    const campaignSlot = slotsData.campaignSlots.find((slot) => {
+      const dateStr = new Date(slot.time).toString();
+      return dateStr === date;
+    });
 
-    return !!slot;
+    if (!!campaignSlot) return campaignSlot;
+    return slot;
   };
 
   const getConsultation = (day, hour) => {
@@ -179,7 +247,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     };
   };
 
-  const handleToggleAvailable = async (date, hour, newStatus) => {
+  const handleToggleAvailable = async (date, hour, newStatus, campaignId) => {
     const timestampSlot = getTimestamp(date, hour);
 
     const timestampStartDate = getTimestampFromUTC(weekStartDate);
@@ -201,20 +269,23 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     if (timestampSlot > timestampEndDate) {
       startDate = timestampPreviousWeekEndDate;
     }
-
     if (newStatus === "available") {
-      addAvailableSlotMutation.mutate({ startDate, timestampSlot });
+      addAvailableSlotMutation.mutate({ startDate, timestampSlot, campaignId });
     } else {
-      removeAvailableSlotMutation.mutate({ startDate, timestampSlot });
+      removeAvailableSlotMutation.mutate({
+        startDate,
+        timestampSlot,
+        campaignId,
+      });
     }
   };
 
-  const handleSetAvailable = (date, hour) => {
-    handleToggleAvailable(date, hour, "available");
+  const handleSetAvailable = (date, hour, campaignId) => {
+    handleToggleAvailable(date, hour, "available", campaignId);
   };
 
-  const handleSetUnavailable = (date, hour) => {
-    handleToggleAvailable(date, hour, "unavailable");
+  const handleSetUnavailable = (date, hour, campaignId) => {
+    handleToggleAvailable(date, hour, "unavailable", campaignId);
   };
 
   const handleCancelConsultation = (consultation) => {
@@ -313,20 +384,46 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                       <p className="small-text">{hour}</p>
                     </GridItem>
                     {weekDays.map((day, dayIndex) => {
+                      const slotDate = getDateAsFullString(day, hour);
+                      const isAvailable = checkIsAvailable(slotDate);
+                      const dayTimestamp = (
+                        getTimestamp(day) * 1000
+                      ).toString();
+
                       return (
                         <ProviderAvailability
                           key={"slot" + day.toString() + dayIndex.toString()}
-                          isAvailable={checkIsAvailable(day, hour)}
-                          handleSetUnavailable={() =>
-                            handleSetUnavailable(day, hour)
+                          isAvailable={
+                            isAvailable?.campaignId ? "campaign" : !!isAvailable
                           }
-                          handleSetAvailable={() =>
-                            handleSetAvailable(day, hour)
-                          }
+                          handleSetUnavailable={(campaignId) => {
+                            handleSetUnavailable(day, hour, campaignId);
+                          }}
+                          handleSetAvailable={(campaignId) => {
+                            handleSetAvailable(day, hour, campaignId);
+                          }}
                           handleCancelConsultation={handleCancelConsultation}
                           handleViewProfile={handleViewProfile}
                           handleJoinConsultation={handleJoinConsultation}
                           consultation={getConsultation(day, hour)}
+                          campaignData={
+                            isAvailable?.campaignId
+                              ? campaignsData[dayTimestamp]?.find(
+                                  (x) =>
+                                    x.campaignId === isAvailable?.campaignId
+                                )
+                              : null
+                          }
+                          enrolledCampaignsForSlot={
+                            isAvailable?.campaignId
+                              ? slotsData?.campaignSlots?.filter((x) => {
+                                  return (
+                                    new Date(x.time).toString() === slotDate
+                                  );
+                                })
+                              : []
+                          }
+                          validCampaigns={campaignsData[dayTimestamp]}
                           dayIndex={dayIndex}
                           t={t}
                         />
