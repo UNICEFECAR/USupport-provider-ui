@@ -334,7 +334,12 @@ export const Notifications = () => {
   return (
     <Block classes="notifications">
       <div className="notifications__heading-container">
-        <Icon name="arrow-chevron-back" size="md" color="#20809E" />
+        <Icon
+          onClick={() => navigate(-1)}
+          name="arrow-chevron-back"
+          size="md"
+          color="#20809E"
+        />
         <h3 className="notifications__heading-container__heading">
           {t("heading")}
         </h3>
