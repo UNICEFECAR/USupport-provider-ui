@@ -143,6 +143,7 @@ export const Page = ({
     { name: t("page_3"), url: "/activity-history" },
     { name: t("page_4"), url: "/consultations" },
     { name: t("page_5"), url: "/clients" },
+    { name: t("page_6"), url: "/reports" },
   ];
 
   const footerLists = {
