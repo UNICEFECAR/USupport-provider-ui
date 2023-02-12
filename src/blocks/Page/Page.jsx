@@ -71,14 +71,20 @@ export const Page = ({
         label: x.name,
         countryID: x["country_id"],
         iconName: x.alpha2,
+        currencySymbol: x["symbol"],
       };
 
       if (localStorageCountry === x.alpha2) {
+        localStorage.setItem("currency_symbol", countryObject.currencySymbol);
+
         setSelectedCountry(countryObject);
       } else if (!localStorageCountry) {
         if (validCountry?.alpha2 === x.alpha2) {
           hasSetDefaultCountry = true;
+
           localStorage.setItem("country", x.alpha2);
+          localStorage.setItem("currency_symbol", countryObject.currencySymbol);
+
           setSelectedCountry(countryObject);
         }
       }
@@ -91,6 +97,11 @@ export const Page = ({
       localStorage.setItem(
         "country_id",
         countries.find((x) => x.value === kazakhstanCountry.value).countryID
+      );
+      localStorage.setItem(
+        "currency_symbol",
+        countries.find((x) => x.value === kazakhstanCountry.value)
+          .currencySymbol
       );
     }
 
