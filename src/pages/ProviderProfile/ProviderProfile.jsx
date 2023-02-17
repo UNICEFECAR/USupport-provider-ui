@@ -20,7 +20,8 @@ export const ProviderProfile = () => {
   const { width } = useWindowDimensions();
 
   const handleLogout = () => {
-    userSvc.logout("provider");
+    userSvc.logout();
+
     navigate("/");
   };
 
