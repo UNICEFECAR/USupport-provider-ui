@@ -72,6 +72,12 @@ export const ProviderProfile = () => {
             {t("other")}
           </p>
           <ButtonSelector
+            label={t("reports_button_label")}
+            iconName="activities"
+            classes="provider-profile__grid__item__button"
+            onClick={() => handleRedirect("reports")}
+          />
+          <ButtonSelector
             label={t("contact_us_button_label")}
             iconName="comment"
             classes="provider-profile__grid__item__button"
