@@ -5,7 +5,7 @@ import { providerSvc } from "@USupport-components-library/services";
 /**
  * Reuseable hook to get and transform the provider data in a desired format
  */
-export default function useGetProviderData(id = null) {
+export default function useGetProviderData(id = null, enabled = true) {
   const [providersData, setProvidersData] = useState();
   const fetchProvidersData = async () => {
     let data;
@@ -49,8 +49,8 @@ export default function useGetProviderData(id = null) {
       const dataCopy = JSON.parse(JSON.stringify(data));
       setProvidersData({ ...dataCopy });
     },
-    // onError: (err) => console.log(err, "err"),
     notifyOnChangeProps: ["data"],
+    enabled,
   });
 
   return [providersDataQuery, providersData, setProvidersData];

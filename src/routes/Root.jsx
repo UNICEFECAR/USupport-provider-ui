@@ -24,14 +24,15 @@ import {
   Consultation,
   Notifications,
   Reports,
-} from "../pages";
+} from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../routes";
 import { useGetProviderData, useCheckHasUnreadNotifications } from "#hooks";
 
 export default function Root() {
-  useGetProviderData();
-  useCheckHasUnreadNotifications();
+  const token = localStorage.getItem("token");
+  useGetProviderData(null, !!token);
+  useCheckHasUnreadNotifications(!!token);
 
   return (
     <Router basename="/provider">
