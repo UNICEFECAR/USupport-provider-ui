@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
 
-export const useGetConsultationsForSingleDay = (date) => {
+export const useGetConsultationsForSingleDay = (date, enabled = true) => {
   const getconsultationsForSingleDay = async () => {
     const { data } = await providerSvc.getConsultationsForSingleDay(date);
     const filtered = data.filter((consultation) => {
@@ -27,7 +27,8 @@ export const useGetConsultationsForSingleDay = (date) => {
 
   const query = useQuery(
     ["consultations-single-day", date],
-    getconsultationsForSingleDay
+    getconsultationsForSingleDay,
+    { enabled }
   );
 
   return query;
