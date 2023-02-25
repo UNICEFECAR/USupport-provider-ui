@@ -28,6 +28,7 @@ export const CancelConsultation = ({
   const queryClient = useQueryClient();
   const { t } = useTranslation("cancel-consultation");
   const [error, setError] = useState();
+  const currencySymbol = localStorage.getItem("currency_symbol");
 
   const { clientName, timestamp, time, image } = consultation;
 
@@ -93,12 +94,13 @@ export const CancelConsultation = ({
         <div
           className={[
             "cancel-consultation__price-badge",
-            //TODO: refactor if price === 0, then free
-            1 !== 1 && "cancel-consultation__price-badge--free",
+            !consultation.price && "cancel-consultation__price-badge--free",
           ].join(" ")}
         >
-          {/* TODO: refactor to show the real price */}
-          <p className="small-text">{consultation.price}</p>
+          <p className="small-text">
+            {consultation.price}
+            {currencySymbol}
+          </p>
         </div>
       </div>
     </Backdrop>
