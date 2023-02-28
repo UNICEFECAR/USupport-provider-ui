@@ -117,7 +117,10 @@ export const Notifications = ({ openJoinConsultation }) => {
 
       // Construct the client name
       const clientData = response.data;
-      const clientName = `${clientData.name} ${clientData.surname}`;
+      const clientName =
+        clientData.name && clientData.surname
+          ? `${clientData.name} ${clientData.surname}`
+          : clientData.nickname;
 
       alreadyFetchedClients.push(notificationData.clientDetailId);
       notificationClientsCopy[notificationData.clientDetailId] = clientName;
@@ -189,6 +192,7 @@ export const Notifications = ({ openJoinConsultation }) => {
 
     switch (notification.type) {
       case "consultation_booking":
+        console.log(notificationClients);
         return (
           <Notification
             date={notification.createdAt}
@@ -202,6 +206,9 @@ export const Notifications = ({ openJoinConsultation }) => {
               endHour,
             })}
             icon="calendar"
+            handleClick={() =>
+              handleNotificationClick(notification.notificationId)
+            }
           />
         );
       case "consultation_reschedule":
