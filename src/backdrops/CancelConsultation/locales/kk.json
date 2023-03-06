@@ -1,0 +1,15 @@
+{
+  "heading": "Консультациядан шынымен бас тартқыңыз келе ме?",
+  "paid_heading": "Are you sure you want to cancel your consultation? You will not receive the payment",
+  "paid_subheading": "Төлемнен айырыласыз. Осы консультация үшін ақша клиентке қайтарылады.",
+  "cancel_button_label": "Консультациядан бас тарту",
+  "keep_button_label": "Консультацияны жалғастыру",
+  "cancel_success": "Консультациядан бас тарттыңыз",
+  "sunday": "Жс",
+  "monday": "Дс",
+  "tuesday": "Сс",
+  "wednesday": "Ср",
+  "thursday": "Бс",
+  "friday": "Жм",
+  "saturday": "Сб"
+}
