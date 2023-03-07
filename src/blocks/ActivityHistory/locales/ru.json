@@ -1,0 +1,16 @@
+{
+  "activity_history_heading": "История активности",
+  "button_propose_consultation_label": "Предложить консультацию",
+  "button_view_profile_label": "Посмотреть личный профиль",
+  "no_consultation_selected": "Чтобы просмотреть историю действий, выберите один из перечисленных слева.",
+  "button_filter_label": "Фильтр",
+  "sunday": "Вс",
+  "monday": "Пн",
+  "tuesday": "Вт",
+  "wednesday": "Ср",
+  "thursday": "Чт",
+  "friday": "Пт",
+  "saturday": "Сб",
+  "no_messages": "В этой консультации нет сообщений",
+  "no_activity_history": "Активность пока не зафиксирована"
+}

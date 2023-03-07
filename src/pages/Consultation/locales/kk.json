@@ -1,0 +1,15 @@
+{
+  "sunday": "Жс",
+  "monday": "Дс",
+  "tuesday": "Сс",
+  "wednesday": "Ср",
+  "thursday": "Бс",
+  "friday": "Жм",
+  "saturday": "Сб",
+
+  "provider_left": "Консультант консультациядан шықты",
+  "provider_camera_off": "Консультант камераны өшірді",
+  "provider_camera_on": "Консультант камераны қосты",
+  "provider_microphone_off": "Консультант микрофонды өшірді",
+  "provider_microphone_on": "Консультант микрофонды қосты"
+}
