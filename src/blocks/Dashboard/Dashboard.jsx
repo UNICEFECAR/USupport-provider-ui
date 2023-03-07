@@ -205,6 +205,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
                   numberOfConsultations={dayConsultations}
                   isAvailable={isAvailable}
                   t={t}
+                  unavailableLabel={t("not_available")}
                   consultationsLabel={
                     dayConsultations === 1
                       ? t("consultation")
