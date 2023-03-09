@@ -32,7 +32,7 @@ import "./scheduler-template.scss";
  *
  * @return {jsx}
  */
-export const SchedulerTemplate = () => {
+export const SchedulerTemplate = ({ campaignId }) => {
   const { t } = useTranslation("scheduler-template");
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -115,6 +115,7 @@ export const SchedulerTemplate = () => {
   const addTemplateAvailability = async (timestamps) => {
     const res = await providerSvc.addTemplateAvailability({
       template: timestamps,
+      campaignId,
     });
     return res;
   };
@@ -127,7 +128,6 @@ export const SchedulerTemplate = () => {
       const { message: errorMessage } = useError(error);
       toast(errorMessage, { type: "error" });
     },
-    onSettled: () => setIsSubmitting(false),
   });
 
   const handleSubmit = async () => {
@@ -325,7 +325,8 @@ export const SchedulerTemplate = () => {
             label={t("save")}
             size="lg"
             classes="scheduler-template__grid__save-button"
-            disabled={!templateStartDate || !templateEndDate || isSubmitting}
+            disabled={!templateStartDate || !templateEndDate}
+            loading={addTemplateAvailabilityMutation.isLoading}
           />
         </GridItem>
       </Grid>
