@@ -121,6 +121,8 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
             overview={true}
             renderIn="client"
             onClick={() => handleConsultationClick(consultation)}
+            couponPrice={consultation.couponPrice}
+            sponsorImage={consultation.sponsorImage}
             t={t}
           />
         </GridItem>
