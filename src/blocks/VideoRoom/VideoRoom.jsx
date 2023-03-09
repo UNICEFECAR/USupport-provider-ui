@@ -74,13 +74,12 @@ export function VideoRoom({
           </div>
         ) : null}
         <div className="video-room__remote-participant">
-          {remoteParticipants.map((p, index) => (
+          {hasRemoteParticipants && (
             <Participant
               type={"remote"}
-              key={"participant" + index}
-              participant={p}
+              participant={remoteParticipants[remoteParticipants.length - 1]}
             />
-          ))}
+          )}
         </div>
       </div>
     </div>
