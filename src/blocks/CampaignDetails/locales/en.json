@@ -1,0 +1,21 @@
+{
+  "upcoming": "Upcoming",
+  "completed": "Completed",
+  "sunday": "Sun",
+  "monday": "Mon",
+  "tuesday": "Tue",
+  "wednesday": "Wed",
+  "thursday": "Thu",
+  "friday": "Fri",
+  "saturday": "Sat",
+  "no_consultations": "You have no upcoming consultations",
+  "cancel_consultation": "Cancel consultation",
+  "suggested": "Suggested",
+  "view_profile": "View profile",
+  "active": "Live",
+  "no_completed_consultations": "You have no completed consultations",
+  "no_upcoming_consultations": "You have no upcoming consultations",
+  "not_conducted": "Not conducted",
+  "conducted": "Conducted",
+  "join": "Join"
+}
