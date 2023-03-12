@@ -192,7 +192,6 @@ export const Notifications = ({ openJoinConsultation }) => {
 
     switch (notification.type) {
       case "consultation_booking":
-        console.log(notificationClients);
         return (
           <Notification
             date={notification.createdAt}
@@ -371,6 +370,19 @@ export const Notifications = ({ openJoinConsultation }) => {
             text={t(notification.type)}
             handleClick={() =>
               handleNotificationClick(notification.notificationId, "/scheduler")
+            }
+          />
+        );
+      case "weekly_report":
+        return (
+          <Notification
+            date={notification.createdAt}
+            isRead={notification.isRead}
+            title="USupportMe"
+            icon="activity"
+            text={t(notification.type)}
+            handleClick={() =>
+              handleNotificationClick(notification.notificationId, "/reports")
             }
           />
         );

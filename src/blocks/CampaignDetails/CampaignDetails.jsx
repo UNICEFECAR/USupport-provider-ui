@@ -88,9 +88,17 @@ export const CampaignDetails = ({
             handleViewProfile={handleViewProfile}
             couponPrice={couponPrice}
             hasMenu={true}
-            overview={false}
+            overview={filter === "upcoming" ? true : false}
+            seeDetails
             renderIn="provider"
             suggested={consultation.status === "suggested"}
+            handleOpenDetails={(consultationCb) =>
+              navigate("/activity-history", {
+                state: {
+                  consultation: consultationCb,
+                },
+              })
+            }
             t={t}
           />
         </GridItem>

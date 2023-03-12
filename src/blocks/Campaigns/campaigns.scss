@@ -23,6 +23,11 @@
       padding-top: $spacing_3_2;
       font-weight: $font_bold;
     }
+
+    &__heading-item p {
+      word-break: normal;
+      white-space: nowrap;
+    }
   }
 
   & .table__container {

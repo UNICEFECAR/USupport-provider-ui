@@ -76,6 +76,34 @@ export const Campaigns = () => {
     ];
   });
 
+  const providerPastCampaignsRowsData = data?.providerPastCampaigns.map(
+    (campaign) => {
+      return [
+        <div className="campaigns__sponsor-container">
+          <img
+            className="campaigns__sponsor-container__image"
+            src={AMAZON_S3_BUCKET + "/default"}
+          />
+          <p>{campaign.sponsorName}</p>
+        </div>,
+        <p>{campaign.campaignName}</p>,
+        <p>
+          {campaign.couponSinglePrice}
+          {currencySymbol}
+        </p>,
+        <p>
+          {campaign.startDate} - {campaign.endDate}
+        </p>,
+        <p>{campaign.conductedConsultationsForCampaign}</p>,
+        <p>
+          {campaign.conductedConsultationsForCampaign *
+            campaign.couponSinglePrice}
+          {currencySymbol}
+        </p>,
+      ];
+    }
+  );
+
   const availableCampaignsRowsData = data?.availableCampaigns.map(
     (campaign) => {
       return [
@@ -149,11 +177,15 @@ export const Campaigns = () => {
   return (
     <Block classes="campaigns">
       <Grid classes="campaigns__grid">
-        <GridItem md={2} lg={2}>
-          {t("campaigns")}: {data?.availableCampaigns.length}
+        <GridItem md={2} lg={2} classes="campaigns__grid__heading-item">
+          <p>
+            {t("campaigns")}: {data?.availableCampaigns.length}
+          </p>
         </GridItem>
-        <GridItem md={3} lg={2}>
-          {t("campaigns_participate")}: {data?.providerCampaigns.length}
+        <GridItem md={3} lg={2} classes="campaigns__grid__heading-item">
+          <p>
+            {t("campaigns_participate")}: {data?.providerCampaigns.length}
+          </p>
         </GridItem>
         <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
           <p className="text">{t("campaigns_participate")}</p>
@@ -173,6 +205,25 @@ export const Campaigns = () => {
           handleClickPropName="campaignId"
         />
       )}
+
+      <Grid classes="campaigns__grid">
+        <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
+          <p className="text">{t("past_campaigns")}</p>
+        </GridItem>
+      </Grid>
+
+      {campaignsQuery.isLoading ? (
+        <GridItem md={8} lg={12}>
+          <Loading />
+        </GridItem>
+      ) : (
+        <BaseTable
+          data={data.providerPastCampaigns}
+          rows={providerCampaignRows}
+          rowsData={providerPastCampaignsRowsData}
+        />
+      )}
+
       <Grid classes="campaigns__grid">
         <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
           <p className="text">{t("available_campaigns")}</p>

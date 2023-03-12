@@ -93,6 +93,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
             campaignEndDate: new Date(x.campaign_end_date),
             sponsorName: x.sponsor_name,
             sponsorImage: x.sponsor_image,
+            active: x.active,
           };
         });
 
@@ -270,12 +271,23 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       const dateStr = new Date(slot).toString();
       return dateStr === date;
     });
-    const campaignSlot = slotsData.campaignSlots.find((slot) => {
+    const campaignSlots = slotsData.campaignSlots.filter((slot) => {
       const dateStr = new Date(slot.time).toString();
       return dateStr === date;
     });
 
+    const campaignSlot = campaignSlots.find((singleSlot) => {
+      const isSlotCampaignActive = validCampaigns?.find(
+        (x) => x.campaignId === singleSlot?.campaignId && x.active
+      );
+      return isSlotCampaignActive;
+    });
     const hasNormalSlot = !!slot;
+
+    // if (slot || campaignSlot) {
+    //   return { slot: hasNormalSlot, hasNormalSlot: null };
+    // }
+
     if (!!campaignSlot) return { campaignSlot, hasNormalSlot };
     return { slot, hasNormalSlot };
   };
@@ -298,6 +310,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       price: consultation.price,
       couponPrice: consultation.coupon_price,
       sponsorImage: consultation.sponsor_image,
+      campaignId: consultation.campaign_id,
     };
   };
 
@@ -450,9 +463,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                       const slotDate = getDateAsFullString(day, hour);
                       const isAvailable = checkIsAvailable(slotDate);
                       const campaignId = isAvailable.campaignSlot?.campaignId;
-                      const dayTimestamp = (
-                        getTimestamp(day) * 1000
-                      ).toString();
 
                       return (
                         <ProviderAvailability
@@ -487,7 +497,9 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                                 })
                               : []
                           }
-                          validCampaigns={validCampaigns}
+                          validCampaigns={validCampaigns?.filter(
+                            (x) => x.active
+                          )}
                           dayIndex={dayIndex}
                           slot={slotDate}
                           t={t}

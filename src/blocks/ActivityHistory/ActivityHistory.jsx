@@ -32,13 +32,19 @@ import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/as
  *
  * @return {jsx}
  */
-export const ActivityHistory = ({ openSelectConsultation }) => {
+export const ActivityHistory = ({
+  openSelectConsultation,
+  preselectedConsultation,
+}) => {
   const navigate = useNavigate();
   const { t } = useTranslation("activity-history");
 
   const { width } = useWindowDimensions();
 
-  const [selectedConsultation, setSelectedConsultation] = useState();
+  const [selectedConsultation, setSelectedConsultation] = useState(
+    preselectedConsultation
+  );
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const consultationsQuery = useGetAllPastConsultations();
   const chatQuery = useGetChatData(selectedConsultation?.chatId);
