@@ -128,6 +128,8 @@ export const Consultations = ({
             overview={false}
             renderIn="provider"
             suggested={consultation.status === "suggested"}
+            couponPrice={consultation.couponPrice}
+            sponsorImage={consultation.sponsorImage}
             t={t}
           />
         </GridItem>
@@ -186,6 +188,8 @@ export const Consultations = ({
             overview={false}
             renderIn="provider"
             suggested={consultation.status === "suggested"}
+            couponPrice={consultation.couponPrice}
+            sponsorImage={consultation.sponsorImage}
             t={t}
           />
         </GridItem>

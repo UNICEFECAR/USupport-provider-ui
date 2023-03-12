@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+
 import { Page, ActivityHistory as ActivityHistoryBlock } from "#blocks";
 import { SelectConsultation } from "#backdrops";
 import { useBlockSlot, useSuggestConsultation } from "#hooks";
 import { userSvc } from "@USupport-components-library/services";
 
 import "./activity-history.scss";
-import { useTranslation } from "react-i18next";
 
 /**
  * ActivityHistory
@@ -17,6 +19,10 @@ import { useTranslation } from "react-i18next";
  */
 export const ActivityHistory = () => {
   const { t } = useTranslation("activity-history-page");
+  const location = useLocation();
+
+  const preselectedConsultation = location.state?.consultation;
+
   const [selectedClientId, setSelectedClientId] = useState();
   const [isSelectConsultationOpen, setIsSelectConsultationOpen] =
     useState(false);
@@ -79,7 +85,10 @@ export const ActivityHistory = () => {
       showFooter
       showGoBackArrow={false}
     >
-      <ActivityHistoryBlock openSelectConsultation={openSelectConsultation} />
+      <ActivityHistoryBlock
+        openSelectConsultation={openSelectConsultation}
+        preselectedConsultation={preselectedConsultation}
+      />
       <SelectConsultation
         isOpen={isSelectConsultationOpen}
         onClose={() => setIsSelectConsultationOpen(false)}

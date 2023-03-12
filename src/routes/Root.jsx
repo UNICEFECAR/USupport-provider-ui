@@ -24,10 +24,13 @@ import {
   Consultation,
   Notifications,
   Reports,
+  Campaigns,
+  AddCampaignAvailability,
+  CampaignDetails,
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../routes";
-import { useGetProviderData, useCheckHasUnreadNotifications } from "#hooks";
+import { useGetProviderData } from "#hooks";
 
 export default function Root() {
   const token = localStorage.getItem("token");
@@ -209,6 +212,30 @@ export default function Root() {
           element={
             <ProtectedRoute>
               <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/campaigns"
+          element={
+            <ProtectedRoute>
+              <Campaigns />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/campaigns/add-availability"
+          element={
+            <ProtectedRoute>
+              <AddCampaignAvailability />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/campaigns/details/:id"
+          element={
+            <ProtectedRoute>
+              <CampaignDetails />
             </ProtectedRoute>
           }
         />

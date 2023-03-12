@@ -16,5 +16,6 @@
   "reject": "Reject",
   "reject_consultation_success": "Succesfully rejected consultation",
   "no_notifications": "You have no notifications yet.",
-  "add_more_availability_slots": "Add more availability slots to your schedule"
+  "add_more_availability_slots": "Add more availability slots to your schedule",
+  "weekly_report": "You have a new weekly report"
 }

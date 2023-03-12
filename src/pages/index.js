@@ -20,4 +20,7 @@ export * from "./TermsOfUse";
 export * from "./Dashboard";
 export * from "./Consultation";
 export * from "./Notifications";
-export * from './Reports';
+export * from "./Reports";
+export * from "./Campaigns";
+export * from './AddCampaignAvailability';
+export * from './CampaignDetails';

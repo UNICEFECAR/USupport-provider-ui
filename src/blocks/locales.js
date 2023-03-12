@@ -19,4 +19,6 @@ export * as CookiePolicy from "./CookiePolicy/locales.js";
 export * as TermsOfUse from "./TermsOfUse/locales.js";
 export * as Dashboard from "./Dashboard/locales.js";
 export * as Notifications from "./Notifications/locales.js";
-export * as Reports from './Reports/locales.js';
+export * as Reports from "./Reports/locales.js";
+export * as Campaigns from "./Campaigns/locales.js";
+export * as CampaignDetails from "./CampaignDetails/locales.js";
