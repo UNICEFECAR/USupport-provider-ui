@@ -108,6 +108,10 @@ export const Clients = ({
             image={client.image}
             name={client.name}
             nextConsultationId={client.nextConsultationId}
+            nextConsultationPrice={client.nextConsultationPrice}
+            nextConsultationCouponPrice={client.nextConsultationCouponPrice}
+            consultationPrice={client.nextConsultationPrice}
+            consultationCouponPrice={client.nextConsultationCouponPrice}
             pastConsultations={client.pastConsultations}
             suggestConsultation={handleSuggestConsultation}
             suggested={client.nextConsultationStatus === "suggested"}
@@ -304,6 +308,7 @@ const ConsultationsHistory = ({
           <Consultation
             overview={true}
             consultation={consultation}
+            sponsorImage={consultation.sponsorImage}
             renderIn="client"
             onClick={() => handleConsultationClick(consultation)}
             t={t}

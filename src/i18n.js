@@ -24,6 +24,8 @@ import {
   Dashboard,
   Notifications,
   Reports,
+  Campaigns,
+  CampaignDetails,
 } from "#blocks/locales.js";
 
 import {
@@ -46,6 +48,8 @@ import {
   Clients as ClientsPage,
   Consultation as ConsultationPage,
   Reports as ReportsPage,
+  Campaigns as CampaignsPage,
+  AddCampaignAvailability as AddCampaignAvailabilityPage,
 } from "#pages/locales.js";
 
 import {
@@ -85,6 +89,8 @@ const resources = {
     dashboard: Dashboard.en,
     notifications: Notifications.en,
     reports: Reports.en,
+    campaigns: Campaigns.en,
+    "campaign-details": CampaignDetails.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -106,6 +112,8 @@ const resources = {
     "clients-page": ClientsPage.en,
     "consultation-page": ConsultationPage.en,
     "reports-page": ReportsPage.en,
+    "campaigns-page": CampaignsPage.en,
+    "add-campaign-availability-page": AddCampaignAvailabilityPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,

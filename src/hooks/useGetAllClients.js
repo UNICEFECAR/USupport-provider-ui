@@ -12,6 +12,8 @@ export default function useGetAllClients() {
       nextConsultation: new Date(client.next_consultation).getTime(),
       nextConsultationId: client.next_consultation_id,
       nextConsultationStatus: client.next_consultation_status,
+      nextConsultationPrice: client.next_consultation_price,
+      nextConsultationCouponPrice: client.next_consultation_coupon_price,
       pastConsultations: client.past_consultations,
     }));
   };

@@ -39,6 +39,7 @@ export const Page = ({
   heading,
   subheading,
   headingButton,
+  headingImage,
   classes,
   children,
 }) => {
@@ -143,6 +144,7 @@ export const Page = ({
     { name: t("page_3"), url: "/activity-history" },
     { name: t("page_4"), url: "/consultations" },
     { name: t("page_5"), url: "/clients" },
+    { name: t("page_6"), url: "/campaigns" },
   ];
 
   const footerLists = {
@@ -197,7 +199,7 @@ export const Page = ({
           `${classNames(classes)}`,
         ].join(" ")}
       >
-        {(heading || showGoBackArrow || headingButton) && (
+        {(heading || showGoBackArrow || headingButton || headingImage) && (
           <div className="page__header">
             {showGoBackArrow && (
               <Icon
@@ -207,6 +209,9 @@ export const Page = ({
                 color="#20809E"
                 onClick={handleGoBack}
               />
+            )}
+            {headingImage && (
+              <img className="page__header__image" src={headingImage} />
             )}
             {heading && <h3 className="page__header-heading">{heading}</h3>}
             {headingButton && headingButton}

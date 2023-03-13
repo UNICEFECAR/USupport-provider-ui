@@ -148,6 +148,8 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             handleJoinClick={openJoinConsultation}
             handleCancelConsultation={handleCancelConsultation}
             handleViewProfile={handleViewProfile}
+            couponPrice={consultation.couponPrice}
+            sponsorImage={consultation.sponsorImage}
             t={t}
           />
         </GridItem>

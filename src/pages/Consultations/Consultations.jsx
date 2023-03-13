@@ -35,6 +35,7 @@ export const Consultations = () => {
       classes="page__consultations"
       showNavbar={true}
       showFooter={true}
+      showGoBackArrow={false}
       handleGoBack={() => navigate(-1)}
     >
       <ConsultationsBlock

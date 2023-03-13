@@ -1,0 +1,19 @@
+{
+  "campaigns": "Campaigns",
+  "campaigns_participate": "Campaigns you participate in",
+  "sponsor": "Sponsor",
+  "campaign": "Campaign",
+  "coupon_single_price": "Coupon single price",
+  "period": "Period",
+  "consultations_with_you": "Consultations with you",
+  "your_payment": "Your payment",
+  "available_campaigns": "Available campaigns",
+  "terms_and_conditions": "Terms and conditions",
+  "agreed_to_get_paid": "I agree to get paid {{amount}}{{currencySymbol}} per Consultataion",
+  "agree_with_terms": "I agree with the terms and conditions",
+  "success": "Successfully enrolled in campaign",
+  "enroll": "Enroll",
+  "add_availability": "Add availability",
+  "view_details": "View details",
+  "past_campaigns": "Past campaigns you had participated in"
+}
