@@ -21,6 +21,7 @@ import {
   getDateAsFullString,
   isDateToday,
   hours,
+  parseUTCDate,
 } from "@USupport-components-library/src/utils/date";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
@@ -112,7 +113,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
           slots: data.slots,
           campaignSlots: [
             ...data.campaign_slots.map((x) => ({
-              time: x.time,
+              time: parseUTCDate(x.time),
               campaignId: x.campaign_id,
             })),
           ],
