@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import {
@@ -17,6 +18,7 @@ import {
 } from "@USupport-components-library/src";
 
 import { validate, validateProperty } from "@USupport-components-library/utils";
+import { countrySvc } from "@USupport-components-library/services";
 import {
   useGetProviderData,
   useGetCountryAndLanguages,
@@ -27,6 +29,13 @@ import countryCodes from "country-codes-list";
 import Joi from "joi";
 
 import "./edit-profile-details.scss";
+
+const fetchCountryMinPrice = async () => {
+  const { data } = await countrySvc.getActiveCountries();
+  const currentCountryId = localStorage.getItem("country_id");
+  const currentCountry = data.find((x) => x.country_id === currentCountryId);
+  return currentCountry?.min_price;
+};
 
 /**
  * EditProfileDetails
@@ -43,11 +52,15 @@ export const EditProfileDetails = ({
 
   const { t } = useTranslation("edit-profile-details");
   const [providersQuery, providerData, setProviderData] = useGetProviderData();
-  const [isProcessing, setIsProcessing] = useState(false);
   const [canSaveChanges, setCanSaveChanges] = useState(false);
 
   const localizationQuery = useGetCountryAndLanguages();
   const workWithQuery = useGetWorkWithCategories();
+
+  const { data: countryMinPrice } = useQuery(
+    ["country-min-price"],
+    fetchCountryMinPrice
+  );
 
   const [errors, setErrors] = useState({});
 
@@ -189,13 +202,11 @@ export const EditProfileDetails = ({
   };
 
   const onUpdateSuccess = () => {
-    setIsProcessing(false);
     toast(t("edit_succes"));
   };
 
   const onUpdateError = (err) => {
     setErrors({ submit: err });
-    setIsProcessing(false);
   };
   const updateProviderMutation = useUpdateProviderData(
     onUpdateSuccess,
@@ -203,11 +214,17 @@ export const EditProfileDetails = ({
   );
 
   const handleSave = async () => {
-    setIsProcessing(true);
+    if (Number(countryMinPrice) > Number(providerData.consultationPrice)) {
+      setErrors({
+        submit: t("min_price_error", {
+          minPrice: countryMinPrice,
+          currencySymbol,
+        }),
+      });
+      return;
+    }
     if ((await validate(providerData, schema, setErrors)) === null) {
       updateProviderMutation.mutate(providerData);
-    } else {
-      setIsProcessing(false);
     }
   };
 
@@ -393,7 +410,14 @@ export const EditProfileDetails = ({
               errorMessage={errors.workWith}
             />
           </GridItem>
-          {errors.submit ? <Error message={errors.submit} /> : null}
+          {errors.submit ? (
+            <GridItem md={8} lg={12}>
+              <Error
+                classes="edit-profile-details__grid__submit-error"
+                message={errors.submit}
+              />
+            </GridItem>
+          ) : null}
           <GridItem
             md={8}
             lg={12}
@@ -405,7 +429,8 @@ export const EditProfileDetails = ({
               label={t("button_text")}
               size="lg"
               onClick={handleSave}
-              disabled={!canSaveChanges || isProcessing}
+              disabled={!canSaveChanges}
+              loading={updateProviderMutation.isLoading}
             />
             <Button
               type="secondary"
