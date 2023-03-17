@@ -10,5 +10,6 @@
   "no_results": "No activities found",
   "start_date": "Дата начала",
   "end_date": "Дата окончания",
-  "submit": "Apply filters"
+  "submit": "Apply filters",
+  "all": "Все"
 }

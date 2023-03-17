@@ -49,6 +49,7 @@
   "street_error": "Street is required",
   "city_error": "City is required",
   "postcode_error": "Postcode is required",
+  "min_price_error": "The minimum consultation price is {{minPrice}}{{currencySymbol}}",
 
   "specializations_error": "Select at least one specialization",
   "work_with_error": "Select at least one category",
@@ -75,6 +76,6 @@
   "panic_attack": "Panic attack",
   "relationship": "Relationship",
   "personal_development": "Personal development",
-  
+
   "edit_succes": "Profile updated successfully"
 }
