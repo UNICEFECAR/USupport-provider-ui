@@ -172,6 +172,7 @@ const resources = {
     "clients-page": ClientsPage.ru,
     "consultation-page": ConsultationPage.ru,
     "reports-page": ReportsPage.ru,
+    "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
 
     // Backdrops
     "upload-picture": UploadPicture.ru,
@@ -230,6 +231,7 @@ const resources = {
     "clients-page": ClientsPage.kk,
     "consultation-page": ConsultationPage.kk,
     "reports-page": ReportsPage.kk,
+    "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
 
     // Backdrops
     "upload-picture": UploadPicture.kk,
