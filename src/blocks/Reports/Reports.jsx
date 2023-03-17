@@ -13,6 +13,7 @@ import {
   getDateView,
   getTimeFromDate,
   ONE_HOUR,
+  downloadCSVFile,
 } from "@USupport-components-library/utils";
 
 import { useGetProviderActivities } from "#hooks";
@@ -35,7 +36,24 @@ export const Reports = () => {
 
   const { isLoading, data } = useGetProviderActivities();
 
-  const handleExport = () => {};
+  const handleExport = () => {
+    let csv = "";
+
+    csv += rows.map((x) => t(x)).join(",");
+
+    data.forEach((row) => {
+      csv += "\n";
+      csv += `${row.displayName},`;
+      csv += `${getFormattedDate(row.time, false)},`;
+      csv += `${row.price || t("free")},`;
+      csv += `${row.campaignName || "N/A"}`;
+    });
+
+    const reportDate = new Date().toISOString().split("T")[0];
+    const fileName = `report-${reportDate}.csv`;
+    downloadCSVFile(csv, fileName);
+  };
+
   const handleFilterOpen = () => {
     setIsFilterOpen(true);
   };
@@ -45,7 +63,9 @@ export const Reports = () => {
   };
 
   const filterData = (activity) => {
-    // TODO: Add filter for campaigns
+    const isCampaignMatching = filters.campaign
+      ? activity.campaignName === filters.campaign
+      : true;
 
     const isClientMatching = filters.client
       ? activity.displayName === filters.client
@@ -60,9 +80,23 @@ export const Reports = () => {
       ? new Date(activity.time).getTime() <= new Date(filters.endDate).getTime()
       : true;
 
-    return isStartDateMatching && isEndDateMatching && isClientMatching
+    return isStartDateMatching &&
+      isEndDateMatching &&
+      isClientMatching &&
+      isCampaignMatching
       ? true
       : false;
+  };
+
+  const getFormattedDate = (date, hasComma = true) => {
+    const endTime = new Date(date.getTime() + ONE_HOUR);
+
+    const displayTime = getTimeFromDate(date);
+    const displayEndTime = getTimeFromDate(endTime);
+
+    return `${displayTime} - ${displayEndTime}${
+      hasComma ? "," : ""
+    } ${getDateView(date)}`;
   };
 
   const renderData = useMemo(() => {
@@ -82,10 +116,7 @@ export const Reports = () => {
       );
 
     return filteredData?.map((activity, index) => {
-      const endTime = new Date(activity.time.getTime() + ONE_HOUR);
-
-      const displayTime = getTimeFromDate(activity.time);
-      const displayEndTime = getTimeFromDate(endTime);
+      const displayTime = getFormattedDate(activity.time);
 
       return (
         <tr key={index}>
@@ -93,30 +124,23 @@ export const Reports = () => {
             <p className="text reports__table__name">{activity.displayName}</p>
           </td>
           <td className="reports__table__td">
-            <p className="text reports__table__name">
-              {displayTime} - {displayEndTime}, {getDateView(activity.time)}
-            </p>
+            <p className="text reports__table__name">{displayTime}</p>
           </td>
           <td className="reports__table__td">
             <p className="text">{activity.price || t("free")}</p>
           </td>
           <td className="reports__table__td">
-            <p className="text">{activity.campaign || "N/A"}</p>
+            <p className="text">{activity.campaignName || "N/A"}</p>
           </td>
         </tr>
       );
     });
   }, [data, filters]);
 
-  let campaignOptions =
-    data
-      ?.map((x) => {
-        if (x.campaign) {
-          return { value: x.campaign, label: x.campaign };
-        }
-        return null;
-      })
-      .filter((x) => x !== null) || [];
+  let campaignOptions = Array.from(
+    new Set(data?.filter((x) => x.campaignName).map((x) => x.campaignName))
+  ).map((x) => ({ value: x, label: x }));
+  campaignOptions.unshift({ value: null, label: t("all") });
 
   const clientOptions =
     data?.map((x) => ({ value: x.displayName, label: x.displayName })) || [];
