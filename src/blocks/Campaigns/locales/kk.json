@@ -1,0 +1,19 @@
+{
+  "campaigns": "Науқандар",
+  "campaigns_participate": "Сіз қатысатын науқандар",
+  "sponsor": "Демеуші",
+  "campaign": "Науқан",
+  "coupon_single_price": "Купонның бірыңғай бағасы",
+  "period": "Кезең",
+  "consultations_with_you": "Сіздің консультацияларыңыз",
+  "your_payment": "Сіздің төлеміңіз",
+  "available_campaigns": "Қол жетімді науқандар",
+  "terms_and_conditions": "Шарттар мен ережелер",
+  "agreed_to_get_paid": "Мен бір консультация үшін {{amount}}{{currencySymbol}} ақы алуға келісемін",
+  "agree_with_terms": "Мен ережелер мен шарттармен келісемін",
+  "success": "Науқанда сәтті тіркелді",
+  "enroll": "Тіркеу",
+  "add_availability": "Қол жетімділікті қосу",
+  "view_details": "Мәліметтерді қарап шығу",
+  "past_campaigns": "Past campaigns you had participated in"
+}

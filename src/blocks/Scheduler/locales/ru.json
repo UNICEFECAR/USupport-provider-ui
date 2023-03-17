@@ -22,5 +22,6 @@
   "suggested": "Предложено",
   "join_consultation": "Присоединиться к консультации",
   "slot_added": "Слот свободного времени успешно добавлен",
-  "free": "Свободно"
+  "free": "Свободно",
+  "more_campaigns": "and {{amount}} more"
 }

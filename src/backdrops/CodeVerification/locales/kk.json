@@ -7,5 +7,5 @@
   "send_button_label": "Жіберу",
   "didnt_get_code": "Кодты алған жоқсыз ба?",
   "resend_code_button_label": "Хатты қайта жіберу",
-  "seconds": " in {{seconds}} seconds"
+  "seconds": " {{seconds}} секундтан кейін"
 }
