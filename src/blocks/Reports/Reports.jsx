@@ -30,6 +30,7 @@ import "./reports.scss";
 export const Reports = () => {
   const { t } = useTranslation("reports");
   const rows = ["client", "time", "price", "campaign"];
+  const currencySymbol = localStorage.getItem("currency_symbol");
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState({});
@@ -38,14 +39,14 @@ export const Reports = () => {
 
   const handleExport = () => {
     let csv = "";
-
     csv += rows.map((x) => t(x)).join(",");
 
     data.forEach((row) => {
+      const price = row.price ? `${row.price}${currencySymbol}` : t("free");
       csv += "\n";
       csv += `${row.displayName},`;
       csv += `${getFormattedDate(row.time, false)},`;
-      csv += `${row.price || t("free")},`;
+      csv += `${price},`;
       csv += `${row.campaignName || "N/A"}`;
     });
 
@@ -127,7 +128,11 @@ export const Reports = () => {
             <p className="text reports__table__name">{displayTime}</p>
           </td>
           <td className="reports__table__td">
-            <p className="text">{activity.price || t("free")}</p>
+            <p className="text">
+              {activity.price
+                ? `${activity.price}${currencySymbol}`
+                : t("free")}
+            </p>
           </td>
           <td className="reports__table__td">
             <p className="text">{activity.campaignName || "N/A"}</p>
