@@ -147,8 +147,12 @@ export const Reports = () => {
   ).map((x) => ({ value: x, label: x }));
   campaignOptions.unshift({ value: null, label: t("all") });
 
-  const clientOptions =
-    data?.map((x) => ({ value: x.displayName, label: x.displayName })) || [];
+  const clientOptions = Array.from(
+    new Set(data?.map((x) => x.displayName))
+  ).map((x) => ({
+    value: x,
+    label: x,
+  }));
 
   return (
     <Block classes="reports">
