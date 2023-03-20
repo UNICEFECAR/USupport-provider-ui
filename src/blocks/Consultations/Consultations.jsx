@@ -225,7 +225,11 @@ export const Consultations = ({
           </div>
         </GridItem>
         <GridItem md={8} lg={12} classes="consultations__grid__tabs-item">
-          <TabsUnderlined options={tabsOptions} handleSelect={handleTabClick} />
+          <TabsUnderlined
+            options={tabsOptions}
+            handleSelect={handleTabClick}
+            t={t}
+          />
         </GridItem>
         <GridItem
           md={8}
