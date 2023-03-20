@@ -203,6 +203,7 @@ export const Campaigns = () => {
           rowsData={providerCampaignsRowsData}
           menuOptions={providerCampaignsMenuOptions}
           handleClickPropName="campaignId"
+          t={t}
         />
       )}
 
@@ -221,6 +222,7 @@ export const Campaigns = () => {
           data={data.providerPastCampaigns}
           rows={providerCampaignRows}
           rowsData={providerPastCampaignsRowsData}
+          t={t}
         />
       )}
 
@@ -239,6 +241,7 @@ export const Campaigns = () => {
           menuOptions={availableTableMenuOptions}
           data={data.availableCampaigns}
           handleClickPropName="campaignId"
+          t={t}
         />
       )}
 

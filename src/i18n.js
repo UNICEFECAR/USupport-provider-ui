@@ -151,6 +151,8 @@ const resources = {
     dashboard: Dashboard.ru,
     notifications: Notifications.ru,
     reports: Reports.ru,
+    campaigns: Campaigns.ru,
+    "campaign-details": CampaignDetails.ru,
 
     // Pages
     "not-found-page": NotFoundPage.ru,
@@ -172,6 +174,9 @@ const resources = {
     "clients-page": ClientsPage.ru,
     "consultation-page": ConsultationPage.ru,
     "reports-page": ReportsPage.ru,
+    "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
+    "reports-page": ReportsPage.ru,
+    "campaigns-page": CampaignsPage.ru,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
 
     // Backdrops
@@ -210,6 +215,8 @@ const resources = {
     dashboard: Dashboard.kk,
     notifications: Notifications.kk,
     reports: Reports.kk,
+    campaigns: Campaigns.kk,
+    "campaign-details": CampaignDetails.kk,
 
     // Pages
     "not-found-page": NotFoundPage.kk,
@@ -231,6 +238,9 @@ const resources = {
     "clients-page": ClientsPage.kk,
     "consultation-page": ConsultationPage.kk,
     "reports-page": ReportsPage.kk,
+    "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
+    "reports-page": ReportsPage.kk,
+    "campaigns-page": CampaignsPage.kk,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
 
     // Backdrops

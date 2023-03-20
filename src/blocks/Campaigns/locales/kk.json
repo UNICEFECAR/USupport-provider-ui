@@ -15,5 +15,6 @@
   "enroll": "Тіркеу",
   "add_availability": "Қол жетімділікті қосу",
   "view_details": "Мәліметтерді қарап шығу",
-  "past_campaigns": "Past campaigns you had participated in"
+  "past_campaigns": "Past campaigns you had participated in",
+  "no_data_found": "No data found"
 }

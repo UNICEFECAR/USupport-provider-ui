@@ -15,5 +15,6 @@
   "enroll": "Enroll",
   "add_availability": "Add availability",
   "view_details": "View details",
-  "past_campaigns": "Past campaigns you had participated in"
+  "past_campaigns": "Past campaigns you had participated in",
+  "no_data_found": "No data found"
 }
