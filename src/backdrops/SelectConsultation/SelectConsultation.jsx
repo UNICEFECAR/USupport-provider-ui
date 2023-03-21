@@ -129,6 +129,7 @@ export const SelectConsultation = ({
           handleDayChange={handleDayChange}
           setStartDate={setStartDate}
           startDate={providerData?.earliestAvailableSlot}
+          t={t}
         />
         <div className="select-consultation__content-container__slots">
           {availableSlotsQuery.isLoading ? (
