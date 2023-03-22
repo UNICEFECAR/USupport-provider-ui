@@ -67,6 +67,7 @@ export const Login = () => {
   };
 
   const requestOTP = async () => {
+    setSeconds(60);
     return await userSvc.requestOTP({
       email: data.email.toLowerCase(),
       password: data.password.trim(),
