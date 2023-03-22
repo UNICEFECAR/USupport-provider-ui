@@ -37,5 +37,6 @@
   "ordinal_st": "st",
   "ordinal_nd": "nd",
   "ordinal_rd": "rd",
-  "ordinal_th": "th"
+  "ordinal_th": "th",
+  "free": "Free"
 }
