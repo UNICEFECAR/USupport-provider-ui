@@ -191,6 +191,7 @@ export const Page = ({
           initialCountry={selectedCountry}
           initialLanguage={selectedLanguage}
           hasUnreadNotifications={hasUnreadNotifications}
+          renderIn="provider"
         />
       )}
       <div
