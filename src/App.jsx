@@ -5,12 +5,16 @@ import { Root } from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 import { FIVE_MINUTES } from "@USupport-components-library/utils";
 
+import { Logger } from "twilio-video";
+const logger = Logger.getLogger("twilio-video");
+logger.setLevel("debug");
+
 import "./App.scss";
 
 // Create a react-query client
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { refetchInterval: FIVE_MINUTES },
+    queries: { refetchInterval: FIVE_MINUTES, refetchOnWindowFocus: false },
   },
 });
 

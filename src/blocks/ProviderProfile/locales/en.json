@@ -8,5 +8,7 @@
   "contact_us_button_label": "Contact us",
   "reports_button_label": "Reports",
   "privacy_policy_button_label": "Privacy Policy",
-  "FAQ_button_label": "FAQ"
+  "FAQ_button_label": "FAQ",
+  "terms_of_use": "Terms of use",
+  "cookie_policy": "Cookie Policy"
 }

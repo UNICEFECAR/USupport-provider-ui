@@ -22,5 +22,6 @@
   "suggested": "Ұсынылды",
   "join_consultation": "Консультацияға қосылу",
   "slot_added": "Бос уақыт сәтті қосылды",
-  "free": "Бос"
+  "free": "Бос",
+  "more_campaigns": "and {{amount}} more"
 }

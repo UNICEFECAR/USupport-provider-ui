@@ -37,5 +37,6 @@
   "ordinal_st": "-ый",
   "ordinal_nd": "-ой",
   "ordinal_rd": "-ий",
-  "ordinal_th": "-ый"
+  "ordinal_th": "-ый",
+  "free": "Бесплатно"
 }

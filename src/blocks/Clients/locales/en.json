@@ -21,5 +21,6 @@
   "no_consultations": "You have no consultations with this client",
   "no_messages": "There are no messages in this consultation",
   "no_clients_search": "There are no clients matching your search",
-  "no_clients": "You don't have any clients yet"
+  "no_clients": "You don't have any clients yet",
+  "free": "Free"
 }

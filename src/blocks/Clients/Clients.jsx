@@ -309,7 +309,7 @@ const ConsultationsHistory = ({
             overview={true}
             consultation={consultation}
             sponsorImage={consultation.sponsorImage}
-            renderIn="client"
+            renderIn="provider"
             onClick={() => handleConsultationClick(consultation)}
             t={t}
           />

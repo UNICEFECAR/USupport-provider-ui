@@ -1,8 +1,6 @@
 {
-  "heading": "Консультации",
-  "today_tab_label": "Сегодня",
-  "upcoming_tab_label": "Предстоящие",
-  "input_search_label": "Поиск",
+  "upcoming": "Предстоящие",
+  "completed": "Завершено",
   "sunday": "Вс",
   "monday": "Пн",
   "tuesday": "Вт",
@@ -15,11 +13,10 @@
   "suggested": "Предложен",
   "view_profile": "Просмотреть профиль",
   "active": "Прямой эфир",
-  "no_upcoming_consultations_today": "У Вас сегодня нет консультаций",
-  "no_upcoming_consultations_upcoming": "У Вас нет предстоящих консультаций",
-  "no_upcoming_consultations_search": "Нет консультаций, соответствующих вашему запросу",
+  "no_completed_consultations": "У Вас нет завершенных консультаций",
+  "no_upcoming_consultations": "У Вас нет предстоящих консультаций",
   "not_conducted": "Не проводилась",
   "conducted": "Проведен",
   "join": "Присоединиться",
-  "free": "Бесплатно"
+  "details": "Смотреть подробности"
 }

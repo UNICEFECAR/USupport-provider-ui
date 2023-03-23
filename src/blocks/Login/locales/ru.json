@@ -7,6 +7,6 @@
   "login_label": "Авторизация",
   "paragraph": "Или войдите с помощью:",
   "register_button_label": "У меня нет аккаунта",
-  "try_again": "Try again in",
-  "seconds": "seconds"
+  "try_again": "Повторите попытку через",
+  "seconds": "секунд"
 }

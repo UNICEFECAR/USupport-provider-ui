@@ -5,7 +5,7 @@
   "campaign": "Campaign",
   "coupon_single_price": "Coupon single price",
   "period": "Period",
-  "consultations_with_you": "Consultations with you",
+  "consultations_with_you": "Your consultations",
   "your_payment": "Your payment",
   "available_campaigns": "Available campaigns",
   "terms_and_conditions": "Terms and conditions",
@@ -15,5 +15,6 @@
   "enroll": "Enroll",
   "add_availability": "Add availability",
   "view_details": "View details",
-  "past_campaigns": "Past campaigns you had participated in"
+  "past_campaigns": "Past campaigns you had participated in",
+  "no_data_found": "No data found"
 }

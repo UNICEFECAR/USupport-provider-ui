@@ -23,9 +23,9 @@ export function useGetCampaigns(enabled = true) {
         termsAndConditions: x.terms_and_conditions,
         conductedConsultationsForCampaign: Number(x.conducted_consultations),
         isActive:
-          new Date(x.start_date).getTime() <= today &&
-          new Date(x.end_date).getTime() >= today &&
-          x.active,
+          // new Date(x.start_date).getTime() <= today &&
+          new Date(x.end_date).getTime() >= today && x.active,
+        isInPast: new Date(x.end_date).getTime() < today,
       };
     });
 
@@ -37,7 +37,7 @@ export function useGetCampaigns(enabled = true) {
       if (data?.providerCampaignIds.includes(campaign.campaignId)) {
         if (campaign.isActive) {
           providerCampaigns.push(campaign);
-        } else {
+        } else if (campaign.isInPast) {
           providerPastCampaigns.push(campaign);
         }
       } else {

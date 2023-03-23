@@ -49,6 +49,7 @@
   "street_error": "Необходимо указать улицу",
   "city_error": "Необходимо указать город",
   "postcode_error": "Необходимо указать почтовый индекс",
+  "min_price_error": "The minimum consultation price is {{minPrice}}{{currencySymbol}}",
 
   "specializations_error": "Выберите хотя бы одну специализацию",
   "work_with_error": "Выберите хотя бы одну категорию",

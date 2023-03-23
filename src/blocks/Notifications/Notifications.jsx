@@ -280,6 +280,9 @@ export const Notifications = ({ openJoinConsultation }) => {
               minutes: notification.content.minToConsultation,
             })}
             icon="calendar"
+            handleClick={() =>
+              handleNotificationClick(notification.notificationId)
+            }
           >
             {checkIsFiveMinutesBefore(notification.content.time) && (
               <Button
@@ -369,7 +372,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             icon="calendar"
             text={t(notification.type)}
             handleClick={() =>
-              handleNotificationClick(notification.notificationId, "/scheduler")
+              handleNotificationClick(notification.notificationId, "/calendar")
             }
           />
         );

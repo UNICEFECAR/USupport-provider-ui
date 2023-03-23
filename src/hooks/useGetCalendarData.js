@@ -22,10 +22,15 @@ export default function useGetCalendarData(startDate) {
       }
     }
 
-    for (let i = 0; i < data.slots.length; i++) {
-      const slot = new Date(data.slots[i]);
+    const slotsData = [...data.slots, ...data.campaign_slots];
+    for (let i = 0; i < slotsData.length; i++) {
+      const slot = slotsData[i];
+      const slotTime =
+        typeof slot === "object"
+          ? new Date(slotsData[i].time)
+          : new Date(slotsData[i]);
 
-      const key = slot.toLocaleDateString();
+      const key = slotTime.toLocaleDateString();
 
       if (!slots.has(key)) {
         slots.set(key, 1);

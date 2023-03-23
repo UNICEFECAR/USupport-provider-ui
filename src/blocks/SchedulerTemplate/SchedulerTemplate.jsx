@@ -151,7 +151,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
 
     const timestamps = [];
     mondays.forEach((monday) => {
-      const currentTimeZoneOffset = new Date().getTimezoneOffset() * 60;
+      const currentTimeZoneOffset =
+        new Date(monday * 1000).getTimezoneOffset() * 60;
 
       const startDate =
         getTimestamp(new Date(monday * 1000)) - currentTimeZoneOffset;

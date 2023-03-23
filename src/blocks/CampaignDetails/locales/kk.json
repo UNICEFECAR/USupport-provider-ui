@@ -1,8 +1,6 @@
 {
-  "heading": "Консультациялар",
-  "today_tab_label": "Бүгін",
-  "upcoming_tab_label": "Алдағы",
-  "input_search_label": "Іздеу",
+  "upcoming": "Алдағы",
+  "completed": "Аяқталды",
   "sunday": "Жс",
   "monday": "Дс",
   "tuesday": "Сс",
@@ -15,11 +13,10 @@
   "suggested": "Ұсынылды",
   "view_profile": "Парақшаны қарап шығу",
   "active": "Тікелей эфир",
-  "no_upcoming_consultations_today": "Бүгін Сізде консультация жоқ",
-  "no_upcoming_consultations_upcoming": "Сізде алдағы консультациялар жоқ",
-  "no_upcoming_consultations_search": "Сұрауыңызға сай келетін консультациялар жоқ",
+  "no_completed_consultations": "Сізде аяқталған консултациялар жоқ",
+  "no_upcoming_consultations": "Сізде алдағы консультациялар жоқ",
   "not_conducted": "Өткізілмеді",
   "conducted": "Өткізілді",
   "join": "Қосылу",
-  "free": "Тегін"
+  "details": "Мәліметтерді қарау"
 }

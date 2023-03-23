@@ -10,9 +10,10 @@
   "modal_title": "Ваше сообщение было успешно отправлено",
   "modal_text": "Мы свяжемся с Вами в самое ближайшее время",
   "modal_cta_label": "Вернуться на главную страницу",
-  "contact_reason_1": "I need more info about the services provided through the platform",
-  "contact_reason_2": "I am a provider and I am experiencing a technical problem",
-  "contact_reason_3": "I am a provider and I am interested to join the platform",
-  "contact_reason_4": "I am presenting a business entity and we are interested in supporting the platform",
-  "contact_reason_5": "Something else"
+  "contact_reason_1": "Мне нужно больше информации об услугах, предоставляемых через платформу",
+  "contact_reason_2": "Я консультант, и у меня возникла техническая проблема",
+  "contact_reason_3": "Я консультант, и мне интересно присоединиться к платформе",
+  "contact_reason_4": "Я представляю бизнес-организацию, и мы заинтересованы в поддержке платформы",
+  "contact_reason_5": "Прочее",
+  "contact_form": "Contact form"
 }

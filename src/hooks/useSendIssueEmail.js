@@ -19,6 +19,7 @@ export default function useSendIssueEmail(onSuccess, onError) {
       subject: payload.subjectValue,
       email: payload.email,
       message: payload.text,
+      sentFrom: "provider",
     });
 
     await Promise.all([emailPromise, addFormPromise]);

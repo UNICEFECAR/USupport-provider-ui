@@ -46,7 +46,6 @@ export const CampaignDetails = ({
         </GridItem>
       );
     }
-
     if (
       filter === "upcoming" &&
       consultationsQuery.data?.upcomingConsultations.length === 0
@@ -58,7 +57,7 @@ export const CampaignDetails = ({
       );
     }
     if (
-      filter === "completed" &&
+      filter === "past" &&
       consultationsQuery.data?.pastConsultations.length === 0
     ) {
       return (
