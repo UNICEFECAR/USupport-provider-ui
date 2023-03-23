@@ -71,9 +71,7 @@ export const CancelConsultation = ({
   // Should refund only when the consultation is more than 24 hours from now
   // and there is no coupon price
   const shouldRefund =
-    isConsultationLessThan24HoursBefore ||
-    !isNaN(couponPrice) ||
-    !isNaN(consultationCouponPrice)
+    isConsultationLessThan24HoursBefore || consultation.campaignId
       ? false
       : true;
 
