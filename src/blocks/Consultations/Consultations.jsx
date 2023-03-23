@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -74,7 +73,7 @@ export const Consultations = ({
   const [upcomingConsultationsQuery, currentPage, totalCount] =
     useGetAllUpcomingConsultations();
 
-  const renderUpcomingConsultations = () => {
+  const renderUpcomingConsultations = useCallback(() => {
     if (
       !upcomingConsultationsQuery.data?.pages ||
       upcomingConsultationsQuery.data.pages.flat().length === 0
@@ -135,7 +134,15 @@ export const Consultations = ({
         </GridItem>
       );
     });
-  };
+  }, [
+    t,
+    upcomingConsultationsQuery.data,
+    searchValue,
+    filter,
+    openJoinConsultation,
+    handleCancelConsultation,
+    handleViewProfile,
+  ]);
 
   const renderAllConsultations = useMemo(() => {
     if (!consultationsQuery.data || consultationsQuery.data?.length === 0)
@@ -195,7 +202,7 @@ export const Consultations = ({
         </GridItem>
       );
     });
-  }, [consultationsQuery.data, searchValue, filter]);
+  }, [consultationsQuery.data, searchValue, filter, t]);
 
   let hasMore;
   const hasLessThanSixConsultations =
