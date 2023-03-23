@@ -55,7 +55,7 @@ export const Campaigns = () => {
       <div className="campaigns__sponsor-container">
         <img
           className="campaigns__sponsor-container__image"
-          src={AMAZON_S3_BUCKET + "/default"}
+          src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
         />
         <p>{campaign.sponsorName}</p>
       </div>,
@@ -82,7 +82,7 @@ export const Campaigns = () => {
         <div className="campaigns__sponsor-container">
           <img
             className="campaigns__sponsor-container__image"
-            src={AMAZON_S3_BUCKET + "/default"}
+            src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
           />
           <p>{campaign.sponsorName}</p>
         </div>,
@@ -110,7 +110,7 @@ export const Campaigns = () => {
         <div className="campaigns__sponsor-container">
           <img
             className="campaigns__sponsor-container__image"
-            src={AMAZON_S3_BUCKET + "/default"}
+            src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
           />
           <p>{campaign.sponsorName}</p>
         </div>,
@@ -138,6 +138,7 @@ export const Campaigns = () => {
       icon: "view",
       text: t("view_details"),
       handleClick: (campaignId) => {
+        console.log(campaignId);
         navigate(`/campaigns/details/${campaignId}`);
       },
     },
@@ -187,6 +188,30 @@ export const Campaigns = () => {
             {t("campaigns_participate")}: {data?.providerCampaigns.length}
           </p>
         </GridItem>
+      </Grid>
+
+      {/* Available campaigns */}
+      <Grid classes="campaigns__grid">
+        <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
+          <p className="text">{t("available_campaigns")}</p>
+        </GridItem>
+      </Grid>
+
+      {campaignsQuery.isLoading ? (
+        <Loading />
+      ) : (
+        <BaseTable
+          rows={baseRows}
+          rowsData={availableCampaignsRowsData}
+          menuOptions={availableTableMenuOptions}
+          data={data.availableCampaigns}
+          handleClickPropName="campaignId"
+          t={t}
+        />
+      )}
+
+      {/* Campaigns you participate in */}
+      <Grid classes="campaigns__grid">
         <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
           <p className="text">{t("campaigns_participate")}</p>
         </GridItem>
@@ -207,6 +232,7 @@ export const Campaigns = () => {
         />
       )}
 
+      {/* Past campaigns */}
       <Grid classes="campaigns__grid">
         <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
           <p className="text">{t("past_campaigns")}</p>
@@ -222,24 +248,7 @@ export const Campaigns = () => {
           data={data.providerPastCampaigns}
           rows={providerCampaignRows}
           rowsData={providerPastCampaignsRowsData}
-          t={t}
-        />
-      )}
-
-      <Grid classes="campaigns__grid">
-        <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
-          <p className="text">{t("available_campaigns")}</p>
-        </GridItem>
-      </Grid>
-
-      {campaignsQuery.isLoading ? (
-        <Loading />
-      ) : (
-        <BaseTable
-          rows={baseRows}
-          rowsData={availableCampaignsRowsData}
-          menuOptions={availableTableMenuOptions}
-          data={data.availableCampaigns}
+          menuOptions={providerCampaignsMenuOptions.slice(1)}
           handleClickPropName="campaignId"
           t={t}
         />

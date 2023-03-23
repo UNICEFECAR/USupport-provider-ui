@@ -44,13 +44,12 @@ export const CampaignDetails = () => {
   if (!campaignsCacheData) {
     shouldFetchData = true;
   }
-
   const campaignsQuery = useGetCampaigns(shouldFetchData);
 
   const campaignsData = campaignsCacheData || campaignsQuery.data;
-  const campaignData = campaignsData?.providerCampaigns?.find(
-    (x) => x.campaignId === id
-  );
+  const campaignData =
+    campaignsData?.providerCampaigns?.find((x) => x.campaignId === id) ||
+    campaignsData?.providerPastCampaigns?.find((x) => x.campaignId === id);
 
   return (
     <Page
