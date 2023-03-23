@@ -30,6 +30,16 @@ import { useError } from "#hooks";
 
 import "./scheduler.scss";
 
+const namesOfDays = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];
+
 /**
  * Scheduler
  *
@@ -48,21 +58,13 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   // const blockRef = useRef(null);
 
   const { first: startDate, last: endDate } = getStartAndEndOfWeek(today);
-  const [weekStartDate, setWeekStartDate] = useState(startDate);
-  const [weekEndDate, setWeekEndDate] = useState(endDate);
-
   const days = getDatesInRange(new Date(startDate), new Date(endDate));
-  const [weekDays, setWeekDays] = useState(days);
 
-  const namesOfDays = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
+  const [weekData, setWeekData] = useState({
+    startDate,
+    endDate,
+    days,
+  });
 
   const [slotsData, setSlots] = useState({
     slots: [],
@@ -75,12 +77,12 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   // Get provider availability
   const fetchAvailableSlots = async () => {
     const response = await providerSvc.getAvailabilityForWeek(
-      getTimestampFromUTC(weekStartDate)
+      getTimestampFromUTC(weekData.startDate)
     );
     return response.data;
   };
   const availableSlotsQuery = useQuery(
-    ["available-slots", weekStartDate],
+    ["available-slots", weekData.startDate],
     fetchAvailableSlots,
     {
       onSuccess: (data) => {
@@ -100,10 +102,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
 
         const today = new Date().getTime();
         const campaigns = data.campaigns_data?.filter((x) => {
-          return (
-            new Date(x.campaignStartDate).getTime() <= today &&
-            new Date(x.campaignEndDate).getTime() >= today
-          );
+          return new Date(x.campaignEndDate).getTime() >= today;
         });
 
         setValidCampaigns(campaigns);
@@ -125,12 +124,12 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   // Get provider availability
   const fetchConsultations = async () => {
     const response = await providerSvc.getConsultationsForWeek(
-      getTimestampFromUTC(weekStartDate)
+      getTimestampFromUTC(weekData.startDate)
     );
     return response.data;
   };
   const consultationQuery = useQuery(
-    ["consultations-single-week", weekStartDate],
+    ["consultations-single-week", weekData.startDate],
     fetchConsultations,
     {
       onSuccess: (data) => {
@@ -206,10 +205,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
           ],
         });
       }
-
-      // return () => {
-      //   setSlots([...slots, newSlot]);
-      // };
     },
     onSuccess: () => {
       availableSlotsQuery.refetch();
@@ -268,6 +263,11 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   // When rendering every single slot check if
   // it exists in the provider's availability
   const checkIsAvailable = (date) => {
+    // const dateToCheckStr = new Date(date).getTime().toString();
+    // console.log(dateToCheckStr, "dateToCheck");
+    // if (availableSlotsData.current[dateToCheckStr]) {
+    //   return availableSlotsData.current[dateToCheckStr];
+    // }
     const slot = slotsData.slots.find((slot) => {
       const dateStr = new Date(slot).toString();
       return dateStr === date;
@@ -284,10 +284,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       return isSlotCampaignActive;
     });
     const hasNormalSlot = !!slot;
-
-    // if (slot || campaignSlot) {
-    //   return { slot: hasNormalSlot, hasNormalSlot: null };
-    // }
 
     if (!!campaignSlot) return { campaignSlot, hasNormalSlot };
     return { slot, hasNormalSlot };
@@ -318,14 +314,18 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const handleToggleAvailable = async (date, hour, newStatus, campaignId) => {
     const timestampSlot = getTimestamp(date, hour);
 
-    const timestampStartDate = getTimestampFromUTC(weekStartDate);
-    const timestampEndDate = getTimestampFromUTC(weekEndDate, "23:59");
+    const timestampStartDate = getTimestampFromUTC(weekData.startDate);
+    const timestampEndDate = getTimestampFromUTC(weekData.endDate, "23:59");
 
     const timestampPreviousWeekStartDate = getTimestampFromUTC(
-      new Date(new Date(weekStartDate).setDate(weekStartDate.getDate() - 7))
+      new Date(
+        new Date(weekData.startDate).setDate(weekData.startDate.getDate() - 7)
+      )
     );
     const timestampPreviousWeekEndDate = getTimestampFromUTC(
-      new Date(new Date(weekEndDate).setDate(weekStartDate.getDate() + 7))
+      new Date(
+        new Date(weekData.endDate).setDate(weekData.startDate.getDate() + 7)
+      )
     );
 
     let startDate = timestampStartDate;
@@ -388,38 +388,43 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const handleWeekChange = (direction) => {
     if (direction === "next") {
       const nextWeek = getStartAndEndOfWeek(
-        new Date(weekEndDate.getTime() + 24 * 60 * 60 * 1000)
+        new Date(weekData.endDate.getTime() + 24 * 60 * 60 * 1000)
       );
-      setWeekStartDate(nextWeek.first);
-      setWeekEndDate(nextWeek.last);
-      setWeekDays(getDatesInRange(nextWeek.first, nextWeek.last));
+      const weekDays = getDatesInRange(nextWeek.first, nextWeek.last);
+      setWeekData({
+        startDate: nextWeek.first,
+        endDate: nextWeek.last,
+        days: weekDays,
+      });
     } else {
       const prevWeek = getStartAndEndOfWeek(
-        new Date(weekStartDate.getTime() - 24 * 60 * 60 * 1000)
+        new Date(weekData.startDate.getTime() - 24 * 60 * 60 * 1000)
       );
-      setWeekStartDate(prevWeek.first);
-      setWeekEndDate(prevWeek.last);
-      setWeekDays(getDatesInRange(prevWeek.first, prevWeek.last));
+      const weekDays = getDatesInRange(prevWeek.first, prevWeek.last);
+      setWeekData({
+        startDate: prevWeek.first,
+        endDate: prevWeek.last,
+        days: weekDays,
+      });
     }
   };
 
   const handleEditClick = () => navigate("/calendar/template");
 
-  const getCampaignDataForSlot = () => {};
   return (
     <>
       <Block classes="scheduler__heading-block">
         <Heading
           handleWeekChange={handleWeekChange}
           handleEditClick={handleEditClick}
-          startDate={weekStartDate}
-          endDate={weekEndDate}
+          startDate={weekData.startDate}
+          endDate={weekData.endDate}
           width={width}
           t={t}
         />
         <div className="scheduler__days-grid__days-of-week-item">
           <Grid classes="scheduler__days-grid__days-of-week-item__grid">
-            {weekDays.map((day, index) => {
+            {weekData.days.map((day, index) => {
               const isToday = isDateToday(day);
               const date = getDateView(day);
               const displayDate = width < 1366 ? date.slice(0, -3) : date;
@@ -460,7 +465,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                       {hour === "07:00" && <div ref={currentHourRef} />}
                       <p className="small-text">{hour}</p>
                     </GridItem>
-                    {weekDays.map((day, dayIndex) => {
+                    {weekData.days.map((day, dayIndex) => {
                       const slotDate = getDateAsFullString(day, hour);
                       const isAvailable = checkIsAvailable(slotDate);
                       const campaignId = isAvailable.campaignSlot?.campaignId;
