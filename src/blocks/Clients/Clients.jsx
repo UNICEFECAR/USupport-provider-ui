@@ -110,6 +110,7 @@ export const Clients = ({
             nextConsultationId={client.nextConsultationId}
             nextConsultationPrice={client.nextConsultationPrice}
             nextConsultationCouponPrice={client.nextConsultationCouponPrice}
+            nextConsultationCampaignId={client.nextConsultationCampaignId}
             consultationPrice={client.nextConsultationPrice}
             consultationCouponPrice={client.nextConsultationCouponPrice}
             pastConsultations={client.pastConsultations}
