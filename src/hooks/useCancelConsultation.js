@@ -6,8 +6,12 @@ import {
 import { useError } from "./useError";
 
 export default function useCancelConsultation(onSuccess, onError) {
-  const cancelConsultation = async ({ consultationId, price }) => {
-    if (price > 0) {
+  const cancelConsultation = async ({
+    consultationId,
+    price,
+    shouldRefund,
+  }) => {
+    if (price > 0 && shouldRefund) {
       await paymentsSvc.refund(consultationId);
     } else {
       await providerSvc.cancelConsultation(consultationId);
