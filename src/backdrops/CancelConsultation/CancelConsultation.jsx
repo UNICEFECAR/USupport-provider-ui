@@ -57,6 +57,7 @@ export const CancelConsultation = ({
     queryClient.invalidateQueries({ queryKey: ["upcoming-consultations"] });
     queryClient.invalidateQueries({ queryKey: ["consultations-single-day"] });
     queryClient.invalidateQueries({ queryKey: ["campaign-consultations"] });
+    queryClient.invalidateQueries({ queryKey: ["all-clients"] });
     onClose();
     toast(t("cancel_success"));
   };
