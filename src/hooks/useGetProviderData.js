@@ -40,6 +40,7 @@ export default function useGetProviderData(id = null, enabled = true) {
       totalConsultations: data.total_consultations || 0,
       earliestAvailableSlot: data.earliest_available_slot || "",
       videoLink: data.video_link || "",
+      status: data.status,
     };
     return formattedData;
   };

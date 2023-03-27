@@ -11,7 +11,11 @@ import {
   Loading,
 } from "@USupport-components-library/src";
 
-import { useGetCampaigns, useEnrollProviderInCampaign } from "#hooks";
+import {
+  useGetCampaigns,
+  useEnrollProviderInCampaign,
+  useGetProviderData,
+} from "#hooks";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
@@ -36,6 +40,9 @@ export const Campaigns = () => {
 
   const campaignsQuery = useGetCampaigns();
   const data = campaignsQuery.data;
+
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
 
   const baseRows = [
     t("sponsor"),
@@ -131,6 +138,10 @@ export const Campaigns = () => {
       icon: "calendar",
       text: t("add_availability"),
       handleClick: (campaignId) => {
+        if (providerStatus !== "active") {
+          toast(t("not_allowed"), { type: "error" });
+          return;
+        }
         navigate(`/campaigns/add-availability?campaignId=${campaignId}`);
       },
     },
@@ -138,7 +149,6 @@ export const Campaigns = () => {
       icon: "view",
       text: t("view_details"),
       handleClick: (campaignId) => {
-        console.log(campaignId);
         navigate(`/campaigns/details/${campaignId}`);
       },
     },
@@ -149,6 +159,10 @@ export const Campaigns = () => {
       icon: "view",
       text: t("enroll"),
       handleClick: (campaignId) => {
+        if (providerStatus !== "active") {
+          toast(t("not_allowed"), { type: "error" });
+          return;
+        }
         const campaign = data?.availableCampaigns.find(
           (x) => x.campaignId === campaignId
         );

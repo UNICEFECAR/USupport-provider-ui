@@ -26,7 +26,7 @@ import {
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
-import { useError } from "#hooks";
+import { useError, useGetProviderData } from "#hooks";
 
 import "./scheduler.scss";
 
@@ -56,6 +56,9 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const today = new Date();
   const currentHourRef = useRef(null);
   // const blockRef = useRef(null);
+
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
 
   const { first: startDate, last: endDate } = getStartAndEndOfWeek(today);
   const days = getDatesInRange(new Date(startDate), new Date(endDate));
@@ -312,6 +315,10 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   };
 
   const handleToggleAvailable = async (date, hour, newStatus, campaignId) => {
+    if (providerStatus === "inactive") {
+      toast(t("provider_inactive"), { type: "error" });
+      return;
+    }
     const timestampSlot = getTimestamp(date, hour);
 
     const timestampStartDate = getTimestampFromUTC(weekData.startDate);
