@@ -15,6 +15,7 @@
   "enroll": "Зачислять",
   "add_availability": "Добавить доступность",
   "view_details": "Посмотреть детали",
-  "past_campaigns": "Past campaigns you had participated in",
-  "no_data_found": "No data found"
+  "past_campaigns": "Past campaigns you had participated inRU",
+  "no_data_found": "No data foundRU",
+  "not_allowed": "You don't have permissions to access campaignsRU"
 }

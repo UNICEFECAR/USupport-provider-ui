@@ -16,5 +16,6 @@
   "add_availability": "Add availability",
   "view_details": "View details",
   "past_campaigns": "Past campaigns you had participated in",
-  "no_data_found": "No data found"
+  "no_data_found": "No data found",
+  "not_allowed": "You don't have permissions to access campaigns"
 }

@@ -25,6 +25,7 @@ import {
   useGetAllClients,
   useGetPastConsultationsByClientId,
   useGetChatData,
+  useGetProviderData,
 } from "#hooks";
 
 import "./clients.scss";
@@ -58,6 +59,9 @@ export const Clients = ({
   );
 
   const clientsQuery = useGetAllClients();
+
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
 
   const handleConsultationClick = (consultation) => {
     setSelectedConsultation(consultation);
@@ -110,6 +114,7 @@ export const Clients = ({
             nextConsultationId={client.nextConsultationId}
             nextConsultationPrice={client.nextConsultationPrice}
             nextConsultationCouponPrice={client.nextConsultationCouponPrice}
+            nextConsultationCampaignId={client.nextConsultationCampaignId}
             consultationPrice={client.nextConsultationPrice}
             consultationCouponPrice={client.nextConsultationCouponPrice}
             pastConsultations={client.pastConsultations}
@@ -117,6 +122,7 @@ export const Clients = ({
             suggested={client.nextConsultationStatus === "suggested"}
             t={t}
             timestamp={client.nextConsultation}
+            providerStatus={providerStatus}
           />
         </GridItem>
       );
@@ -181,6 +187,7 @@ export const Clients = ({
               noConsultationHeading={t("no_consultation_selected")}
               proposeConsultationLabel={t("propose_consultation_label")}
               selectedClient={selectedClient}
+              providerStatus={providerStatus}
               t={t}
             />
           )}
@@ -196,6 +203,7 @@ const ConsultationDetails = ({
   handleSuggestConsultation,
   noConsultationHeading,
   selectedClient,
+  providerStatus,
   t,
 }) => {
   const chatQuery = useGetChatData(consultation?.chatId);
@@ -259,14 +267,16 @@ const ConsultationDetails = ({
             {chatQuery.isLoading ? <Loading size="lg" /> : renderAllMessages()}
           </div>
 
-          <Button
-            size="lg"
-            label={proposeConsultationLabel}
-            onClick={() =>
-              handleSuggestConsultation(selectedClient.clientDetailId)
-            }
-            classes="clients__consultation-container__consultation__button"
-          />
+          {providerStatus === "active" ? (
+            <Button
+              size="lg"
+              label={proposeConsultationLabel}
+              onClick={() =>
+                handleSuggestConsultation(selectedClient.clientDetailId)
+              }
+              classes="clients__consultation-container__consultation__button"
+            />
+          ) : null}
         </div>
       )}
     </GridItem>
@@ -280,6 +290,7 @@ const ConsultationsHistory = ({
   proposeConsultationLabel,
   selectedClient,
   handleSuggestConsultation,
+  providerStatus,
   t,
 }) => {
   const imageUrl = AMAZON_S3_BUCKET + "/" + (image || "default");
@@ -352,11 +363,13 @@ const ConsultationsHistory = ({
           <Avatar image={imageUrl} size="sm" />
           <p className="name-text">{clientName}</p>
         </div>
-        <Icon
-          name="three-dots-vertical"
-          color="#20809E"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        />
+        {providerStatus === "active" ? (
+          <Icon
+            name="three-dots-vertical"
+            color="#20809E"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          />
+        ) : null}
       </Box>
       <Grid classes="clients__main-container__grid">
         {renderAllConsultations()}
