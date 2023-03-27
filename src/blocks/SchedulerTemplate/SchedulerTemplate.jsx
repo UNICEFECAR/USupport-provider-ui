@@ -23,6 +23,8 @@ import {
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
+import { useGetProviderData } from "#hooks";
+
 import "./scheduler-template.scss";
 
 /**
@@ -45,6 +47,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
     "saturday",
     "sunday",
   ];
+
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
 
   const initialTemplate = {};
   daysOfWeek.forEach(
@@ -131,6 +136,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
   });
 
   const handleSubmit = async () => {
+    if (providerStatus !== "active") {
+      return;
+    }
     setIsSubmitting(true);
     const start = templateStartDate;
     // Gett all mondays between start and end
@@ -262,12 +270,14 @@ export const SchedulerTemplate = ({ campaignId }) => {
               setTemplateStartDate(value);
             }}
             label={t("start_date")}
+            disabled={providerStatus !== "active"}
           />
           <DropdownWithLabel
             options={getSundayOptions}
             selected={templateEndDate}
             setSelected={(value) => setTemplateEndDate(value)}
             label={t("end_date")}
+            disabled={providerStatus !== "active"}
           />
         </GridItem>
         {daysOfWeek.map((day, index) => {
@@ -295,7 +305,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
                   <div className="scheduler-template__grid__day-time-selector__single">
                     <p>From</p>
                     <Dropdown
-                      disabled={template[day].unavailable}
+                      disabled={
+                        template[day].unavailable || providerStatus !== "active"
+                      }
                       options={hoursOptions}
                       selected={template[day].start || ""}
                       setSelected={(value) =>
@@ -306,7 +318,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
                   <div className="scheduler-template__grid__day-time-selector__single">
                     <p>to</p>
                     <Dropdown
-                      disabled={template[day].unavailable}
+                      disabled={
+                        template[day].unavailable || providerStatus !== "active"
+                      }
                       options={getEndHoursOptions(template[day].start)}
                       selected={template[day].end || ""}
                       setSelected={(value) =>
