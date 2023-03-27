@@ -416,7 +416,13 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     }
   };
 
-  const handleEditClick = () => navigate("/calendar/template");
+  const handleEditClick = () => {
+    if (providerStatus !== "active") {
+      toast(t("provider_inactive"), { type: "error" });
+      return;
+    }
+    navigate("/calendar/template");
+  };
 
   return (
     <>
