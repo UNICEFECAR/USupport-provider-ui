@@ -101,7 +101,11 @@ export const Reports = () => {
   };
 
   const renderData = useMemo(() => {
-    const filteredData = data?.filter(filterData);
+    const filteredData = data
+      ?.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      })
+      .filter(filterData);
 
     if (!filteredData || filteredData?.length === 0)
       return (
@@ -210,10 +214,13 @@ const Filters = ({
   campaignOptions,
   clientOptions,
 }) => {
-  const [data, setData] = useState({
+  const initialData = {
     startDate: "",
     endDate: "",
-  });
+    campaign: "",
+    client: "",
+  };
+  const [data, setData] = useState(initialData);
 
   const handleChange = (field, value) => {
     setData({
@@ -224,6 +231,11 @@ const Filters = ({
 
   const handleSubmit = () => {
     handleSave(data);
+    handleClose();
+  };
+
+  const handleResetFilters = () => {
+    handleSave(initialData);
     handleClose();
   };
 
@@ -271,7 +283,19 @@ const Filters = ({
           </div>
         </div>
         <div>
-          <Button label={t("submit")} size="lg" onClick={handleSubmit} />
+          <Button
+            label={t("apply_filter")}
+            size="lg"
+            onClick={handleSubmit}
+            classes="reports__filter-modal__submit-button"
+          />
+          <Button
+            label={t("reset_filter")}
+            type="secondary"
+            size="lg"
+            onClick={handleResetFilters}
+            classes="reports__filter-modal__reset-button"
+          />
         </div>
       </>
     </Modal>
