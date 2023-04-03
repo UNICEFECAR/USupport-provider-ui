@@ -23,5 +23,7 @@
   "join_consultation": "Присоединиться к консультации",
   "slot_added": "Слот свободного времени успешно добавлен",
   "free": "Свободно",
-  "more_campaigns": "and {{amount}} more"
+  "more_campaigns": "{{amount}} кампании",
+  "provider_inactive": "You don't have permissions to add availabilityRU",
+  "coupon": "CouponRU"
 }
