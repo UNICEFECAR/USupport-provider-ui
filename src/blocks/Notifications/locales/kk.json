@@ -10,6 +10,7 @@
   "consultation_suggestion": "Сіз {{clientName}} {{date}} {{startHour}} бастап {{endHour}} дейін консультация ұсындыңыз.",
   "consultation_suggestion_booking": "Клиент {{clientName}} {{date}} {{startHour}} бастап {{endHour}} дейін ұсынылған консультацияны қабылдады.",
   "consultation_suggestion_cancellation": "Клиент {{clientName}} {{date}}  {{startHour}} бастап {{endHour}} дейін ұсынылған консультациядан бас тартты",
+  "consultation_started": "Your consultation with client {{clientName}} startedKK",
   "join": "Қосылу",
   "accept": "Қабылдау",
   "accept_consultation_success": "Консультация сәтті қабылданды accepted consultation",
