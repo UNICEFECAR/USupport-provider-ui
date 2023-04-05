@@ -389,6 +389,42 @@ export const Notifications = ({ openJoinConsultation }) => {
             }
           />
         );
+      case "consultation_started":
+        return (
+          <Notification
+            date={notification.createdAt}
+            isRead={notification.isRead}
+            title="USupport"
+            text={t(notification.type, {
+              clientName:
+                notificationClients[notification.content.clientDetailId],
+            })}
+            icon="calendar"
+            handleClick={() =>
+              handleNotificationClick(notification.notificationId)
+            }
+          >
+            {checkIsFiveMinutesBefore(notification.content.time) && (
+              <Button
+                classes="notifications__center-button"
+                size="md"
+                label={t("join")}
+                color="purple"
+                onClick={() => {
+                  const data =
+                    consultationsData?.length !== 0
+                      ? consultationsData
+                      : consultationsDataQuery?.data;
+                  const consultationToJoin = data.find(
+                    (x) =>
+                      x.consultationId === notification.content.consultationId
+                  );
+                  openJoinConsultation(consultationToJoin);
+                }}
+              />
+            )}
+          </Notification>
+        );
       default:
         return null;
     }

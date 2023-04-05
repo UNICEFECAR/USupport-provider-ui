@@ -23,5 +23,7 @@
   "join_consultation": "Консультацияға қосылу",
   "slot_added": "Бос уақыт сәтті қосылды",
   "free": "Бос",
-  "more_campaigns": "and {{amount}} more"
+  "more_campaigns": "{{amount}} науқан",
+  "provider_inactive": "You don't have permissions to add availabilityKK",
+  "coupon": "CouponKK"
 }

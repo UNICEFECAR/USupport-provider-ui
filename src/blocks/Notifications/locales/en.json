@@ -10,6 +10,7 @@
   "consultation_suggestion": "You suggested a consultation to {{clientName}} for {{date}} from {{startHour}} to {{endHour}}",
   "consultation_suggestion_booking": "Client {{clientName}} accepted the suggested consultation on {{date}} from {{startHour}} to {{endHour}}",
   "consultation_suggestion_cancellation": "Client {{clientName}} rejected the suggested consultation on {{date}} from {{startHour}} to {{endHour}}",
+  "consultation_started": "Your consultation with client {{clientName}} started",
   "join": "Join",
   "accept": "Accept",
   "accept_consultation_success": "Succesfully accepted consultation",
