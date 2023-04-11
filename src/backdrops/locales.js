@@ -7,3 +7,4 @@ export * as JoinConsultation from "./JoinConsultation/locales.js";
 export * as SelectConsultation from "./SelectConsultation/locales.js";
 export * as CodeVerification from './CodeVerification/locales.js';
 export * as CancelPaidConsultation from './CancelPaidConsultation/locales.js';
+export * as CreateResponse from './CreateResponse/locales.js';

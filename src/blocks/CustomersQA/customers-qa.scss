@@ -1,0 +1,10 @@
+@import "@USupport-components-library/styles";
+
+.customers-qa {
+  padding-top: $spacing_2_4;
+  padding-bottom: $spacing_3_6;
+
+  @media screen and (min-width: $screen_md) {
+    padding-top: $spacing_3_2;
+  }
+}

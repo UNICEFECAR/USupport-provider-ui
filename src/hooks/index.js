@@ -33,3 +33,4 @@ export * from "./useCountdownTimer.js";
 export * from "./useGetCampaigns.js";
 export * from "./useEnrollProviderInCampaign.js";
 export * from "./useGetConsultationsForCampaign.js";
+export * from "./useGetQuestions";

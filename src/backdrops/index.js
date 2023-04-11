@@ -7,3 +7,4 @@ export * from "./JoinConsultation";
 export * from "./SelectConsultation";
 export * from './CodeVerification';
 export * from './CancelPaidConsultation';
+export * from './CreateResponse';
