@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 import { Block } from "@USupport-components-library/src";
 
 import { Page, CustomersQA as CustomersQABlock } from "#blocks";
-import { CreateResponse } from "#backdrops";
+import {
+  CreateResponse,
+  ArchiveQuestion,
+  QuestionDetails,
+  FilterQuestions,
+} from "#backdrops";
 
 import "./customers-qa.scss";
 
@@ -20,15 +25,34 @@ export const CustomersQA = () => {
 
   const [isCreateResponseBackdropOpen, setIsCreateResponseBackdropOpen] =
     useState(false);
-  const [respondQuestionId, setRespondQuestionId] = useState(null);
+  const [question, setQuestion] = useState(null);
+  const [isArchiveQuestionBackdropOpen, setIsArchiveQuestionBackdropOpen] =
+    useState(false);
+  const [isQuestionDetailsBackdropOpen, setIsQuestionDetailsBackdropOpen] =
+    useState(false);
+  const [isFilterQuestionsBackdropOpen, setIsFilterQuestionsBackdropOpen] =
+    useState(false);
 
-  const openCreateRespondBackdrop = (questionId) => {
-    console.log("yes");
-    setRespondQuestionId(questionId);
+  const [filterTag, setFilterTag] = useState();
+
+  const openCreateRespondBackdrop = (question) => {
+    setQuestion(question);
     setIsCreateResponseBackdropOpen(true);
   };
 
-  console.log(isCreateResponseBackdropOpen);
+  const handleOpenArchive = (question) => {
+    setQuestion(question);
+    setIsArchiveQuestionBackdropOpen(true);
+  };
+
+  const handleReadMore = (question) => {
+    setQuestion(question);
+    setIsQuestionDetailsBackdropOpen(true);
+  };
+
+  const handleFilterTags = () => {
+    setIsFilterQuestionsBackdropOpen(true);
+  };
 
   return (
     <Page classes="page__customers-qa" showGoBackArrow={false}>
@@ -38,12 +62,40 @@ export const CustomersQA = () => {
           {t("subheading")}
         </p>
       </Block>
-      <CustomersQABlock handleOpenResposeBackdrop={openCreateRespondBackdrop} />
+      <CustomersQABlock
+        handleOpenResposeBackdrop={openCreateRespondBackdrop}
+        handleOpenArchive={handleOpenArchive}
+        handleReadMore={handleReadMore}
+        handleFilterTags={handleFilterTags}
+        filterTag={filterTag}
+      />
       {isCreateResponseBackdropOpen && (
         <CreateResponse
           isOpen={isCreateResponseBackdropOpen}
           onClose={() => setIsCreateResponseBackdropOpen(false)}
-          questionId={respondQuestionId}
+          question={question}
+        />
+      )}
+      {isArchiveQuestionBackdropOpen && (
+        <ArchiveQuestion
+          isOpen={isArchiveQuestionBackdropOpen}
+          onClose={() => setIsArchiveQuestionBackdropOpen(false)}
+          question={question}
+        />
+      )}
+      {isQuestionDetailsBackdropOpen && (
+        <QuestionDetails
+          isOpen={isQuestionDetailsBackdropOpen}
+          onClose={() => setIsQuestionDetailsBackdropOpen(false)}
+          question={question}
+          handleRespond={openCreateRespondBackdrop}
+        />
+      )}
+      {isFilterQuestionsBackdropOpen && (
+        <FilterQuestions
+          isOpen={isFilterQuestionsBackdropOpen}
+          onClose={() => setIsFilterQuestionsBackdropOpen(false)}
+          setTag={setFilterTag}
         />
       )}
     </Page>

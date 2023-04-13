@@ -8,3 +8,6 @@ export * from "./SelectConsultation";
 export * from './CodeVerification';
 export * from './CancelPaidConsultation';
 export * from './CreateResponse';
+export * from './ArchiveQuestion';
+export * from './QuestionDetails';
+export * from './FilterQuestions';

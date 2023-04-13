@@ -8,3 +8,6 @@ export * as SelectConsultation from "./SelectConsultation/locales.js";
 export * as CodeVerification from './CodeVerification/locales.js';
 export * as CancelPaidConsultation from './CancelPaidConsultation/locales.js';
 export * as CreateResponse from './CreateResponse/locales.js';
+export * as ArchiveQuestion from './ArchiveQuestion/locales.js';
+export * as QuestionDetails from './QuestionDetails/locales.js';
+export * as FilterQuestions from './FilterQuestions/locales.js';

@@ -1,0 +1,16 @@
+@import "@USupport-components-library/styles";
+
+.archive-question {
+  &__radio-button-group {
+    margin-top: $spacing_1_0;
+  }
+
+  &__input {
+    margin-top: $spacing_1_0;
+    margin-bottom: $spacing_1_6;
+  }
+
+  .radio-button-group__radio-button {
+    margin-bottom: $spacing_1_6;
+  }
+}

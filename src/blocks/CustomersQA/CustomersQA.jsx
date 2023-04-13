@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -8,6 +8,8 @@ import {
   Tabs,
   Loading,
   Answer,
+  ButtonWithIcon,
+  InputSearch,
 } from "@USupport-components-library/src";
 
 import { useGetQuestions } from "#hooks";
@@ -21,7 +23,13 @@ import "./customers-qa.scss";
  *
  * @return {jsx}
  */
-export const CustomersQA = ({ handleOpenResposeBackdrop }) => {
+export const CustomersQA = ({
+  handleOpenResposeBackdrop,
+  handleOpenArchive,
+  handleReadMore,
+  handleFilterTags,
+  filterTag,
+}) => {
   const { t } = useTranslation("customers-qa");
 
   const [tabs, setTabs] = useState([
@@ -29,22 +37,46 @@ export const CustomersQA = ({ handleOpenResposeBackdrop }) => {
     { value: "answered", isSelected: true },
     { value: "self_answered", isSelected: false },
   ]);
+  const [searchValue, setSearchValue] = useState("");
 
   const questionsQuery = useGetQuestions(
     tabs.find((tab) => tab.isSelected).value
   );
 
   const renderQuestions = () => {
+    if (questionsQuery.data.length === 0) {
+      return (
+        <GridItem md={8} lg={12}>
+          <p className="text">{t("no_results_found")}</p>
+        </GridItem>
+      );
+    }
+
     return questionsQuery.data.map((question, index) => {
+      if (filterTag) {
+        const tags = question.tags;
+        if (!tags.includes(filterTag)) {
+          return null;
+        }
+      }
+
+      if (searchValue) {
+        if (
+          !question.answerTitle.toLowerCase().includes(searchValue) &&
+          !question.answerText.toLowerCase().includes(searchValue)
+        )
+          return null;
+      }
+
       return (
         <GridItem md={8} lg={12} key={index}>
           <Answer
             question={question}
             classes="customers-qa__answer"
-            // handleLike={handleLike}
-            // handleReadMore={() => handleReadMore(question)}
+            handleReadMore={handleReadMore}
             // handleScheduleConsultationClick={handleScheduleConsultationClick}
             handleRespond={handleOpenResposeBackdrop}
+            handleArchive={handleOpenArchive}
             t={t}
             renderIn="provider"
           />
@@ -69,18 +101,38 @@ export const CustomersQA = ({ handleOpenResposeBackdrop }) => {
   return (
     <Block classes="customers-qa">
       <Grid>
-        <GridItem md={8} lg={12}></GridItem>
         <GridItem md={8} lg={12}>
-          <Tabs
-            options={tabs.map((tab) => {
-              return {
-                label: t(tab.value),
-                value: tab.value,
-                isSelected: tab.isSelected,
-              };
-            })}
-            handleSelect={handleSelectTab}
-          />
+          <div className="customers-qa__search-input-container">
+            <InputSearch
+              placeholder={t("search_placeholder")}
+              value={searchValue}
+              onChange={(value) => setSearchValue(value.toLowerCase())}
+            />
+            <ButtonWithIcon
+              label={t("filter")}
+              iconName="filter"
+              iconColor="#ffffff"
+              iconSize="sm"
+              color="purple"
+              size="xs"
+              classes="customers-qa__search-input-container__button"
+              onClick={handleFilterTags}
+            />
+          </div>
+        </GridItem>
+        <GridItem md={8} lg={12}>
+          <div className="customers-qa__tabs-container">
+            <Tabs
+              options={tabs.map((tab) => {
+                return {
+                  label: t(tab.value),
+                  value: tab.value,
+                  isSelected: tab.isSelected,
+                };
+              })}
+              handleSelect={handleSelectTab}
+            />
+          </div>
         </GridItem>
         <GridItem md={8} lg={12}>
           {questionsQuery.isLoading ? (

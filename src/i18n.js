@@ -64,6 +64,9 @@ import {
   CodeVerification,
   CancelPaidConsultation,
   CreateResponse,
+  ArchiveQuestion,
+  QuestionDetails,
+  FilterQuestions,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -129,6 +132,9 @@ const resources = {
     "code-verification": CodeVerification.en,
     "cancel-paid-consultation": CancelPaidConsultation.en,
     "create-response": CreateResponse.en,
+    "archive-question": ArchiveQuestion.en,
+    "question-details": QuestionDetails.en,
+    "filter-questions": FilterQuestions.en,
   },
 
   ru: {
@@ -195,6 +201,9 @@ const resources = {
     "code-verification": CodeVerification.ru,
     "cancel-paid-consultation": CancelPaidConsultation.ru,
     "create-response": CreateResponse.ru,
+    "archive-question": ArchiveQuestion.ru,
+    "question-details": QuestionDetails.ru,
+    "filter-questions": FilterQuestions.ru,
   },
 
   kk: {
@@ -261,6 +270,9 @@ const resources = {
     "code-verification": CodeVerification.kk,
     "cancel-paid-consultation": CancelPaidConsultation.kk,
     "create-response": CreateResponse.kk,
+    "archive-question": ArchiveQuestion.kk,
+    "question-details": QuestionDetails.kk,
+    "filter-questions": FilterQuestions.kk,
   },
 };
 
