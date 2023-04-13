@@ -11,7 +11,6 @@ export function useGetQuestions(type) {
     const { data } = await providerSvc.getQuestions(type);
 
     return data.map((question) => {
-      console.log(question);
       return {
         answerCreatedAt: question.answer_created_at,
         answerId: question.answer_id,
