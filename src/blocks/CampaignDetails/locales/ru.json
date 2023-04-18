@@ -1,0 +1,22 @@
+{
+  "upcoming": "Предстоящие",
+  "completed": "Завершено",
+  "sunday": "Вс",
+  "monday": "Пн",
+  "tuesday": "Вт",
+  "wednesday": "Ср",
+  "thursday": "Чт",
+  "friday": "Пт",
+  "saturday": "Сб",
+  "no_consultations": "У Вас нет предстоящих консультаций",
+  "cancel_consultation": "Отменить консультацию",
+  "suggested": "Предложен",
+  "view_profile": "Просмотреть профиль",
+  "active": "Прямой эфир",
+  "no_completed_consultations": "У Вас нет завершенных консультаций",
+  "no_upcoming_consultations": "У Вас нет предстоящих консультаций",
+  "not_conducted": "Не проводилась",
+  "conducted": "Проведен",
+  "join": "Присоединиться",
+  "details": "Смотреть подробности"
+}

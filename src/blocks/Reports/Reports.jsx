@@ -13,6 +13,7 @@ import {
   getDateView,
   getTimeFromDate,
   ONE_HOUR,
+  downloadCSVFile,
 } from "@USupport-components-library/utils";
 
 import { useGetProviderActivities } from "#hooks";
@@ -29,13 +30,31 @@ import "./reports.scss";
 export const Reports = () => {
   const { t } = useTranslation("reports");
   const rows = ["client", "time", "price", "campaign"];
+  const currencySymbol = localStorage.getItem("currency_symbol");
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState({});
 
   const { isLoading, data } = useGetProviderActivities();
 
-  const handleExport = () => {};
+  const handleExport = () => {
+    let csv = "";
+    csv += rows.map((x) => t(x)).join(",");
+
+    data.forEach((row) => {
+      const price = row.price ? `${row.price}${currencySymbol}` : t("free");
+      csv += "\n";
+      csv += `${row.displayName},`;
+      csv += `${getFormattedDate(row.time, false)},`;
+      csv += `${price},`;
+      csv += `${row.campaignName || "N/A"}`;
+    });
+
+    const reportDate = new Date().toISOString().split("T")[0];
+    const fileName = `report-${reportDate}.csv`;
+    downloadCSVFile(csv, fileName);
+  };
+
   const handleFilterOpen = () => {
     setIsFilterOpen(true);
   };
@@ -45,7 +64,9 @@ export const Reports = () => {
   };
 
   const filterData = (activity) => {
-    // TODO: Add filter for campaigns
+    const isCampaignMatching = filters.campaign
+      ? activity.campaignName === filters.campaign
+      : true;
 
     const isClientMatching = filters.client
       ? activity.displayName === filters.client
@@ -60,13 +81,31 @@ export const Reports = () => {
       ? new Date(activity.time).getTime() <= new Date(filters.endDate).getTime()
       : true;
 
-    return isStartDateMatching && isEndDateMatching && isClientMatching
+    return isStartDateMatching &&
+      isEndDateMatching &&
+      isClientMatching &&
+      isCampaignMatching
       ? true
       : false;
   };
 
+  const getFormattedDate = (date, hasComma = true) => {
+    const endTime = new Date(date.getTime() + ONE_HOUR);
+
+    const displayTime = getTimeFromDate(date);
+    const displayEndTime = getTimeFromDate(endTime);
+
+    return `${displayTime} - ${displayEndTime}${
+      hasComma ? "," : ""
+    } ${getDateView(date)}`;
+  };
+
   const renderData = useMemo(() => {
-    const filteredData = data?.filter(filterData);
+    const filteredData = data
+      ?.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      })
+      .filter(filterData);
 
     if (!filteredData || filteredData?.length === 0)
       return (
@@ -82,10 +121,7 @@ export const Reports = () => {
       );
 
     return filteredData?.map((activity, index) => {
-      const endTime = new Date(activity.time.getTime() + ONE_HOUR);
-
-      const displayTime = getTimeFromDate(activity.time);
-      const displayEndTime = getTimeFromDate(endTime);
+      const displayTime = getFormattedDate(activity.time);
 
       return (
         <tr key={index}>
@@ -93,33 +129,34 @@ export const Reports = () => {
             <p className="text reports__table__name">{activity.displayName}</p>
           </td>
           <td className="reports__table__td">
-            <p className="text reports__table__name">
-              {displayTime} - {displayEndTime}, {getDateView(activity.time)}
+            <p className="text reports__table__name">{displayTime}</p>
+          </td>
+          <td className="reports__table__td">
+            <p className="text">
+              {activity.price
+                ? `${activity.price}${currencySymbol}`
+                : t("free")}
             </p>
           </td>
           <td className="reports__table__td">
-            <p className="text">{activity.price || t("free")}</p>
-          </td>
-          <td className="reports__table__td">
-            <p className="text">{activity.campaign || "N/A"}</p>
+            <p className="text">{activity.campaignName || "N/A"}</p>
           </td>
         </tr>
       );
     });
   }, [data, filters]);
 
-  let campaignOptions =
-    data
-      ?.map((x) => {
-        if (x.campaign) {
-          return { value: x.campaign, label: x.campaign };
-        }
-        return null;
-      })
-      .filter((x) => x !== null) || [];
+  let campaignOptions = Array.from(
+    new Set(data?.filter((x) => x.campaignName).map((x) => x.campaignName))
+  ).map((x) => ({ value: x, label: x }));
+  campaignOptions.unshift({ value: null, label: t("all") });
 
-  const clientOptions =
-    data?.map((x) => ({ value: x.displayName, label: x.displayName })) || [];
+  const clientOptions = Array.from(
+    new Set(data?.map((x) => x.displayName))
+  ).map((x) => ({
+    value: x,
+    label: x,
+  }));
 
   return (
     <Block classes="reports">
@@ -177,10 +214,13 @@ const Filters = ({
   campaignOptions,
   clientOptions,
 }) => {
-  const [data, setData] = useState({
+  const initialData = {
     startDate: "",
     endDate: "",
-  });
+    campaign: "",
+    client: "",
+  };
+  const [data, setData] = useState(initialData);
 
   const handleChange = (field, value) => {
     setData({
@@ -191,6 +231,11 @@ const Filters = ({
 
   const handleSubmit = () => {
     handleSave(data);
+    handleClose();
+  };
+
+  const handleResetFilters = () => {
+    handleSave(initialData);
     handleClose();
   };
 
@@ -238,7 +283,19 @@ const Filters = ({
           </div>
         </div>
         <div>
-          <Button label={t("submit")} size="lg" onClick={handleSubmit} />
+          <Button
+            label={t("apply_filter")}
+            size="lg"
+            onClick={handleSubmit}
+            classes="reports__filter-modal__submit-button"
+          />
+          <Button
+            label={t("reset_filter")}
+            type="secondary"
+            size="lg"
+            onClick={handleResetFilters}
+            classes="reports__filter-modal__reset-button"
+          />
         </div>
       </>
     </Modal>

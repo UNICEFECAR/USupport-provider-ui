@@ -1,0 +1,26 @@
+@import "@USupport-components-library/styles";
+
+.campaign-details {
+  &__grid {
+    padding-top: $spacing_2_4;
+    padding-bottom: $spacing_6_4;
+    place-items: center;
+  }
+
+  &__inner-grid {
+    place-items: center;
+
+    &__heading {
+      place-self: start;
+      margin-top: $spacing_1_6;
+
+      @media screen and (min-width: $screen_md) {
+        margin-top: $spacing_2_4;
+      }
+    }
+
+    &__consultation {
+      margin-bottom: $spacing_2_4;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "heading": "Уведомления",
+  "mark_read": "Отметить все как прочитанное",
+  "subheading": "Здесь Вы можете найти все уведомления, которые когда-либо получали в своем аккаунте.",
+  "consultation_booking": "Клиент {{clientName}} перенес консультацию с {{date}} {{startHour}} до {{endHour}} на {{newDate}} с {{newStartHour}} до {{newEndHour}}",
+  "consultation_reschedule": "Client {{clientName}} rescheduled the consultation from {{date}} from {{startHour}} to {{endHour}} to {{newDate}} from {{newStartHour}} to {{newEndHour}}",
+  "consultation_cancellation_provider": "Вы отменили консультацию с {{clientName}}, запланированную на {{date}} с {{startHour}} до {{endHour}}",
+  "consultation_cancellation": "Клиент {{clientName}} отменил консультацию, запланированную на {{date}} с {{startHour}} до {{endHour}}.",
+  "consultation_remind_start": "Предстоящая консультация начнется через {{minutes}} минут",
+  "consultation_suggestion": "Вы предложили консультацию {{clientName}} на {{date}} с {{startHour}} до {{endHour}}",
+  "consultation_suggestion_booking": "Клиент {{clientName}} принял предложенную консультацию {{date}} с {{startHour}} до {{endHour}}",
+  "consultation_suggestion_cancellation": "Клиент {{clientName}} отклонил предложенную консультацию {{date}} с {{startHour}} до {{endHour}}",
+  "consultation_started": "Your consultation with client {{clientName}} startedRU",
+  "join": "Присоединиться",
+  "accept": "Принять",
+  "accept_consultation_success": "Консультация успешно принята  accepted consultation",
+  "reject": "Отклонить",
+  "reject_consultation_success": "Консультация успешно отклонена",
+  "no_notifications": "У Вас пока нет уведомлений.",
+  "add_more_availability_slots": "Добавить больше слотов свободного времени в свое расписание",
+  "weekly_report": "У вас есть новый еженедельный отчет"
+}

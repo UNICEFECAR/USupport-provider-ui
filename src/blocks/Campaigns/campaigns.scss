@@ -1,0 +1,36 @@
+@import "@USupport-components-library/styles";
+
+.campaigns {
+  padding-bottom: $spacing_10_0;
+
+  &__sponsor-container {
+    display: flex;
+    align-items: center;
+
+    &__image {
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 50%;
+      margin-right: $spacing_1_2;
+    }
+  }
+
+  &__grid {
+    justify-items: start;
+    padding-top: $spacing_2_4;
+
+    &__participate-heading .text {
+      padding-top: $spacing_3_2;
+      font-weight: $font_bold;
+    }
+
+    &__heading-item p {
+      word-break: normal;
+      white-space: nowrap;
+    }
+  }
+
+  & .table__container {
+    padding-bottom: 0;
+  }
+}

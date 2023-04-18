@@ -23,13 +23,28 @@ export const CancelConsultation = ({
   isOpen,
   onClose,
   consultation,
+  couponPrice,
   onSuccess = () => {},
 }) => {
   const queryClient = useQueryClient();
   const { t } = useTranslation("cancel-consultation");
   const [error, setError] = useState();
+  const currencySymbol = localStorage.getItem("currency_symbol");
 
-  const { clientName, timestamp, time, image } = consultation;
+  const {
+    clientName,
+    timestamp,
+    time,
+    image,
+    price: consultationPrice,
+    couponPrice: consultationCouponPrice,
+  } = consultation;
+
+  const price = !isNaN(couponPrice)
+    ? couponPrice
+    : !isNaN(consultationCouponPrice)
+    ? consultationCouponPrice
+    : consultationPrice;
 
   const startDate = new Date(time || timestamp);
   const endDate = new Date(new Date(time || timestamp).getTime() + ONE_HOUR);
@@ -41,6 +56,8 @@ export const CancelConsultation = ({
     onSuccess();
     queryClient.invalidateQueries({ queryKey: ["upcoming-consultations"] });
     queryClient.invalidateQueries({ queryKey: ["consultations-single-day"] });
+    queryClient.invalidateQueries({ queryKey: ["campaign-consultations"] });
+    queryClient.invalidateQueries({ queryKey: ["all-clients"] });
     onClose();
     toast(t("cancel_success"));
   };
@@ -52,11 +69,18 @@ export const CancelConsultation = ({
     onCancelError
   );
 
+  // Should refund only when the consultation is more than 24 hours from now
+  // and there is no coupon price
+  const shouldRefund =
+    isConsultationLessThan24HoursBefore || consultation.campaignId
+      ? false
+      : true;
+
   const handleCancelClick = () => {
     cancelConsultationMutation.mutate({
       consultationId: consultation.consultationId,
-      price: consultation.price,
-      shouldRefund: isConsultationLessThan24HoursBefore ? false : true,
+      price,
+      shouldRefund,
     });
   };
 
@@ -66,17 +90,17 @@ export const CancelConsultation = ({
       title="CancelConsultation"
       isOpen={isOpen}
       onClose={onClose}
-      heading={
-        consultation.price > 0
-          ? t("paid_heading", { price: consultation.price })
-          : t("heading")
+      heading={price > 0 ? t("paid_heading", { price }) : t("heading")}
+      text={
+        price > 0 && !couponPrice && !consultationCouponPrice
+          ? t("paid_subheading")
+          : ""
       }
-      text={consultation.price > 0 ? t("paid_subheading") : ""}
       ctaHandleClick={onClose}
       ctaLabel={t("keep_button_label")}
       secondaryCtaLabel={t("cancel_button_label")}
       secondaryCtaHandleClick={handleCancelClick}
-      secondaryCtaColor={consultation.price > 0 ? "red" : "green"}
+      secondaryCtaColor={price > 0 ? "red" : "green"}
       showLoadingIfDisabled
       isSecondaryCtaDisabled={cancelConsultationMutation.isLoading}
       errorMessage={error}
@@ -93,12 +117,13 @@ export const CancelConsultation = ({
         <div
           className={[
             "cancel-consultation__price-badge",
-            //TODO: refactor if price === 0, then free
-            1 !== 1 && "cancel-consultation__price-badge--free",
+            !price && "cancel-consultation__price-badge--free",
           ].join(" ")}
         >
-          {/* TODO: refactor to show the real price */}
-          <p className="small-text">{consultation.price}</p>
+          <p className="small-text">
+            {price}
+            {currencySymbol}
+          </p>
         </div>
       </div>
     </Backdrop>

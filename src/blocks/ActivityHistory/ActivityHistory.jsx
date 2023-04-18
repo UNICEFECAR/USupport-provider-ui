@@ -17,7 +17,11 @@ import {
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 
-import { useGetAllPastConsultations, useGetChatData } from "#hooks";
+import {
+  useGetAllPastConsultations,
+  useGetChatData,
+  useGetProviderData,
+} from "#hooks";
 
 import "./activity-history.scss";
 
@@ -32,16 +36,25 @@ import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/as
  *
  * @return {jsx}
  */
-export const ActivityHistory = ({ openSelectConsultation }) => {
+export const ActivityHistory = ({
+  openSelectConsultation,
+  preselectedConsultation,
+}) => {
   const navigate = useNavigate();
   const { t } = useTranslation("activity-history");
 
   const { width } = useWindowDimensions();
 
-  const [selectedConsultation, setSelectedConsultation] = useState();
+  const [selectedConsultation, setSelectedConsultation] = useState(
+    preselectedConsultation
+  );
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const consultationsQuery = useGetAllPastConsultations();
   const chatQuery = useGetChatData(selectedConsultation?.chatId);
+
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
 
   const handleConsultationClick = (consultation) => {
     window.scrollTo(0, 0);
@@ -64,10 +77,12 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
         iconName: "share-front",
         text: t("button_propose_consultation_label"),
         onClick: handleProposeConsultation,
+        value: "suggest-consultation",
       },
       {
         iconName: "person",
         text: t("button_view_profile_label"),
+        value: "view-profile",
         onClick: () =>
           navigate("/clients", {
             state: {
@@ -82,6 +97,12 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
     ];
 
     return options.map((option, index) => {
+      if (
+        providerStatus !== "active" &&
+        option.value === "suggest-consultation"
+      ) {
+        return null;
+      }
       return (
         <div
           className="menu-option"
@@ -119,8 +140,10 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
           <Consultation
             consultation={consultation}
             overview={true}
-            renderIn="client"
+            renderIn="provider"
             onClick={() => handleConsultationClick(consultation)}
+            couponPrice={consultation.couponPrice}
+            sponsorImage={consultation.sponsorImage}
             t={t}
           />
         </GridItem>
@@ -218,12 +241,14 @@ export const ActivityHistory = ({ openSelectConsultation }) => {
                     renderAllMessages()
                   )}
                 </div>
-                <Button
-                  size="lg"
-                  label={t("button_propose_consultation_label")}
-                  onClick={handleProposeConsultation}
-                  classes="activity-history__consultation-container__consultation__button"
-                />
+                {providerStatus === "active" ? (
+                  <Button
+                    size="lg"
+                    label={t("button_propose_consultation_label")}
+                    onClick={handleProposeConsultation}
+                    classes="activity-history__consultation-container__consultation__button"
+                  />
+                ) : null}
                 {isMenuOpen && (
                   <OutsideClickHandler
                     onOutsideClick={() => setIsMenuOpen(false)}

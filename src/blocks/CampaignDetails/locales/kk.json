@@ -1,0 +1,22 @@
+{
+  "upcoming": "Алдағы",
+  "completed": "Аяқталды",
+  "sunday": "Жс",
+  "monday": "Дс",
+  "tuesday": "Сс",
+  "wednesday": "Ср",
+  "thursday": "Бс",
+  "friday": "Жм",
+  "saturday": "Сб",
+  "no_consultations": "Сізде алдағы консультациялар жоқ",
+  "cancel_consultation": "Консультацияны болдырмау",
+  "suggested": "Ұсынылды",
+  "view_profile": "Парақшаны қарап шығу",
+  "active": "Тікелей эфир",
+  "no_completed_consultations": "Сізде аяқталған консултациялар жоқ",
+  "no_upcoming_consultations": "Сізде алдағы консультациялар жоқ",
+  "not_conducted": "Өткізілмеді",
+  "conducted": "Өткізілді",
+  "join": "Қосылу",
+  "details": "Мәліметтерді қарау"
+}

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
 
-export const useGetConsultationsForSingleDay = (date) => {
+export const useGetConsultationsForSingleDay = (date, enabled = true) => {
   const getconsultationsForSingleDay = async () => {
     const { data } = await providerSvc.getConsultationsForSingleDay(date);
     const filtered = data.filter((consultation) => {
@@ -22,12 +22,16 @@ export const useGetConsultationsForSingleDay = (date) => {
       timestamp: new Date(consultation.time).getTime(),
       status: consultation.status,
       price: consultation.price,
+      campaignId: consultation.campaign_id,
+      couponPrice: consultation.coupon_price,
+      sponsorImage: consultation.sponsor_image,
     }));
   };
 
   const query = useQuery(
     ["consultations-single-day", date],
-    getconsultationsForSingleDay
+    getconsultationsForSingleDay,
+    { enabled }
   );
 
   return query;

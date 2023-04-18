@@ -23,6 +23,8 @@ import {
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
+import { useGetProviderData } from "#hooks";
+
 import "./scheduler-template.scss";
 
 /**
@@ -32,7 +34,7 @@ import "./scheduler-template.scss";
  *
  * @return {jsx}
  */
-export const SchedulerTemplate = () => {
+export const SchedulerTemplate = ({ campaignId }) => {
   const { t } = useTranslation("scheduler-template");
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -45,6 +47,9 @@ export const SchedulerTemplate = () => {
     "saturday",
     "sunday",
   ];
+
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
 
   const initialTemplate = {};
   daysOfWeek.forEach(
@@ -115,6 +120,7 @@ export const SchedulerTemplate = () => {
   const addTemplateAvailability = async (timestamps) => {
     const res = await providerSvc.addTemplateAvailability({
       template: timestamps,
+      campaignId,
     });
     return res;
   };
@@ -127,10 +133,12 @@ export const SchedulerTemplate = () => {
       const { message: errorMessage } = useError(error);
       toast(errorMessage, { type: "error" });
     },
-    onSettled: () => setIsSubmitting(false),
   });
 
   const handleSubmit = async () => {
+    if (providerStatus !== "active") {
+      return;
+    }
     setIsSubmitting(true);
     const start = templateStartDate;
     // Gett all mondays between start and end
@@ -151,7 +159,8 @@ export const SchedulerTemplate = () => {
 
     const timestamps = [];
     mondays.forEach((monday) => {
-      const currentTimeZoneOffset = new Date().getTimezoneOffset() * 60;
+      const currentTimeZoneOffset =
+        new Date(monday * 1000).getTimezoneOffset() * 60;
 
       const startDate =
         getTimestamp(new Date(monday * 1000)) - currentTimeZoneOffset;
@@ -261,12 +270,14 @@ export const SchedulerTemplate = () => {
               setTemplateStartDate(value);
             }}
             label={t("start_date")}
+            disabled={providerStatus !== "active"}
           />
           <DropdownWithLabel
             options={getSundayOptions}
             selected={templateEndDate}
             setSelected={(value) => setTemplateEndDate(value)}
             label={t("end_date")}
+            disabled={providerStatus !== "active"}
           />
         </GridItem>
         {daysOfWeek.map((day, index) => {
@@ -294,7 +305,9 @@ export const SchedulerTemplate = () => {
                   <div className="scheduler-template__grid__day-time-selector__single">
                     <p>From</p>
                     <Dropdown
-                      disabled={template[day].unavailable}
+                      disabled={
+                        template[day].unavailable || providerStatus !== "active"
+                      }
                       options={hoursOptions}
                       selected={template[day].start || ""}
                       setSelected={(value) =>
@@ -305,7 +318,9 @@ export const SchedulerTemplate = () => {
                   <div className="scheduler-template__grid__day-time-selector__single">
                     <p>to</p>
                     <Dropdown
-                      disabled={template[day].unavailable}
+                      disabled={
+                        template[day].unavailable || providerStatus !== "active"
+                      }
                       options={getEndHoursOptions(template[day].start)}
                       selected={template[day].end || ""}
                       setSelected={(value) =>
@@ -325,7 +340,8 @@ export const SchedulerTemplate = () => {
             label={t("save")}
             size="lg"
             classes="scheduler-template__grid__save-button"
-            disabled={!templateStartDate || !templateEndDate || isSubmitting}
+            disabled={!templateStartDate || !templateEndDate}
+            loading={addTemplateAvailabilityMutation.isLoading}
           />
         </GridItem>
       </Grid>

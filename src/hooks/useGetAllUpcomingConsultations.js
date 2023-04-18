@@ -36,6 +36,9 @@ export default function useGetAllUpcomingConsultations() {
         timestamp: new Date(consultation.time).getTime(),
         status: consultation.status,
         price: consultation.price,
+        campaignId: consultation.campaign_id,
+        couponPrice: consultation.coupon_price,
+        sponsorImage: consultation.sponsor_image,
       }));
   };
 

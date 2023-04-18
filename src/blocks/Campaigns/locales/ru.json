@@ -1,0 +1,21 @@
+{
+  "campaigns": "Кампании",
+  "campaigns_participate": "Кампании, в которых Вы участвуете",
+  "sponsor": "Спонсор",
+  "campaign": "Кампания",
+  "coupon_single_price": "Единая цена купона",
+  "period": "Период",
+  "consultations_with_you": "Ваши консультации",
+  "your_payment": "Ваш платеж",
+  "available_campaigns": "Доступные кампании",
+  "terms_and_conditions": "Условия и положения",
+  "agreed_to_get_paid": "Я согласен получать оплату {{amount}}{{currencySymbol}} за одну консультацию",
+  "agree_with_terms": "Я согласен с правилами и условиями",
+  "success": "Успешно зарегистрировался в кампании",
+  "enroll": "Зачислять",
+  "add_availability": "Добавить доступность",
+  "view_details": "Посмотреть детали",
+  "past_campaigns": "Past campaigns you had participated inRU",
+  "no_data_found": "No data foundRU",
+  "not_allowed": "You don't have permissions to access campaignsRU"
+}

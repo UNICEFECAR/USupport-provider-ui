@@ -1,0 +1,22 @@
+{
+  "heading": "Хабарландырулар",
+  "mark_read": "Барлығын оқылған деп белгілеу",
+  "subheading": "Мұнда Сіз өз аккаунтыңызда алған барлық хабарландыруларды таба аласыз.",
+  "consultation_booking": "Сіздің {{clientName}} консультацияңыз {{date}} {{startHour}} бастап {{endHour}} дейін жоспарланған.",
+  "consultation_reschedule": "Клиент {{clientName}} консультацияны {{date}} {{startHour}} бастап {{endHour}} дейін {{newDate}} {{newStartHour}} бастап {{newEndHour}} дейін ауыстырды.",
+  "consultation_cancellation_provider": "Сіз {{clientName}} {{date}} {{startHour}} бастап {{endHour}} дейін жоспарланған консультациядан бас тарттыңыз.",
+  "consultation_cancellation": "Клиент {{clientName}} {{date}} {{startHour}} бастап {{endHour}} дейін жоспарланған консультациядан бас тартты.",
+  "consultation_remind_start": "Алдағы консультация {{минут}} минуттан кейін басталады",
+  "consultation_suggestion": "Сіз {{clientName}} {{date}} {{startHour}} бастап {{endHour}} дейін консультация ұсындыңыз.",
+  "consultation_suggestion_booking": "Клиент {{clientName}} {{date}} {{startHour}} бастап {{endHour}} дейін ұсынылған консультацияны қабылдады.",
+  "consultation_suggestion_cancellation": "Клиент {{clientName}} {{date}}  {{startHour}} бастап {{endHour}} дейін ұсынылған консультациядан бас тартты",
+  "consultation_started": "Your consultation with client {{clientName}} startedKK",
+  "join": "Қосылу",
+  "accept": "Қабылдау",
+  "accept_consultation_success": "Консультация сәтті қабылданды accepted consultation",
+  "reject": "Бас тарту",
+  "reject_consultation_success": "Консультациядан сәтті бас тарттыңыз",
+  "no_notifications": "Сізде әлі хабарландырулар жоқ.",
+  "add_more_availability_slots": "Кестеңізге көбірек бос уақыт қосу",
+  "weekly_report": "Сізде жаңа апталық есеп бар"
+}

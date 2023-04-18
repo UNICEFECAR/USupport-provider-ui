@@ -1,0 +1,17 @@
+{
+  "activity_history_heading": "Әрекет тарихы",
+  "button_propose_consultation_label": "Консультация ұсыну",
+  "button_view_profile_label": "Жеке парақшаны қарап шығу",
+  "no_consultation_selected": "Чтобы просмотреть историю действий, выберите один из перечисленных слева.",
+  "button_filter_label": "Сүзгі",
+  "sunday": "Жс",
+  "monday": "Дс",
+  "tuesday": "Сс",
+  "wednesday": "Ср",
+  "thursday": "Бс",
+  "friday": "Жм",
+  "saturday": "Сб",
+  "no_messages": "Бұл консультацияда хабарламалар жоқ",
+  "no_activity_history": "Әлі әрекет тіркелген жоқ",
+  "free": "Тегін"
+}

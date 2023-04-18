@@ -148,6 +148,8 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             handleJoinClick={openJoinConsultation}
             handleCancelConsultation={handleCancelConsultation}
             handleViewProfile={handleViewProfile}
+            couponPrice={consultation.couponPrice}
+            sponsorImage={consultation.sponsorImage}
             t={t}
           />
         </GridItem>
@@ -205,6 +207,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
                   numberOfConsultations={dayConsultations}
                   isAvailable={isAvailable}
                   t={t}
+                  unavailableLabel={t("not_available")}
                   consultationsLabel={
                     dayConsultations === 1
                       ? t("consultation")

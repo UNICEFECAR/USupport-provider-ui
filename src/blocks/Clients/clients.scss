@@ -145,7 +145,7 @@
       background-color: $color_white_ff;
       position: absolute;
       right: calc(50% - calc(33.4rem / 2));
-      top: 8%;
+      top: 8rem;
       z-index: $z_index_2;
 
       & .menu-option {
@@ -272,5 +272,6 @@
 
   &__no-clients-item {
     padding-top: $spacing_2_4;
+    place-self: center;
   }
 }

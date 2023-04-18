@@ -5,6 +5,7 @@
 
   position: relative;
   padding-top: 20.2rem;
+  padding-bottom: 15rem;
 
   @media screen and (min-width: $screen-md) {
     padding-top: 13.2rem;
@@ -38,6 +39,11 @@
     grid-template-columns: repeat(8, 1fr);
     margin-top: $spacing_1_6;
     padding-bottom: $spacing_6_0;
+    grid-gap: 0.5rem;
+
+    @media screen and (min-width: $screen-sm) {
+      grid-gap: 0.8rem;
+    }
 
     &__days-of-week-item {
       position: sticky;

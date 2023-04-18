@@ -4,7 +4,7 @@
   @include full-height-page-navbar;
 
   &__grid {
-    padding-top: $spacing_2_4;
+    padding-top: $spacing_3_2;
     padding-bottom: $spacing_6_4;
     place-items: center;
 
@@ -31,9 +31,11 @@
     flex-direction: column;
     text-align: left;
     width: 100%;
+    align-items: center;
 
     &__heading-text {
       margin-top: $spacing_2_4;
+      align-self: flex-start;
     }
 
     @media screen and (min-width: $screen_md) {
