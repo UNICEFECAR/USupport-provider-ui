@@ -62,8 +62,10 @@ export const CustomersQA = ({
 
       if (searchValue) {
         if (
-          !question.answerTitle.toLowerCase().includes(searchValue) &&
-          !question.answerText.toLowerCase().includes(searchValue)
+          !question.answerTitle
+            .toLowerCase()
+            .includes(searchValue.toLowerCase()) &&
+          !question.answerText.toLowerCase().includes(searchValue.toLowerCase())
         )
           return null;
       }
