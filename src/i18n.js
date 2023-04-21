@@ -26,6 +26,7 @@ import {
   Reports,
   Campaigns,
   CampaignDetails,
+  CustomersQA,
 } from "#blocks/locales.js";
 
 import {
@@ -49,6 +50,7 @@ import {
   Reports as ReportsPage,
   Campaigns as CampaignsPage,
   AddCampaignAvailability as AddCampaignAvailabilityPage,
+  CustomersQA as CustomersQAPage,
 } from "#pages/locales.js";
 
 import {
@@ -61,6 +63,10 @@ import {
   SelectConsultation,
   CodeVerification,
   CancelPaidConsultation,
+  CreateResponse,
+  ArchiveQuestion,
+  QuestionDetails,
+  FilterQuestions,
 } from "#backdrops/locales.js";
 
 const resources = {
@@ -90,6 +96,7 @@ const resources = {
     reports: Reports.en,
     campaigns: Campaigns.en,
     "campaign-details": CampaignDetails.en,
+    "customers-qa": CustomersQA.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -112,6 +119,7 @@ const resources = {
     "reports-page": ReportsPage.en,
     "campaigns-page": CampaignsPage.en,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.en,
+    "customers-qa-page": CustomersQAPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,
@@ -123,6 +131,10 @@ const resources = {
     "select-consultation": SelectConsultation.en,
     "code-verification": CodeVerification.en,
     "cancel-paid-consultation": CancelPaidConsultation.en,
+    "create-response": CreateResponse.en,
+    "archive-question": ArchiveQuestion.en,
+    "question-details": QuestionDetails.en,
+    "filter-questions": FilterQuestions.en,
   },
 
   ru: {
@@ -151,6 +163,7 @@ const resources = {
     reports: Reports.ru,
     campaigns: Campaigns.ru,
     "campaign-details": CampaignDetails.ru,
+    "customers-qa": CustomersQA.en,
 
     // Pages
     "not-found-page": NotFoundPage.ru,
@@ -175,6 +188,7 @@ const resources = {
     "reports-page": ReportsPage.ru,
     "campaigns-page": CampaignsPage.ru,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
+    "customers-qa-page": CustomersQAPage.ru,
 
     // Backdrops
     "upload-picture": UploadPicture.ru,
@@ -186,6 +200,10 @@ const resources = {
     "select-consultation": SelectConsultation.ru,
     "code-verification": CodeVerification.ru,
     "cancel-paid-consultation": CancelPaidConsultation.ru,
+    "create-response": CreateResponse.ru,
+    "archive-question": ArchiveQuestion.ru,
+    "question-details": QuestionDetails.ru,
+    "filter-questions": FilterQuestions.ru,
   },
 
   kk: {
@@ -214,6 +232,7 @@ const resources = {
     reports: Reports.kk,
     campaigns: Campaigns.kk,
     "campaign-details": CampaignDetails.kk,
+    "customers-qa": CustomersQA.en,
 
     // Pages
     "not-found-page": NotFoundPage.kk,
@@ -238,6 +257,7 @@ const resources = {
     "reports-page": ReportsPage.kk,
     "campaigns-page": CampaignsPage.kk,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
+    "customers-qa-page": CustomersQAPage.kk,
 
     // Backdrops
     "upload-picture": UploadPicture.kk,
@@ -249,6 +269,10 @@ const resources = {
     "select-consultation": SelectConsultation.kk,
     "code-verification": CodeVerification.kk,
     "cancel-paid-consultation": CancelPaidConsultation.kk,
+    "create-response": CreateResponse.kk,
+    "archive-question": ArchiveQuestion.kk,
+    "question-details": QuestionDetails.kk,
+    "filter-questions": FilterQuestions.kk,
   },
 };
 

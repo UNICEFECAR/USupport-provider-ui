@@ -22,5 +22,6 @@ export * from "./Consultation";
 export * from "./Notifications";
 export * from "./Reports";
 export * from "./Campaigns";
-export * from './AddCampaignAvailability';
-export * from './CampaignDetails';
+export * from "./AddCampaignAvailability";
+export * from "./CampaignDetails";
+export * from "./CustomersQA";
