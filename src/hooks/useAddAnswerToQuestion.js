@@ -14,7 +14,7 @@ export function useAddAnswerToQuestion(onSuccess, onError) {
   };
 
   const addAnswerToQuestionMutation = useMutation(addAnswerToQuestion, {
-    onSuccess: onSuccess,
+    onSuccess,
     onError: (error) => {
       const { message: errorMessage } = useError(error);
       onError(errorMessage);

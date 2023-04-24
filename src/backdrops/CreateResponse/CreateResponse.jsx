@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import Joi from "joi";
 
 import {
@@ -24,11 +26,12 @@ import "./create-response.scss";
  */
 export const CreateResponse = ({ isOpen, onClose, question }) => {
   const { t } = useTranslation("create-response");
+  const queryClient = useQueryClient();
 
   const onSuccess = (data) => {
     setInitialTagsOptions(data);
   };
-  const tagsQuery = useGetQuestionsTags(onSuccess);
+  useGetQuestionsTags(onSuccess);
 
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({ title: "", answer: "", tags: [] });
@@ -58,7 +61,10 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
 
   const onSuccessMutation = () => {
     onClose();
+    toast(t("response_success"));
+    queryClient.invalidateQueries({ queryKey: ["getQuestions"] });
   };
+
   const onError = (error) => {
     const errorsCopy = { ...errors };
     errorsCopy.submit = error;
@@ -73,7 +79,6 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
     setData(dataCopy);
 
     if ((await validate(dataCopy, schema, setErrors)) === null) {
-      // const activeTags = dataCopy.tags.map((tag) => {
       const tagsToSend = dataCopy.tags.map((tag) => {
         const tagExists = initialTagsOptions.find(
           (initialTag) => initialTag.id === tag.id
@@ -93,12 +98,12 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
   return (
     <Backdrop
       classes="create-response"
-      title="CreateResponse"
       isOpen={isOpen}
       onClose={onClose}
       heading={t("heading")}
       ctaLabel={t("cta_label")}
-      ctaHandleClick={() => handleSendAnswer()}
+      ctaHandleClick={handleSendAnswer}
+      isCtaLoading={addAnswerMutation.isLoading}
       errorMessage={errors.submit}
     >
       <Grid>

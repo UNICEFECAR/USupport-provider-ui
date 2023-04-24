@@ -33,8 +33,8 @@ export const CustomersQA = ({
   const { t } = useTranslation("customers-qa");
 
   const [tabs, setTabs] = useState([
-    { value: "unanswered", isSelected: false },
-    { value: "answered", isSelected: true },
+    { value: "unanswered", isSelected: true },
+    { value: "answered", isSelected: false },
     { value: "self_answered", isSelected: false },
   ]);
   const [searchValue, setSearchValue] = useState("");
@@ -47,27 +47,39 @@ export const CustomersQA = ({
     if (questionsQuery.data.length === 0) {
       return (
         <GridItem md={8} lg={12}>
-          <p className="text">{t("no_results_found")}</p>
+          <p className="text">{t("no_questions_found")}</p>
         </GridItem>
       );
     }
-
-    return questionsQuery.data.map((question, index) => {
+    const filteredQuestions = questionsQuery.data.filter((question) => {
       if (filterTag) {
         const tags = question.tags;
         if (!tags.includes(filterTag)) {
           return null;
         }
       }
+      const value = searchValue.toLowerCase();
 
-      if (searchValue) {
+      if (value) {
         if (
-          !question.answerTitle.toLowerCase().includes(searchValue) &&
-          !question.answerText.toLowerCase().includes(searchValue)
+          !question.answerTitle?.toLowerCase().includes(value) &&
+          !question.answerText?.toLowerCase().includes(value) &&
+          !question.tags?.find((x) => x?.toLowerCase().includes(value))
         )
           return null;
       }
+      return true;
+    });
 
+    if (!filteredQuestions.length) {
+      return (
+        <GridItem md={8} lg={12}>
+          <p>{t("no_questions_found")}</p>
+        </GridItem>
+      );
+    }
+
+    return filteredQuestions.map((question, index) => {
       return (
         <GridItem md={8} lg={12} key={index}>
           <Answer
