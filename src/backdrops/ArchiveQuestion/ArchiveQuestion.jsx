@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import {
   Backdrop,
@@ -19,6 +21,7 @@ import "./archive-question.scss";
  */
 export const ArchiveQuestion = ({ isOpen, onClose, question }) => {
   const { t } = useTranslation("archive-question");
+  const queryClient = useQueryClient();
 
   const [selectedReasonValue, setSelectedReasonValue] = useState("");
   const [inputData, setInputData] = useState("");
@@ -30,6 +33,8 @@ export const ArchiveQuestion = ({ isOpen, onClose, question }) => {
   ];
 
   const onSuccess = () => {
+    toast(t("question_archived"));
+    queryClient.invalidateQueries({ queryKey: ["getQuestions", "unanswered"] });
     onClose();
   };
   const archiveQuestionMutation = useArchiveQuestion(onSuccess);
@@ -56,6 +61,7 @@ export const ArchiveQuestion = ({ isOpen, onClose, question }) => {
       text={t("subheading")}
       ctaLabel={t("cta_label")}
       ctaHandleClick={handleArchive}
+      isCtaLoading={archiveQuestionMutation.isLoading}
       isCtaDisabled={isButtonDisabled}
     >
       <RadioButtonGroup
