@@ -33,3 +33,7 @@ export * from "./useCountdownTimer.js";
 export * from "./useGetCampaigns.js";
 export * from "./useEnrollProviderInCampaign.js";
 export * from "./useGetConsultationsForCampaign.js";
+export * from "./useGetQuestions";
+export * from "./useGetQuestionsTags.js";
+export * from "./useAddAnswerToQuestion.js";
+export * from "./useArchiveQuestion.js";
