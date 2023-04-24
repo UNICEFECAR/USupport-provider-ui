@@ -22,3 +22,4 @@ export * as Notifications from "./Notifications/locales.js";
 export * as Reports from "./Reports/locales.js";
 export * as Campaigns from "./Campaigns/locales.js";
 export * as CampaignDetails from "./CampaignDetails/locales.js";
+export * as CustomersQA from './CustomersQA/locales.js';

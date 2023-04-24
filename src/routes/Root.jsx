@@ -27,6 +27,7 @@ import {
   Campaigns,
   AddCampaignAvailability,
   CampaignDetails,
+  CustomersQA,
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../routes";
@@ -39,6 +40,14 @@ export default function Root() {
   return (
     <Router basename="/provider">
       <Routes>
+        <Route
+          path="/my-qa"
+          element={
+            <ProtectedRoute>
+              <CustomersQA />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/clients"
           element={
