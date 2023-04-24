@@ -163,7 +163,7 @@ const resources = {
     reports: Reports.ru,
     campaigns: Campaigns.ru,
     "campaign-details": CampaignDetails.ru,
-    "customers-qa": CustomersQA.en,
+    "customers-qa": CustomersQA.ru,
 
     // Pages
     "not-found-page": NotFoundPage.ru,
@@ -232,7 +232,7 @@ const resources = {
     reports: Reports.kk,
     campaigns: Campaigns.kk,
     "campaign-details": CampaignDetails.kk,
-    "customers-qa": CustomersQA.en,
+    "customers-qa": CustomersQA.kk,
 
     // Pages
     "not-found-page": NotFoundPage.kk,
