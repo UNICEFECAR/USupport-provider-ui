@@ -1,1 +1,1 @@
-export * from './CustomersQA.jsx';
+export * from "./CustomersQA.jsx";

@@ -1,0 +1,13 @@
+{
+    "heading": "Write a response",
+    "title_label": "Title",
+    "title_placeholder": "Write a title here",
+    "answer_label": "Answer",
+    "answer_placeholder": "Write your answer here",
+    "tags_label": "Tags",
+    "title_error_label": "Title is required",
+    "answer_error_label": "Answer is required",
+    "tags_error_label": "Tags are required",
+    "cta_label": "Send your response",
+    "selected_tags": "Selected tags"
+}
