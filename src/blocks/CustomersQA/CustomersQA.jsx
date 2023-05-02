@@ -126,7 +126,7 @@ export const CustomersQA = ({
               iconColor="#ffffff"
               iconSize="sm"
               color="purple"
-              size="xs"
+              size="sm"
               classes="customers-qa__search-input-container__button"
               onClick={handleFilterTags}
             />
