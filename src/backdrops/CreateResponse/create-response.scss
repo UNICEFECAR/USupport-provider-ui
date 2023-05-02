@@ -3,6 +3,10 @@
 .create-response {
   max-width: 80rem;
 
+  @media screen and (min-width: $screen-md) {
+    min-height: 70vh;
+  }
+
   &__question-text {
     text-align: left;
   }
