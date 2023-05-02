@@ -104,6 +104,7 @@ export const EditProfileDetails = ({
     totalConsultations: Joi.any(),
     earliestAvailableSlot: Joi.any(),
     videoLink: Joi.string().uri().allow("", null),
+    status: Joi.any(),
   });
 
   const sexOptions = [
@@ -191,6 +192,7 @@ export const EditProfileDetails = ({
   };
 
   const handleEducationChange = (options) => {
+    console.log(options, "new Options");
     setErrors({ education: null });
     const data = { ...providerData };
     data.education = options.map((x) => x.value);

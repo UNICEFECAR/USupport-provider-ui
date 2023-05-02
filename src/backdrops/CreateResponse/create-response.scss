@@ -1,0 +1,34 @@
+@import "@USupport-components-library/styles";
+
+.create-response {
+  max-width: 80rem;
+
+  &__question-text {
+    text-align: left;
+  }
+
+  &__inputs-item {
+    margin-top: $spacing_1_0;
+
+    @media screen and (min-width: $screen_lg) {
+      margin-top: 0;
+    }
+
+    &__grid {
+      place-items: center;
+    }
+  }
+
+  &__tags {
+    margin-bottom: $spacing_3_2;
+  }
+
+  & .backdrop__children {
+    flex: 0.9;
+    overflow-y: scroll;
+  }
+
+  & .backdrop__buttons-container {
+    flex: 0.1;
+  }
+}

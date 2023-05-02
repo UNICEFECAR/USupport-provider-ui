@@ -1,0 +1,19 @@
+/* CustomersQA styles */
+@import "@USupport-components-library/styles";
+
+.page__customers-qa {
+  @include full-height-page-navbar;
+
+  &__heading {
+    text-align: left;
+    padding-top: $spacing_3_2;
+
+    @media screen and (min-width: $screen_md) {
+      padding-top: $spacing_4_0;
+    }
+
+    &__subheading {
+      margin-top: $spacing_1_6;
+    }
+  }
+}
