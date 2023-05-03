@@ -58,7 +58,6 @@ export const QuestionDetails = ({
       title="QuestionDetails"
       isOpen={isOpen}
       onClose={onClose}
-      heading={t("heading")}
       ctaLabel={t("write_response")}
       ctaHandleClick={handleCtaClick}
     >
