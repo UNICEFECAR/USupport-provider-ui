@@ -17,21 +17,35 @@ import "./filter-questions.scss";
  *
  * @return {jsx}
  */
-export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
+export const FilterQuestions = ({
+  isOpen,
+  onClose,
+  selectedTag,
+  setSelectedTag,
+}) => {
   const { t } = useTranslation("filter-questions");
 
   const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState(null);
+
+  useEffect(() => {
+    if (selectedTag) {
+      setTag(selectedTag);
+    }
+  }, []);
 
   const onSuccess = (data) => {
     setTags(data);
   };
   const tagsQuery = useGetQuestionsTags(onSuccess);
 
-  const [selectedTagId, setSelectedTagId] = useState({});
+  const resetFilters = () => {
+    setSelectedTag(null);
+    onClose();
+  };
 
-  const handleSave = () => {
-    const selectedTag = tags.find((tag) => tag.id === selectedTagId).label;
-    setTag(selectedTag);
+  const handleSaveFilter = () => {
+    setSelectedTag(tag);
     onClose();
   };
 
@@ -43,7 +57,10 @@ export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
       onClose={onClose}
       heading={t("heading")}
       ctaLabel={t("cta_label")}
-      ctaHandleClick={handleSave}
+      ctaHandleClick={handleSaveFilter}
+      secondaryCtaLabel={t("secondary_cta_label")}
+      secondaryCtaType="secondary"
+      secondaryCtaHandleClick={resetFilters}
     >
       {tagsQuery.isLoading ? (
         <Loading />
@@ -51,12 +68,14 @@ export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
         <div className="filter-questions__dropdown-wrapper">
           <DropdownWithLabel
             label={t("dropdown_label")}
-            options={tags.map((tag) => {
-              return { value: tag.id, ...tag };
+            options={tags.map((x) => {
+              return { value: x.id, ...x };
             })}
-            className="filter-questions__dropdown"
-            selected={selectedTagId}
-            setSelected={setSelectedTagId}
+            selected={tags.find((x) => x.label === tag)?.id}
+            classes="filter-questions__dropdown"
+            setSelected={(value) => {
+              setTag(tags?.find((x) => x.id === value).label);
+            }}
           />
         </div>
       )}
