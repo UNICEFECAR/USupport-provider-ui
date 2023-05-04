@@ -216,11 +216,25 @@ export const Page = ({
             {headingImage && (
               <img className="page__header__image" src={headingImage} />
             )}
-            {heading && <h3 className="page__header-heading">{heading}</h3>}
+            {heading && (
+              <h3
+                className={`page__header-heading ${
+                  !showGoBackArrow && "page__header-heading__no-go-back-arrow"
+                }`}
+              >
+                {heading}
+              </h3>
+            )}
             {headingButton && headingButton}
           </div>
         )}
-        <p className="page__subheading-text text">{subheading}</p>
+        <p
+          className={`page__subheading-text text ${
+            !showGoBackArrow && "page__subheading-text__no-go-back-arrow"
+          }`}
+        >
+          {subheading}
+        </p>
         {children}
       </div>
       {showEmergencyButton && (
