@@ -26,6 +26,13 @@ export const FilterQuestions = ({
   const { t } = useTranslation("filter-questions");
 
   const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState(null);
+
+  useEffect(() => {
+    if (selectedTag) {
+      setTag(selectedTag);
+    }
+  }, []);
 
   const onSuccess = (data) => {
     setTags(data);
@@ -37,6 +44,11 @@ export const FilterQuestions = ({
     onClose();
   };
 
+  const handleSaveFilter = () => {
+    setSelectedTag(tag);
+    onClose();
+  };
+
   return (
     <Backdrop
       classes="filter-questions"
@@ -45,7 +57,7 @@ export const FilterQuestions = ({
       onClose={onClose}
       heading={t("heading")}
       ctaLabel={t("cta_label")}
-      ctaHandleClick={onClose}
+      ctaHandleClick={handleSaveFilter}
       secondaryCtaLabel={t("secondary_cta_label")}
       secondaryCtaType="secondary"
       secondaryCtaHandleClick={resetFilters}
@@ -56,13 +68,13 @@ export const FilterQuestions = ({
         <div className="filter-questions__dropdown-wrapper">
           <DropdownWithLabel
             label={t("dropdown_label")}
-            options={tags.map((tag) => {
-              return { value: tag.id, ...tag };
+            options={tags.map((x) => {
+              return { value: x.id, ...x };
             })}
-            selected={tags.find((tag) => tag.label === selectedTag)?.id}
+            selected={tags.find((x) => x.label === tag)?.id}
             classes="filter-questions__dropdown"
             setSelected={(value) => {
-              setSelectedTag(tags?.find((tag) => tag.id === value).label);
+              setTag(tags?.find((x) => x.id === value).label);
             }}
           />
         </div>

@@ -55,7 +55,7 @@ export const CustomersQA = ({
     const filteredQuestions = questionsQuery.data.filter((question) => {
       if (filterTag) {
         const tags = question.tags;
-        if (!tags.includes((tag) => tag.id === filterTag)) {
+        if (!tags.find((tag) => tag === filterTag)) {
           return null;
         }
       }
