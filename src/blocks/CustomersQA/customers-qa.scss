@@ -8,8 +8,38 @@
     padding-top: $spacing_3_2;
   }
 
+  &__tab-and-search-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $spacing_1_6;
+
+    @media screen and (min-width: 950px) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__input {
+      margin: 0 auto;
+      margin-top: $spacing_1_0;
+
+      @media screen and (min-width: 950px) {
+        margin: 0;
+      }
+    }
+  }
+
   &__tabs-container {
     overflow-y: scroll;
+
+    @media screen and (min-width: $screen_md) {
+      padding-top: $spacing_1_2;
+      padding-left: $spacing_6_0;
+    }
+
+    @media screen and (min-width: $screen-lg) {
+      padding-left: calc($spacing_16_0 + $spacing_1_0);
+    }
   }
 
   &__answer {
