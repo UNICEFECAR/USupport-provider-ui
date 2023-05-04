@@ -17,7 +17,12 @@ import "./filter-questions.scss";
  *
  * @return {jsx}
  */
-export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
+export const FilterQuestions = ({
+  isOpen,
+  onClose,
+  selectedTag,
+  setSelectedTag,
+}) => {
   const { t } = useTranslation("filter-questions");
 
   const [tags, setTags] = useState([]);
@@ -27,11 +32,8 @@ export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
   };
   const tagsQuery = useGetQuestionsTags(onSuccess);
 
-  const [selectedTagId, setSelectedTagId] = useState({});
-
-  const handleSave = () => {
-    const selectedTag = tags.find((tag) => tag.id === selectedTagId).label;
-    setTag(selectedTag);
+  const resetFilters = () => {
+    setSelectedTag(null);
     onClose();
   };
 
@@ -43,7 +45,10 @@ export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
       onClose={onClose}
       heading={t("heading")}
       ctaLabel={t("cta_label")}
-      ctaHandleClick={handleSave}
+      ctaHandleClick={onClose}
+      secondaryCtaLabel={t("secondary_cta_label")}
+      secondaryCtaType="secondary"
+      secondaryCtaHandleClick={resetFilters}
     >
       {tagsQuery.isLoading ? (
         <Loading />
@@ -54,9 +59,11 @@ export const FilterQuestions = ({ isOpen, onClose, setTag }) => {
             options={tags.map((tag) => {
               return { value: tag.id, ...tag };
             })}
-            className="filter-questions__dropdown"
-            selected={selectedTagId}
-            setSelected={setSelectedTagId}
+            selected={tags.find((tag) => tag.label === selectedTag)?.id}
+            classes="filter-questions__dropdown"
+            setSelected={(value) => {
+              setSelectedTag(tags?.find((tag) => tag.id === value).label);
+            }}
           />
         </div>
       )}
