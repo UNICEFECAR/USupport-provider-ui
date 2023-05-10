@@ -9,6 +9,7 @@ import {
   GridItem,
   Modal,
   Loading,
+  TabsUnderlined,
 } from "@USupport-components-library/src";
 
 import {
@@ -56,6 +57,18 @@ export const Campaigns = () => {
     t("consultations_with_you"),
     t("your_payment"),
   ];
+
+  const [tabs, setTabs] = useState([
+    {
+      value: "available_campaigns",
+      isSelected: true,
+    },
+    {
+      value: "campaigns_participate",
+      isSelected: false,
+    },
+    { value: "past_campaigns", isSelected: false },
+  ]);
 
   const providerCampaignsRowsData = data?.providerCampaigns.map((campaign) => {
     return [
@@ -189,31 +202,32 @@ export const Campaigns = () => {
     enrollInCampaignMutation.mutate(selectedCampaign.campaignId);
   };
 
+  const handleTabSelect = (index) => {
+    const optionsCopy = [...tabs];
+
+    optionsCopy.forEach((option) => {
+      option.isSelected = false;
+    });
+
+    optionsCopy[index].isSelected = !optionsCopy[index].isSelected;
+
+    setTabs(optionsCopy);
+  };
+
+  const checkIfTabIsSelected = (value) => {
+    return tabs.find((tab) => tab.isSelected === true && tab.value === value);
+  };
+
   return (
     <Block classes="campaigns">
       <Grid classes="campaigns__grid">
-        <GridItem md={2} lg={2} classes="campaigns__grid__heading-item">
-          <p>
-            {t("campaigns")}: {data?.availableCampaigns.length}
-          </p>
-        </GridItem>
-        <GridItem md={3} lg={2} classes="campaigns__grid__heading-item">
-          <p>
-            {t("campaigns_participate")}: {data?.providerCampaigns.length}
-          </p>
+        <GridItem md={4} lg={12}>
+          <TabsUnderlined options={tabs} handleSelect={handleTabSelect} t={t} />
         </GridItem>
       </Grid>
-
-      {/* Available campaigns */}
-      <Grid classes="campaigns__grid">
-        <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
-          <p className="text">{t("available_campaigns")}</p>
-        </GridItem>
-      </Grid>
-
       {campaignsQuery.isLoading ? (
         <Loading />
-      ) : (
+      ) : checkIfTabIsSelected("available_campaigns") ? (
         <BaseTable
           rows={baseRows}
           rowsData={availableCampaignsRowsData}
@@ -222,20 +236,7 @@ export const Campaigns = () => {
           handleClickPropName="campaignId"
           t={t}
         />
-      )}
-
-      {/* Campaigns you participate in */}
-      <Grid classes="campaigns__grid">
-        <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
-          <p className="text">{t("campaigns_participate")}</p>
-        </GridItem>
-      </Grid>
-
-      {campaignsQuery.isLoading ? (
-        <GridItem md={8} lg={12}>
-          <Loading />
-        </GridItem>
-      ) : (
+      ) : checkIfTabIsSelected("campaigns_participate") ? (
         <BaseTable
           data={data.providerCampaigns}
           rows={providerCampaignRows}
@@ -244,19 +245,6 @@ export const Campaigns = () => {
           handleClickPropName="campaignId"
           t={t}
         />
-      )}
-
-      {/* Past campaigns */}
-      <Grid classes="campaigns__grid">
-        <GridItem md={8} lg={12} classes="campaigns__grid__participate-heading">
-          <p className="text">{t("past_campaigns")}</p>
-        </GridItem>
-      </Grid>
-
-      {campaignsQuery.isLoading ? (
-        <GridItem md={8} lg={12}>
-          <Loading />
-        </GridItem>
       ) : (
         <BaseTable
           data={data.providerPastCampaigns}
