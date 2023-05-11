@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   Block,
@@ -11,6 +12,7 @@ import {
   Loading,
   TabsUnderlined,
 } from "@USupport-components-library/src";
+import { getDateView } from "@USupport-components-library/utils";
 
 import {
   useGetCampaigns,
@@ -21,7 +23,6 @@ import {
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
 import "./campaigns.scss";
-import { useNavigate } from "react-router-dom";
 
 /**
  * Campaigns
@@ -45,18 +46,42 @@ export const Campaigns = () => {
   const providerQuery = useGetProviderData()[0];
   const providerStatus = providerQuery?.data?.status;
 
-  const baseRows = [
-    t("sponsor"),
-    t("campaign"),
-    t("coupon_single_price"),
-    t("period"),
-  ];
+  const [dataToDisplay, setDataToDisplay] = useState();
 
-  const providerCampaignRows = [
-    ...baseRows,
-    t("consultations_with_you"),
-    t("your_payment"),
-  ];
+  useEffect(() => {
+    if (campaignsQuery.data) {
+      setDataToDisplay(campaignsQuery.data);
+    }
+  }, [campaignsQuery.data]);
+
+  const baseRows = useMemo(() => {
+    return [
+      { label: t("sponsor"), sortingKey: "sponsorName" },
+      { label: t("campaign"), sortingKey: "campaignName" },
+      {
+        label: t("coupon_single_price"),
+        sortingKey: "couponSinglePrice",
+        isNumbered: true,
+      },
+      { label: t("period"), sortingKey: "startDate", isDate: true },
+    ];
+  }, []);
+
+  const providerCampaignRows = useMemo(() => {
+    return [
+      ...baseRows,
+      {
+        label: t("consultations_with_you"),
+        sortingKey: "conductedConsultationsForCampaign",
+        isNumbered: true,
+      },
+      {
+        label: t("your_payment"),
+        sortingKey: "providerPayment",
+        isNumbered: true,
+      },
+    ];
+  }, []);
 
   const [tabs, setTabs] = useState([
     {
@@ -70,34 +95,8 @@ export const Campaigns = () => {
     { value: "past_campaigns", isSelected: false },
   ]);
 
-  const providerCampaignsRowsData = data?.providerCampaigns.map((campaign) => {
-    return [
-      <div className="campaigns__sponsor-container">
-        <img
-          className="campaigns__sponsor-container__image"
-          src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
-        />
-        <p>{campaign.sponsorName}</p>
-      </div>,
-      <p>{campaign.campaignName}</p>,
-      <p>
-        {campaign.couponSinglePrice}
-        {currencySymbol}
-      </p>,
-      <p>
-        {campaign.startDate} - {campaign.endDate}
-      </p>,
-      <p>{campaign.conductedConsultationsForCampaign}</p>,
-      <p>
-        {campaign.conductedConsultationsForCampaign *
-          campaign.couponSinglePrice}
-        {currencySymbol}
-      </p>,
-    ];
-  });
-
-  const providerPastCampaignsRowsData = data?.providerPastCampaigns.map(
-    (campaign) => {
+  const providerCampaignsRowsData = useMemo(() => {
+    return dataToDisplay?.providerCampaigns.map((campaign) => {
       return [
         <div className="campaigns__sponsor-container">
           <img
@@ -112,7 +111,34 @@ export const Campaigns = () => {
           {currencySymbol}
         </p>,
         <p>
-          {campaign.startDate} - {campaign.endDate}
+          {getDateView(campaign.startDate)} - {getDateView(campaign.endDate)}
+        </p>,
+        <p>{campaign.conductedConsultationsForCampaign}</p>,
+        <p>
+          {campaign.providerPayment}
+          {currencySymbol}
+        </p>,
+      ];
+    });
+  }, [dataToDisplay]);
+
+  const providerPastCampaignsRowsData = useMemo(() => {
+    return dataToDisplay?.providerPastCampaigns.map((campaign) => {
+      return [
+        <div className="campaigns__sponsor-container">
+          <img
+            className="campaigns__sponsor-container__image"
+            src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
+          />
+          <p>{campaign.sponsorName}</p>
+        </div>,
+        <p>{campaign.campaignName}</p>,
+        <p>
+          {campaign.couponSinglePrice}
+          {currencySymbol}
+        </p>,
+        <p>
+          {getDateView(campaign.startDate)} - {getDateView(campaign.endDate)}
         </p>,
         <p>{campaign.conductedConsultationsForCampaign}</p>,
         <p>
@@ -121,11 +147,11 @@ export const Campaigns = () => {
           {currencySymbol}
         </p>,
       ];
-    }
-  );
+    });
+  }, [dataToDisplay]);
 
-  const availableCampaignsRowsData = data?.availableCampaigns.map(
-    (campaign) => {
+  const availableCampaignsRowsData = useMemo(() => {
+    return dataToDisplay?.availableCampaigns.map((campaign) => {
       return [
         <div className="campaigns__sponsor-container">
           <img
@@ -140,11 +166,11 @@ export const Campaigns = () => {
           {currencySymbol}
         </p>,
         <p>
-          {campaign.startDate} - {campaign.endDate}
+          {getDateView(campaign.startDate)} - {getDateView(campaign.endDate)}
         </p>,
       ];
-    }
-  );
+    });
+  }, [dataToDisplay]);
 
   const providerCampaignsMenuOptions = [
     {
@@ -218,6 +244,31 @@ export const Campaigns = () => {
     return tabs.find((tab) => tab.isSelected === true && tab.value === value);
   };
 
+  const updateProviderCampaigns = (data) => {
+    setDataToDisplay((prev) => {
+      return {
+        ...prev,
+        providerCampaigns: data,
+      };
+    });
+  };
+  const updateProviderPastCampaigns = (data) => {
+    setDataToDisplay((prev) => {
+      return {
+        ...prev,
+        providerPastCampaigns: data,
+      };
+    });
+  };
+  const updateAvailableCampaigns = (data) => {
+    setDataToDisplay((prev) => {
+      return {
+        ...prev,
+        availableCampaigns: data,
+      };
+    });
+  };
+
   return (
     <Block classes="campaigns">
       <Grid classes="campaigns__grid">
@@ -233,12 +284,14 @@ export const Campaigns = () => {
           rowsData={availableCampaignsRowsData}
           menuOptions={availableTableMenuOptions}
           data={data.availableCampaigns}
+          updateData={updateAvailableCampaigns}
           handleClickPropName="campaignId"
           t={t}
         />
       ) : checkIfTabIsSelected("campaigns_participate") ? (
         <BaseTable
           data={data.providerCampaigns}
+          updateData={updateProviderCampaigns}
           rows={providerCampaignRows}
           rowsData={providerCampaignsRowsData}
           menuOptions={providerCampaignsMenuOptions}
@@ -248,6 +301,7 @@ export const Campaigns = () => {
       ) : (
         <BaseTable
           data={data.providerPastCampaigns}
+          updateData={updateProviderPastCampaigns}
           rows={providerCampaignRows}
           rowsData={providerPastCampaignsRowsData}
           menuOptions={providerCampaignsMenuOptions.slice(1)}
