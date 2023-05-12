@@ -116,7 +116,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
           <Grid classes="create-response__inputs-item__grid">
             <GridItem md={8} lg={12}>
               <Input
-                label={t("title_label") + "*"}
+                label={t("title_label") + " *"}
                 placeholder={t("title_placeholder")}
                 value={data.title}
                 onChange={(e) => hanldeChange("title", e.currentTarget.value)}
@@ -126,7 +126,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
             </GridItem>
             <GridItem md={8} lg={12}>
               <Textarea
-                label={t("answer_label") + "*"}
+                label={t("answer_label") + " *"}
                 placeholder={t("answer_placeholder")}
                 value={data.answer}
                 onChange={(value) => hanldeChange("answer", value)}
@@ -136,7 +136,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
             </GridItem>
             <GridItem md={8} lg={12}>
               <InputWithDropdown
-                label={t("tags_label") + "*"}
+                label={t("tags_label") + " *"}
                 options={tags}
                 setOptions={setTags}
                 selectedOptions={selectedTags}
