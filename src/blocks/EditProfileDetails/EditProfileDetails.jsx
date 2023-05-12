@@ -47,6 +47,7 @@ const fetchCountryMinPrice = async () => {
 export const EditProfileDetails = ({
   openUploadPictureBackdrop,
   openDeletePictureBackdrop,
+  providerImageUrl,
 }) => {
   const currencySymbol = localStorage.getItem("currency_symbol");
 
@@ -258,6 +259,7 @@ export const EditProfileDetails = ({
           <GridItem md={8} lg={4}>
             <ProfilePicturePreview
               image={providerData.image}
+              imageFile={providerImageUrl}
               handleDeleteClick={openDeletePictureBackdrop}
               handleChangeClick={openUploadPictureBackdrop}
               changePhotoText={t("change_photo")}
