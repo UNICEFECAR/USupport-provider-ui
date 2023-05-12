@@ -286,6 +286,7 @@ export const Campaigns = () => {
           data={data.availableCampaigns}
           updateData={updateAvailableCampaigns}
           handleClickPropName="campaignId"
+          hasSearch
           t={t}
         />
       ) : checkIfTabIsSelected("campaigns_participate") ? (
@@ -296,6 +297,7 @@ export const Campaigns = () => {
           rowsData={providerCampaignsRowsData}
           menuOptions={providerCampaignsMenuOptions}
           handleClickPropName="campaignId"
+          hasSearch
           t={t}
         />
       ) : (
@@ -306,6 +308,7 @@ export const Campaigns = () => {
           rowsData={providerPastCampaignsRowsData}
           menuOptions={providerCampaignsMenuOptions.slice(1)}
           handleClickPropName="campaignId"
+          hasSearch
           t={t}
         />
       )}
