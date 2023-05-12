@@ -20,5 +20,6 @@
   "not_allowed": "You don't have permissions to access campaigns",
   "available_campaigns_tab_label": "Available campaigns",
   "campaigns_participate_tab_label": "Campaigns you participate in",
-  "past_campaigns_tab_label": "Past campaigns"
+  "past_campaigns_tab_label": "Past campaigns",
+  "search": "Search"
 }
