@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Backdrop } from "@USupport-components-library/src";
@@ -14,7 +15,11 @@ import "./delete-profile-picture.scss";
  *
  * @return {jsx}
  */
-export const DeleteProfilePicture = ({ isOpen, onClose }) => {
+export const DeleteProfilePicture = ({
+  isOpen,
+  onClose,
+  setProviderImageUrl,
+}) => {
   const { t } = useTranslation("delete-profile-picture");
   const [error, setError] = useState();
   const queryClient = useQueryClient();
@@ -29,6 +34,8 @@ export const DeleteProfilePicture = ({ isOpen, onClose }) => {
   const deletePictureMutation = useMutation(deletePicture, {
     onSuccess: () => {
       queryClient.invalidateQueries(["provider-data"]);
+      setProviderImageUrl(null);
+      toast(t("delete_success"));
       onClose();
     },
     onError: (error) => {
