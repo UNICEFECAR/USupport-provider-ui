@@ -9,7 +9,7 @@
   "your_payment": "Your payment",
   "available_campaigns": "Available campaigns",
   "terms_and_conditions": "Terms and conditions",
-  "agreed_to_get_paid": "I agree to get paid {{amount}}{{currencySymbol}} per Consultataion",
+  "agreed_to_get_paid": "I agree to get paid {{amount}}{{currencySymbol}} per Consultation",
   "agree_with_terms": "I agree with the terms and conditions",
   "success": "Successfully enrolled in campaign",
   "enroll": "Enroll",
