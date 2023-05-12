@@ -77,5 +77,8 @@
   "relationship": "Relationship",
   "personal_development": "Personal development",
 
-  "edit_succes": "Profile updated successfully"
+  "edit_succes": "Profile updated successfully",
+
+  "search": "Search",
+  "no_data_found": "No data found"
 }
