@@ -18,14 +18,13 @@ export function useGetCampaigns(enabled = true) {
         couponSinglePrice: x.price_per_coupon,
         couponCode: x.coupon_code,
         numberOfCoupons: x.number_of_coupons,
-        startDate: getDateView(x.start_date),
-        endDate: getDateView(x.end_date),
+        startDate: new Date(x.start_date),
+        endDate: new Date(x.end_date),
         termsAndConditions: x.terms_and_conditions,
         conductedConsultationsForCampaign: Number(x.conducted_consultations),
-        isActive:
-          // new Date(x.start_date).getTime() <= today &&
-          new Date(x.end_date).getTime() >= today && x.active,
+        isActive: new Date(x.end_date).getTime() >= today && x.active,
         isInPast: new Date(x.end_date).getTime() < today,
+        providerPayment: Number(x.conducted_consultations) * x.price_per_coupon,
       };
     });
 

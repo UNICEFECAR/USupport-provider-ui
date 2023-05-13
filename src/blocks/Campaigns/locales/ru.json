@@ -17,5 +17,9 @@
   "view_details": "Посмотреть детали",
   "past_campaigns": "Past campaigns you had participated inRU",
   "no_data_found": "No data foundRU",
-  "not_allowed": "You don't have permissions to access campaignsRU"
+  "not_allowed": "You don't have permissions to access campaignsRU",
+  "available_campaigns_tab_label": "Доступные кампании",
+  "campaigns_participate_tab_label": "Кампании, в которых Вы участвуете",
+  "past_campaigns_tab_label": "Past campaignsRU",
+  "search": "Поиск"
 }

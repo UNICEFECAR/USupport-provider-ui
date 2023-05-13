@@ -77,5 +77,8 @@
   "relationship": "Қарым-қатынас",
   "personal_development": "Жеке даму",
 
-  "edit_succes": "Парақша сәтті жаңартылды"
+  "edit_succes": "Парақша сәтті жаңартылды",
+
+  "search": "Іздеу",
+  "no_data_found": "No data found"
 }

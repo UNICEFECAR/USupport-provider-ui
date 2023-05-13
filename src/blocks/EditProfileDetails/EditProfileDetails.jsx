@@ -15,6 +15,7 @@ import {
   Loading,
   ProfilePicturePreview,
   Textarea,
+  InputPhone,
 } from "@USupport-components-library/src";
 
 import { validate, validateProperty } from "@USupport-components-library/utils";
@@ -25,7 +26,6 @@ import {
   useGetWorkWithCategories,
   useUpdateProviderData,
 } from "#hooks";
-import countryCodes from "country-codes-list";
 import Joi from "joi";
 
 import "./edit-profile-details.scss";
@@ -47,6 +47,7 @@ const fetchCountryMinPrice = async () => {
 export const EditProfileDetails = ({
   openUploadPictureBackdrop,
   openDeletePictureBackdrop,
+  providerImageUrl,
 }) => {
   const currencySymbol = localStorage.getItem("currency_symbol");
 
@@ -88,7 +89,6 @@ export const EditProfileDetails = ({
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .label(t("email_error")),
-    phonePrefix: Joi.string().label(t("phone_prefix_error")),
     phone: Joi.string().label(t("phone_error")),
     image: Joi.string(),
     street: Joi.string().label(t("street_error")),
@@ -142,7 +142,10 @@ export const EditProfileDetails = ({
         const language = localizationQuery.data.languages[i];
         // Construct the new object
         newLanguageOption.value = language.language_id;
-        newLanguageOption.label = language.name;
+        newLanguageOption.label =
+          language.name === "English"
+            ? language.name
+            : `${language.name} (${language.local_name})`;
         newLanguageOption.selected = providerLanguages.includes(
           language.language_id
         );
@@ -246,9 +249,6 @@ export const EditProfileDetails = ({
     setProviderData(providersQuery.data);
   };
 
-  const phonePrefixes = generateCountryCodes();
-  const usersCountry = localStorage.getItem("country");
-
   return (
     <Block classes="edit-profile-details">
       {isLoading ? (
@@ -258,6 +258,7 @@ export const EditProfileDetails = ({
           <GridItem md={8} lg={4}>
             <ProfilePicturePreview
               image={providerData.image}
+              imageFile={providerImageUrl}
               handleDeleteClick={openDeletePictureBackdrop}
               handleChangeClick={openUploadPictureBackdrop}
               changePhotoText={t("change_photo")}
@@ -301,30 +302,16 @@ export const EditProfileDetails = ({
 
           <GridItem md={8} lg={4}>
             <div className="edit-profile-details__grid__phone-container">
-              <DropdownWithLabel
-                options={phonePrefixes}
+              <InputPhone
                 label={t("phone_label")}
-                selected={
-                  providerData.phonePrefix ||
-                  phonePrefixes.find((x) => x.country === usersCountry)?.value
-                }
-                setSelected={(value) => handleChange("phonePrefix", value)}
-                placeholder={t("phone_prefix_placeholder")}
-              />
-              <Input
                 value={providerData.phone}
-                onChange={(e) => handleChange("phone", e.currentTarget.value)}
-                placeholder={t("phone_placeholder")}
+                onChange={(value) => handleChange("phone", value)}
                 onBlur={() => handleBlur("phone")}
-                classes="edit-profile-details__grid__phone-container__phone-input"
+                searchPlaceholder={t("search")}
+                errorMessage={errors.phone}
+                searchNotFound={t("no_entries_found")}
               />
             </div>
-            {errors.phone || errors.phonePrefix ? (
-              <Error
-                classes="edit-profile-details__grid__phone-error"
-                message={errors.phone || errors.phonePrefix}
-              />
-            ) : null}
             <Input
               value={providerData.email}
               onChange={(e) => handleChange("email", e.currentTarget.value)}
@@ -463,20 +450,3 @@ export const EditProfileDetails = ({
     </Block>
   );
 };
-
-function generateCountryCodes() {
-  const countryCodesList = countryCodes.customList(
-    "countryCode",
-    "+{countryCallingCode}"
-  );
-  const codes = [];
-  Object.keys(countryCodesList).forEach((key) => {
-    codes.push({
-      value: countryCodesList[key],
-      label: `${key}: ${countryCodesList[key]}`,
-      country: key,
-    });
-  });
-
-  return codes.sort((a, b) => (a.country > b.country ? 1 : -1));
-}

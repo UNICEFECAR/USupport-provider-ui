@@ -77,5 +77,8 @@
   "relationship": "Отношения",
   "personal_development": "Личное развитие",
 
-  "edit_succes": "Профиль успешно обновлен"
+  "edit_succes": "Профиль успешно обновлен",
+
+  "search": "Поиск",
+  "no_data_found": "No data found"
 }

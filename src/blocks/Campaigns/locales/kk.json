@@ -17,5 +17,9 @@
   "view_details": "Мәліметтерді қарап шығу",
   "past_campaigns": "Past campaigns you had participated inKK",
   "no_data_found": "No data foundKK",
-  "not_allowed": "You don't have permissions to access campaignsKK"
+  "not_allowed": "You don't have permissions to access campaignsKK",
+  "available_campaigns_tab_label": "Қол жетімді науқандар",
+  "campaigns_participate_tab_label": "Сіз қатысатын науқандар",
+  "past_campaigns_tab_label": "Past campaignsKK",
+  "search": "Іздеу"
 }

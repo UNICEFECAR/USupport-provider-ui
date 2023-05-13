@@ -22,6 +22,8 @@ export const EditProfileDetails = () => {
   const [isDeletePictureBackdropShown, setIsDeletePictureBackdropShown] =
     useState(false);
 
+  const [providerImageUrl, setProviderImageUrl] = useState();
+
   const openUploadPictureBackdrop = () => setIsUploadPictureBackdropOpen(true);
   const openDeletePictureBackdrop = () => setIsDeletePictureBackdropShown(true);
 
@@ -39,15 +41,21 @@ export const EditProfileDetails = () => {
       handleGoBack={handleGoBack}
     >
       <EditProfileDetailsBlock
-        {...{ openUploadPictureBackdrop, openDeletePictureBackdrop }}
+        {...{
+          openUploadPictureBackdrop,
+          openDeletePictureBackdrop,
+          providerImageUrl,
+        }}
       />
       <UploadPicture
         isOpen={isUploadPictureBackdropOpen}
         onClose={closeUploadPictureBackdrop}
+        setProviderImageUrl={setProviderImageUrl}
       />
       <DeleteProfilePicture
         isOpen={isDeletePictureBackdropShown}
         onClose={closeDeletePictureBackdrop}
+        setProviderImageUrl={setProviderImageUrl}
       />
     </Page>
   );
