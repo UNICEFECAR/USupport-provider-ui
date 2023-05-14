@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
+import { parseUTCDate } from "@USupport-components-library/utils";
 
 export default function useGetCalendarData(startDate) {
   const getCalendarData = async () => {
@@ -27,7 +28,7 @@ export default function useGetCalendarData(startDate) {
       const slot = slotsData[i];
       const slotTime =
         typeof slot === "object"
-          ? new Date(slotsData[i].time)
+          ? new Date(parseUTCDate(slotsData[i].time))
           : new Date(slotsData[i]);
 
       const key = slotTime.toLocaleDateString();
