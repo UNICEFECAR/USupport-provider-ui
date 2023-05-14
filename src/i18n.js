@@ -51,6 +51,7 @@ import {
   Campaigns as CampaignsPage,
   AddCampaignAvailability as AddCampaignAvailabilityPage,
   CustomersQA as CustomersQAPage,
+  Consultations as ConsultationsPage,
 } from "#pages/locales.js";
 
 import {
@@ -120,6 +121,7 @@ const resources = {
     "campaigns-page": CampaignsPage.en,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.en,
     "customers-qa-page": CustomersQAPage.en,
+    "consultations-page": ConsultationsPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,
@@ -189,6 +191,7 @@ const resources = {
     "campaigns-page": CampaignsPage.ru,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
     "customers-qa-page": CustomersQAPage.ru,
+    "consultations-page": ConsultationsPage.ru,
 
     // Backdrops
     "upload-picture": UploadPicture.ru,
@@ -258,6 +261,7 @@ const resources = {
     "campaigns-page": CampaignsPage.kk,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
     "customers-qa-page": CustomersQAPage.kk,
+    "consultations-page": ConsultationsPage.kk,
 
     // Backdrops
     "upload-picture": UploadPicture.kk,

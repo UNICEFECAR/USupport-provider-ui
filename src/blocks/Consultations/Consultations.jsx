@@ -31,11 +31,11 @@ import "./consultations.scss";
 export const Consultations = ({
   openJoinConsultation,
   openCancelConsultation,
+  searchValue,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation("consultations");
 
-  const [searchValue, setSearchValue] = useState("");
   const [filter, setFilter] = useState("today");
 
   const [tabsOptions, setTabsOptions] = useState([
@@ -218,19 +218,11 @@ export const Consultations = ({
   return (
     <Block classes="consultations">
       <Grid classes="consultations__grid">
-        <GridItem md={8} lg={12} classes="consultations__grid__heading-item">
-          <div className="consultations__heading-container">
-            <InputSearch
-              value={searchValue}
-              onChange={(value) => setSearchValue(value.toLowerCase())}
-              placeholder={t("input_search_label")}
-              classes="consultations__heading-container__search"
-            />
-            <h4 className="consultations__heading-container__heading-text">
-              {t("heading")}
-            </h4>
-          </div>
-        </GridItem>
+        <GridItem
+          md={8}
+          lg={12}
+          classes="consultations__grid__heading-item"
+        ></GridItem>
         <GridItem md={8} lg={12} classes="consultations__grid__tabs-item">
           <TabsUnderlined
             options={tabsOptions}
