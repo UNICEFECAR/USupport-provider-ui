@@ -13,43 +13,7 @@
     }
   }
 
-  &__go-back-arrow-container {
-    margin-right: $spacing_3_2;
-    display: flex;
-
-    & .icon {
-      cursor: pointer;
-    }
-  }
-
   &__clients-container {
-    padding: $spacing_3_2 0;
-
-    &__header {
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      @media screen and (min-width: $screen_lg) {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      &__text {
-        align-self: start;
-        margin-left: $spacing_3_2;
-      }
-
-      &__input {
-        margin-top: $spacing_2_4;
-
-        @media screen and (min-width: $screen_lg) {
-          margin-top: 0;
-        }
-      }
-    }
-
     &__grid {
       margin-top: $spacing_2_4;
       place-items: center;
