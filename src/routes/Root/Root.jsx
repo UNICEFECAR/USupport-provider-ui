@@ -1,5 +1,10 @@
 import React, { useCallback, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  // BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { IdleTimer } from "@USupport-components-library/src";
 import { useEventListener } from "#hooks";
@@ -58,8 +63,14 @@ export default function Root() {
   useEventListener("login", loginHandler);
 
   return (
-    <Router basename="/provider">
-      {loggedIn && <IdleTimer t={t} setLoggedIn={setLoggedIn} />}
+    <React.Fragment>
+      {loggedIn && (
+        <IdleTimer
+          t={t}
+          setLoggedIn={setLoggedIn}
+          NavigateComponent={Navigate}
+        />
+      )}
       <Routes>
         <Route
           path="/my-qa"
@@ -277,7 +288,7 @@ export default function Root() {
         <Route path="/" element={<Welcome />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </Router>
+    </React.Fragment>
   );
 }
 
