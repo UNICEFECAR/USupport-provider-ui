@@ -84,6 +84,7 @@ export const ActivityHistory = () => {
       showNavbar
       showFooter
       showGoBackArrow={false}
+      heading={t("heading")}
     >
       <ActivityHistoryBlock
         openSelectConsultation={openSelectConsultation}

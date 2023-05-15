@@ -116,7 +116,8 @@ export const Page = ({
       const languageObject = {
         value: x.alpha2,
         label: x.name,
-        id: x["language_id"],
+        localName: x.local_name,
+        id: x.language_id,
       };
       if (localStorageLanguage === x.alpha2) {
         setSelectedLanguage(languageObject);

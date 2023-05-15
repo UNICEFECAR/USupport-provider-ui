@@ -62,6 +62,7 @@ export const Campaigns = () => {
         label: t("coupon_single_price"),
         sortingKey: "couponSinglePrice",
         isNumbered: true,
+        isCentered: true,
       },
       { label: t("period"), sortingKey: "startDate", isDate: true },
     ];
@@ -74,11 +75,13 @@ export const Campaigns = () => {
         label: t("consultations_with_you"),
         sortingKey: "conductedConsultationsForCampaign",
         isNumbered: true,
+        isCentered: true,
       },
       {
         label: t("your_payment"),
         sortingKey: "providerPayment",
         isNumbered: true,
+        isCentered: true,
       },
     ];
   }, []);
@@ -87,12 +90,14 @@ export const Campaigns = () => {
     {
       value: "available_campaigns",
       isSelected: true,
+      isCentered: true,
     },
     {
       value: "campaigns_participate",
       isSelected: false,
+      isCentered: true,
     },
-    { value: "past_campaigns", isSelected: false },
+    { value: "past_campaigns", isSelected: false, isCentered: true },
   ]);
 
   const providerCampaignsRowsData = useMemo(() => {
@@ -105,16 +110,18 @@ export const Campaigns = () => {
           />
           <p>{campaign.sponsorName}</p>
         </div>,
-        <p>{campaign.campaignName}</p>,
-        <p>
+        <p className="text">{campaign.campaignName}</p>,
+        <p className="text centered">
           {campaign.couponSinglePrice}
           {currencySymbol}
         </p>,
-        <p>
+        <p className="text">
           {getDateView(campaign.startDate)} - {getDateView(campaign.endDate)}
         </p>,
-        <p>{campaign.conductedConsultationsForCampaign}</p>,
-        <p>
+        <p className="text centered">
+          {campaign.conductedConsultationsForCampaign}
+        </p>,
+        <p className="text centered">
           {campaign.providerPayment}
           {currencySymbol}
         </p>,
@@ -130,18 +137,20 @@ export const Campaigns = () => {
             className="campaigns__sponsor-container__image"
             src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
           />
-          <p>{campaign.sponsorName}</p>
+          <p className="text">{campaign.sponsorName}</p>
         </div>,
-        <p>{campaign.campaignName}</p>,
-        <p>
+        <p className="text">{campaign.campaignName}</p>,
+        <p className="text centered">
           {campaign.couponSinglePrice}
           {currencySymbol}
         </p>,
-        <p>
+        <p className="text">
           {getDateView(campaign.startDate)} - {getDateView(campaign.endDate)}
         </p>,
-        <p>{campaign.conductedConsultationsForCampaign}</p>,
-        <p>
+        <p className="text centered">
+          {campaign.conductedConsultationsForCampaign}
+        </p>,
+        <p className="text centered">
           {campaign.conductedConsultationsForCampaign *
             campaign.couponSinglePrice}
           {currencySymbol}
@@ -158,14 +167,14 @@ export const Campaigns = () => {
             className="campaigns__sponsor-container__image"
             src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
           />
-          <p>{campaign.sponsorName}</p>
+          <p className="text">{campaign.sponsorName}</p>
         </div>,
-        <p>{campaign.campaignName}</p>,
-        <p>
+        <p className="text">{campaign.campaignName}</p>,
+        <p className="text centered">
           {campaign.couponSinglePrice}
           {currencySymbol}
         </p>,
-        <p>
+        <p className="text">
           {getDateView(campaign.startDate)} - {getDateView(campaign.endDate)}
         </p>,
       ];
