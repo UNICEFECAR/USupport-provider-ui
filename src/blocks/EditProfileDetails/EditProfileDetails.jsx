@@ -29,7 +29,6 @@ import {
 import Joi from "joi";
 
 import "./edit-profile-details.scss";
-import { Select } from "../../../../admin-country-ui/USupport-components-library/src/components/inputs/Select/Select";
 
 const fetchCountryMinPrice = async () => {
   const { data } = await countrySvc.getActiveCountries();
