@@ -70,6 +70,8 @@ import {
   FilterQuestions,
 } from "#backdrops/locales.js";
 
+import { Root } from "#routes/locales.js";
+
 const resources = {
   en: {
     // Blocks
@@ -137,6 +139,9 @@ const resources = {
     "archive-question": ArchiveQuestion.en,
     "question-details": QuestionDetails.en,
     "filter-questions": FilterQuestions.en,
+
+    // Routes
+    root: Root.en,
   },
 
   ru: {
@@ -207,6 +212,9 @@ const resources = {
     "archive-question": ArchiveQuestion.ru,
     "question-details": QuestionDetails.ru,
     "filter-questions": FilterQuestions.ru,
+
+    // Routes
+    root: Root.ru,
   },
 
   kk: {
@@ -277,6 +285,9 @@ const resources = {
     "archive-question": ArchiveQuestion.kk,
     "question-details": QuestionDetails.kk,
     "filter-questions": FilterQuestions.kk,
+
+    // Routes
+    root: Root.kk,
   },
 };
 

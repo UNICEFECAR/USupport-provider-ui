@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { IdleTimer } from "@USupport-components-library/src";
+import { useEventListener } from "#hooks";
+
 import {
   NotFound,
   ContactUs,
@@ -30,15 +34,32 @@ import {
   CustomersQA,
 } from "#pages";
 
-import { ProtectedRoute, CountryValidationRoute } from "../routes";
+import { ProtectedRoute, CountryValidationRoute } from "../../routes";
 import { useGetProviderData } from "#hooks";
 
 export default function Root() {
   const token = localStorage.getItem("token");
+  const [loggedIn, setLoggedIn] = useState(!!token);
+
+  const { t } = useTranslation("root");
+
   useGetProviderData(null, !!token);
+
+  const logoutHandler = useCallback(() => {
+    setLoggedIn(false);
+  }, []);
+
+  useEventListener("logout", logoutHandler);
+
+  const loginHandler = useCallback(() => {
+    setLoggedIn(true);
+  }, []);
+
+  useEventListener("login", loginHandler);
 
   return (
     <Router basename="/provider">
+      {loggedIn && <IdleTimer t={t} setLoggedIn={setLoggedIn} />}
       <Routes>
         <Route
           path="/my-qa"
