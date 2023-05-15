@@ -10,6 +10,7 @@ import {
   SelectConsultation,
   JoinConsultation,
 } from "#backdrops";
+import { InputSearch } from "@USupport-components-library/src";
 import { useBlockSlot, useSuggestConsultation } from "#hooks";
 
 import "./clients.scss";
@@ -31,7 +32,7 @@ export const Clients = () => {
   const [isSelectConsultationOpen, setIsSelectConsultationOpen] =
     useState(false);
   const [selectedConsultation, setSelectedConsultation] = useState();
-
+  const [searchValue, setSearchValue] = useState("");
   const [blockSlotError, setBlockSlotError] = useState();
   const [isBlockSlotSubmitting, setIsBlockSlotSubmitting] = useState(false);
 
@@ -94,11 +95,25 @@ export const Clients = () => {
   };
 
   return (
-    <Page classes="page__clients" showNavbar showFooter showGoBackArrow={false}>
+    <Page
+      classes="page__clients"
+      showNavbar
+      showFooter
+      showGoBackArrow={false}
+      heading={t("heading")}
+      headingButton={
+        <InputSearch
+          placeholder={t("input_search_placeholder")}
+          onChange={(value) => setSearchValue(value)}
+          value={searchValue}
+        />
+      }
+    >
       <ClientsBlock
         openCancelConsultation={openCancelConsultation}
         openSelectConsultation={openSelectConsultation}
         openJoinConsultation={openJoinConsultation}
+        searchValue={searchValue}
       />
       {selectedConsultation && (
         <>

@@ -195,9 +195,6 @@ export const ActivityHistory = ({
       <div className="activity-history__content">
         {((width < 1366 && !selectedConsultation) || width >= 1366) && (
           <div className="activity-history__main-container">
-            <div className="activity-history__main-container__header">
-              <h4>{t("activity_history_heading")}</h4>
-            </div>
             <Grid classes="activity-history__main-container__grid">
               {renderAllConsultations()}
             </Grid>

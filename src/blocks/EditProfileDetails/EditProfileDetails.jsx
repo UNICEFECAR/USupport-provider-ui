@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   Block,
   Button,
-  DropdownGroup,
+  Select,
   DropdownWithLabel,
   Error,
   Grid,
@@ -366,7 +366,8 @@ export const EditProfileDetails = ({
           </GridItem>
 
           <GridItem md={8} lg={4}>
-            <DropdownGroup
+            <Select
+              placeholder={t("select")}
               options={getLanguageOptions()}
               handleChange={(languages) =>
                 handleWorkWithAndLanguageSelect("languages", languages)
@@ -376,7 +377,8 @@ export const EditProfileDetails = ({
               addMoreText={t("add_more_languages")}
               errorMessage={errors.languages}
             />
-            <DropdownGroup
+            <Select
+              placeholder={t("select")}
               label={t("specialization_label")}
               options={getSpecializationsOptions()}
               handleChange={(options) =>
@@ -394,7 +396,8 @@ export const EditProfileDetails = ({
               addMoreText={t("add_more_education")}
               errorMessage={errors.education}
             />
-            <DropdownGroup
+            <Select
+              placeholder={t("select")}
               options={getWorkWithOptions()}
               handleChange={(workWith) =>
                 handleWorkWithAndLanguageSelect("workWith", workWith)

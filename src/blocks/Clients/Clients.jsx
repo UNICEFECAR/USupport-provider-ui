@@ -43,6 +43,7 @@ export const Clients = ({
   openCancelConsultation,
   openSelectConsultation,
   openJoinConsultation,
+  searchValue,
 }) => {
   const { t } = useTranslation("clients");
   const { width } = useWindowDimensions();
@@ -50,7 +51,6 @@ export const Clients = ({
   const location = useLocation();
   const initiallySelectedClient = location.state?.clientInformation || null;
   const [selectedClient, setSelectedClient] = useState(initiallySelectedClient);
-  const [searchValue, setSearchValue] = useState("");
 
   const initiallySelectedConsultation =
     location.state?.consultationInformation || null;
@@ -75,19 +75,16 @@ export const Clients = ({
     openSelectConsultation(clientId);
   };
 
-  const handleSearch = (value) => {
-    setSearchValue(value.toLowerCase());
-  };
-
   const renderAllClients = () => {
     let clientsData = clientsQuery.data;
-    if (searchValue) {
+    const value = searchValue?.toLowerCase();
+    if (value) {
       clientsData = clientsQuery.data?.filter((client) => {
-        return client.name.toLowerCase().includes(searchValue);
+        return client.name.toLowerCase().includes(value);
       });
     }
 
-    if (searchValue && clientsData.length === 0)
+    if (value && clientsData.length === 0)
       return (
         <GridItem md={8} lg={12} classes="clients__no-clients-item">
           {t("no_clients_search")}
@@ -149,17 +146,6 @@ export const Clients = ({
       ) : null}
       {!selectedClient ? (
         <div className="clients__clients-container">
-          <div className="clients__clients-container__header">
-            <h3 className="clients__clients-container__header__text">
-              {t("clients_heading")}
-            </h3>
-            <InputSearch
-              placeholder={t("input_search_placeholder")}
-              classes="clients__clients-container__header__input"
-              onChange={handleSearch}
-              value={searchValue}
-            />
-          </div>
           <Grid classes="clients__clients-container__grid">
             {renderAllClients()}
           </Grid>
