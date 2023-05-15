@@ -267,7 +267,7 @@ export const EditProfileDetails = ({
               value={providerData.name}
               onChange={(e) => handleChange("name", e.currentTarget.value)}
               errorMessage={errors.name}
-              label={t("name_label")}
+              label={t("name_label") + " *"}
               placeholder={t("name_placeholder")}
             />
             <Input
@@ -281,14 +281,14 @@ export const EditProfileDetails = ({
               value={providerData.surname}
               onChange={(e) => handleChange("surname", e.currentTarget.value)}
               errorMessage={errors.surname}
-              label={t("surname_label")}
+              label={t("surname_label") + " *"}
               placeholder={t("surname_placeholder")}
             />
             <Textarea
               value={providerData.description}
               onChange={(value) => handleChange("description", value)}
               errorMessage={errors.description}
-              label={t("description_label")}
+              label={t("description_label") + " *"}
               placeholder={t("description_placeholder")}
               onBlur={() => handleBlur("description")}
             />
@@ -303,7 +303,7 @@ export const EditProfileDetails = ({
           <GridItem md={8} lg={4}>
             <div className="edit-profile-details__grid__phone-container">
               <InputPhone
-                label={t("phone_label")}
+                label={t("phone_label") + " *"}
                 value={providerData.phone}
                 onChange={(value) => handleChange("phone", value)}
                 onBlur={() => handleBlur("phone")}
@@ -316,12 +316,12 @@ export const EditProfileDetails = ({
               value={providerData.email}
               onChange={(e) => handleChange("email", e.currentTarget.value)}
               errorMessage={errors.email}
-              label={t("email_label")}
+              label={t("email_label") + " *"}
               placeholder={t("email_placeholder")}
               onBlur={() => handleBlur("email")}
             />
             <DropdownWithLabel
-              label={t("sex_label")}
+              label={t("sex_label") + " *"}
               placeholder={t("sex_placeholder")}
               options={sexOptions}
               selected={providerData.sex}
@@ -335,7 +335,7 @@ export const EditProfileDetails = ({
                 handleChange("consultationPrice", e.currentTarget.value)
               }
               errorMessage={errors.consultationPrice}
-              label={t("consultation_price_label", { currencySymbol })}
+              label={t("consultation_price_label", { currencySymbol }) + " *"}
               placeholder={t("consultation_price_placeholder")}
               onBlur={() => handleBlur("consultationPrice")}
             />
@@ -343,7 +343,7 @@ export const EditProfileDetails = ({
               value={providerData.city}
               onChange={(e) => handleChange("city", e.currentTarget.value)}
               errorMessage={errors.city}
-              label={t("city_label")}
+              label={t("city_label") + " *"}
               placeholder={t("city_placeholder")}
               onBlur={() => handleBlur("city")}
             />
@@ -351,7 +351,7 @@ export const EditProfileDetails = ({
               value={providerData.postcode}
               onChange={(e) => handleChange("postcode", e.currentTarget.value)}
               errorMessage={errors.postcode}
-              label={t("postcode_label")}
+              label={t("postcode_label") + " *"}
               placeholder={t("postcode_placeholder")}
               onBlur={() => handleBlur("postcode")}
             />
@@ -359,7 +359,7 @@ export const EditProfileDetails = ({
               value={providerData.street}
               onChange={(e) => handleChange("street", e.currentTarget.value)}
               errorMessage={errors.street}
-              label={t("street_label")}
+              label={t("street_label") + " *"}
               placeholder={t("street_placeholder")}
               onBlur={() => handleBlur("street")}
             />
@@ -372,14 +372,14 @@ export const EditProfileDetails = ({
               handleChange={(languages) =>
                 handleWorkWithAndLanguageSelect("languages", languages)
               }
-              label={t("language_label")}
+              label={t("language_label") + " *"}
               maxShown={5}
               addMoreText={t("add_more_languages")}
               errorMessage={errors.languages}
             />
             <Select
               placeholder={t("select")}
-              label={t("specialization_label")}
+              label={t("specialization_label") + " *"}
               options={getSpecializationsOptions()}
               handleChange={(options) =>
                 handleWorkWithAndLanguageSelect("specializations", options)
@@ -391,7 +391,7 @@ export const EditProfileDetails = ({
             <InputGroup
               maxShown={5}
               options={providerData.education}
-              label={t("education_label")}
+              label={t("education_label") + " *"}
               handleParentChange={(data) => handleEducationChange(data)}
               addMoreText={t("add_more_education")}
               errorMessage={errors.education}
@@ -402,7 +402,7 @@ export const EditProfileDetails = ({
               handleChange={(workWith) =>
                 handleWorkWithAndLanguageSelect("workWith", workWith)
               }
-              label={t("work_with_label")}
+              label={t("work_with_label") + " *"}
               maxShown={5}
               addMoreText={t("add_more_work_with")}
               errorMessage={errors.workWith}
