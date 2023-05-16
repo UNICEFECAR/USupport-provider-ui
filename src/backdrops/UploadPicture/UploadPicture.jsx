@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+
 import { Backdrop, Loading } from "@USupport-components-library/src";
 import { userSvc, providerSvc } from "@USupport-components-library/services";
 import { useError } from "#hooks";
@@ -51,6 +53,7 @@ export const UploadPicture = ({ isOpen, onClose, setProviderImageUrl }) => {
       setIsLoading(false);
       queryClient.invalidateQueries({ queryKey: ["provider-data"] });
       onClose();
+      toast(t("success"));
     },
     onError: (error) => {
       setIsLoading(false);

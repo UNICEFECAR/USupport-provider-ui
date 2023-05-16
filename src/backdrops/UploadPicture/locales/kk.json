@@ -4,5 +4,6 @@
   "or": "немесе",
   "upload": "Компьютерден жүктеңіз",
   "upload_error": "Фотосуретті жүктеп кезінде қате шықты, тағы бір көріңіз",
-  "file_size_error": "Ең үлкен файл өлшемі - 1 МБ."
+  "file_size_error": "Ең үлкен файл өлшемі - 1 МБ.",
+  "success": "Profile picture updated successfullyKK"
 }
