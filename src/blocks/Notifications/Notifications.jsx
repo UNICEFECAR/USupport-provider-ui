@@ -31,6 +31,7 @@ import {
 import {
   useMarkNotificationsAsRead,
   useGetConsultationsForSingleDay,
+  useMarkAllNotificationsAsRead,
 } from "#hooks";
 
 import "./notifications.scss";
@@ -154,14 +155,19 @@ export const Notifications = ({ openJoinConsultation }) => {
   // Because of the load on scroll we mark as read
   // only the currently shown/fetched notifications
   const onMarkAllAsReadError = (error) => toast(error, { type: "error" });
-  const markAllAsReadMutation =
+  const markNotificationAsReadByIdMutation =
     useMarkNotificationsAsRead(onMarkAllAsReadError);
+
+  const onMarkAllAsReadSuccess = () => {
+    window.dispatchEvent(new Event("all-notifications-read"));
+  };
+  const markAllAsReadMutation = useMarkAllNotificationsAsRead(
+    onMarkAllAsReadSuccess,
+    onMarkAllAsReadError
+  );
+
   const handleMarkAllAsRead = async () => {
-    const unreadNotificationsIds = notificationsQuery.data?.pages
-      .flat()
-      ?.filter((x) => !x.isRead)
-      .map((x) => x.notificationId);
-    markAllAsReadMutation.mutate(unreadNotificationsIds);
+    markAllAsReadMutation.mutate();
   };
 
   const renderNotification = (notification) => {
@@ -187,7 +193,8 @@ export const Notifications = ({ openJoinConsultation }) => {
       notificationId,
       redirectTo = "/consultations"
     ) => {
-      markAllAsReadMutation.mutate([notificationId]), navigate(redirectTo);
+      markNotificationAsReadByIdMutation.mutate([notificationId]),
+        navigate(redirectTo);
     };
 
     switch (notification.type) {
