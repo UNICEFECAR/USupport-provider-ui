@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { Root } from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 import { FIVE_MINUTES } from "@USupport-components-library/utils";
+import { userSvc } from "@USupport-components-library/services";
 
 import { Logger } from "twilio-video";
 const logger = Logger.getLogger("twilio-video");
@@ -31,6 +32,13 @@ function App() {
     anchorPlacement: "top-bottom",
     once: false,
   });
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      userSvc.logout();
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
