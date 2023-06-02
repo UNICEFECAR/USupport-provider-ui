@@ -9,6 +9,7 @@ import { userSvc } from "@USupport-components-library/services";
 import Joi from "joi";
 
 import "./change-password.scss";
+import { toast } from "react-toastify";
 /**
  * ChangePassword
  *
@@ -52,6 +53,7 @@ export const ChangePassword = ({ isOpen, onClose }) => {
         newPassword: "",
       });
       onClose();
+      toast(t("success"));
     },
     onError: (error) => {
       const { message: errorMessage } = useError(error);

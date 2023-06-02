@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   // BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { IdleTimer } from "@USupport-components-library/src";
@@ -62,9 +63,21 @@ export default function Root() {
 
   useEventListener("login", loginHandler);
 
+  const location = useLocation();
+  const [hideIdleTimer, setHideIdleTimer] = useState(false);
+
+  useEffect(() => {
+    const currentUrl = location.pathname;
+    if (currentUrl === "consultation") {
+      setHideIdleTimer(true);
+    } else if (hideIdleTimer) {
+      setHideIdleTimer(false);
+    }
+  }, [location]);
+
   return (
     <React.Fragment>
-      {loggedIn && (
+      {loggedIn && !hideIdleTimer && (
         <IdleTimer
           t={t}
           setLoggedIn={setLoggedIn}

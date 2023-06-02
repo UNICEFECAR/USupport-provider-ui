@@ -60,6 +60,7 @@ export const Clients = () => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
     // setConsultationId(consultationId);
+    window.dispatchEvent(new Event("new-notification"));
     closeSelectConsultation();
     setBlockSlotError(null);
   };

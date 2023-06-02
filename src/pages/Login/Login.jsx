@@ -3,13 +3,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { Page, Login as LoginBlock } from "#blocks";
+import { useIsLoggedIn, useError } from "#hooks";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { RadialCircle, Loading } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
-
-import { Page, Login as LoginBlock } from "#blocks";
-
-import { useIsLoggedIn, useError } from "#hooks";
 
 import { CodeVerification } from "#backdrops";
 
@@ -120,6 +118,10 @@ export const Login = () => {
       window.dispatchEvent(new Event("login"));
       setErrors({});
       navigate("/dashboard");
+      const language = localStorage.getItem("language");
+      userSvc.changeLanguage(language).catch((err) => {
+        console.log(err, "Error when changing language");
+      });
     },
     onError: (err) => {
       const { message: errorMessage } = useError(err);

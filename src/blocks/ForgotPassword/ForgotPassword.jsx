@@ -10,11 +10,9 @@ import {
 } from "@USupport-components-library/src";
 import { validate } from "@USupport-components-library/utils";
 import { userSvc } from "@USupport-components-library/services";
-import { useError } from "#hooks";
 import Joi from "joi";
 
 import "./forgot-password.scss";
-import { Error } from "../../../USupport-components-library/src/components/errors/Error";
 
 /**
  * ForgotPassword
@@ -45,8 +43,7 @@ export const ForgotPassword = () => {
         );
         setIsModalOpen(true);
       } catch (error) {
-        const { message: errorMessage } = useError(error);
-        setErrors({ submit: errorMessage });
+        setIsModalOpen(true);
       }
     }
   };
@@ -67,7 +64,6 @@ export const ForgotPassword = () => {
               }
               errorMessage={errors.email}
             />
-            {errors.submit ? <Error message={errors.submit} /> : null}
             <Button
               label={t("reset_password_button_label")}
               size="lg"

@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
+  BaseTable,
   Block,
   Button,
   Loading,
@@ -28,20 +29,40 @@ import "./reports.scss";
  * @return {jsx}
  */
 export const Reports = () => {
-  const { t } = useTranslation("reports");
-  const rows = ["client", "time", "price", "campaign"];
+  const { t, i18n } = useTranslation("reports");
+  const [dataToDisplay, setDataToDisplay] = useState();
+
+  const rows = useMemo(() => {
+    return [
+      { label: t("client"), sortingKey: "displayName" },
+      { label: t("time"), sortingKey: "time", isCentered: true, isDate: true },
+      {
+        label: t("price"),
+        sortingKey: "price",
+        isCentered: true,
+        isNumbered: true,
+      },
+      { label: t("campaign"), sortingKey: "campaignName" },
+    ];
+  }, [i18n.language]);
+
   const currencySymbol = localStorage.getItem("currency_symbol");
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filters, setFilters] = useState({});
 
   const { isLoading, data } = useGetProviderActivities();
 
+  useEffect(() => {
+    if (data) {
+      setDataToDisplay(data);
+    }
+  }, [data]);
+
   const handleExport = () => {
     let csv = "";
-    csv += rows.map((x) => t(x)).join(",");
+    csv += rows.map((x) => x.label).join(",");
 
-    data.forEach((row) => {
+    dataToDisplay.forEach((row) => {
       const price = row.price ? `${row.price}${currencySymbol}` : t("free");
       csv += "\n";
       csv += `${row.displayName},`;
@@ -59,26 +80,28 @@ export const Reports = () => {
     setIsFilterOpen(true);
   };
 
-  const handleFilterSave = (data) => {
-    setFilters(data);
-  };
+  const filterData = (activity, newFilters) => {
+    const isCampaignMatching =
+      !newFilters.campaign || newFilters.campaign === "all"
+        ? true
+        : activity.campaignName === newFilters.campaign;
 
-  const filterData = (activity) => {
-    const isCampaignMatching = filters.campaign
-      ? activity.campaignName === filters.campaign
+    const isClientMatching = newFilters.client
+      ? activity.displayName === newFilters.client
       : true;
 
-    const isClientMatching = filters.client
-      ? activity.displayName === filters.client
+    const createdAt = new Date(activity.time).getTime();
+    const startDate = new Date(
+      new Date(newFilters.startDate).setHours(0, 0, 0, 0)
+    ).getTime();
+
+    const isStartDateMatching = newFilters.startDate
+      ? createdAt >= startDate
       : true;
 
-    const isStartDateMatching = filters.startDate
-      ? new Date(activity.time).getTime() >=
-        new Date(filters.startDate).getTime()
-      : true;
-
-    const isEndDateMatching = filters.endDate
-      ? new Date(activity.time).getTime() <= new Date(filters.endDate).getTime()
+    const isEndDateMatching = newFilters.endDate
+      ? new Date(new Date(activity.time).setHours(0, 0, 0, 0)) <=
+        new Date(newFilters.endDate)
       : true;
 
     return isStartDateMatching &&
@@ -87,6 +110,11 @@ export const Reports = () => {
       isCampaignMatching
       ? true
       : false;
+  };
+
+  const handleFilterSave = (newFilters) => {
+    const filteredData = data.filter((x) => filterData(x, newFilters));
+    setDataToDisplay(filteredData);
   };
 
   const getFormattedDate = (date, hasComma = true) => {
@@ -100,100 +128,50 @@ export const Reports = () => {
     } ${getDateView(date)}`;
   };
 
-  const renderData = useMemo(() => {
-    const filteredData = data
-      ?.sort((a, b) => {
-        return b.createdAt - a.createdAt;
-      })
-      .filter(filterData);
+  let campaignOptions = useMemo(() => {
+    let res = Array.from(
+      new Set(data?.filter((x) => x.campaignName).map((x) => x.campaignName))
+    ).map((x) => ({ value: x, label: x }));
+    res.unshift({ value: null, label: t("all") });
+    return res;
+  }, [data]);
 
-    if (!filteredData || filteredData?.length === 0)
-      return (
-        <tr>
-          <td
-            className="reports__table__td__no-results"
-            align="center"
-            colSpan={4}
-          >
-            <h4>{t("no_results")}</h4>
-          </td>
-        </tr>
-      );
+  const clientOptions = useMemo(() => {
+    return Array.from(new Set(data?.map((x) => x.displayName))).map((x) => ({
+      value: x,
+      label: x,
+    }));
+  }, [data]);
 
-    return filteredData?.map((activity, index) => {
-      const displayTime = getFormattedDate(activity.time);
-
-      return (
-        <tr key={index}>
-          <td className="reports__table__td">
-            <p className="text reports__table__name">{activity.displayName}</p>
-          </td>
-          <td className="reports__table__td">
-            <p className="text reports__table__name">{displayTime}</p>
-          </td>
-          <td className="reports__table__td">
-            <p className="text">
-              {activity.price
-                ? `${activity.price}${currencySymbol}`
-                : t("free")}
-            </p>
-          </td>
-          <td className="reports__table__td">
-            <p className="text">{activity.campaignName || "N/A"}</p>
-          </td>
-        </tr>
-      );
-    });
-  }, [data, filters]);
-
-  let campaignOptions = Array.from(
-    new Set(data?.filter((x) => x.campaignName).map((x) => x.campaignName))
-  ).map((x) => ({ value: x, label: x }));
-  campaignOptions.unshift({ value: null, label: t("all") });
-
-  const clientOptions = Array.from(
-    new Set(data?.map((x) => x.displayName))
-  ).map((x) => ({
-    value: x,
-    label: x,
-  }));
+  const rowsData = dataToDisplay?.map((activity) => {
+    const displayTime = getFormattedDate(activity.time);
+    return [
+      <p className="text ">{activity.displayName}</p>,
+      <p className="text centered">{displayTime}</p>,
+      <p className="text centered">
+        {activity.price ? `${activity.price}${currencySymbol}` : t("free")}
+      </p>,
+      <p className="text">{activity.campaignName || "N/A"}</p>,
+    ];
+  });
 
   return (
     <Block classes="reports">
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="reports__buttons">
-            <Button
-              type="secondary"
-              color="purple"
-              label={t("export_label")}
-              onClick={handleExport}
-              size="md"
-            />
-            <Button
-              type="primary"
-              color="purple"
-              label={t("filter")}
-              onClick={handleFilterOpen}
-              size="md"
-            />
-          </div>
-          <div className="reports__container">
-            <table className="reports__table">
-              <thead>
-                <tr>
-                  {rows.map((row, index) => {
-                    return <th key={row + index}>{t(row)}</th>;
-                  })}
-                </tr>
-              </thead>
-              <tbody>{renderData}</tbody>
-            </table>
-          </div>
-        </>
-      )}
+      <BaseTable
+        rows={rows}
+        rowsData={rowsData}
+        data={dataToDisplay}
+        updateData={setDataToDisplay}
+        hasSearch
+        hasMenu={false}
+        buttonLabel={t("export_label")}
+        buttonAction={handleExport}
+        secondaryButtonLabel={t("filter")}
+        secondaryButtonAction={handleFilterOpen}
+        isLoading={isLoading}
+        t={t}
+      />
+
       <Filters
         isOpen={isFilterOpen}
         handleClose={() => setIsFilterOpen(false)}

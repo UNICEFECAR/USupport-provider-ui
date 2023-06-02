@@ -46,6 +46,7 @@ export const ActivityHistory = () => {
     closeSelectConsultation();
     openConfirmConsultationBackdrop();
     setBlockSlotError(null);
+    window.dispatchEvent(new Event("new-notification"));
   };
   const onSuggestConsultationError = (error) => {
     setBlockSlotError(error);

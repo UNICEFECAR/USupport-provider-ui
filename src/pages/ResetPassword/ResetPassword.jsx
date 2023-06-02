@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Page, ResetPassword as ResetPasswordBlock } from "#blocks";
 import { Loading } from "@USupport-components-library/src";
@@ -17,12 +17,22 @@ import "./reset-password.scss";
  */
 export const ResetPassword = () => {
   const { t } = useTranslation("reset-password-page");
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate("/forgot-password");
+  };
+
   const isLoggedIn = useIsLoggedIn();
 
   if (isLoggedIn === "loading") return <Loading />;
   if (isLoggedIn === true) return <Navigate to="/dashboard" />;
+
   return (
-    <Page heading={t("heading")} classes="page__reset-password">
+    <Page
+      handleGoBack={handleGoBack}
+      heading={t("heading")}
+      classes="page__reset-password"
+    >
       <ResetPasswordBlock />
     </Page>
   );
