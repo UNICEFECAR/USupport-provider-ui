@@ -35,8 +35,11 @@ function App() {
 
   useEffect(() => {
     window.addEventListener("beforeunload", (e) => {
-      e.preventDefault();
-      userSvc.logout();
+      if (!(performance.getEntriesByType("navigation")[0].type === "reload")) {
+        // If the page is being refreshed, do nothing
+        e.preventDefault();
+        userSvc.logout();
+      }
     });
   }, []);
 
