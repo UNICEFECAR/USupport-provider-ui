@@ -25,15 +25,15 @@
     }
 
     &__slots {
-      overflow: scroll;
+      overflow: auto;
       height: 50rem;
       padding-top: $spacing_1_2;
-      padding-bottom: $spacing_2_4;
+      padding-bottom: $spacing_4_8;
     }
 
     & .radio-button-selector-group {
       padding: 0 $spacing_1_2;
-      padding-bottom: 25rem;
+      padding-bottom: 35rem;
     }
   }
 }
