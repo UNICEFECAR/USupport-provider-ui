@@ -1,14 +1,13 @@
 {
-  "unanswered": "Unanswered",
-  "answered": "Answered",
-  "self_answered": "Answered by you",
-  "respond": "Respond",
-  "answer_by": "Answered by:",
-  "schedule_consultation": "Schedule consultation",
-  "today": "Today",
-  "archive": "Archive",
-  "read_more": "Read more",
-  "filter": "Filter tags",
-  "search_placeholder": "Search",
-  "no_questions_found": "No results found."
+  "unanswered": "Неотвеченные",
+  "answered": "Отвеченные",
+  "self_answered": "Отвеченные Вами",
+  "respond": "Ответить",
+  "answer_by": "Ответил:",
+  "schedule_consultation": "Запланировать консультацию",
+  "today": "Сегодня",
+  "archive": "Архив",
+  "read_more": "Узнать больше",
+  "search_placeholder": "Поиск",
+  "no_questions_found": "Ничего не нашлось"
 }
