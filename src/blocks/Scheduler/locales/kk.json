@@ -24,6 +24,6 @@
   "slot_added": "Бос уақыт сәтті қосылды",
   "free": "Бос",
   "more_campaigns": "{{amount}} науқан",
-  "provider_inactive": "You don't have permissions to add availabilityKK",
-  "coupon": "CouponKK"
+  "provider_inactive": "Қолжетімді болу үшін Сіздің құқығыңыз жеткіліксіз",
+  "coupon": "Купон"
 }

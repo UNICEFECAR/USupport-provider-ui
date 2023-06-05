@@ -1,10 +1,10 @@
 {
-  "heading": "Reason for archiving",
-  "subheading": "Select the reason why, you want to archive this question",
-  "cta_label": "Send to archive",
-  "spam_label": "It is a spam",
-  "duplicate_label": "Question already exists",
-  "other_label": "Other reason",
-  "input_placeholder": "Enter reason here",
-  "question_archived": "Question archived successfully"
+  "heading": "Причина архивации",
+  "subheading": "Выберите причину, по которой вы хотите заархивировать этот вопрос",
+  "cta_label": "Отправить в архив",
+  "spam_label": "Это спам",
+  "duplicate_label": "Вопрос уже существует",
+  "other_label": "Другая причина",
+  "input_placeholder": "Введите причину здесь",
+  "question_archived": "Мұнда себебін енгізіңіз"
 }

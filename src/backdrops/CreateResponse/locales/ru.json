@@ -1,14 +1,14 @@
 {
-  "heading": "Write a response",
-  "title_label": "Title",
-  "title_placeholder": "Write a title here",
-  "answer_label": "Answer",
-  "answer_placeholder": "Write your answer here",
-  "tags_label": "Tags",
-  "title_error_label": "Title is required",
-  "answer_error_label": "Answer is required",
-  "tags_error_label": "Tags are required",
-  "cta_label": "Send your response",
-  "selected_tags": "Selected tags",
-  "response_success": "Response sent successfully"
+  "heading": "Напишите ответ",
+  "title_label": "Заголовок",
+  "title_placeholder": "Напишите заголовок здесь",
+  "answer_label": "Ответ",
+  "answer_placeholder": "Запишите свой ответ здесь",
+  "tags_label": "Тег",
+  "title_error_label": "Требуется заголовок",
+  "answer_error_label": "Требуется ответ",
+  "tags_error_label": "Теги обязательны",
+  "cta_label": "Отправьте свой ответ",
+  "selected_tags": "Выбранные теги",
+  "response_success": "Ответ успешно отправлен"
 }
