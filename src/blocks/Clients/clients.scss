@@ -5,10 +5,10 @@
 
   display: flex;
   padding-bottom: $spacing_3_2;
-  
-  & .container{
+
+  & .container {
     width: 100%;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
@@ -48,11 +48,11 @@
   &__go-back-arrow-container {
     position: absolute;
     left: $spacing_0_8;
-    @media screen and (min-width: $screen_md){
+    @media screen and (min-width: $screen_md) {
       top: $spacing_5_6;
       left: $spacing_6_0;
     }
-    @media screen and (min-width: $screen_lg){
+    @media screen and (min-width: $screen_lg) {
       left: -32px;
     }
   }
@@ -68,12 +68,13 @@
 
   &__main-container {
     padding-bottom: $spacing_10_0;
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
     min-width: 36rem;
 
     @media screen and (min-width: $screen-lg) {
-      padding: $spacing_2_4;
+      padding: $spacing_1_8;
       padding-top: 0;
       border: 0.1rem solid $color_primary_20809e;
       border-radius: $border_radius_1_2;
@@ -89,13 +90,13 @@
       justify-content: space-between;
       width: calc(34.3rem - 2 * $spacing_1_6);
       margin: 0 auto;
-      margin: $spacing_3_2 $spacing_0_4 0;
+      margin-top: $spacing_2_4;
       padding: $spacing_1_6;
       position: relative;
       z-index: 2;
 
       @media screen and (min-width: $screen-md) {
-        width: calc(36.8rem - 2 * $spacing_1_6);
+        width: calc(34.8rem - 2 * $spacing_1_6);
       }
 
       & .icon {
@@ -189,7 +190,7 @@
       width: 100%;
       // height: 100%;
       position: relative;
-      overflow: scroll;
+      overflow: auto;
       padding: $spacing_2_4;
       padding-bottom: $spacing_3_2;
       display: flex;

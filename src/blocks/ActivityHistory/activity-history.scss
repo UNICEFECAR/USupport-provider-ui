@@ -20,7 +20,7 @@
 
   &__main-container {
     padding-bottom: $spacing_10_0;
-    overflow: scroll;
+    overflow: auto;
 
     @media screen and (min-width: $screen-lg) {
       padding: $spacing_2_4;
@@ -93,7 +93,7 @@
     &__consultation {
       width: 100%;
       position: relative;
-      overflow: scroll;
+      overflow: auto;
 
       &__header {
         display: flex;
