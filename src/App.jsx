@@ -11,6 +11,7 @@ const logger = Logger.getLogger("twilio-video");
 logger.setLevel("debug");
 
 import "./App.scss";
+import "./HackTimer.js";
 
 // Create a react-query client
 const queryClient = new QueryClient({
