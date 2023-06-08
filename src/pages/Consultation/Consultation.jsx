@@ -5,16 +5,24 @@ import { toast } from "react-toastify";
 import io from "socket.io-client";
 
 import {
-  SendMessage,
-  Message,
-  SystemMessage,
-  Loading,
   Backdrop,
+  Button,
+  InputSearch,
+  Loading,
+  Message,
+  SendMessage,
+  SystemMessage,
   Toggle,
 } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 
-import { useGetChatData, useSendMessage, useLeaveConsultation } from "#hooks";
+import {
+  useGetChatData,
+  useSendMessage,
+  useLeaveConsultation,
+  useDebounce,
+  useGetAllChatHistoryData,
+} from "#hooks";
 import { Page, VideoRoom } from "#blocks";
 
 import "./consultation.scss";
@@ -30,10 +38,13 @@ const SOCKET_IO_URL = `${import.meta.env.VITE_SOCKET_IO_URL}`;
  */
 export const Consultation = () => {
   const { t } = useTranslation("consultation-page");
+  const language = localStorage.getItem("language");
+  const country = localStorage.getItem("country");
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const location = useLocation();
   const backdropMessagesContainerRef = useRef();
+  const socketRef = useRef();
 
   const consultation = location.state?.consultation;
   const joinWithVideo = location.state?.videoOn;
@@ -49,41 +60,26 @@ export const Consultation = () => {
   const [messages, setMessages] = useState([]);
   const [areSystemMessagesShown, setAreSystemMessagesShown] = useState(true);
 
-  useEffect(() => {
-    if (
-      messages?.length > 0 &&
-      backdropMessagesContainerRef.current &&
-      backdropMessagesContainerRef.current.scrollHeight > 0
-    ) {
-      backdropMessagesContainerRef.current.scrollTo({
-        top: backdropMessagesContainerRef.current?.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [messages, backdropMessagesContainerRef.current?.scrollHeight]);
+  const [showAllMessages, setShowAllMessages] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const [search, setSearch] = useState("");
+  const [hasUnreadMessages, setHasUnreadMessages] = useState(true);
 
-  const onSendSuccess = (data) => {
-    setMessages([...data.messages]);
-  };
-  const onSendError = (err) => {
-    toast(err, { type: "error" });
-  };
-  const sendMessageMutation = useSendMessage(onSendSuccess, onSendError);
-  const leaveConsultationMutation = useLeaveConsultation();
+  const debouncedSearch = useDebounce(search, 500);
 
   const chatDataQuery = useGetChatData(consultation?.chatId, (data) =>
     setMessages(data.messages)
   );
 
+  const clientId = chatDataQuery.data?.clientDetailId;
   const providerId = chatDataQuery.data?.providerDetailId;
+  const allChatHistoryQuery = useGetAllChatHistoryData(
+    providerId,
+    clientId,
+    showAllMessages
+  );
 
-  const language = localStorage.getItem("language");
-  const country = localStorage.getItem("country");
-  const socketRef = useRef();
-
-  // TODO: Send a system message when the user leaves the consultation
   // TODO: Send a consultation add services request only when the provider leaves the consultation
-  // TODO: Send a system message when the client/provider toggles camera
   useEffect(() => {
     socketRef.current = io(SOCKET_IO_URL, {
       path: "/api/v1/ws/socket.io",
@@ -112,13 +108,56 @@ export const Consultation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Filter the messages based on the search input
+  useEffect(() => {
+    if (debouncedSearch) {
+      const filteredMessages = chatDataQuery.data.messages.filter((message) =>
+        message.content.toLowerCase().includes(debouncedSearch.toLowerCase())
+      );
+      setMessages(filteredMessages);
+    } else if (!debouncedSearch && chatDataQuery.data?.messages) {
+      setMessages(chatDataQuery.data.messages);
+    }
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (
+      messages?.length > 0 &&
+      backdropMessagesContainerRef.current &&
+      backdropMessagesContainerRef.current.scrollHeight > 0
+    ) {
+      backdropMessagesContainerRef.current.scrollTo({
+        top: backdropMessagesContainerRef.current?.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages, backdropMessagesContainerRef.current?.scrollHeight]);
+
+  useEffect(() => {
+    if (showAllMessages && allChatHistoryQuery.data?.messages) {
+      setMessages(allChatHistoryQuery.data?.messages);
+    } else if (!showAllMessages) {
+      setMessages(chatDataQuery.data?.messages);
+    }
+  }, [showAllMessages, allChatHistoryQuery.data]);
+
+  const onSendSuccess = (data) => {
+    setMessages([...data.messages]);
+  };
+  const onSendError = (err) => {
+    toast(err, { type: "error" });
+  };
+  const sendMessageMutation = useSendMessage(onSendSuccess, onSendError);
+  const leaveConsultationMutation = useLeaveConsultation();
+
   const receiveMessage = (message) => {
+    setHasUnreadMessages(true);
     setMessages((messages) => [...messages, message]);
   };
 
   const renderAllMessages = useCallback(() => {
     if (chatDataQuery.isLoading) return <Loading size="lg" />;
-    return messages.map((message) => {
+    return messages?.map((message) => {
       if (message.type === "system") {
         if (!areSystemMessagesShown) return null;
         return (
@@ -153,6 +192,9 @@ export const Consultation = () => {
   }, [messages, chatDataQuery.isLoading, providerId, areSystemMessagesShown]);
 
   const handleSendMessage = (content, type = "text") => {
+    if (hasUnreadMessages) {
+      setHasUnreadMessages(false);
+    }
     const message = {
       content,
       type,
@@ -182,6 +224,9 @@ export const Consultation = () => {
           behavior: "smooth",
         });
       }, 200);
+    }
+    if (!isChatShownOnMobile && hasUnreadMessages) {
+      setHasUnreadMessages(false);
     }
     setIsChatShownOnMobile(!isChatShownOnMobile);
   };
@@ -214,6 +259,12 @@ export const Consultation = () => {
     navigate("/consultations");
   };
 
+  const handleTextareaFocus = () => {
+    if (hasUnreadMessages) {
+      setHasUnreadMessages(false);
+    }
+  };
+  console.log(showOptions);
   return (
     <Page
       showNavbar={width < 768 ? false : true}
@@ -230,6 +281,7 @@ export const Consultation = () => {
           toggleChat={toggleChat}
           leaveConsultation={leaveConsultation}
           handleSendMessage={handleSendMessage}
+          hasUnreadMessages={hasUnreadMessages}
           token={token}
           t={t}
         />
@@ -241,6 +293,13 @@ export const Consultation = () => {
           width={width}
           areSystemMessagesShown={areSystemMessagesShown}
           setAreSystemMessagesShown={setAreSystemMessagesShown}
+          showOptions={showOptions}
+          setShowOptions={setShowOptions}
+          search={search}
+          setSearch={setSearch}
+          showAllMessages={showAllMessages}
+          setShowAllMessages={setShowAllMessages}
+          onTextareaFocus={handleTextareaFocus}
           t={t}
         />
       </div>
@@ -250,19 +309,27 @@ export const Consultation = () => {
         onClose={() => setIsChatShownOnMobile(false)}
         reference={width < 768 ? backdropMessagesContainerRef : null}
         headingComponent={
-          <div className="page__consultation__system-message-toggle">
-            <Toggle
-              isToggled={areSystemMessagesShown}
-              setParentState={setAreSystemMessagesShown}
-            />
-            <p>{t("show_system_messages")}</p>
-          </div>
+          <OptionsContainer
+            showOptions={showOptions}
+            setShowOptions={setShowOptions}
+            search={search}
+            setSearch={setSearch}
+            showAllMessages={showAllMessages}
+            setShowAllMessages={setShowAllMessages}
+            areSystemMessagesShown={areSystemMessagesShown}
+            setAreSystemMessagesShown={setAreSystemMessagesShown}
+            t={t}
+          />
         }
       >
         <div className="page__consultation__chat-backdrop__container">
           <div
             ref={width >= 768 ? backdropMessagesContainerRef : null}
-            className="page__consultation__container__messages__messages-container"
+            className={`page__consultation__container__messages__messages-container ${
+              showOptions
+                ? "page__consultation__container__messages__messages-container--show-options"
+                : ""
+            }`}
           >
             {renderAllMessages()}
             <div
@@ -272,7 +339,12 @@ export const Consultation = () => {
               }}
             />
           </div>
-          <SendMessage handleSubmit={handleSendMessage} />
+          {(isChatShownOnMobile || width >= 768) && (
+            <SendMessage
+              handleSubmit={handleSendMessage}
+              onTextareaFocus={handleTextareaFocus}
+            />
+          )}
         </div>
       </Backdrop>
     </Page>
@@ -287,6 +359,13 @@ const MessageList = ({
   providerId,
   areSystemMessagesShown,
   setAreSystemMessagesShown,
+  showOptions,
+  setShowOptions,
+  search,
+  setSearch,
+  showAllMessages,
+  setShowAllMessages,
+  onTextareaFocus,
   t,
 }) => {
   const messagesContainerRef = useRef();
@@ -306,7 +385,7 @@ const MessageList = ({
 
   const renderAllMessages = () => {
     if (isLoading) return <Loading size="lg" />;
-    return messages.map((message) => {
+    return messages?.map((message) => {
       if (message.type === "system") {
         if (!areSystemMessagesShown) return null;
         return (
@@ -341,21 +420,85 @@ const MessageList = ({
   };
 
   return width >= 1024 ? (
-    <div>
-      <div className="page__consultation__system-message-toggle">
-        <Toggle
-          isToggled={areSystemMessagesShown}
-          setParentState={setAreSystemMessagesShown}
-        />
-        <p>{t("show_system_messages")}</p>
-      </div>
+    <div style={{ position: "relative" }}>
+      <OptionsContainer
+        showOptions={showOptions}
+        setShowOptions={setShowOptions}
+        search={search}
+        setSearch={setSearch}
+        showAllMessages={showAllMessages}
+        setShowAllMessages={setShowAllMessages}
+        areSystemMessagesShown={areSystemMessagesShown}
+        setAreSystemMessagesShown={setAreSystemMessagesShown}
+        isAbsolute
+        t={t}
+      />
       <div
         ref={messagesContainerRef}
-        className="page__consultation__container__messages__messages-container"
+        className={`page__consultation__container__messages__messages-container ${
+          showOptions
+            ? "page__consultation__container__messages__messages-container--show-options"
+            : ""
+        }`}
       >
         {renderAllMessages()}
       </div>
-      <SendMessage handleSubmit={handleSendMessage} />
+      <SendMessage
+        handleSubmit={handleSendMessage}
+        onTextareaFocus={onTextareaFocus}
+      />
     </div>
   ) : null;
+};
+
+const OptionsContainer = ({
+  showAllMessages,
+  setShowAllMessages,
+  showOptions,
+  setShowOptions,
+  areSystemMessagesShown,
+  setAreSystemMessagesShown,
+  search,
+  setSearch,
+  isAbsolute,
+  t,
+}) => {
+  return (
+    <div
+      style={{
+        position: isAbsolute ? "absolute" : "static",
+      }}
+      className="page__consultation__options-container"
+    >
+      <Button
+        size="sm"
+        label={t(showOptions ? "hide_options" : "show_options")}
+        onClick={() => setShowOptions(!showOptions)}
+        style={{ marginBottom: "16px" }}
+      />
+      {showOptions && (
+        <div>
+          <div className="page__consultation__system-message-toggle">
+            <Toggle
+              isToggled={areSystemMessagesShown}
+              setParentState={setAreSystemMessagesShown}
+            />
+            <p>{t("show_system_messages")}</p>
+          </div>
+          <div className="page__consultation__system-message-toggle">
+            <Toggle
+              isToggled={showAllMessages}
+              setParentState={setShowAllMessages}
+            />
+            <p>{t("show_previous_consultations")}</p>
+          </div>
+          <InputSearch
+            value={search}
+            onChange={setSearch}
+            placeholder={t("search")}
+          />
+        </div>
+      )}
+    </div>
+  );
 };

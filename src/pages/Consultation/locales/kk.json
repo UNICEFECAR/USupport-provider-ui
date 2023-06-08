@@ -12,5 +12,9 @@
   "provider_camera_on": "Консультант камераны қосты",
   "provider_microphone_off": "Консультант микрофонды өшірді",
   "provider_microphone_on": "Консультант микрофонды қосты",
-  "show_system_messages": "Show system messagesKK"
+  "show_system_messages": "Show system messagesKK",
+  "show_previous_consultations": "Show previous consultationsKK",
+  "hide_options": "Hide optionsKK",
+  "show_options": "Show optionsKK",
+  "search": "Іздеу"
 }
