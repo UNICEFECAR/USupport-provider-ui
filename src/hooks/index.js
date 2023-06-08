@@ -38,3 +38,4 @@ export * from "./useGetQuestionsTags.js";
 export * from "./useAddAnswerToQuestion.js";
 export * from "./useArchiveQuestion.js";
 export * from "./useMarkAllNotificationsAsRead.js";
+export * from "./useGetAllChatHistoryData.js";
