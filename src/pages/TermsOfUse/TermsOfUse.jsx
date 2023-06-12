@@ -1,6 +1,8 @@
 import React from "react";
-import { Page, TermsOfUse as TermsOfUseBlock } from "#blocks";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+import { Page, TermsOfUse as TermsOfUseBlock } from "#blocks";
 
 /**
  * TermsOfUse
@@ -11,12 +13,13 @@ import { useTranslation } from "react-i18next";
  */
 export const TermsOfUse = () => {
   const { t } = useTranslation("terms-of-use-page");
+  const navigate = useNavigate();
+
   return (
     <Page
       classes="page__terms-of-use"
-      showGoBackArrow={false}
+      handleGoBack={() => navigate(-1)}
       heading={t("heading")}
-      on
     >
       <TermsOfUseBlock />
     </Page>
