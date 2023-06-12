@@ -310,6 +310,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       price: consultation.price,
       couponPrice: consultation.coupon_price,
       sponsorImage: consultation.sponsor_image,
+      sponsorName: consultation.sponsor_name,
       campaignId: consultation.campaign_id,
     };
   };

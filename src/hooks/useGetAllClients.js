@@ -15,6 +15,7 @@ export default function useGetAllClients() {
       nextConsultationPrice: client.next_consultation_price,
       nextConsultationCouponPrice: client.next_consultation_coupon_price,
       nextConsultationCampaignId: client.next_consultation_campaign_id,
+      nextConsultationSponsorName: client.next_consultation_sponsor_name,
       pastConsultations: client.past_consultations,
     }));
   };
