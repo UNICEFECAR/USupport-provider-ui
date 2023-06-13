@@ -1,6 +1,11 @@
 /* Notifications styles */
-@import '@USupport-components-library/styles';
+@import "@USupport-components-library/styles";
 
-.page__notifications{
+.page__notifications {
+  &__mark-read {
+    align-self: flex-end;
+    color: $color_secondary_9749fa;
+    cursor: pointer;
+    text-align: right;
+  }
 }
-
