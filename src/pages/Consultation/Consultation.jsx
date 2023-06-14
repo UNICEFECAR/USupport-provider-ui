@@ -107,16 +107,18 @@ export const Consultation = () => {
     });
 
     socketRef.current.on("receive message", receiveMessage);
-    // window.addEventListener("beforeunload", (ev) => {
-    //   console.log("asd");
-    //   return (ev.returnValue = "Are you sure you want to close?");
-    // });
+
+    const handleBeforeUnload = () => {
+      leaveConsultation();
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
         socketRef.current.off();
       }
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
