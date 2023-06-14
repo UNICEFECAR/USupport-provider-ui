@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -24,6 +30,11 @@ import {
   useGetAllChatHistoryData,
 } from "#hooks";
 import { Page, VideoRoom } from "#blocks";
+import { RootContext } from "#routes";
+
+import { Logger } from "twilio-video";
+const logger = Logger.getLogger("twilio-video");
+logger.setLevel("silent");
 
 import "./consultation.scss";
 
@@ -50,6 +61,8 @@ export const Consultation = () => {
   const joinWithVideo = location.state?.videoOn;
   const joinWithMicrophone = location.state?.microphoneOn;
   const token = location.state?.token;
+
+  const { leaveConsultationFn } = useContext(RootContext);
 
   if (!consultation) return <Navigate to="/consultations" />;
 
@@ -110,13 +123,17 @@ export const Consultation = () => {
 
   // Filter the messages based on the search input
   useEffect(() => {
+    const messagesToFilter = showAllMessages
+      ? allChatHistoryQuery.data?.messages
+      : chatDataQuery.data?.messages;
+
     if (debouncedSearch) {
-      const filteredMessages = chatDataQuery.data.messages.filter((message) =>
+      const filteredMessages = messagesToFilter.filter((message) =>
         message.content.toLowerCase().includes(debouncedSearch.toLowerCase())
       );
       setMessages(filteredMessages);
     } else if (!debouncedSearch && chatDataQuery.data?.messages) {
-      setMessages(chatDataQuery.data.messages);
+      setMessages(messagesToFilter);
     }
   }, [debouncedSearch]);
 
@@ -157,12 +174,12 @@ export const Consultation = () => {
 
   const renderAllMessages = useCallback(() => {
     if (chatDataQuery.isLoading) return <Loading size="lg" />;
-    return messages?.map((message) => {
+    return messages?.map((message, index) => {
       if (message.type === "system") {
         if (!areSystemMessagesShown) return null;
         return (
           <SystemMessage
-            key={message.time}
+            key={`${message.time}-${index}`}
             title={message.content}
             date={new Date(Number(message.time))}
           />
@@ -171,7 +188,7 @@ export const Consultation = () => {
         if (message.senderId === providerId) {
           return (
             <Message
-              key={message.time}
+              key={`${message.time}-${index}`}
               message={message.content}
               sent
               date={new Date(Number(message.time))}
@@ -180,7 +197,7 @@ export const Consultation = () => {
         } else {
           return (
             <Message
-              key={message.time}
+              key={`${message.time}-${index}`}
               message={message.content}
               received
               date={new Date(Number(message.time))}
@@ -215,7 +232,7 @@ export const Consultation = () => {
   };
 
   // const showChat = width < 768;
-
+  const [isChatShownOnTablet, setIsChatShownOnTablet] = useState(true);
   const toggleChat = () => {
     if (!isChatShownOnMobile) {
       setTimeout(() => {
@@ -228,7 +245,11 @@ export const Consultation = () => {
     if (!isChatShownOnMobile && hasUnreadMessages) {
       setHasUnreadMessages(false);
     }
-    setIsChatShownOnMobile(!isChatShownOnMobile);
+    if (width < 1024) {
+      setIsChatShownOnMobile(!isChatShownOnMobile);
+    } else {
+      setIsChatShownOnTablet(!isChatShownOnTablet);
+    }
   };
 
   const leaveConsultation = () => {
@@ -259,12 +280,18 @@ export const Consultation = () => {
     navigate("/consultations");
   };
 
+  useEffect(() => {
+    if (leaveConsultation) {
+      leaveConsultationFn.current = leaveConsultation;
+    }
+  }, [leaveConsultation]);
+
   const handleTextareaFocus = () => {
     if (hasUnreadMessages) {
       setHasUnreadMessages(false);
     }
   };
-  console.log(showOptions);
+
   return (
     <Page
       showNavbar={width < 768 ? false : true}
@@ -285,23 +312,25 @@ export const Consultation = () => {
           token={token}
           t={t}
         />
-        <MessageList
-          messages={messages}
-          isLoading={chatDataQuery.isLoading}
-          handleSendMessage={handleSendMessage}
-          providerId={providerId}
-          width={width}
-          areSystemMessagesShown={areSystemMessagesShown}
-          setAreSystemMessagesShown={setAreSystemMessagesShown}
-          showOptions={showOptions}
-          setShowOptions={setShowOptions}
-          search={search}
-          setSearch={setSearch}
-          showAllMessages={showAllMessages}
-          setShowAllMessages={setShowAllMessages}
-          onTextareaFocus={handleTextareaFocus}
-          t={t}
-        />
+        {isChatShownOnTablet && (
+          <MessageList
+            messages={messages}
+            isLoading={chatDataQuery.isLoading}
+            handleSendMessage={handleSendMessage}
+            providerId={providerId}
+            width={width}
+            areSystemMessagesShown={areSystemMessagesShown}
+            setAreSystemMessagesShown={setAreSystemMessagesShown}
+            showOptions={showOptions}
+            setShowOptions={setShowOptions}
+            search={search}
+            setSearch={setSearch}
+            showAllMessages={showAllMessages}
+            setShowAllMessages={setShowAllMessages}
+            onTextareaFocus={handleTextareaFocus}
+            t={t}
+          />
+        )}
       </div>
       <Backdrop
         classes="page__consultation__chat-backdrop"
@@ -369,28 +398,43 @@ const MessageList = ({
   t,
 }) => {
   const messagesContainerRef = useRef();
+  const [showMessages, setShowMessages] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowMessages(true);
+    }, 200);
+
+    return () => {
+      clearTimeout(timeout);
+      setShowMessages(false);
+    };
+  }, []);
 
   useEffect(() => {
     if (
       messages?.length > 0 &&
       messagesContainerRef.current &&
-      messagesContainerRef.current.scrollHeight > 0
+      messagesContainerRef.current.scrollHeight > 0 &&
+      showMessages
     ) {
       messagesContainerRef.current.scrollTo({
         top: messagesContainerRef.current?.scrollHeight,
         behavior: "smooth",
       });
     }
-  }, [messages, messagesContainerRef.current?.scrollHeight]);
+  }, [messages, messagesContainerRef.current?.scrollHeight, showMessages]);
 
-  const renderAllMessages = () => {
+  const renderAllMessages = useCallback(() => {
+    console.log(areSystemMessagesShown, "areSystemMessagesShown");
     if (isLoading) return <Loading size="lg" />;
-    return messages?.map((message) => {
+    return messages?.map((message, index) => {
+      console.log(message.type, areSystemMessagesShown);
       if (message.type === "system") {
         if (!areSystemMessagesShown) return null;
         return (
           <SystemMessage
-            key={message.time}
+            key={`${message.time}-${index}`}
             title={message.content}
             date={new Date(Number(message.time))}
           />
@@ -399,7 +443,7 @@ const MessageList = ({
         if (message.senderId === providerId) {
           return (
             <Message
-              key={message.time}
+              key={`${message.time}-${index}`}
               message={message.content}
               sent
               date={new Date(Number(message.time))}
@@ -408,7 +452,7 @@ const MessageList = ({
         } else {
           return (
             <Message
-              key={message.time}
+              key={`${message.time}-${index}`}
               message={message.content}
               received
               date={new Date(Number(message.time))}
@@ -417,7 +461,7 @@ const MessageList = ({
         }
       }
     });
-  };
+  }, [messages, areSystemMessagesShown]);
 
   return width >= 1024 ? (
     <div style={{ position: "relative" }}>
@@ -441,7 +485,7 @@ const MessageList = ({
             : ""
         }`}
       >
-        {renderAllMessages()}
+        {showMessages && renderAllMessages()}
       </div>
       <SendMessage
         handleSubmit={handleSendMessage}
