@@ -1,7 +1,4 @@
 {
-  "heading": "Уведомления",
-  "mark_read": "Отметить все как прочитанное",
-  "subheading": "Здесь Вы можете найти все уведомления, которые когда-либо получали в своем аккаунте.",
   "consultation_booking": "Ваша консультация с <0>{{clientName}} запланирована</0> на <0>{{date}}</0> с <0>{{startHour}}</0> до <0>{{endHour}}</0>.",
   "consultation_reschedule": "Client <0>{{clientName}}</0> rescheduled the consultation from <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0> to <0>{{newDate}}</0> from <0>{{newStartHour}}</0> to <0>{{newEndHour}}</0>",
   "consultation_cancellation_provider": "Вы <0>отменили</0> консультацию с <0>{{clientName}}</0>, <0>запланированную</0> на <0>{{date}}</0> с <0>{{startHour}}</0> до <0>{{endHour}}</0>",

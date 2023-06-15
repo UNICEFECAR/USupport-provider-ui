@@ -30,10 +30,12 @@
     @media screen and (min-width: $screen-md) {
       padding-top: $spacing_5_0;
       padding-left: $spacing_5_0;
+      padding-right: $spacing_5_0;
     }
     @media screen and (min-width: $screen-lg) {
       padding-top: $spacing_5_0;
       padding-left: $spacing_23_0;
+      padding-right: $spacing_23_0;
     }
 
     &-heading {
@@ -41,13 +43,6 @@
       width: 75%;
       word-break: break-all;
       text-align: left;
-
-      @media screen and (min-width: $screen_md) {
-        padding-left: $spacing_6_0;
-      }
-      @media screen and (min-width: $screen_lg) {
-        padding-left: $spacing_16_0;
-      }
 
       &__no-go-back-arrow {
         @media screen and (min-width: $screen_md) {
@@ -97,15 +92,11 @@
     padding-left: $spacing_2_2;
 
     @media screen and (min-width: $screen-md) {
-      padding-left: calc(
-        $spacing_5_0 + $spacing_3_2 + $spacing_2_4 + $spacing_6_0
-      );
+      padding-left: calc($spacing_2_6 + $spacing_8_0);
     }
 
     @media screen and (min-width: $screen-lg) {
-      padding-left: calc(
-        $spacing_23_0 + $spacing_3_2 + $spacing_2_4 + $spacing_16_0
-      );
+      padding-left: calc($spacing_23_0 + $spacing_5_6);
     }
 
     &__no-go-back-arrow {

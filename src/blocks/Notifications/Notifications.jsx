@@ -10,7 +10,6 @@ import {
   Button,
   Grid,
   GridItem,
-  Icon,
   Loading,
   Notification,
 } from "@USupport-components-library/src";
@@ -31,7 +30,6 @@ import {
 import {
   useMarkNotificationsAsRead,
   useGetConsultationsForSingleDay,
-  useMarkAllNotificationsAsRead,
 } from "#hooks";
 
 import "./notifications.scss";
@@ -151,24 +149,9 @@ export const Notifications = ({ openJoinConsultation }) => {
     }
   );
 
-  // Mark all notificartions as read logic
-  // Because of the load on scroll we mark as read
-  // only the currently shown/fetched notifications
   const onMarkAllAsReadError = (error) => toast(error, { type: "error" });
   const markNotificationAsReadByIdMutation =
     useMarkNotificationsAsRead(onMarkAllAsReadError);
-
-  const onMarkAllAsReadSuccess = () => {
-    window.dispatchEvent(new Event("all-notifications-read"));
-  };
-  const markAllAsReadMutation = useMarkAllNotificationsAsRead(
-    onMarkAllAsReadSuccess,
-    onMarkAllAsReadError
-  );
-
-  const handleMarkAllAsRead = async () => {
-    markAllAsReadMutation.mutate();
-  };
 
   const renderNotification = (notification) => {
     if (!notification.content) return null;
@@ -421,7 +404,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             date={notification.createdAt}
             isRead={notification.isRead}
             title="USupportMe"
-            icon="activity"
+            icon="activities"
             text={t(notification.type)}
             handleClick={() =>
               handleNotificationClick(notification.notificationId, "/reports")
@@ -475,24 +458,6 @@ export const Notifications = ({ openJoinConsultation }) => {
 
   return (
     <Block classes="notifications">
-      <div className="notifications__heading-container">
-        <Icon
-          onClick={() => navigate(-1)}
-          name="arrow-chevron-back"
-          size="md"
-          color="#20809E"
-        />
-        <h3 className="notifications__heading-container__heading">
-          {t("heading")}
-        </h3>
-        <p
-          className="paragraph notifications__heading-container__mark-read"
-          onClick={handleMarkAllAsRead}
-        >
-          {t("mark_read")}
-        </p>
-      </div>
-      <p className="text notifications__subheading">{t("subheading")}</p>
       {isLoadingClients ? (
         <Loading size="lg" />
       ) : (

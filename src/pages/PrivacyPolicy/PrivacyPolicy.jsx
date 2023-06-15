@@ -1,6 +1,8 @@
 import React from "react";
-import { Page, PrivacyPolicy as PrivacyPolicyBlock } from "#blocks";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+import { Page, PrivacyPolicy as PrivacyPolicyBlock } from "#blocks";
 
 /**
  * PrivacyPolicy
@@ -11,11 +13,13 @@ import { useTranslation } from "react-i18next";
  */
 export const PrivacyPolicy = () => {
   const { t } = useTranslation("privacy-policy-page");
+  const navigate = useNavigate();
 
   return (
     <Page
       classes="page__privacy-policy"
-      showGoBackArrow={false}
+      showGoBackArrow={true}
+      handleGoBack={() => navigate(-1)}
       heading={t("heading")}
     >
       <PrivacyPolicyBlock />
