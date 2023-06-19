@@ -4,7 +4,7 @@
   "title_placeholder": "Напишите заголовок здесь",
   "answer_label": "Ответ",
   "answer_placeholder": "Запишите свой ответ здесь",
-  "tags_label": "Тег",
+  "tags_label": "Теги",
   "title_error_label": "Требуется заголовок",
   "answer_error_label": "Требуется ответ",
   "tags_error_label": "Теги обязательны",
