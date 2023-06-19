@@ -70,7 +70,10 @@ export const Consultation = () => {
     !joinWithVideo
   );
 
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState({
+    currentSession: [],
+    previousSessions: [],
+  });
   const [areSystemMessagesShown, setAreSystemMessagesShown] = useState(true);
 
   const [showAllMessages, setShowAllMessages] = useState(false);
@@ -81,7 +84,10 @@ export const Consultation = () => {
   const debouncedSearch = useDebounce(search, 500);
 
   const chatDataQuery = useGetChatData(consultation?.chatId, (data) =>
-    setMessages(data.messages)
+    setMessages((prev) => ({
+      ...prev,
+      currentSession: data.messages,
+    }))
   );
 
   const clientId = chatDataQuery.data?.clientDetailId;
@@ -89,8 +95,22 @@ export const Consultation = () => {
   const allChatHistoryQuery = useGetAllChatHistoryData(
     providerId,
     clientId,
-    showAllMessages
+    true
   );
+
+  useEffect(() => {
+    if (
+      allChatHistoryQuery.data?.messages &&
+      !messages.previousSessions.length
+    ) {
+      setMessages((prev) => {
+        return {
+          ...prev,
+          previousSessions: allChatHistoryQuery.data.messages,
+        };
+      });
+    }
+  }, [allChatHistoryQuery.data]);
 
   // TODO: Send a consultation add services request only when the provider leaves the consultation
   useEffect(() => {
@@ -123,25 +143,11 @@ export const Consultation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Filter the messages based on the search input
-  useEffect(() => {
-    const messagesToFilter = showAllMessages
-      ? allChatHistoryQuery.data?.messages
-      : chatDataQuery.data?.messages;
-
-    if (debouncedSearch) {
-      const filteredMessages = messagesToFilter.filter((message) =>
-        message.content.toLowerCase().includes(debouncedSearch.toLowerCase())
-      );
-      setMessages(filteredMessages);
-    } else if (!debouncedSearch && chatDataQuery.data?.messages) {
-      setMessages(messagesToFilter);
-    }
-  }, [debouncedSearch]);
-
+  // Scroll the messages container to the bottom when a new message is received
   useEffect(() => {
     if (
-      messages?.length > 0 &&
+      (messages.currentSession?.length > 0 ||
+        messages.previousSessions?.length > 0) &&
       backdropMessagesContainerRef.current &&
       backdropMessagesContainerRef.current.scrollHeight > 0
     ) {
@@ -150,18 +156,19 @@ export const Consultation = () => {
         behavior: "smooth",
       });
     }
-  }, [messages, backdropMessagesContainerRef.current?.scrollHeight]);
+  }, [
+    messages,
+    backdropMessagesContainerRef.current?.scrollHeight,
+    debouncedSearch,
+  ]);
 
-  useEffect(() => {
-    if (showAllMessages && allChatHistoryQuery.data?.messages) {
-      setMessages(allChatHistoryQuery.data?.messages);
-    } else if (!showAllMessages) {
-      setMessages(chatDataQuery.data?.messages);
-    }
-  }, [showAllMessages, allChatHistoryQuery.data]);
-
-  const onSendSuccess = (data) => {
-    setMessages([...data.messages]);
+  const onSendSuccess = (newMessage) => {
+    const message = newMessage.message;
+    message.senderId = providerId;
+    setMessages((prev) => ({
+      ...prev,
+      currentSession: [...prev.currentSession, message],
+    }));
   };
   const onSendError = (err) => {
     toast(err, { type: "error" });
@@ -171,12 +178,28 @@ export const Consultation = () => {
 
   const receiveMessage = (message) => {
     setHasUnreadMessages(true);
-    setMessages((messages) => [...messages, message]);
+    setMessages((messages) => {
+      return {
+        ...messages,
+        currentSession: [...messages.currentSession, message],
+      };
+    });
   };
 
   const renderAllMessages = useCallback(() => {
     if (chatDataQuery.isLoading) return <Loading size="lg" />;
-    return messages?.map((message, index) => {
+
+    let messagesToShow = showAllMessages
+      ? [...messages.previousSessions, ...messages.currentSession]
+      : messages.currentSession;
+    messagesToShow?.sort((a, b) => new Date(a.time) - new Date(b.time));
+    if (debouncedSearch) {
+      messagesToShow = messagesToShow?.filter((message) =>
+        message.content?.toLowerCase().includes(debouncedSearch.toLowerCase())
+      );
+    }
+
+    return messagesToShow?.map((message, index) => {
       if (message.type === "system") {
         if (!areSystemMessagesShown) return null;
         return (
@@ -208,8 +231,14 @@ export const Consultation = () => {
         }
       }
     });
-  }, [messages, chatDataQuery.isLoading, providerId, areSystemMessagesShown]);
-
+  }, [
+    messages,
+    chatDataQuery.isLoading,
+    providerId,
+    areSystemMessagesShown,
+    debouncedSearch,
+    showAllMessages,
+  ]);
   const handleSendMessage = (content, type = "text") => {
     if (hasUnreadMessages) {
       setHasUnreadMessages(false);
@@ -317,9 +346,7 @@ export const Consultation = () => {
         {isChatShownOnTablet && (
           <MessageList
             messages={messages}
-            isLoading={chatDataQuery.isLoading}
             handleSendMessage={handleSendMessage}
-            providerId={providerId}
             width={width}
             areSystemMessagesShown={areSystemMessagesShown}
             setAreSystemMessagesShown={setAreSystemMessagesShown}
@@ -330,6 +357,7 @@ export const Consultation = () => {
             showAllMessages={showAllMessages}
             setShowAllMessages={setShowAllMessages}
             onTextareaFocus={handleTextareaFocus}
+            renderAllMessages={renderAllMessages}
             t={t}
           />
         )}
@@ -384,10 +412,8 @@ export const Consultation = () => {
 
 const MessageList = ({
   messages,
-  isLoading,
   width,
   handleSendMessage,
-  providerId,
   areSystemMessagesShown,
   setAreSystemMessagesShown,
   showOptions,
@@ -397,6 +423,7 @@ const MessageList = ({
   showAllMessages,
   setShowAllMessages,
   onTextareaFocus,
+  renderAllMessages,
   t,
 }) => {
   const messagesContainerRef = useRef();
@@ -415,7 +442,8 @@ const MessageList = ({
 
   useEffect(() => {
     if (
-      messages?.length > 0 &&
+      (messages.currentSession?.length > 0 ||
+        messages.previousSessions?.length > 0) &&
       messagesContainerRef.current &&
       messagesContainerRef.current.scrollHeight > 0 &&
       showMessages
@@ -426,44 +454,6 @@ const MessageList = ({
       });
     }
   }, [messages, messagesContainerRef.current?.scrollHeight, showMessages]);
-
-  const renderAllMessages = useCallback(() => {
-    console.log(areSystemMessagesShown, "areSystemMessagesShown");
-    if (isLoading) return <Loading size="lg" />;
-    return messages?.map((message, index) => {
-      console.log(message.type, areSystemMessagesShown);
-      if (message.type === "system") {
-        if (!areSystemMessagesShown) return null;
-        return (
-          <SystemMessage
-            key={`${message.time}-${index}`}
-            title={message.content}
-            date={new Date(Number(message.time))}
-          />
-        );
-      } else {
-        if (message.senderId === providerId) {
-          return (
-            <Message
-              key={`${message.time}-${index}`}
-              message={message.content}
-              sent
-              date={new Date(Number(message.time))}
-            />
-          );
-        } else {
-          return (
-            <Message
-              key={`${message.time}-${index}`}
-              message={message.content}
-              received
-              date={new Date(Number(message.time))}
-            />
-          );
-        }
-      }
-    });
-  }, [messages, areSystemMessagesShown]);
 
   return width >= 1024 ? (
     <div style={{ position: "relative" }}>
