@@ -18,7 +18,6 @@ export const ProtectedRoute = ({ children }) => {
     unreadNotificationsQuery.refetch();
   }, [location]);
 
-  //   if (isLoggedIn === "loading") return <Loading size="lg" />;
   if (!isLoggedIn || !isProvider) return <Navigate to="/" />;
 
   return children;

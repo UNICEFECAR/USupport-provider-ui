@@ -55,7 +55,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const todayText = t("today");
   const today = new Date();
   const currentHourRef = useRef(null);
-  // const blockRef = useRef(null);
 
   const providerQuery = useGetProviderData()[0];
   const providerStatus = providerQuery?.data?.status;
@@ -263,11 +262,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   // When rendering every single slot check if
   // it exists in the provider's availability
   const checkIsAvailable = (date) => {
-    // const dateToCheckStr = new Date(date).getTime().toString();
-    // console.log(dateToCheckStr, "dateToCheck");
-    // if (availableSlotsData.current[dateToCheckStr]) {
-    //   return availableSlotsData.current[dateToCheckStr];
-    // }
     const slot = slotsData.slots.find((slot) => {
       const dateStr = new Date(slot).toString();
       return dateStr === date;

@@ -262,7 +262,6 @@ export const Consultation = () => {
     });
   };
 
-  // const showChat = width < 768;
   const [isChatShownOnTablet, setIsChatShownOnTablet] = useState(true);
   const toggleChat = () => {
     if (!isChatShownOnMobile) {

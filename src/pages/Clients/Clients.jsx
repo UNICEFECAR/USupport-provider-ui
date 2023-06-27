@@ -45,7 +45,6 @@ export const Clients = () => {
   const closeSelectConsultation = () => setIsSelectConsultationOpen(false);
 
   const openSelectConsultation = (clientId) => {
-    // setSelectedConsultation(consultation);
     setSelectedClientId(clientId);
     setIsSelectConsultationOpen(true);
   };
@@ -59,7 +58,6 @@ export const Clients = () => {
   const onSuggestConsultationSuccess = (data) => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
     window.dispatchEvent(new Event("new-notification"));
     closeSelectConsultation();
     setBlockSlotError(null);
@@ -74,13 +72,8 @@ export const Clients = () => {
   );
 
   const onBlockSlotSuccess = (consultationId) => {
-    // setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
-
     suggestConsultationMutation.mutate(consultationId);
     setIsBlockSlotSubmitting(false);
-    // closeSelectConsultation();
-    // openConfirmConsultationBackdrop();
   };
   const onBlockSlotError = (error) => {
     setBlockSlotError(error);
