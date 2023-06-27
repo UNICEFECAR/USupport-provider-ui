@@ -73,7 +73,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     slots: [],
     campaignSlots: [],
   });
-  const [campaignsData, setCampaignsData] = useState({});
   const [consultations, setConsultations] = useState();
   const [validCampaigns, setValidCampaigns] = useState();
 
@@ -89,7 +88,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     fetchAvailableSlots,
     {
       onSuccess: (data) => {
-        const campaignsDataCopy = {};
         data.campaigns_data = data.campaigns_data?.map((x) => {
           return {
             campaignId: x.campaign_id,
@@ -110,7 +108,6 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
 
         setValidCampaigns(campaigns);
 
-        setCampaignsData(campaignsDataCopy);
         setSlots({
           slots: data.slots,
           campaignSlots: [
