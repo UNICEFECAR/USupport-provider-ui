@@ -48,7 +48,6 @@ export default function useGetConsultationsForCampaign(
   const getConsultationsForCampaignQuery = useQuery(
     ["campaign-consultations", campaignId],
     getConsultationsForCampaign
-    // { enabled: true }
   );
 
   return getConsultationsForCampaignQuery;

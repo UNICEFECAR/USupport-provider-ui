@@ -42,7 +42,6 @@ export const ActivityHistory = () => {
   const onSuggestConsultationSuccess = (data) => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
     closeSelectConsultation();
     openConfirmConsultationBackdrop();
     setBlockSlotError(null);
@@ -58,13 +57,8 @@ export const ActivityHistory = () => {
   );
 
   const onBlockSlotSuccess = (consultationId) => {
-    // setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
-
     suggestConsultationMutation.mutate(consultationId);
     setIsBlockSlotSubmitting(false);
-    // closeSelectConsultation();
-    // openConfirmConsultationBackdrop();
   };
   const onBlockSlotError = (error) => {
     setBlockSlotError(error);

@@ -1,11 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
-import {
-  // BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { IdleTimer } from "@USupport-components-library/src";
 import { useEventListener } from "#hooks";

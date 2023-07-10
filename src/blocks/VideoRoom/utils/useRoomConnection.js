@@ -17,10 +17,8 @@ export default function useRoomConnection() {
     connect(token, options)
       .then((room) => {
         setRoomState((c) => ({ ...c, room }));
-        // console.log(`Successfully joined a Room: ${room}`);
       })
       .catch((error) => {
-        // console.error(`Unable to connect to Room: ${error.message}`);
         setRoomState((c) => ({ ...c, error }));
       });
   }, []);

@@ -246,12 +246,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
       }
     });
 
-    // Change all the slots from timestamp to new date
-    // const slots = timestamps.map((x) => ({
-    //   startDate: new Date(parseInt(x.startDate) * 1000),
-    //   slots: x.slots.map((y) => new Date(y * 1000)),
-    // }));
-
     addTemplateAvailabilityMutation.mutate(timestamps);
   };
 

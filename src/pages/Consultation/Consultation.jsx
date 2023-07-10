@@ -20,7 +20,10 @@ import {
   SystemMessage,
   Toggle,
 } from "@USupport-components-library/src";
-import { useWindowDimensions } from "@USupport-components-library/utils";
+import {
+  useWindowDimensions,
+  ONE_HOUR,
+} from "@USupport-components-library/utils";
 
 import {
   useGetChatData,
@@ -97,6 +100,37 @@ export const Consultation = () => {
     clientId,
     true
   );
+
+  useEffect(() => {
+    const endTime = new Date(consultation.timestamp + ONE_HOUR);
+    let isTenMinAlertShown,
+      isFiveMinAlertShown = false;
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      const timeDifferenceInMinutes = Math.floor((endTime - now) / (1000 * 60));
+
+      if (timeDifferenceInMinutes <= 10 && !isTenMinAlertShown) {
+        toast(t("consultation_end_reminder", { minutes: 10 }), {
+          autoClose: false,
+          type: "info",
+        });
+        isTenMinAlertShown = true;
+      }
+      if (timeDifferenceInMinutes <= 5 && !isFiveMinAlertShown) {
+        toast(t("consultation_end_reminder", { minutes: 5 }), {
+          autoClose: false,
+          type: "info",
+        });
+        isFiveMinAlertShown;
+        clearInterval(interval);
+      }
+    }, 20000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     if (
@@ -262,7 +296,6 @@ export const Consultation = () => {
     });
   };
 
-  // const showChat = width < 768;
   const [isChatShownOnTablet, setIsChatShownOnTablet] = useState(true);
   const toggleChat = () => {
     if (!isChatShownOnMobile) {
