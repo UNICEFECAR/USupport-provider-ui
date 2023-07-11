@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
-import { getDateView } from "@USupport-components-library/utils";
 
 export function useGetCampaigns(enabled = true) {
   const getCampaigns = async () => {

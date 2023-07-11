@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 const API_URL = "http://localhost:80/api/v1"; // Replace with env variable
 
 const defaultOptions = ({ headers, options }) => ({
@@ -18,7 +19,7 @@ export const apiGet = async ({ path, headers: {}, options: {} }) => {
       return res;
     })
     .catch((err) => {
-      // If this fails you need to handle it
+      console.log(err);
     });
 };
 
@@ -40,7 +41,7 @@ export const apiPost = async ({ path, body: {}, headers: {}, options: {} }) => {
       return res;
     })
     .catch((err) => {
-      // If this fails you need to handle it
+      console.log(err);
     });
 };
 
@@ -62,11 +63,16 @@ export const apiPut = async ({ path, body: {}, headers: {}, options: {} }) => {
       return res;
     })
     .catch((err) => {
-      // If this fails you need to handle it
+      console.log(err);
     });
 };
 
-export const apiDelete = async ({ path, body: {}, headers: {}, options: {} }) => {
+export const apiDelete = async ({
+  path,
+  body: {},
+  headers: {},
+  options: {},
+}) => {
   const reqOptions = defaultOptions({
     headers,
     options: {
@@ -84,6 +90,6 @@ export const apiDelete = async ({ path, body: {}, headers: {}, options: {} }) =>
       return res;
     })
     .catch((err) => {
-      // If this fails you need to handle it
+      console.log(err);
     });
 };
