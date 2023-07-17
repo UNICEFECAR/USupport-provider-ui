@@ -171,12 +171,13 @@ export const Page = ({
       { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
+      { name: t("footer_5"), url: "/clients", exact: true },
     ],
     list2: [
-      { name: t("footer_5"), url: "/clients", exact: true },
       { name: t("footer_6"), url: "/terms-of-use" },
       { name: t("footer_7"), url: "/privacy-policy" },
       { name: t("footer_8"), url: "/cookie-policy" },
+      { name: t("footer_9"), url: "/faq" },
     ],
     list3: [
       { value: "+7 717 232 28 78", iconName: "call-filled", onClick: "phone" },
