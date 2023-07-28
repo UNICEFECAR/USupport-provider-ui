@@ -22,7 +22,7 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
   const handleClick = async (redirectTo) => {
     const sytemMessage = {
       type: "system",
-      content: t("provider_joined"),
+      content: "provider_joined",
       time: JSON.stringify(new Date().getTime()),
     };
 

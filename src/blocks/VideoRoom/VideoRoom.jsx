@@ -15,6 +15,7 @@ export function VideoRoom({
   leaveConsultation,
   handleSendMessage,
   hasUnreadMessages,
+  isClientInSession,
   token,
   t,
 }) {
@@ -66,6 +67,7 @@ export function VideoRoom({
         isMicrophoneOn={isMicrophoneOn}
         isRoomConnecting={!localParticipant}
         hasUnreadMessages={hasUnreadMessages}
+        isInSession={isClientInSession}
         t={t}
       />
 
