@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export default function useRoomConnection() {
+export default function useRoomConnection(setIsClientInSession) {
   const [roomState, setRoomState] = useState(INITIAL_STATE);
   const { room } = roomState;
 
@@ -37,6 +37,15 @@ export default function useRoomConnection() {
    */
   useEffect(() => {
     if (room) {
+      room.on("participantDisconnected", () => {
+        setIsClientInSession(false);
+        // console.log("client disconnected");
+      });
+      room.on("participantConnected", () => {
+        setIsClientInSession(true);
+        // console.log("client connected");
+      });
+
       window.addEventListener("beforeunload", disconnectRoom);
       window.addEventListener("pagehide", disconnectRoom);
 
