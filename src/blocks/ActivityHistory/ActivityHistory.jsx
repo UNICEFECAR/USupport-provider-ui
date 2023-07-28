@@ -15,7 +15,10 @@ import {
   Message,
   SystemMessage,
 } from "@USupport-components-library/src";
-import { useWindowDimensions } from "@USupport-components-library/utils";
+import {
+  useWindowDimensions,
+  systemMessageTypes,
+} from "@USupport-components-library/utils";
 
 import {
   useGetAllPastConsultations,
@@ -159,7 +162,11 @@ export const ActivityHistory = ({
         return (
           <SystemMessage
             key={message.time}
-            title={message.content}
+            title={
+              systemMessageTypes.includes(message.content)
+                ? t(message.content)
+                : message.content
+            }
             date={new Date(Number(message.time))}
           />
         );
