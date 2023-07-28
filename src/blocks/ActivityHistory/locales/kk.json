@@ -13,5 +13,19 @@
   "saturday": "Сб",
   "no_messages": "Бұл консультацияда хабарламалар жоқ",
   "no_activity_history": "Әлі әрекет тіркелген жоқ",
-  "free": "Тегін"
+  "free": "Тегін",
+
+  "client_joined": "Клиент консультацияға қосылды",
+  "client_left": "Клиент консультациядан шығып кетті",
+  "client_camera_off": "Клиент камераны өшірді",
+  "client_camera_on": "Клиент камераны қосты",
+  "client_microphone_off": "Клиент микрофонды өшірді",
+  "client_microphone_on": "Клиент микрофонды қосты",
+
+  "provider_joined": "Консультант консультацияға қосылды",
+  "provider_left": "Консультант консультациядан шықты",
+  "provider_camera_off": "Консультант камераны өшірді",
+  "provider_camera_on": "Консультант камераны қосты",
+  "provider_microphone_off": "Консультант микрофонды өшірді",
+  "provider_microphone_on": "Консультант микрофонды қосты"
 }
