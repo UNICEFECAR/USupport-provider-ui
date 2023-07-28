@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import OutsideClickHandler from "react-outside-click-handler";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import {
-  Avatar,
   Block,
-  Box,
   Button,
   ClientHistory,
   Consultation,
   Grid,
   GridItem,
   Icon,
-  InputSearch,
   Loading,
   Message,
   SystemMessage,
 } from "@USupport-components-library/src";
+
 import { mascotHappyPurpleFull as mascot } from "@USupport-components-library/assets";
-import { useWindowDimensions } from "@USupport-components-library/src/utils";
+
+import {
+  useWindowDimensions,
+  systemMessageTypes,
+} from "@USupport-components-library/src/utils";
 
 import {
   useGetAllClients,
@@ -44,19 +45,13 @@ export const Clients = ({
   openSelectConsultation,
   openJoinConsultation,
   searchValue,
+  selectedClient,
+  setSelectedClient,
+  selectedConsultation,
+  setSelectedConsultation,
 }) => {
   const { t } = useTranslation("clients");
   const { width } = useWindowDimensions();
-
-  const location = useLocation();
-  const initiallySelectedClient = location.state?.clientInformation || null;
-  const [selectedClient, setSelectedClient] = useState(initiallySelectedClient);
-
-  const initiallySelectedConsultation =
-    location.state?.consultationInformation || null;
-  const [selectedConsultation, setSelectedConsultation] = useState(
-    initiallySelectedConsultation
-  );
 
   const clientsQuery = useGetAllClients();
 
@@ -105,7 +100,9 @@ export const Clients = ({
             clientId={client.clientDetailId}
             joinConsultation={openJoinConsultation}
             consultationChatId={client.chatId}
-            handleClick={() => setSelectedClient(client)}
+            handleClick={() => {
+              setSelectedClient(client);
+            }}
             image={client.image}
             name={client.name}
             nextConsultationId={client.nextConsultationId}
@@ -129,22 +126,6 @@ export const Clients = ({
 
   return (
     <Block classes="clients">
-      {selectedClient ? (
-        <div className="clients__go-back-arrow-container">
-          <Icon
-            onClick={() => {
-              if (selectedConsultation) {
-                setSelectedConsultation("");
-              } else {
-                setSelectedClient(null);
-              }
-            }}
-            classes="clients__go-back-icon"
-            name="arrow-chevron-back"
-            color="#20809E"
-          />
-        </div>
-      ) : null}
       {!selectedClient ? (
         <div className="clients__clients-container">
           <Grid classes="clients__clients-container__grid">
@@ -162,6 +143,7 @@ export const Clients = ({
               image={selectedClient.image}
               proposeConsultationLabel={t("propose_consultation_label")}
               selectedClient={selectedClient}
+              setSelectedConsultation={setSelectedConsultation}
               screenWidth={width}
               t={t}
             />
@@ -175,6 +157,7 @@ export const Clients = ({
               proposeConsultationLabel={t("propose_consultation_label")}
               selectedClient={selectedClient}
               providerStatus={providerStatus}
+              setSelectedConsultation={setSelectedConsultation}
               t={t}
             />
           )}
@@ -191,9 +174,14 @@ const ConsultationDetails = ({
   noConsultationHeading,
   selectedClient,
   providerStatus,
+  setSelectedConsultation,
   t,
 }) => {
   const chatQuery = useGetChatData(consultation?.chatId);
+
+  // useEffect(() => {
+  //   return () => setSelectedConsultation(null);
+  // }, []);
 
   const renderAllMessages = () => {
     if (chatQuery.data.messages.length === 0) return <p>{t("no_messages")}</p>;
@@ -201,7 +189,11 @@ const ConsultationDetails = ({
       if (message.type === "system") {
         return (
           <SystemMessage
-            title={message.content}
+            title={
+              systemMessageTypes.includes(message.content)
+                ? t(message.content)
+                : message.content
+            }
             date={new Date(Number(message.time))}
             key={index}
           />
@@ -272,23 +264,29 @@ const ConsultationDetails = ({
 
 const ConsultationsHistory = ({
   handleConsultationClick,
-  clientName,
   image,
   proposeConsultationLabel,
   selectedClient,
   handleSuggestConsultation,
-  providerStatus,
+  setSelectedConsultation,
+  screenWidth,
   t,
 }) => {
   const imageUrl = AMAZON_S3_BUCKET + "/" + (image || "default");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (screenWidth >= 1366) setSelectedConsultation(null);
+    };
+  }, []);
 
   const consultationsQuery = useGetPastConsultationsByClientId(
     selectedClient.clientDetailId
   );
 
   const renderAllConsultations = () => {
-    if (consultationsQuery.isLoading)
+    if (consultationsQuery.isFetching)
       return (
         <GridItem md={8} lg={12} classes="clients__consultation-loading">
           <Loading size="lg" />
@@ -345,19 +343,6 @@ const ConsultationsHistory = ({
 
   return (
     <GridItem md={8} lg={4} classes="clients__main-container">
-      <Box classes="clients__main-container__header">
-        <div className="clients__main-container__header__client-container">
-          <Avatar image={imageUrl} size="sm" />
-          <p className="name-text">{clientName}</p>
-        </div>
-        {providerStatus === "active" ? (
-          <Icon
-            name="three-dots-vertical"
-            color="#20809E"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          />
-        ) : null}
-      </Box>
       <Grid classes="clients__main-container__grid">
         {renderAllConsultations()}
       </Grid>
