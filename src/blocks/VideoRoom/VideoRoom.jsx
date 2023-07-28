@@ -1,9 +1,8 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Participant from "./Participant";
 import useRoom from "./utils/useRoom";
 
-import { Controls, Icon, Loading } from "@USupport-components-library/src";
+import { Controls, Icon } from "@USupport-components-library/src";
 
 import "./video-room.scss";
 
@@ -16,11 +15,12 @@ export function VideoRoom({
   handleSendMessage,
   hasUnreadMessages,
   isClientInSession,
+  setIsClientInSession,
+  hideControls,
   token,
   t,
 }) {
   const roomName = consultation.consultationId;
-
   const {
     room,
     connectRoom,
@@ -31,7 +31,7 @@ export function VideoRoom({
     toggleCamera,
     isMicrophoneOn,
     toggleMicrophone,
-  } = useRoom(joinWithVideo, joinWithMicrophone);
+  } = useRoom(joinWithVideo, joinWithMicrophone, setIsClientInSession);
 
   useEffect(() => {
     if (!room && token && roomName) {
@@ -47,7 +47,9 @@ export function VideoRoom({
     }
   }, [connectRoom, disconnectRoom, room, roomName, token]);
 
-  const hasRemoteParticipants = remoteParticipants?.length > 0;
+  const hasRemoteParticipants = useMemo(() => {
+    return remoteParticipants?.length > 0;
+  }, [remoteParticipants]);
 
   const handleLeaveConsultation = () => {
     disconnectRoom();
@@ -55,23 +57,29 @@ export function VideoRoom({
   };
   return (
     <div className="video-room">
-      <Controls
-        consultation={consultation}
-        toggleCamera={toggleCamera}
-        toggleMicrophone={toggleMicrophone}
-        toggleChat={toggleChat}
-        leaveConsultation={handleLeaveConsultation}
-        handleSendMessage={handleSendMessage}
-        renderIn="provider"
-        isCameraOn={isCameraOn}
-        isMicrophoneOn={isMicrophoneOn}
-        isRoomConnecting={!localParticipant}
-        hasUnreadMessages={hasUnreadMessages}
-        isInSession={isClientInSession}
-        t={t}
-      />
+      {!hideControls && (
+        <Controls
+          consultation={consultation}
+          toggleCamera={toggleCamera}
+          toggleMicrophone={toggleMicrophone}
+          toggleChat={toggleChat}
+          leaveConsultation={handleLeaveConsultation}
+          handleSendMessage={handleSendMessage}
+          renderIn="provider"
+          isCameraOn={isCameraOn}
+          isMicrophoneOn={isMicrophoneOn}
+          isRoomConnecting={!localParticipant}
+          hasUnreadMessages={hasUnreadMessages}
+          isInSession={isClientInSession}
+          t={t}
+        />
+      )}
 
-      <div className="video-room__participants">
+      <div
+        className={`video-room__participants ${
+          hideControls ? "video-room__participants--shrink-video" : ""
+        }`}
+      >
         <Participant type={"local"} participant={localParticipant} />
         {!hasRemoteParticipants ? (
           <div className="remote-video-off video-off">

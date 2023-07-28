@@ -311,8 +311,10 @@ export const Consultation = () => {
 
   const receiveMessage = (message) => {
     if (message.content === "client_left") {
+      // console.log("received client left message");
       setIsClientInSession(false);
     } else if (message.content === "client_joined") {
+      // console.log("received client joined message");
       setIsClientInSession(true);
     }
     setHasUnreadMessages(true);
@@ -434,7 +436,7 @@ export const Consultation = () => {
     if (!isChatShownOnMobile && hasUnreadMessages) {
       setHasUnreadMessages(false);
     }
-    if (width < 1024) {
+    if (width < 1366) {
       setIsChatShownOnMobile(!isChatShownOnMobile);
     } else {
       setIsChatShownOnTablet(!isChatShownOnTablet);
@@ -442,11 +444,6 @@ export const Consultation = () => {
   };
 
   const leaveConsultation = () => {
-    leaveConsultationMutation.mutate({
-      consultationId: consultation.consultationId,
-      userType: "provider",
-    });
-
     const leaveMessage = {
       time: JSON.stringify(new Date().getTime()),
       content: "provider_left",
@@ -464,6 +461,11 @@ export const Consultation = () => {
       chatId: consultation.chatId,
       to: "client",
       message: leaveMessage,
+    });
+
+    leaveConsultationMutation.mutate({
+      consultationId: consultation.consultationId,
+      userType: "provider",
     });
 
     navigate("/consultations");
@@ -490,6 +492,17 @@ export const Consultation = () => {
       type,
     });
   };
+  const [hideControls, setHideControls] = useState(false);
+
+  useEffect(() => {
+    if (isChatShownOnMobile) {
+      setTimeout(() => {
+        setHideControls(true);
+      }, 500);
+    } else {
+      setHideControls(false);
+    }
+  }, [width, isChatShownOnMobile]);
 
   return (
     <Page
@@ -509,6 +522,8 @@ export const Consultation = () => {
           handleSendMessage={handleSendMessage}
           hasUnreadMessages={hasUnreadMessages}
           isClientInSession={isClientInSession}
+          setIsClientInSession={setIsClientInSession}
+          hideControls={hideControls}
           token={token}
           t={t}
         />
@@ -534,9 +549,9 @@ export const Consultation = () => {
       </div>
       <Backdrop
         classes="page__consultation__chat-backdrop"
-        isOpen={isChatShownOnMobile && width < 1024}
+        isOpen={isChatShownOnMobile}
         onClose={() => setIsChatShownOnMobile(false)}
-        // reference={width < 768 ? backdropMessagesContainerRef : null}
+        showAlwaysAsBackdrop
         headingComponent={
           <OptionsContainer
             showOptions={showOptions}
