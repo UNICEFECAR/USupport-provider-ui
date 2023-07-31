@@ -1,8 +1,10 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 import { IdleTimer } from "@USupport-components-library/src";
-import { useEventListener } from "#hooks";
+
+import { useEventListener, useGetProviderData } from "#hooks";
 
 import {
   NotFound,
@@ -35,7 +37,6 @@ import {
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
-import { useGetProviderData } from "#hooks";
 const RootContext = React.createContext();
 
 export default function Root() {
@@ -44,7 +45,8 @@ export default function Root() {
 
   const { t } = useTranslation("root");
 
-  useGetProviderData(null, !!token);
+  const enabled = !!token && loggedIn;
+  useGetProviderData(null, enabled);
 
   const logoutHandler = useCallback(() => {
     setLoggedIn(false);
