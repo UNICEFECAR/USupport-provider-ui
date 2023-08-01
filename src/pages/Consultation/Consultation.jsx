@@ -523,7 +523,7 @@ export const Consultation = () => {
           hasUnreadMessages={hasUnreadMessages}
           isClientInSession={isClientInSession}
           setIsClientInSession={setIsClientInSession}
-          hideControls={hideControls}
+          hideControls={hideControls && width < 1366}
           token={token}
           t={t}
         />
@@ -549,7 +549,7 @@ export const Consultation = () => {
       </div>
       <Backdrop
         classes="page__consultation__chat-backdrop"
-        isOpen={isChatShownOnMobile}
+        isOpen={isChatShownOnMobile && width < 1366}
         onClose={() => setIsChatShownOnMobile(false)}
         showAlwaysAsBackdrop
         headingComponent={

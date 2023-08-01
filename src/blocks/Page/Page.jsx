@@ -73,6 +73,7 @@ export const Page = ({
         countryID: x["country_id"],
         iconName: x.alpha2,
         currencySymbol: x["symbol"],
+        localName: x.local_name,
       };
       if (localStorageCountry === x.alpha2) {
         localStorage.setItem("currency_symbol", countryObject.currencySymbol);
