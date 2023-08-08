@@ -101,9 +101,9 @@ export const Campaigns = () => {
   ]);
 
   const providerCampaignsRowsData = useMemo(() => {
-    return dataToDisplay?.providerCampaigns.map((campaign) => {
+    return dataToDisplay?.providerCampaigns.map((campaign, index) => {
       return [
-        <div className="campaigns__sponsor-container">
+        <div className="campaigns__sponsor-container" key={index + "current"}>
           <img
             className="campaigns__sponsor-container__image"
             src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
@@ -130,9 +130,9 @@ export const Campaigns = () => {
   }, [dataToDisplay]);
 
   const providerPastCampaignsRowsData = useMemo(() => {
-    return dataToDisplay?.providerPastCampaigns.map((campaign) => {
+    return dataToDisplay?.providerPastCampaigns.map((campaign, index) => {
       return [
-        <div className="campaigns__sponsor-container">
+        <div className="campaigns__sponsor-container" key={index + "past"}>
           <img
             className="campaigns__sponsor-container__image"
             src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
@@ -160,9 +160,9 @@ export const Campaigns = () => {
   }, [dataToDisplay]);
 
   const availableCampaignsRowsData = useMemo(() => {
-    return dataToDisplay?.availableCampaigns.map((campaign) => {
+    return dataToDisplay?.availableCampaigns.map((campaign, index) => {
       return [
-        <div className="campaigns__sponsor-container">
+        <div className="campaigns__sponsor-container" key={index + "available"}>
           <img
             className="campaigns__sponsor-container__image"
             src={AMAZON_S3_BUCKET + "/" + campaign.sponsorImage}
