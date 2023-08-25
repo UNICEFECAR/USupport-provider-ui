@@ -111,7 +111,7 @@ export const ContactUs = () => {
       const payload = {
         subjectValue: data.issue,
         subjectLabel: t("contact_form"),
-        title: issues.find((x) => x.value === data.issue)?.label,
+        title: t(issues.find((x) => x.value === data.issue)?.label),
         text: data.message,
         email: providerDataQuery.data.email,
       };
