@@ -1,1 +1,1 @@
-export * from './CancelPaidConsultation.jsx';
+export * from "./CancelPaidConsultation.jsx";

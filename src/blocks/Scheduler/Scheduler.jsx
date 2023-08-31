@@ -279,7 +279,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     });
     const hasNormalSlot = !!slot;
 
-    if (!!campaignSlot) return { campaignSlot, hasNormalSlot };
+    if (campaignSlot) return { campaignSlot, hasNormalSlot };
     return { slot, hasNormalSlot };
   };
 

@@ -9,7 +9,6 @@ import {
   GridItem,
   TabsUnderlined,
   Consultation,
-  InputSearch,
   Loading,
 } from "@USupport-components-library/src";
 import { getTimestampFromUTC } from "@USupport-components-library/utils";

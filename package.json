@@ -7,7 +7,9 @@
     "dev": "vite --host --port 5174",
     "staging": "vite build --mode staging",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.jsx src",
+    "lint-fix": "eslint --fix --ext .js,.jsx src"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.14.3",

@@ -39,11 +39,11 @@ export const ActivityHistory = () => {
     setIsSelectConsultationOpen(true);
   };
 
-  const onSuggestConsultationSuccess = (data) => {
+  const onSuggestConsultationSuccess = () => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
     closeSelectConsultation();
-    openConfirmConsultationBackdrop();
+    // openConfirmConsultationBackdrop();
     setBlockSlotError(null);
     window.dispatchEvent(new Event("new-notification"));
   };

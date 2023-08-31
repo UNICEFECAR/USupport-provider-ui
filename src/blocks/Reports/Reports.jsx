@@ -5,7 +5,6 @@ import {
   BaseTable,
   Block,
   Button,
-  Loading,
   DropdownWithLabel,
   Input,
   Modal,

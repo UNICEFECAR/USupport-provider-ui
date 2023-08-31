@@ -31,8 +31,6 @@ import {
 
 import "./clients.scss";
 
-const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
-
 /**
  * Clients
  *
@@ -174,7 +172,6 @@ const ConsultationDetails = ({
   noConsultationHeading,
   selectedClient,
   providerStatus,
-  setSelectedConsultation,
   t,
 }) => {
   const chatQuery = useGetChatData(consultation?.chatId);
@@ -264,7 +261,6 @@ const ConsultationDetails = ({
 
 const ConsultationsHistory = ({
   handleConsultationClick,
-  image,
   proposeConsultationLabel,
   selectedClient,
   handleSuggestConsultation,
@@ -272,7 +268,6 @@ const ConsultationsHistory = ({
   screenWidth,
   t,
 }) => {
-  const imageUrl = AMAZON_S3_BUCKET + "/" + (image || "default");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {

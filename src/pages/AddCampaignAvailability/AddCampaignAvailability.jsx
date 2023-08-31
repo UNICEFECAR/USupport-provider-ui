@@ -22,9 +22,6 @@ export const AddCampaignAvailability = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const sponsorId = new URLSearchParams(window.location.search).get(
-    "sponsorId"
-  );
   const campaignId = new URLSearchParams(window.location.search).get(
     "campaignId"
   );
