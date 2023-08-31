@@ -118,6 +118,7 @@ export const Consultation = () => {
         (x) => x.content === "client_joined" || x.content === "client_left"
       )
       .sort((a, b) => new Date(Number(b.time)) - new Date(Number(a.time)));
+    if (joinMessages.length === 0) return false;
     return joinMessages[0].content === "client_joined";
   };
 
@@ -247,7 +248,6 @@ export const Consultation = () => {
       }
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

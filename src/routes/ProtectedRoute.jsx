@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { Navigate, useLocation } from "react-router-dom";
 import { useIsLoggedIn, useCheckHasUnreadNotifications } from "#hooks";
-import { Loading } from "@USupport-components-library/src";
 
 export const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");

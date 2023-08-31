@@ -82,7 +82,7 @@ export const Clients = () => {
   };
   const closeCancelConsultation = () => setIsCancelConsultationOpen(false);
 
-  const onSuggestConsultationSuccess = (data) => {
+  const onSuggestConsultationSuccess = () => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
     window.dispatchEvent(new Event("new-notification"));

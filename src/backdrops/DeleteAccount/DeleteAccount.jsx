@@ -3,10 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Backdrop, InputPassword } from "@USupport-components-library/src";
-import { validateProperty } from "@USupport-components-library/utils";
 import { useError } from "#hooks";
 import { userSvc, providerSvc } from "@USupport-components-library/services";
-import Joi from "joi";
 
 import "./delete-account.scss";
 
@@ -20,10 +18,6 @@ import "./delete-account.scss";
 export const DeleteAccount = ({ isOpen, onClose }) => {
   const { t } = useTranslation("delete-account");
   const navigate = useNavigate();
-
-  const schema = Joi.object({
-    password: Joi.string(),
-  });
 
   const [data, setData] = useState({ password: "" });
   const [errors, setErrors] = useState({});
@@ -50,10 +44,6 @@ export const DeleteAccount = ({ isOpen, onClose }) => {
     setData({
       password: value,
     });
-  };
-
-  const handleBlur = () => {
-    validateProperty("password", data.password, schema, setErrors);
   };
 
   const handleSubmit = () => {

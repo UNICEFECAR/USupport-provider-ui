@@ -23,7 +23,7 @@ import {
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
-import { useGetProviderData } from "#hooks";
+import { useGetProviderData, useError } from "#hooks";
 
 import "./scheduler-template.scss";
 
@@ -73,7 +73,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
     allSundays.push(getTimestamp(sunday));
   }
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [template, setTemplate] = useState(initialTemplate);
   const [templateStartDate, setTemplateStartDate] = useState("");
   const [templateEndDate, setTemplateEndDate] = useState("");
@@ -139,7 +138,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
     if (providerStatus !== "active") {
       return;
     }
-    setIsSubmitting(true);
     const start = templateStartDate;
     // Gett all mondays between start and end
     const lastMonday = templateEndDate - getXDaysInSeconds(6);

@@ -13,7 +13,9 @@ export default function useTrackSubscription({ participant }) {
        * participant track subs
        */
       const trackSubscribed = (track) => {
-        if (track.kind === "video") {
+        if (!track) {
+          setVideoTrack(null);
+        } else if (track.kind === "video") {
           setVideoTrack(track);
         } else if (track.kind === "audio") {
           setAudioTrack(track);
@@ -21,7 +23,10 @@ export default function useTrackSubscription({ participant }) {
       };
 
       const trackPublished = (track) => {
-        if (track.kind === "video") {
+        if (!track) {
+          setVideoTrack(null);
+          return;
+        } else if (track.kind === "video") {
           setVideoTrack(track);
         } else if (track.kind === "audio") {
           setAudioTrack(track);
@@ -47,13 +52,19 @@ export default function useTrackSubscription({ participant }) {
        * participant track unsubs
        */
       const trackUnsubscribed = (track) => {
-        if (track.kind === "video") {
+        if (!track) {
+          setVideoTrack(null);
+          return;
+        } else if (track.kind === "video") {
           setVideoTrack(null);
         } else if (track.kind === "audio") {
           setAudioTrack(null);
         }
       };
       participant.on("trackUnsubscribed", trackUnsubscribed);
+      participant.on("trackUnpublished", () => {
+        trackUnsubscribed();
+      });
 
       return () => {
         participant.off("trackSubscribed", trackSubscribed);

@@ -4,9 +4,10 @@ import VideoTrack from "./VideoTrack";
 import AudioTrack from "./AudioTrack";
 import { Icon, Loading } from "@USupport-components-library/src";
 
-export default function Participant({ type, participant }) {
+export default function Participant({ type, participant, room }) {
   const { videoOn, audioOn, videoTrack, audioTrack } = useTrack({
     participant,
+    room,
   });
 
   return (
