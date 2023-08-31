@@ -91,6 +91,7 @@ export function VideoRoom({
             <Participant
               type={"remote"}
               participant={remoteParticipants[remoteParticipants.length - 1]}
+              room={room}
             />
           )}
         </div>
