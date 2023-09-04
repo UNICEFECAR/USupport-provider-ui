@@ -33,7 +33,7 @@ import "./campaigns.scss";
  */
 export const Campaigns = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("campaigns");
+  const { t, i18n } = useTranslation("campaigns");
   const currencySymbol = localStorage.getItem("currency_symbol");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,7 +66,7 @@ export const Campaigns = () => {
       },
       { label: t("period"), sortingKey: "startDate", isDate: true },
     ];
-  }, []);
+  }, [i18n.language]);
 
   const providerCampaignRows = useMemo(() => {
     return [
@@ -84,7 +84,7 @@ export const Campaigns = () => {
         isCentered: true,
       },
     ];
-  }, []);
+  }, [i18n.language]);
 
   const [tabs, setTabs] = useState([
     {
