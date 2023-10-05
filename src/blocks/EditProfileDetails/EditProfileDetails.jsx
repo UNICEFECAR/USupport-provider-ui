@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   Block,
   Button,
-  DropdownGroup,
+  Select,
   DropdownWithLabel,
   Error,
   Grid,
@@ -15,6 +15,7 @@ import {
   Loading,
   ProfilePicturePreview,
   Textarea,
+  InputPhone,
 } from "@USupport-components-library/src";
 
 import { validate, validateProperty } from "@USupport-components-library/utils";
@@ -25,7 +26,6 @@ import {
   useGetWorkWithCategories,
   useUpdateProviderData,
 } from "#hooks";
-import countryCodes from "country-codes-list";
 import Joi from "joi";
 
 import "./edit-profile-details.scss";
@@ -47,6 +47,7 @@ const fetchCountryMinPrice = async () => {
 export const EditProfileDetails = ({
   openUploadPictureBackdrop,
   openDeletePictureBackdrop,
+  providerImageUrl,
 }) => {
   const currencySymbol = localStorage.getItem("currency_symbol");
 
@@ -88,7 +89,6 @@ export const EditProfileDetails = ({
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .label(t("email_error")),
-    phonePrefix: Joi.string().label(t("phone_prefix_error")),
     phone: Joi.string().label(t("phone_error")),
     image: Joi.string(),
     street: Joi.string().label(t("street_error")),
@@ -116,7 +116,7 @@ export const EditProfileDetails = ({
 
   const getSpecializationsOptions = useCallback(() => {
     if (providerData && providerData.specializations) {
-      return specializationOptions.map((option, index) => {
+      return specializationOptions.map((option) => {
         if (providerData.specializations.includes(option.value)) {
           return {
             ...option,
@@ -142,7 +142,10 @@ export const EditProfileDetails = ({
         const language = localizationQuery.data.languages[i];
         // Construct the new object
         newLanguageOption.value = language.language_id;
-        newLanguageOption.label = language.name;
+        newLanguageOption.label =
+          language.name === "English"
+            ? language.name
+            : `${language.name} (${language.local_name})`;
         newLanguageOption.selected = providerLanguages.includes(
           language.language_id
         );
@@ -246,9 +249,6 @@ export const EditProfileDetails = ({
     setProviderData(providersQuery.data);
   };
 
-  const phonePrefixes = generateCountryCodes();
-  const usersCountry = localStorage.getItem("country");
-
   return (
     <Block classes="edit-profile-details">
       {isLoading ? (
@@ -258,6 +258,7 @@ export const EditProfileDetails = ({
           <GridItem md={8} lg={4}>
             <ProfilePicturePreview
               image={providerData.image}
+              imageFile={providerImageUrl}
               handleDeleteClick={openDeletePictureBackdrop}
               handleChangeClick={openUploadPictureBackdrop}
               changePhotoText={t("change_photo")}
@@ -266,7 +267,7 @@ export const EditProfileDetails = ({
               value={providerData.name}
               onChange={(e) => handleChange("name", e.currentTarget.value)}
               errorMessage={errors.name}
-              label={t("name_label")}
+              label={t("name_label") + " *"}
               placeholder={t("name_placeholder")}
             />
             <Input
@@ -280,14 +281,14 @@ export const EditProfileDetails = ({
               value={providerData.surname}
               onChange={(e) => handleChange("surname", e.currentTarget.value)}
               errorMessage={errors.surname}
-              label={t("surname_label")}
+              label={t("surname_label") + " *"}
               placeholder={t("surname_placeholder")}
             />
             <Textarea
               value={providerData.description}
               onChange={(value) => handleChange("description", value)}
               errorMessage={errors.description}
-              label={t("description_label")}
+              label={t("description_label") + " *"}
               placeholder={t("description_placeholder")}
               onBlur={() => handleBlur("description")}
             />
@@ -301,40 +302,26 @@ export const EditProfileDetails = ({
 
           <GridItem md={8} lg={4}>
             <div className="edit-profile-details__grid__phone-container">
-              <DropdownWithLabel
-                options={phonePrefixes}
-                label={t("phone_label")}
-                selected={
-                  providerData.phonePrefix ||
-                  phonePrefixes.find((x) => x.country === usersCountry)?.value
-                }
-                setSelected={(value) => handleChange("phonePrefix", value)}
-                placeholder={t("phone_prefix_placeholder")}
-              />
-              <Input
+              <InputPhone
+                label={t("phone_label") + " *"}
                 value={providerData.phone}
-                onChange={(e) => handleChange("phone", e.currentTarget.value)}
-                placeholder={t("phone_placeholder")}
+                onChange={(value) => handleChange("phone", value)}
                 onBlur={() => handleBlur("phone")}
-                classes="edit-profile-details__grid__phone-container__phone-input"
+                searchPlaceholder={t("search")}
+                errorMessage={errors.phone}
+                searchNotFound={t("no_entries_found")}
               />
             </div>
-            {errors.phone || errors.phonePrefix ? (
-              <Error
-                classes="edit-profile-details__grid__phone-error"
-                message={errors.phone || errors.phonePrefix}
-              />
-            ) : null}
             <Input
               value={providerData.email}
               onChange={(e) => handleChange("email", e.currentTarget.value)}
               errorMessage={errors.email}
-              label={t("email_label")}
+              label={t("email_label") + " *"}
               placeholder={t("email_placeholder")}
               onBlur={() => handleBlur("email")}
             />
             <DropdownWithLabel
-              label={t("sex_label")}
+              label={t("sex_label") + " *"}
               placeholder={t("sex_placeholder")}
               options={sexOptions}
               selected={providerData.sex}
@@ -348,7 +335,7 @@ export const EditProfileDetails = ({
                 handleChange("consultationPrice", e.currentTarget.value)
               }
               errorMessage={errors.consultationPrice}
-              label={t("consultation_price_label", { currencySymbol })}
+              label={t("consultation_price_label", { currencySymbol }) + " *"}
               placeholder={t("consultation_price_placeholder")}
               onBlur={() => handleBlur("consultationPrice")}
             />
@@ -356,7 +343,7 @@ export const EditProfileDetails = ({
               value={providerData.city}
               onChange={(e) => handleChange("city", e.currentTarget.value)}
               errorMessage={errors.city}
-              label={t("city_label")}
+              label={t("city_label") + " *"}
               placeholder={t("city_placeholder")}
               onBlur={() => handleBlur("city")}
             />
@@ -364,7 +351,7 @@ export const EditProfileDetails = ({
               value={providerData.postcode}
               onChange={(e) => handleChange("postcode", e.currentTarget.value)}
               errorMessage={errors.postcode}
-              label={t("postcode_label")}
+              label={t("postcode_label") + " *"}
               placeholder={t("postcode_placeholder")}
               onBlur={() => handleBlur("postcode")}
             />
@@ -372,25 +359,27 @@ export const EditProfileDetails = ({
               value={providerData.street}
               onChange={(e) => handleChange("street", e.currentTarget.value)}
               errorMessage={errors.street}
-              label={t("street_label")}
+              label={t("street_label") + " *"}
               placeholder={t("street_placeholder")}
               onBlur={() => handleBlur("street")}
             />
           </GridItem>
 
           <GridItem md={8} lg={4}>
-            <DropdownGroup
+            <Select
+              placeholder={t("select")}
               options={getLanguageOptions()}
               handleChange={(languages) =>
                 handleWorkWithAndLanguageSelect("languages", languages)
               }
-              label={t("language_label")}
+              label={t("language_label") + " *"}
               maxShown={5}
               addMoreText={t("add_more_languages")}
               errorMessage={errors.languages}
             />
-            <DropdownGroup
-              label={t("specialization_label")}
+            <Select
+              placeholder={t("select")}
+              label={t("specialization_label") + " *"}
               options={getSpecializationsOptions()}
               handleChange={(options) =>
                 handleWorkWithAndLanguageSelect("specializations", options)
@@ -402,17 +391,19 @@ export const EditProfileDetails = ({
             <InputGroup
               maxShown={5}
               options={providerData.education}
-              label={t("education_label")}
+              label={t("education_label") + " *"}
               handleParentChange={(data) => handleEducationChange(data)}
               addMoreText={t("add_more_education")}
+              removeText={t("remove")}
               errorMessage={errors.education}
             />
-            <DropdownGroup
+            <Select
+              placeholder={t("select")}
               options={getWorkWithOptions()}
               handleChange={(workWith) =>
                 handleWorkWithAndLanguageSelect("workWith", workWith)
               }
-              label={t("work_with_label")}
+              label={t("work_with_label") + " *"}
               maxShown={5}
               addMoreText={t("add_more_work_with")}
               errorMessage={errors.workWith}
@@ -463,20 +454,3 @@ export const EditProfileDetails = ({
     </Block>
   );
 };
-
-function generateCountryCodes() {
-  const countryCodesList = countryCodes.customList(
-    "countryCode",
-    "+{countryCallingCode}"
-  );
-  const codes = [];
-  Object.keys(countryCodesList).forEach((key) => {
-    codes.push({
-      value: countryCodesList[key],
-      label: `${key}: ${countryCodesList[key]}`,
-      country: key,
-    });
-  });
-
-  return codes.sort((a, b) => (a.country > b.country ? 1 : -1));
-}

@@ -5,7 +5,7 @@
   "page_4": "Консультации",
   "page_5": "Клиенты",
   "page_6": "Кампании",
-  "page_7": "My Q&A",
+  "page_7": "Мой Q&A",
 
   "country_1": "",
   "country_2": "",
@@ -26,10 +26,14 @@
   "footer_6": "Условия использования",
   "footer_7": "Политика конфиденциальности",
   "footer_8": "Настройки файлов cookie",
+  "footer_9": "Часто задаваемые вопросы",
 
   "emergency_button": "SOS-центр",
 
   "button_text": "Перейти к приложению",
   "contact_us": "Свяжитесь с нами",
-  "your_profile_text": "Профиль"
+  "your_profile_text": "Профиль",
+  "password": "Пароль",
+  "wrong_password": "Неверный пароль",
+  "submit": "Отправить"
 }

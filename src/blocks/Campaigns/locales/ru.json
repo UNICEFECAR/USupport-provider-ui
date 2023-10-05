@@ -12,10 +12,14 @@
   "agreed_to_get_paid": "Я согласен получать оплату {{amount}}{{currencySymbol}} за одну консультацию",
   "agree_with_terms": "Я согласен с правилами и условиями",
   "success": "Успешно зарегистрировался в кампании",
-  "enroll": "Зачислять",
+  "enroll": "Зарегистрироваться",
   "add_availability": "Добавить доступность",
   "view_details": "Посмотреть детали",
-  "past_campaigns": "Past campaigns you had participated inRU",
-  "no_data_found": "No data foundRU",
-  "not_allowed": "You don't have permissions to access campaignsRU"
+  "past_campaigns": "Прошлые кампании, в которых вы участвовали",
+  "no_data_found": "Данные не найдены",
+  "not_allowed": "У вас нет прав доступа к кампаниям",
+  "available_campaigns_tab_label": "Доступные кампании",
+  "campaigns_participate_tab_label": "Кампании, в которых Вы участвуете",
+  "past_campaigns_tab_label": "Прошлые кампании, в которых вы участвовали",
+  "search": "Поиск"
 }

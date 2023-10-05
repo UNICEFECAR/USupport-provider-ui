@@ -5,7 +5,7 @@
   "page_4": "Консультация",
   "page_5": "Клиенттер",
   "page_6": "Науқан",
-  "page_7": "My Q&A",
+  "page_7": "Менің Q&A",
 
   "country_1": "",
   "country_2": "",
@@ -26,10 +26,14 @@
   "footer_6": "Пайдалану ережелері",
   "footer_7": "Құпиялық саясаты",
   "footer_8": "Cookie файлдарының баптаулары",
+  "footer_9": "Жиі қойылатын сұрақтар",
 
   "emergency_button": "SOS-орталық",
 
   "button_text": "Қосымшаға өту",
   "contact_us": "Бізге хабарласыңыз",
-  "your_profile_text": "Профиль"
+  "your_profile_text": "Профиль",
+  "password": "Құпия сөз",
+  "wrong_password": "Құпия сөз дұрыс емес",
+  "submit": "Жіберу"
 }

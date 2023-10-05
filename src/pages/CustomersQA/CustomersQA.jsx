@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Block } from "@USupport-components-library/src";
+import { ButtonWithIcon } from "@USupport-components-library/src";
 
 import { Page, CustomersQA as CustomersQABlock } from "#blocks";
 import {
@@ -32,7 +32,7 @@ export const CustomersQA = () => {
     useState(false);
   const [isFilterQuestionsBackdropOpen, setIsFilterQuestionsBackdropOpen] =
     useState(false);
-
+  const [isFilterShown, setIsFilterShown] = useState(false);
   const [filterTag, setFilterTag] = useState();
 
   const openCreateRespondBackdrop = (question) => {
@@ -55,19 +55,34 @@ export const CustomersQA = () => {
   };
 
   return (
-    <Page classes="page__customers-qa" showGoBackArrow={false}>
-      <Block classes="page__customers-qa__heading">
-        <h3>{t("heading")}</h3>
-        <p className="text page__customers-qa__heading__subheading">
-          {t("subheading")}
-        </p>
-      </Block>
+    <Page
+      classes="page__customers-qa"
+      showGoBackArrow={false}
+      heading={t("heading")}
+      subheading={t("subheading")}
+      headingButton={
+        isFilterShown && (
+          <ButtonWithIcon
+            label={t("filter")}
+            iconName="filter"
+            iconColor="#ffffff"
+            iconSize="sm"
+            color="purple"
+            size="sm"
+            classes="page__customers-qa__filter-button"
+            onClick={handleFilterTags}
+          />
+        )
+      }
+    >
       <CustomersQABlock
         handleOpenResposeBackdrop={openCreateRespondBackdrop}
         handleOpenArchive={handleOpenArchive}
         handleReadMore={handleReadMore}
         handleFilterTags={handleFilterTags}
         filterTag={filterTag}
+        isFilterShown={isFilterShown}
+        setIsFilterShown={setIsFilterShown}
       />
       {isCreateResponseBackdropOpen && (
         <CreateResponse
@@ -95,7 +110,8 @@ export const CustomersQA = () => {
         <FilterQuestions
           isOpen={isFilterQuestionsBackdropOpen}
           onClose={() => setIsFilterQuestionsBackdropOpen(false)}
-          setTag={setFilterTag}
+          selectedTag={filterTag}
+          setSelectedTag={setFilterTag}
         />
       )}
     </Page>

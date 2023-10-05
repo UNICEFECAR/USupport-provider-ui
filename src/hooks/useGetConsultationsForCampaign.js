@@ -2,10 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
 import { ONE_HOUR } from "../../USupport-components-library/src/utils";
 
-export default function useGetConsultationsForCampaign(
-  campaignId,
-  enabled = true
-) {
+export default function useGetConsultationsForCampaign(campaignId) {
   const getConsultationsForCampaign = async () => {
     const response = await providerSvc.getConsultationsForCampaign(campaignId);
 
@@ -48,7 +45,6 @@ export default function useGetConsultationsForCampaign(
   const getConsultationsForCampaignQuery = useQuery(
     ["campaign-consultations", campaignId],
     getConsultationsForCampaign
-    // { enabled: true }
   );
 
   return getConsultationsForCampaignQuery;

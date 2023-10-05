@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
+import { InputSearch } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
+import { useWindowDimensions } from "@USupport-components-library/utils";
 
 import { Page, Clients as ClientsBlock } from "#blocks";
 import {
@@ -22,6 +25,7 @@ import "./clients.scss";
  * @returns {JSX.Element}
  */
 export const Clients = () => {
+  const { width } = useWindowDimensions();
   const { t } = useTranslation("clients-page");
   const providerId = userSvc.getUserID();
 
@@ -31,11 +35,35 @@ export const Clients = () => {
   const [isSelectConsultationOpen, setIsSelectConsultationOpen] =
     useState(false);
   const [selectedConsultation, setSelectedConsultation] = useState();
-
+  const [searchValue, setSearchValue] = useState("");
   const [blockSlotError, setBlockSlotError] = useState();
   const [isBlockSlotSubmitting, setIsBlockSlotSubmitting] = useState(false);
 
   const [isJoinConsultationOpen, setIsJoinConsultationOpen] = useState(false);
+
+  const location = useLocation();
+  const initiallySelectedClient = location.state?.clientInformation || null;
+  const [selectedClient, setSelectedClient] = useState(initiallySelectedClient);
+
+  const initiallySelectedConsultation =
+    location.state?.consultationInformation || null;
+
+  const [displayedConsultation, setDisplayedConsultation] = useState();
+
+  useEffect(() => {
+    if (selectedClient || displayedConsultation) {
+      window.scrollTo(0, 0);
+    }
+  }, [selectedClient, displayedConsultation]);
+
+  useEffect(() => {
+    if (!initiallySelectedConsultation) {
+      setDisplayedConsultation(null);
+    } else {
+      setDisplayedConsultation(initiallySelectedConsultation);
+    }
+  }, [selectedClient, initiallySelectedConsultation]);
+
   const openJoinConsultation = (consultation) => {
     setSelectedConsultation(consultation);
     setIsJoinConsultationOpen(true);
@@ -44,7 +72,6 @@ export const Clients = () => {
   const closeSelectConsultation = () => setIsSelectConsultationOpen(false);
 
   const openSelectConsultation = (clientId) => {
-    // setSelectedConsultation(consultation);
     setSelectedClientId(clientId);
     setIsSelectConsultationOpen(true);
   };
@@ -55,10 +82,10 @@ export const Clients = () => {
   };
   const closeCancelConsultation = () => setIsCancelConsultationOpen(false);
 
-  const onSuggestConsultationSuccess = (data) => {
+  const onSuggestConsultationSuccess = () => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
+    window.dispatchEvent(new Event("new-notification"));
     closeSelectConsultation();
     setBlockSlotError(null);
   };
@@ -72,13 +99,8 @@ export const Clients = () => {
   );
 
   const onBlockSlotSuccess = (consultationId) => {
-    // setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
-
     suggestConsultationMutation.mutate(consultationId);
     setIsBlockSlotSubmitting(false);
-    // closeSelectConsultation();
-    // openConfirmConsultationBackdrop();
   };
   const onBlockSlotError = (error) => {
     setBlockSlotError(error);
@@ -94,11 +116,39 @@ export const Clients = () => {
   };
 
   return (
-    <Page classes="page__clients" showNavbar showFooter showGoBackArrow={false}>
+    <Page
+      classes="page__clients"
+      showNavbar
+      showFooter
+      showGoBackArrow={selectedClient}
+      handleGoBack={() => {
+        if (width < 1366 && displayedConsultation) {
+          setDisplayedConsultation(null);
+        } else {
+          setSelectedClient(null);
+        }
+      }}
+      heading={t("heading")}
+      headingButton={
+        !selectedClient ? (
+          <InputSearch
+            placeholder={t("input_search_placeholder")}
+            onChange={(value) => setSearchValue(value)}
+            value={searchValue}
+          />
+        ) : null
+      }
+    >
       <ClientsBlock
         openCancelConsultation={openCancelConsultation}
         openSelectConsultation={openSelectConsultation}
         openJoinConsultation={openJoinConsultation}
+        searchValue={searchValue}
+        selectedClient={selectedClient}
+        setSelectedClient={setSelectedClient}
+        initiallySelectedConsultation={initiallySelectedConsultation}
+        selectedConsultation={displayedConsultation}
+        setSelectedConsultation={setDisplayedConsultation}
       />
       {selectedConsultation && (
         <>

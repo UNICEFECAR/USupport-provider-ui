@@ -3,7 +3,8 @@
 .edit-profile-details {
   &__grid {
     place-items: center;
-    padding-bottom: $spacing_3_6;
+    padding-bottom: $spacing_20_0;
+
     padding-top: $spacing_3_0;
 
     @media screen and (min-width: $screen-md) {
@@ -17,37 +18,6 @@
     & .grid-item {
       justify-items: center;
       width: 34.3rem;
-    }
-
-    &__phone-container {
-      display: flex;
-      align-items: center;
-      margin-top: $spacing_2_4;
-
-      &__phone-input {
-        width: 19.5rem;
-
-        @media screen and (min-width: $screen-lg) {
-          width: 22rem;
-        }
-      }
-
-      & .dropdown-with-label,
-      & .dropdown {
-        text-align: left;
-        width: 14rem;
-        margin-right: $spacing_0_8;
-      }
-      & .dropdown-content {
-        width: 12.5rem;
-      }
-    }
-
-    &__phone-error {
-      margin: 0;
-      padding-top: $spacing_0_8;
-      width: 34.3rem;
-      text-align: center;
     }
 
     & .input-container,

@@ -3,8 +3,13 @@ import useRoomConnection from "./useRoomConnection";
 import useToggleCamera from "./useToggleCamera";
 import useToggleMicrophone from "./useToggleMicrophone";
 
-export default function useRoom(startWithVideoOn, startWithAudioOn) {
-  const { room, error, connectRoom, disconnectRoom } = useRoomConnection();
+export default function useRoom(
+  startWithVideoOn,
+  startWithAudioOn,
+  setIsClientInSession
+) {
+  const { room, error, connectRoom, disconnectRoom } =
+    useRoomConnection(setIsClientInSession);
   const { localParticipant, remoteParticipants } = useParticipant({ room });
   const { isCameraOn, toggleCamera } = useToggleCamera({
     room,

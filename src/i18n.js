@@ -51,6 +51,8 @@ import {
   Campaigns as CampaignsPage,
   AddCampaignAvailability as AddCampaignAvailabilityPage,
   CustomersQA as CustomersQAPage,
+  Consultations as ConsultationsPage,
+  Notifications as NotificationsPage,
 } from "#pages/locales.js";
 
 import {
@@ -68,6 +70,8 @@ import {
   QuestionDetails,
   FilterQuestions,
 } from "#backdrops/locales.js";
+
+import { Root } from "#routes/locales.js";
 
 const resources = {
   en: {
@@ -120,6 +124,8 @@ const resources = {
     "campaigns-page": CampaignsPage.en,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.en,
     "customers-qa-page": CustomersQAPage.en,
+    "consultations-page": ConsultationsPage.en,
+    "notifications-page": NotificationsPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,
@@ -135,6 +141,9 @@ const resources = {
     "archive-question": ArchiveQuestion.en,
     "question-details": QuestionDetails.en,
     "filter-questions": FilterQuestions.en,
+
+    // Routes
+    root: Root.en,
   },
 
   ru: {
@@ -185,10 +194,10 @@ const resources = {
     "consultation-page": ConsultationPage.ru,
     "reports-page": ReportsPage.ru,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
-    "reports-page": ReportsPage.ru,
     "campaigns-page": CampaignsPage.ru,
-    "add-campaign-availability-page": AddCampaignAvailabilityPage.ru,
     "customers-qa-page": CustomersQAPage.ru,
+    "consultations-page": ConsultationsPage.ru,
+    "notifications-page": NotificationsPage.ru,
 
     // Backdrops
     "upload-picture": UploadPicture.ru,
@@ -204,6 +213,9 @@ const resources = {
     "archive-question": ArchiveQuestion.ru,
     "question-details": QuestionDetails.ru,
     "filter-questions": FilterQuestions.ru,
+
+    // Routes
+    root: Root.ru,
   },
 
   kk: {
@@ -254,10 +266,10 @@ const resources = {
     "consultation-page": ConsultationPage.kk,
     "reports-page": ReportsPage.kk,
     "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
-    "reports-page": ReportsPage.kk,
     "campaigns-page": CampaignsPage.kk,
-    "add-campaign-availability-page": AddCampaignAvailabilityPage.kk,
     "customers-qa-page": CustomersQAPage.kk,
+    "consultations-page": ConsultationsPage.kk,
+    "notifications-page": NotificationsPage.kk,
 
     // Backdrops
     "upload-picture": UploadPicture.kk,
@@ -273,6 +285,9 @@ const resources = {
     "archive-question": ArchiveQuestion.kk,
     "question-details": QuestionDetails.kk,
     "filter-questions": FilterQuestions.kk,
+
+    // Routes
+    root: Root.kk,
   },
 };
 

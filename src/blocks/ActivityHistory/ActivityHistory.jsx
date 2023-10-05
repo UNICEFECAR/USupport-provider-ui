@@ -15,7 +15,10 @@ import {
   Message,
   SystemMessage,
 } from "@USupport-components-library/src";
-import { useWindowDimensions } from "@USupport-components-library/utils";
+import {
+  useWindowDimensions,
+  systemMessageTypes,
+} from "@USupport-components-library/utils";
 
 import {
   useGetAllPastConsultations,
@@ -159,7 +162,11 @@ export const ActivityHistory = ({
         return (
           <SystemMessage
             key={message.time}
-            title={message.content}
+            title={
+              systemMessageTypes.includes(message.content)
+                ? t(message.content)
+                : message.content
+            }
             date={new Date(Number(message.time))}
           />
         );
@@ -195,9 +202,6 @@ export const ActivityHistory = ({
       <div className="activity-history__content">
         {((width < 1366 && !selectedConsultation) || width >= 1366) && (
           <div className="activity-history__main-container">
-            <div className="activity-history__main-container__header">
-              <h4>{t("activity_history_heading")}</h4>
-            </div>
             <Grid classes="activity-history__main-container__grid">
               {renderAllConsultations()}
             </Grid>

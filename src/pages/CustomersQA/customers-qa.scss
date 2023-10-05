@@ -4,16 +4,15 @@
 .page__customers-qa {
   @include full-height-page-navbar;
 
-  &__heading {
-    text-align: left;
-    padding-top: $spacing_3_2;
-
-    @media screen and (min-width: $screen_md) {
-      padding-top: $spacing_4_0;
+  &__filter-button {
+    @media screen and (min-width: 950px) {
+      margin-left: auto;
+      margin-right: $spacing_2_4;
     }
 
-    &__subheading {
-      margin-top: $spacing_1_6;
+    @media screen and (min-width: $screen_lg) {
+      margin-left: auto;
+      margin-right: $spacing_9_6;
     }
   }
 }

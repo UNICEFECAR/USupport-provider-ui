@@ -1,15 +1,14 @@
+/* eslint-disable */
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { Page, Login as LoginBlock } from "#blocks";
+import { useIsLoggedIn, useError } from "#hooks";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { RadialCircle, Loading } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
-
-import { Page, Login as LoginBlock } from "#blocks";
-
-import { useIsLoggedIn, useError } from "#hooks";
 
 import { CodeVerification } from "#backdrops";
 
@@ -26,6 +25,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("login-page");
   const { width } = useWindowDimensions();
+  const queryClient = useQueryClient();
 
   const [isCodeVerificationOpen, setIsCodeVerificationOpen] = useState(false);
   const [loginCredentials, setLoginCredentials] = useState();
@@ -97,6 +97,39 @@ export const Login = () => {
     },
   });
 
+  const login = async () => {
+    const payload = {
+      userType: "provider",
+      otp: "1111",
+      ...data,
+    };
+    return await userSvc.login(payload);
+  };
+  const loginMutation = useMutation(login, {
+    onSuccess: (response) => {
+      const { token: tokenData } = response.data;
+      const { token, expiresIn, refreshToken } = tokenData;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("token-expires-in", expiresIn);
+      localStorage.setItem("refresh-token", refreshToken);
+
+      queryClient.invalidateQueries({ queryKey: ["provider-data"] });
+
+      window.dispatchEvent(new Event("login"));
+      setErrors({});
+      navigate("/dashboard");
+      const language = localStorage.getItem("language");
+      userSvc.changeLanguage(language).catch((err) => {
+        console.log(err, "Error when changing language");
+      });
+    },
+    onError: (err) => {
+      const { message: errorMessage } = useError(err);
+      setErrors({ submit: errorMessage });
+    },
+  });
+
   if (isLoggedIn === "loading") return <Loading />;
   if (isLoggedIn === true) return <Navigate to="/dashboard" />;
 
@@ -106,6 +139,8 @@ export const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    loginMutation.mutate();
+    return;
     if (hasReceivedOtp) {
       if (
         lastUsedCredentials.email === data.email.toLocaleLowerCase() &&

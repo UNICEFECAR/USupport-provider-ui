@@ -34,9 +34,9 @@
   "month_10": "Окт",
   "month_11": "Ноя",
   "month_12": "Дек",
-  "ordinal_st": "-ый",
-  "ordinal_nd": "-ой",
-  "ordinal_rd": "-ий",
-  "ordinal_th": "-ый",
+  "ordinal_st": "",
+  "ordinal_nd": "",
+  "ordinal_rd": "",
+  "ordinal_th": "",
   "free": "Бесплатно"
 }

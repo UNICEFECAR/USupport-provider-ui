@@ -41,6 +41,7 @@ export const ProviderProfile = () => {
           size="sm"
           circleSize="sm"
           onClick={handleLogout}
+          style={{ marginLeft: "auto" }}
         />
       }
     >

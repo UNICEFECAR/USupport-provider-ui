@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -10,7 +10,6 @@ import {
   Button,
   Grid,
   GridItem,
-  Icon,
   Loading,
   Notification,
 } from "@USupport-components-library/src";
@@ -150,19 +149,9 @@ export const Notifications = ({ openJoinConsultation }) => {
     }
   );
 
-  // Mark all notificartions as read logic
-  // Because of the load on scroll we mark as read
-  // only the currently shown/fetched notifications
   const onMarkAllAsReadError = (error) => toast(error, { type: "error" });
-  const markAllAsReadMutation =
+  const markNotificationAsReadByIdMutation =
     useMarkNotificationsAsRead(onMarkAllAsReadError);
-  const handleMarkAllAsRead = async () => {
-    const unreadNotificationsIds = notificationsQuery.data?.pages
-      .flat()
-      ?.filter((x) => !x.isRead)
-      .map((x) => x.notificationId);
-    markAllAsReadMutation.mutate(unreadNotificationsIds);
-  };
 
   const renderNotification = (notification) => {
     if (!notification.content) return null;
@@ -187,23 +176,29 @@ export const Notifications = ({ openJoinConsultation }) => {
       notificationId,
       redirectTo = "/consultations"
     ) => {
-      markAllAsReadMutation.mutate([notificationId]), navigate(redirectTo);
+      markNotificationAsReadByIdMutation.mutate([notificationId]),
+        navigate(redirectTo);
     };
 
     switch (notification.type) {
       case "consultation_booking":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -213,19 +208,24 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_reschedule":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-              newDate,
-              newStartHour,
-              newEndHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                  newDate,
+                  newStartHour,
+                  newEndHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -235,16 +235,21 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_cancellation":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -254,16 +259,21 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_cancellation_provider":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -273,12 +283,17 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_remind_start":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              minutes: notification.content.minToConsultation,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  minutes: notification.content.minToConsultation,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -308,16 +323,21 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_suggestion":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -327,16 +347,21 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_suggestion_booking":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -346,16 +371,21 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_suggestion_cancellation":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-              date,
-              startHour,
-              endHour,
-            })}
+            title="USupport"
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                  date,
+                  startHour,
+                  endHour,
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -366,9 +396,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "add_more_availability_slots":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
+            title="USupport"
             icon="calendar"
             text={t(notification.type)}
             handleClick={() =>
@@ -379,10 +410,11 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "weekly_report":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupportMe"
-            icon="activity"
+            title="USupport"
+            icon="activities"
             text={t(notification.type)}
             handleClick={() =>
               handleNotificationClick(notification.notificationId, "/reports")
@@ -392,13 +424,18 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_started":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
             title="USupport"
-            text={t(notification.type, {
-              clientName:
-                notificationClients[notification.content.clientDetailId],
-            })}
+            text={
+              <Trans components={[<b></b>]}>
+                {t(notification.type, {
+                  clientName:
+                    notificationClients[notification.content.clientDetailId],
+                })}
+              </Trans>
+            }
             icon="calendar"
             handleClick={() =>
               handleNotificationClick(notification.notificationId)
@@ -432,24 +469,6 @@ export const Notifications = ({ openJoinConsultation }) => {
 
   return (
     <Block classes="notifications">
-      <div className="notifications__heading-container">
-        <Icon
-          onClick={() => navigate(-1)}
-          name="arrow-chevron-back"
-          size="md"
-          color="#20809E"
-        />
-        <h3 className="notifications__heading-container__heading">
-          {t("heading")}
-        </h3>
-        <p
-          className="paragraph notifications__heading-container__mark-read"
-          onClick={handleMarkAllAsRead}
-        >
-          {t("mark_read")}
-        </p>
-      </div>
-      <p className="text notifications__subheading">{t("subheading")}</p>
       {isLoadingClients ? (
         <Loading size="lg" />
       ) : (

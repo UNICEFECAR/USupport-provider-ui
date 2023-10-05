@@ -23,7 +23,7 @@ import {
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
-import { useGetProviderData } from "#hooks";
+import { useGetProviderData, useError } from "#hooks";
 
 import "./scheduler-template.scss";
 
@@ -73,7 +73,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
     allSundays.push(getTimestamp(sunday));
   }
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [template, setTemplate] = useState(initialTemplate);
   const [templateStartDate, setTemplateStartDate] = useState("");
   const [templateEndDate, setTemplateEndDate] = useState("");
@@ -139,7 +138,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
     if (providerStatus !== "active") {
       return;
     }
-    setIsSubmitting(true);
     const start = templateStartDate;
     // Gett all mondays between start and end
     const lastMonday = templateEndDate - getXDaysInSeconds(6);
@@ -245,12 +243,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
         timestamps[startDateIndex].slots.push(mondayTimestamps.slots);
       }
     });
-
-    // Change all the slots from timestamp to new date
-    // const slots = timestamps.map((x) => ({
-    //   startDate: new Date(parseInt(x.startDate) * 1000),
-    //   slots: x.slots.map((y) => new Date(y * 1000)),
-    // }));
 
     addTemplateAvailabilityMutation.mutate(timestamps);
   };

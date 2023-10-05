@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+
 import { Backdrop, Loading } from "@USupport-components-library/src";
 import { userSvc, providerSvc } from "@USupport-components-library/services";
 import { useError } from "#hooks";
@@ -17,7 +19,7 @@ import "./upload-picture.scss";
  *
  * @return {jsx}
  */
-export const UploadPicture = ({ isOpen, onClose }) => {
+export const UploadPicture = ({ isOpen, onClose, setProviderImageUrl }) => {
   const { t } = useTranslation("upload-picture");
 
   const queryClient = useQueryClient();
@@ -34,10 +36,15 @@ export const UploadPicture = ({ isOpen, onClose }) => {
     }
   }, [providerData]);
 
-  const uploadFile = async (content) => {
+  const uploadFile = async (data) => {
+    const content = new FormData();
+    content.append("fileName", userID);
+    content.append("fileContent", data.imageFile);
+
     const uploadImage = userSvc.uploadFile(content);
     const changeImage = providerSvc.changeImage();
     await Promise.all([uploadImage, changeImage]);
+    setProviderImageUrl(data.imageAsUrl);
     return true;
   };
 
@@ -46,6 +53,7 @@ export const UploadPicture = ({ isOpen, onClose }) => {
       setIsLoading(false);
       queryClient.invalidateQueries({ queryKey: ["provider-data"] });
       onClose();
+      toast(t("success"));
     },
     onError: (error) => {
       setIsLoading(false);
@@ -56,9 +64,6 @@ export const UploadPicture = ({ isOpen, onClose }) => {
 
   const onDrop = useCallback((files) => {
     setIsLoading(true);
-    const content = new FormData();
-    content.append("fileName", userID);
-    content.append("fileContent", files[0]);
 
     const reader = new FileReader();
     reader.onabort = () => setError(t("upload_error"));
@@ -74,9 +79,11 @@ export const UploadPicture = ({ isOpen, onClose }) => {
 
     reader.onload = (e) => {
       setImage(e.target.result);
+      uploadFileMutation.mutate({
+        imageAsUrl: e.target.result,
+        imageFile: files[0],
+      });
     };
-
-    uploadFileMutation.mutate(content);
   });
 
   const { getRootProps, getInputProps, inputRef } = useDropzone({

@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import {
-  Backdrop,
+  Modal,
   Icon,
   Like,
   Label,
@@ -18,7 +18,7 @@ import "./question-details.scss";
 /**
  * QuestionDetails
  *
- * The QuestionDetails backdrop
+ * The QuestionDetails Modal
  *
  * @return {jsx}
  */
@@ -53,12 +53,11 @@ export const QuestionDetails = ({
   };
 
   return (
-    <Backdrop
+    <Modal
       classes="question-details"
       title="QuestionDetails"
       isOpen={isOpen}
-      onClose={onClose}
-      heading={t("heading")}
+      closeModal={onClose}
       ctaLabel={t("write_response")}
       ctaHandleClick={handleCtaClick}
     >
@@ -74,9 +73,9 @@ export const QuestionDetails = ({
       {question.answerText && (
         <>
           <div className="question-details__heading">
-            <p className="text question-details__heading__text">
+            <h4 className="question-details__heading__text">
               {question.answerTitle}
-            </p>
+            </h4>
             <Like
               handleClick={handleLike}
               likes={question.likes}
@@ -99,9 +98,9 @@ export const QuestionDetails = ({
               })}
             </div>
           ) : null}
-          <p className="text question-details__answer-text">
+          <pre className="text question-details__answer-text">
             {question.answerText}
-          </p>
+          </pre>
           <div className="question-details__bottom-container">
             <div className="question-details__answered-by-container">
               <p className="text">{t("answered_by")}</p>
@@ -118,6 +117,6 @@ export const QuestionDetails = ({
           </div>
         </>
       )}
-    </Backdrop>
+    </Modal>
   );
 };

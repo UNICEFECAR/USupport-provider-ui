@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -8,7 +8,6 @@ import {
   Tabs,
   Loading,
   Answer,
-  ButtonWithIcon,
   InputSearch,
 } from "@USupport-components-library/src";
 
@@ -27,7 +26,8 @@ export const CustomersQA = ({
   handleOpenResposeBackdrop,
   handleOpenArchive,
   handleReadMore,
-  handleFilterTags,
+  isFilterShown,
+  setIsFilterShown,
   filterTag,
 }) => {
   const { t } = useTranslation("customers-qa");
@@ -54,7 +54,7 @@ export const CustomersQA = ({
     const filteredQuestions = questionsQuery.data.filter((question) => {
       if (filterTag) {
         const tags = question.tags;
-        if (!tags.includes(filterTag)) {
+        if (!tags.find((tag) => tag === filterTag)) {
           return null;
         }
       }
@@ -108,42 +108,37 @@ export const CustomersQA = ({
       }
     }
     setTabs(tabsCopy);
+
+    setIsFilterShown(
+      tabsCopy.find((tab) => tab.isSelected).value !== "unanswered"
+    );
   };
 
   return (
     <Block classes="customers-qa">
       <Grid>
         <GridItem md={8} lg={12}>
-          <div className="customers-qa__search-input-container">
-            <InputSearch
-              placeholder={t("search_placeholder")}
-              value={searchValue}
-              onChange={(value) => setSearchValue(value.toLowerCase())}
-            />
-            <ButtonWithIcon
-              label={t("filter")}
-              iconName="filter"
-              iconColor="#ffffff"
-              iconSize="sm"
-              color="purple"
-              size="xs"
-              classes="customers-qa__search-input-container__button"
-              onClick={handleFilterTags}
-            />
-          </div>
-        </GridItem>
-        <GridItem md={8} lg={12}>
-          <div className="customers-qa__tabs-container">
-            <Tabs
-              options={tabs.map((tab) => {
-                return {
-                  label: t(tab.value),
-                  value: tab.value,
-                  isSelected: tab.isSelected,
-                };
-              })}
-              handleSelect={handleSelectTab}
-            />
+          <div className="customers-qa__tab-and-search-wrapper">
+            <div className="customers-qa__tabs-container">
+              <Tabs
+                options={tabs.map((tab) => {
+                  return {
+                    label: t(tab.value),
+                    value: tab.value,
+                    isSelected: tab.isSelected,
+                  };
+                })}
+                handleSelect={handleSelectTab}
+              />
+            </div>
+            {isFilterShown && (
+              <InputSearch
+                placeholder={t("search_placeholder")}
+                value={searchValue}
+                onChange={(value) => setSearchValue(value.toLowerCase())}
+                classes="customers-qa__tab-and-search-wrapper__input"
+              />
+            )}
           </div>
         </GridItem>
         <GridItem md={8} lg={12}>

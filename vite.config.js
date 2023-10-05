@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -17,6 +18,7 @@ export default defineConfig(() => {
         "#services": path.resolve(__dirname, "./src/services"),
         "#backdrops": path.resolve(__dirname, "./src/backdrops"),
         "#hooks": path.resolve(__dirname, "./src/hooks"),
+        "#routes": path.resolve(__dirname, "./src/routes"),
       },
     },
   };

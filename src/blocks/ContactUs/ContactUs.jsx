@@ -33,11 +33,11 @@ export const ContactUs = () => {
   const { t } = useTranslation("contact-us-block");
 
   const initialIssues = [
-    { value: "information", label: t("contact_reason_1") },
-    { value: "technical-problem", label: t("contact_reason_2") },
-    { value: "join-as-provider", label: t("contact_reason_3") },
-    { value: "partnerships", label: t("contact_reason_4") },
-    { value: "other", label: t("contact_reason_5") },
+    { value: "information", label: "contact_reason_1" },
+    { value: "technical-problem", label: "contact_reason_2" },
+    { value: "join-as-provider", label: "contact_reason_3" },
+    { value: "partnerships", label: "contact_reason_4" },
+    { value: "other", label: "contact_reason_5" },
   ];
 
   const [data, setData] = useState({ ...initialData });
@@ -111,7 +111,7 @@ export const ContactUs = () => {
       const payload = {
         subjectValue: data.issue,
         subjectLabel: t("contact_form"),
-        title: issues.find((x) => x.value === data.issue)?.label,
+        title: t(issues.find((x) => x.value === data.issue)?.label),
         text: data.message,
         email: providerDataQuery.data.email,
       };
@@ -128,7 +128,10 @@ export const ContactUs = () => {
             errorMessage={errors.issue}
             classes="contact-us__issue-input"
             placeholder={t("issue_placeholder")}
-            options={issues}
+            options={issues.map((x) => ({
+              ...x,
+              label: t(x.label),
+            }))}
             selected={data.issue}
             setSelected={handleIssueChange}
           />

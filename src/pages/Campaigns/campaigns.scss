@@ -1,6 +1,6 @@
 /* Campaigns styles */
-@import '@USupport-components-library/styles';
+@import "@USupport-components-library/styles";
 
-.page__campaigns{
+.page__campaigns {
+  @include full-height-page-navbar;
 }
-

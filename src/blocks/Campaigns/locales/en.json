@@ -8,14 +8,18 @@
   "consultations_with_you": "Your consultations",
   "your_payment": "Your payment",
   "available_campaigns": "Available campaigns",
-  "terms_and_conditions": "Terms and conditions",
-  "agreed_to_get_paid": "I agree to get paid {{amount}}{{currencySymbol}} per Consultataion",
-  "agree_with_terms": "I agree with the terms and conditions",
+  "terms_and_conditions": "Terms of Use",
+  "agreed_to_get_paid": "I agree to get paid {{amount}}{{currencySymbol}} per Consultation",
+  "agree_with_terms": "I agree with the Terms of Use",
   "success": "Successfully enrolled in campaign",
   "enroll": "Enroll",
   "add_availability": "Add availability",
   "view_details": "View details",
   "past_campaigns": "Past campaigns you had participated in",
   "no_data_found": "No data found",
-  "not_allowed": "You don't have permissions to access campaigns"
+  "not_allowed": "You don't have permissions to access campaigns",
+  "available_campaigns_tab_label": "Available campaigns",
+  "campaigns_participate_tab_label": "Campaigns you participate in",
+  "past_campaigns_tab_label": "Past campaigns you had participated in",
+  "search": "Search"
 }

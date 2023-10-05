@@ -8,7 +8,6 @@ import {
   GridItem,
   SingleDay,
   Loading,
-  Icon,
   Consultation,
 } from "@USupport-components-library/src";
 

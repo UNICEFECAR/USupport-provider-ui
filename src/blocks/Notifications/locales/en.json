@@ -1,16 +1,13 @@
 {
-  "heading": "Notifications",
-  "mark_read": "Mark all as read",
-  "subheading": "Here you can find all the notifications you ever received in your account.",
-  "consultation_booking": "Your consultation with {{clientName}} was scheduled for {{date}} from {{startHour}} to {{endHour}}",
-  "consultation_reschedule": "Client {{clientName}} rescheduled the consultation from {{date}} from {{startHour}} to {{endHour}} to {{newDate}} from {{newStartHour}} to {{newEndHour}}",
-  "consultation_cancellation_provider": "You cancelled your consultation with {{clientName}} scheduled on {{date}} from {{startHour}} to {{endHour}}",
-  "consultation_cancellation": "The client {{clientName}} cancelled the consultation scheduled on {{date}} from {{startHour}} to {{endHour}}",
-  "consultation_remind_start": "Upcoming consultation in {{minutes}} minutes",
-  "consultation_suggestion": "You suggested a consultation to {{clientName}} for {{date}} from {{startHour}} to {{endHour}}",
-  "consultation_suggestion_booking": "Client {{clientName}} accepted the suggested consultation on {{date}} from {{startHour}} to {{endHour}}",
-  "consultation_suggestion_cancellation": "Client {{clientName}} rejected the suggested consultation on {{date}} from {{startHour}} to {{endHour}}",
-  "consultation_started": "Your consultation with client {{clientName}} started",
+  "consultation_booking": "Your consultation with <0>{{clientName}}</0> was <0>scheduled</0> for <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
+  "consultation_reschedule": "Client <0>{{clientName}} rescheduled</0> the consultation from <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0> to <0>{{newDate}}</0> from <0>{{newStartHour}}</0> to <0>{{newEndHour}}</0>",
+  "consultation_cancellation_provider": "You <0>cancelled</0> your consultation with <0>{{clientName}}</0> <0>scheduled</0> on <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
+  "consultation_cancellation": "The client <0>{{clientName}} cancelled</0> the consultation <0>scheduled</0> on <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
+  "consultation_remind_start": "<0>Upcoming consultation</0> in <0>{{minutes}} minutes</0>",
+  "consultation_suggestion": "You suggested a consultation to <0>{{clientName}}</0> for <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
+  "consultation_suggestion_booking": "Client <0>{{clientName}} accepted</0> the suggested consultation on <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
+  "consultation_suggestion_cancellation": "Client <0>{{clientName}}</0> rejected the suggested consultation on <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
+  "consultation_started": "Your consultation with client <0>{{clientName}} started</0>",
   "join": "Join",
   "accept": "Accept",
   "accept_consultation_success": "Succesfully accepted consultation",
@@ -18,5 +15,6 @@
   "reject_consultation_success": "Succesfully rejected consultation",
   "no_notifications": "You have no notifications yet.",
   "add_more_availability_slots": "Add more availability slots to your schedule",
-  "weekly_report": "You have a new weekly report"
+  "weekly_report": "You have a new weekly report",
+  "yesterday": "yesterday"
 }

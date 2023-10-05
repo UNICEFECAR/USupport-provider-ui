@@ -1,14 +1,13 @@
 {
-  "unanswered": "Unanswered",
-  "answered": "Answered",
-  "self_answered": "Answered by you",
-  "respond": "Respond",
-  "answer_by": "Answer by:",
-  "schedule_consultation": "Schedule consultation",
-  "today": "Today",
-  "archive": "Archive",
-  "read_more": "Read more",
-  "filter": "Filter tags",
-  "search_placeholder": "Search",
-  "no_questions_found": "No results found."
+  "unanswered": "Жауап берілмегендер",
+  "answered": "Жауап берілгендер",
+  "self_answered": "Сізбен жауап берілгені",
+  "respond": "Жауап беру",
+  "answer_by": "Жауап берді:",
+  "schedule_consultation": "Консультацияны жоспарлау",
+  "today": "Бүгін",
+  "archive": "Мұрағат",
+  "read_more": "Ары қарай оқу",
+  "search_placeholder": "Іздеу",
+  "no_questions_found": "Ештеңе табылмады"
 }

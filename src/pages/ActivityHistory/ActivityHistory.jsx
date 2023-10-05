@@ -39,13 +39,13 @@ export const ActivityHistory = () => {
     setIsSelectConsultationOpen(true);
   };
 
-  const onSuggestConsultationSuccess = (data) => {
+  const onSuggestConsultationSuccess = () => {
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
     closeSelectConsultation();
-    openConfirmConsultationBackdrop();
+    // openConfirmConsultationBackdrop();
     setBlockSlotError(null);
+    window.dispatchEvent(new Event("new-notification"));
   };
   const onSuggestConsultationError = (error) => {
     setBlockSlotError(error);
@@ -57,13 +57,8 @@ export const ActivityHistory = () => {
   );
 
   const onBlockSlotSuccess = (consultationId) => {
-    // setIsBlockSlotSubmitting(false);
-    // setConsultationId(consultationId);
-
     suggestConsultationMutation.mutate(consultationId);
     setIsBlockSlotSubmitting(false);
-    // closeSelectConsultation();
-    // openConfirmConsultationBackdrop();
   };
   const onBlockSlotError = (error) => {
     setBlockSlotError(error);
@@ -84,6 +79,7 @@ export const ActivityHistory = () => {
       showNavbar
       showFooter
       showGoBackArrow={false}
+      heading={t("heading")}
     >
       <ActivityHistoryBlock
         openSelectConsultation={openSelectConsultation}

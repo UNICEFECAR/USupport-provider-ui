@@ -1,1 +1,1 @@
-export * from './AddCampaignAvailability.jsx';
+export * from "./AddCampaignAvailability.jsx";

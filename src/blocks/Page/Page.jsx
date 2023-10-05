@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,10 +8,11 @@ import {
   CircleIconButton,
   Footer,
   Icon,
+  PasswordModal,
 } from "@USupport-components-library/src";
 import { countrySvc, languageSvc } from "@USupport-components-library/services";
 import { getCountryFromTimezone } from "@USupport-components-library/utils";
-import { useIsLoggedIn } from "#hooks";
+import { useIsLoggedIn, useEventListener } from "#hooks";
 import classNames from "classnames";
 
 import "./page.scss";
@@ -73,6 +74,7 @@ export const Page = ({
         countryID: x["country_id"],
         iconName: x.alpha2,
         currencySymbol: x["symbol"],
+        localName: x.local_name,
       };
       if (localStorageCountry === x.alpha2) {
         localStorage.setItem("currency_symbol", countryObject.currencySymbol);
@@ -116,7 +118,8 @@ export const Page = ({
       const languageObject = {
         value: x.alpha2,
         label: x.name,
-        id: x["language_id"],
+        localName: x.local_name,
+        id: x.language_id,
       };
       if (localStorageLanguage === x.alpha2) {
         setSelectedLanguage(languageObject);
@@ -133,9 +136,24 @@ export const Page = ({
   const { data: countries } = useQuery(["countries"], fetchCountries);
   const { data: languages } = useQuery(["languages"], fetchLanguages);
 
-  const hasUnreadNotifications = queryClient.getQueryData([
-    "has-unread-notifications",
-  ]);
+  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+
+  useEffect(() => {
+    const hasUnreadNotificationsData = queryClient.getQueryData([
+      "has-unread-notifications",
+    ]);
+    setHasUnreadNotifications(hasUnreadNotificationsData);
+  }, []);
+
+  const newNotificationHandler = useCallback(() => {
+    setHasUnreadNotifications(true);
+  }, []);
+  useEventListener("new-notification", newNotificationHandler);
+
+  const allNotificationsReadHandler = useCallback(() => {
+    setHasUnreadNotifications(false);
+  });
+  useEventListener("all-notifications-read", allNotificationsReadHandler);
 
   const image = queryClient.getQueryData(["provider-data"])?.image;
 
@@ -155,17 +173,18 @@ export const Page = ({
       { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
+      { name: t("footer_5"), url: "/clients", exact: true },
     ],
     list2: [
-      { name: t("footer_5"), url: "/clients", exact: true },
       { name: t("footer_6"), url: "/terms-of-use" },
       { name: t("footer_7"), url: "/privacy-policy" },
       { name: t("footer_8"), url: "/cookie-policy" },
+      { name: t("footer_9"), url: "/faq" },
     ],
     list3: [
       { value: "+7 717 232 28 78", iconName: "call-filled", onClick: "phone" },
       {
-        value: `Beibitshilik St 10а, Astana 010000, Kazakhstan`,
+        value: "Beibitshilik St 10а, Astana 010000, Kazakhstan",
         iconName: "pin",
       },
       {
@@ -175,9 +194,31 @@ export const Page = ({
       },
     ],
   };
+  const hasEnteredPassword = queryClient.getQueryData(["hasEnteredPassword"]);
+
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(
+    !hasEnteredPassword
+  );
+  const [password, setPasswordError] = useState("");
+
+  const handlePasswordCheck = (password) => {
+    if (password === "USupport!2023") {
+      queryClient.setQueryData(["hasEnteredPassword"], true);
+      setIsPasswordModalOpen(false);
+    } else {
+      setPasswordError(t("wrong_password"));
+    }
+  };
 
   return (
     <>
+      <PasswordModal
+        label={t("password")}
+        btnLabel={t("submit")}
+        isOpen={isPasswordModalOpen}
+        error={password}
+        handleSubmit={handlePasswordCheck}
+      />
       {isNavbarShown === true && (
         <Navbar
           pages={pages}
@@ -216,11 +257,25 @@ export const Page = ({
             {headingImage && (
               <img className="page__header__image" src={headingImage} />
             )}
-            {heading && <h3 className="page__header-heading">{heading}</h3>}
+            {heading && (
+              <h3
+                className={`page__header-heading ${
+                  !showGoBackArrow && "page__header-heading__no-go-back-arrow"
+                }`}
+              >
+                {heading}
+              </h3>
+            )}
             {headingButton && headingButton}
           </div>
         )}
-        <p className="page__subheading-text text">{subheading}</p>
+        <p
+          className={`page__subheading-text text ${
+            !showGoBackArrow && "page__subheading-text__no-go-back-arrow"
+          }`}
+        >
+          {subheading}
+        </p>
         {children}
       </div>
       {showEmergencyButton && (
