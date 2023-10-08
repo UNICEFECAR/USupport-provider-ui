@@ -33,7 +33,8 @@
   "button_text": "Перейти к приложению",
   "contact_us": "Свяжитесь с нами",
   "your_profile_text": "Профиль",
-  "password": "Пароль",
+  "password_placeholder": "Пароль",
+  "password": "Пожалуйста, введите пароль для доступа к сайту",
   "wrong_password": "Неверный пароль",
   "submit": "Отправить"
 }
