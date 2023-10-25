@@ -8,7 +8,15 @@
   }
 
   &__grid {
-     min-height: 85vh;
+    min-height: 85vh;
+
+    @media screen and (min-width: $screen-md) {
+      min-height: 75vh;
+    }
+
+    @media screen and (min-width: $screen-lg) {
+      min-height: 65vh;
+    }
     place-items: center;
     text-align: left;
 
