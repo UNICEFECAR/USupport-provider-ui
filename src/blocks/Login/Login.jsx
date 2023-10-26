@@ -40,14 +40,20 @@ export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
   return (
     <Block classes="login">
       <Grid md={8} lg={12} classes="login__grid">
-        <GridItem md={8} lg={12} classes="login__grid__logo-item">
-          <h2 className="welcome__grid__logo-item__heading">{t("heading")}</h2>
-          <img
-            src={logoVerticalSvg}
-            alt="Logo"
-            className="welcome__grid__logo-item__logo"
-          />
-          <h2 className="welcome__grid__logo-item__heading">{t("provider")}</h2>
+        <GridItem md={8} lg={12} classes="login__grid__inputs-item">
+          <div className="login__grid__logo-item">
+            <h2 className="welcome__grid__logo-item__heading">
+              {t("heading")}
+            </h2>
+            <img
+              src={logoVerticalSvg}
+              alt="Logo"
+              className="welcome__grid__logo-item__logo"
+            />
+            <h2 className="welcome__grid__logo-item__heading">
+              {t("provider")}
+            </h2>
+          </div>
         </GridItem>
         <GridItem md={8} lg={12} classes="login__grid__inputs-item">
           <form onSubmit={handleLogin}>
