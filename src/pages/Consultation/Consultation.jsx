@@ -122,22 +122,25 @@ export const Consultation = () => {
     return joinMessages[0].content === "client_joined";
   };
 
-  const chatDataQuery = useGetChatData(consultation?.chatId, (data) => {
-    {
-      setIsClientInSession(checkHasClientJoined(data.messages));
-      setMessages((prev) => ({
-        ...prev,
-        currentSession: data.messages,
-      }));
-    }
-  });
+  const onGetChatDataSuccess = (data) => {
+    setIsClientInSession(checkHasClientJoined(data.messages));
+    setMessages((prev) => ({
+      ...prev,
+      currentSession: data.messages,
+    }));
+  };
+
+  const chatDataQuery = useGetChatData(
+    consultation?.chatId,
+    onGetChatDataSuccess
+  );
 
   const clientId = chatDataQuery.data?.clientDetailId;
   const providerId = chatDataQuery.data?.providerDetailId;
   const allChatHistoryQuery = useGetAllChatHistoryData(
     providerId,
     clientId,
-    true
+    chatDataQuery.isFetched
   );
 
   const [areMessagesHidden, setAreMessagesHidden] = useState(true);
@@ -149,52 +152,30 @@ export const Consultation = () => {
     );
   }, [messages]);
 
-  // End of session alerts
-  useEffect(() => {
-    const endTime = new Date(consultation.timestamp + ONE_HOUR);
-    let isTenMinAlertShown,
-      isFiveMinAlertShown = false;
-
-    const interval = setInterval(() => {
-      const now = new Date();
-      const timeDifferenceInMinutes = Math.floor((endTime - now) / (1000 * 60));
-
-      if (timeDifferenceInMinutes <= 10 && !isTenMinAlertShown) {
-        toast(t("consultation_end_reminder", { minutes: 10 }), {
-          autoClose: false,
-          type: "info",
-        });
-        isTenMinAlertShown = true;
-      }
-      if (timeDifferenceInMinutes <= 5 && !isFiveMinAlertShown) {
-        toast(t("consultation_end_reminder", { minutes: 5 }), {
-          autoClose: false,
-          type: "info",
-        });
-        isFiveMinAlertShown;
-        clearInterval(interval);
-      }
-    }, 20000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  // End of seession alerts
+  useSessionEndReminder(consultation.timestamp, t);
 
   // Calculate all chat history
   useEffect(() => {
     if (
       allChatHistoryQuery.data?.messages &&
+      chatDataQuery.data?.messages &&
       !messages.previousSessions.length
     ) {
       setMessages((prev) => {
+        const currentMessagesTimes = chatDataQuery.data.messages.map(
+          (x) => x.time
+        );
+        const previousFiltered = allChatHistoryQuery.data.messages
+          .flat()
+          .filter((x) => !currentMessagesTimes.includes(x.time));
         return {
           ...prev,
-          previousSessions: allChatHistoryQuery.data.messages,
+          previousSessions: previousFiltered,
         };
       });
     }
-  }, [allChatHistoryQuery.data]);
+  }, [allChatHistoryQuery.data, chatDataQuery.data]);
 
   // TODO: Send a consultation add services request only when the provider leaves the consultation
   useEffect(() => {
@@ -761,4 +742,37 @@ const OptionsContainer = ({
       )}
     </div>
   );
+};
+
+const useSessionEndReminder = (timestamp, t) => {
+  useEffect(() => {
+    const endTime = new Date(timestamp + ONE_HOUR);
+    let isTenMinAlertShown,
+      isFiveMinAlertShown = false;
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      const timeDifferenceInMinutes = Math.floor((endTime - now) / (1000 * 60));
+
+      if (timeDifferenceInMinutes <= 10 && !isTenMinAlertShown) {
+        toast(t("consultation_end_reminder", { minutes: 10 }), {
+          autoClose: false,
+          type: "info",
+        });
+        isTenMinAlertShown = true;
+      }
+      if (timeDifferenceInMinutes <= 5 && !isFiveMinAlertShown) {
+        toast(t("consultation_end_reminder", { minutes: 5 }), {
+          autoClose: false,
+          type: "info",
+        });
+        isFiveMinAlertShown;
+        clearInterval(interval);
+      }
+    }, 20000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 };
