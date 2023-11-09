@@ -704,6 +704,7 @@ const MessageList = ({
       </div>
       <div ref={belowMessagesRef} />
       <SendMessage
+        t={t}
         handleSubmit={handleSendMessage}
         onTextareaFocus={onTextareaFocus}
         emitTyping={emitTyping}
