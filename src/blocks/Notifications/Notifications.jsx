@@ -187,7 +187,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -211,7 +211,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -238,7 +238,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -262,7 +262,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -286,7 +286,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -326,7 +326,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -350,7 +350,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -374,7 +374,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -399,7 +399,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             icon="calendar"
             text={t(notification.type)}
             handleClick={() =>
@@ -413,7 +413,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             icon="activities"
             text={t(notification.type)}
             handleClick={() =>
@@ -427,7 +427,7 @@ export const Notifications = ({ openJoinConsultation }) => {
             t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
