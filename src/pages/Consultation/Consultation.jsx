@@ -35,6 +35,7 @@ import {
   useLeaveConsultation,
   useDebounce,
   useGetAllChatHistoryData,
+  useJoinConsultation,
 } from "#hooks";
 
 import { Page, VideoRoom } from "#blocks";
@@ -139,6 +140,7 @@ export const Consultation = () => {
     clientId,
     true
   );
+  const joinConsultationMutation = useJoinConsultation();
 
   const [areMessagesHidden, setAreMessagesHidden] = useState(true);
 
@@ -294,6 +296,13 @@ export const Consultation = () => {
     debouncedSearch,
     areMessagesHidden,
   ]);
+
+  useEffect(() => {
+    joinConsultationMutation.mutate({
+      consultationId: consultation.consultationId,
+      userType: "provider",
+    });
+  }, []);
 
   const onSendSuccess = (newMessage) => {
     const message = newMessage.message;
