@@ -253,16 +253,14 @@ export const ActivityHistory = ({
                     classes="activity-history__consultation-container__consultation__button"
                   />
                 ) : null}
-                {isMenuOpen && (
-                  <OutsideClickHandler
-                    onOutsideClick={() => setIsMenuOpen(false)}
-                  >
-                    <div className="activity-history__consultation-container__consultation__menu">
-                      {renderMenuOptions()}
-                    </div>
-                  </OutsideClickHandler>
-                )}
               </div>
+            )}
+            {isMenuOpen && (
+              <OutsideClickHandler onOutsideClick={() => setIsMenuOpen(false)}>
+                <div className="activity-history__consultation-container__consultation__menu">
+                  {renderMenuOptions()}
+                </div>
+              </OutsideClickHandler>
             )}
           </div>
         )}

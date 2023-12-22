@@ -166,10 +166,14 @@
         flex-direction: column;
         padding: $spacing_1_6;
         position: absolute;
-        right: 1%;
-        top: 7%;
+        right: 4%;
+        top: 10%;
         width: calc(19rem - 2 * $spacing_1_6);
         z-index: $z_index_2;
+
+        @media screen and (min-width: $screen_lg) {
+          top: 7%;
+        }
 
         & .menu-option {
           display: flex;
