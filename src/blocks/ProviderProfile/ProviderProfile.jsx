@@ -10,6 +10,7 @@ import {
 import { useGetProviderData } from "#hooks";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
+const GIT_BOOK_URL = `${import.meta.env.VITE_GIT_BOOK_URL}`;
 
 import "./provider-profile.scss";
 
@@ -105,12 +106,7 @@ export const ProviderProfile = () => {
             label={t("user_guide")}
             iconName="document"
             classes="provider-profile__grid__item__button"
-            onClick={() =>
-              window.open(
-                "https://7digit-1.gitbook.io/usupport/y0yJCW2nZ6Sb52p4arjv",
-                "_blank"
-              )
-            }
+            onClick={() => window.open(GIT_BOOK_URL, "_blank")}
           />
           <ButtonSelector
             label={t("FAQ_button_label")}
