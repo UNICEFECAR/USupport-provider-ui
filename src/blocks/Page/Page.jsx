@@ -291,6 +291,7 @@ export const Page = ({
         <Footer
           lists={footerLists}
           contactUsText={t("contact_us")}
+          contactUsUrl="/contact-us"
           navigate={navigateTo}
           Link={Link}
         />
