@@ -170,28 +170,21 @@ export const Page = ({
   const footerLists = {
     list1: [
       { name: t("footer_1"), url: "/dashboard" },
+      { name: t("page_7"), url: "/my-qa" },
+      { name: t("page_6"), url: "/campaigns" },
+      { name: t("footer_9"), url: "/faq" },
+    ],
+    list2: [
       { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
       { name: t("footer_5"), url: "/clients", exact: true },
     ],
-    list2: [
+    list3: [
+      { name: t("contact_us"), url: "/contact-us" },
       { name: t("footer_6"), url: "/terms-of-use" },
       { name: t("footer_7"), url: "/privacy-policy" },
       { name: t("footer_8"), url: "/cookie-policy" },
-      { name: t("footer_9"), url: "/faq" },
-    ],
-    list3: [
-      { value: "+7 717 232 28 78", iconName: "call-filled", onClick: "phone" },
-      {
-        value: "Beibitshilik St 10а, Astana 010000, Kazakhstan",
-        iconName: "pin",
-      },
-      {
-        value: "usupport@7digit.io",
-        iconName: "mail-filled",
-        onClick: "mail",
-      },
     ],
   };
   const hasEnteredPassword = queryClient.getQueryData(["hasEnteredPassword"]);
@@ -212,14 +205,14 @@ export const Page = ({
 
   return (
     <>
-      <PasswordModal
+      {/* <PasswordModal
         label={t("password")}
         btnLabel={t("submit")}
         isOpen={isPasswordModalOpen}
         error={password}
         handleSubmit={handlePasswordCheck}
         placeholder={t("password_placeholder")}
-      />
+      /> */}
       {isNavbarShown === true && (
         <Navbar
           pages={pages}
@@ -288,13 +281,7 @@ export const Page = ({
         />
       )}
       {isFooterShown && (
-        <Footer
-          lists={footerLists}
-          contactUsText={t("contact_us")}
-          contactUsUrl="/contact-us"
-          navigate={navigateTo}
-          Link={Link}
-        />
+        <Footer lists={footerLists} navigate={navigateTo} Link={Link} />
       )}
     </>
   );
