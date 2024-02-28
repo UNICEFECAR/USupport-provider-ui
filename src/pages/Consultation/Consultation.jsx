@@ -490,11 +490,11 @@ export const Consultation = () => {
           hasUnreadMessages={hasUnreadMessages}
           isClientInSession={isClientInSession}
           setIsClientInSession={setIsClientInSession}
-          hideControls={hideControls && width < 150}
+          hideControls={hideControls && width < 1150}
           token={token}
           t={t}
         />
-        {isChatShownOnTablet && width >= 150 && (
+        {isChatShownOnTablet && width >= 1150 && (
           <MessageList
             messages={messages}
             handleSendMessage={handleSendMessage}
@@ -516,7 +516,7 @@ export const Consultation = () => {
       </div>
       <Backdrop
         classes="page__consultation__chat-backdrop"
-        isOpen={isChatShownOnMobile && width < 150}
+        isOpen={isChatShownOnMobile && width < 1150}
         onClose={() => setIsChatShownOnMobile(false)}
         showAlwaysAsBackdrop
         headingComponent={
