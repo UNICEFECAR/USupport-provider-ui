@@ -4,7 +4,7 @@
   "expiration_text": "Срок действия кода истекает через ",
   "button_with_icon_label_view": "Посмотреть код",
   "button_with_icon_label_hide": "Скрыть код",
-  "send_button_label": "Послать",
+  "send_button_label": "Отправить",
   "didnt_get_code": "Не получили код?",
   "resend_code_button_label": "Отправить письмо повторно",
   "seconds": " через {{seconds}} секунд"

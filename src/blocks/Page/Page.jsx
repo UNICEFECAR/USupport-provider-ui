@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useNavigate, NavLink, Link } from "react-router-dom";
 import {
   Navbar,
@@ -10,9 +10,13 @@ import {
   Icon,
   PasswordModal,
 } from "@USupport-components-library/src";
-import { countrySvc, languageSvc } from "@USupport-components-library/services";
+import {
+  countrySvc,
+  languageSvc,
+  userSvc,
+} from "@USupport-components-library/services";
 import { getCountryFromTimezone } from "@USupport-components-library/utils";
-import { useIsLoggedIn, useEventListener } from "#hooks";
+import { useIsLoggedIn, useEventListener, useError } from "#hooks";
 import classNames from "classnames";
 
 import "./page.scss";
@@ -170,44 +174,48 @@ export const Page = ({
   const footerLists = {
     list1: [
       { name: t("footer_1"), url: "/dashboard" },
+      { name: t("page_7"), url: "/my-qa" },
+      { name: t("page_6"), url: "/campaigns" },
+      { name: t("footer_9"), url: "/faq" },
+    ],
+    list2: [
       { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
       { name: t("footer_5"), url: "/clients", exact: true },
     ],
-    list2: [
+    list3: [
+      { name: t("contact_us"), url: "/contact-us" },
       { name: t("footer_6"), url: "/terms-of-use" },
       { name: t("footer_7"), url: "/privacy-policy" },
       { name: t("footer_8"), url: "/cookie-policy" },
-      { name: t("footer_9"), url: "/faq" },
-    ],
-    list3: [
-      { value: "+7 717 232 28 78", iconName: "call-filled", onClick: "phone" },
-      {
-        value: "Beibitshilik St 10а, Astana 010000, Kazakhstan",
-        iconName: "pin",
-      },
-      {
-        value: "usupport@7digit.io",
-        iconName: "mail-filled",
-        onClick: "mail",
-      },
     ],
   };
-  const hasEnteredPassword = queryClient.getQueryData(["hasEnteredPassword"]);
+  const hasPassedValidation = queryClient.getQueryData(["hasPassedValidation"]);
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(
-    !hasEnteredPassword
+    !hasPassedValidation
   );
-  const [password, setPasswordError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const handlePasswordCheck = (password) => {
-    if (password === "USupport!2023") {
-      queryClient.setQueryData(["hasEnteredPassword"], true);
-      setIsPasswordModalOpen(false);
-    } else {
-      setPasswordError(t("wrong_password"));
+  const validatePlatformPasswordMutation = useMutation(
+    async (value) => {
+      return await userSvc.validatePlatformPassword(value);
+    },
+    {
+      onError: (error) => {
+        const { message: errorMessage } = useError(error);
+        setPasswordError(errorMessage);
+      },
+      onSuccess: () => {
+        queryClient.setQueryData(["hasPassedValidation"], true);
+        setIsPasswordModalOpen(false);
+      },
     }
+  );
+
+  const handlePasswordCheck = (value) => {
+    validatePlatformPasswordMutation.mutate(value);
   };
 
   return (
@@ -216,7 +224,8 @@ export const Page = ({
         label={t("password")}
         btnLabel={t("submit")}
         isOpen={isPasswordModalOpen}
-        error={password}
+        isLoading={validatePlatformPasswordMutation.isLoading}
+        error={passwordError}
         handleSubmit={handlePasswordCheck}
         placeholder={t("password_placeholder")}
       />
@@ -288,12 +297,7 @@ export const Page = ({
         />
       )}
       {isFooterShown && (
-        <Footer
-          lists={footerLists}
-          contactUsText={t("contact_us")}
-          navigate={navigateTo}
-          Link={Link}
-        />
+        <Footer lists={footerLists} navigate={navigateTo} Link={Link} />
       )}
     </>
   );
