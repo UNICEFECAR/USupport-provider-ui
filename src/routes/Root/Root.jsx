@@ -36,6 +36,7 @@ import {
   AddCampaignAvailability,
   CampaignDetails,
   CustomersQA,
+  PlatformRating,
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
@@ -316,6 +317,14 @@ export default function Root() {
           element={
             <ProtectedRoute>
               <CampaignDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/platform-rating"
+          element={
+            <ProtectedRoute>
+              <PlatformRating />
             </ProtectedRoute>
           }
         />
