@@ -23,3 +23,4 @@ export * as Reports from "./Reports/locales.js";
 export * as Campaigns from "./Campaigns/locales.js";
 export * as AddCampaignAvailability from "./AddCampaignAvailability/locales.js";
 export * as CustomersQA from "./CustomersQA/locales.js";
+export * as PlatformRating from "./PlatformRating/locales.js";
