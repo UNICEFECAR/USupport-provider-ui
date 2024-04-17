@@ -1,8 +1,10 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 
 import { IdleTimer } from "@USupport-components-library/src";
+import { userSvc } from "@USupport-components-library/services";
 
 import { useEventListener, useGetProviderData } from "#hooks";
 
@@ -34,6 +36,7 @@ import {
   AddCampaignAvailability,
   CampaignDetails,
   CustomersQA,
+  PlatformRating,
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
@@ -59,6 +62,12 @@ export default function Root() {
   }, []);
 
   useEventListener("login", loginHandler);
+
+  useQuery({
+    queryKey: ["addPlatformAccess", loggedIn],
+    queryFn: async () => await userSvc.addPlatformAccess("provider"),
+    staleTime: Infinity,
+  });
 
   const location = useLocation();
   const [hideIdleTimer, setHideIdleTimer] = useState(false);
@@ -308,6 +317,14 @@ export default function Root() {
           element={
             <ProtectedRoute>
               <CampaignDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/platform-rating"
+          element={
+            <ProtectedRoute>
+              <PlatformRating />
             </ProtectedRoute>
           }
         />
