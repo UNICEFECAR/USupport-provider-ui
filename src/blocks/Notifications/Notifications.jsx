@@ -184,9 +184,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_booking":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -207,9 +208,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_reschedule":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -233,9 +235,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_cancellation":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -256,9 +259,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_cancellation_provider":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -279,9 +283,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_remind_start":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -318,9 +323,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_suggestion":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -341,9 +347,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_suggestion_booking":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -364,9 +371,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_suggestion_cancellation":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {
@@ -388,9 +396,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "add_more_availability_slots":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             icon="calendar"
             text={t(notification.type)}
             handleClick={() =>
@@ -401,9 +410,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "weekly_report":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             icon="activities"
             text={t(notification.type)}
             handleClick={() =>
@@ -414,9 +424,10 @@ export const Notifications = ({ openJoinConsultation }) => {
       case "consultation_started":
         return (
           <Notification
+            t={t}
             date={notification.createdAt}
             isRead={notification.isRead}
-            title="USupport"
+            title="uSupport"
             text={
               <Trans components={[<b></b>]}>
                 {t(notification.type, {

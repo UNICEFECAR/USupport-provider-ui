@@ -8,5 +8,7 @@
   "paragraph": "Or login with:",
   "register_button_label": "I don’t have an account",
   "try_again": "Try again in",
-  "seconds": "seconds"
+  "seconds": "seconds",
+  "heading": "Welcome to",
+  "provider": "Provider"
 }

@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { Root } from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 import { FIVE_MINUTES } from "@USupport-components-library/utils";
 import { userSvc } from "@USupport-components-library/services";
+import { ThemeContext } from "@USupport-components-library/utils";
 
 import { Logger } from "twilio-video";
 const logger = Logger.getLogger("twilio-video");
@@ -44,11 +45,26 @@ function App() {
     });
   }, []);
 
+  const getDefaultTheme = () => {
+    const localStorageTheme = localStorage.getItem("default-theme");
+    return localStorageTheme || "light";
+  };
+
+  const [theme, setTheme] = useState(getDefaultTheme());
+
+  useEffect(() => {
+    localStorage.setItem("default-theme", theme);
+  }, [theme]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <Root />
-      <ToastContainer />
-    </QueryClientProvider>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div className={`theme-${theme}`}>
+        <QueryClientProvider client={queryClient}>
+          <Root />
+          <ToastContainer />
+        </QueryClientProvider>
+      </div>
+    </ThemeContext.Provider>
   );
 }
 

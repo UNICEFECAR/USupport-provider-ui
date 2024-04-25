@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useNavigate, NavLink, Link } from "react-router-dom";
 import {
   Navbar,
   CircleIconButton,
   Footer,
   Icon,
+  PasswordModal,
 } from "@USupport-components-library/src";
-import { countrySvc, languageSvc } from "@USupport-components-library/services";
+import {
+  countrySvc,
+  languageSvc,
+  userSvc,
+} from "@USupport-components-library/services";
 import { getCountryFromTimezone } from "@USupport-components-library/utils";
-import { useIsLoggedIn, useEventListener } from "#hooks";
+import { useIsLoggedIn, useEventListener, useError } from "#hooks";
 import classNames from "classnames";
 
 import "./page.scss";
@@ -50,6 +55,7 @@ export const Page = ({
   const navigateTo = useNavigate();
   const queryClient = useQueryClient();
   const { t, i18n } = useTranslation("page");
+  const IS_DEV = process.env.NODE_ENV === "development";
   const isLoggedIn = useIsLoggedIn();
   const isNavbarShown = showNavbar !== null ? showNavbar : isLoggedIn;
   const isFooterShown = showFooter !== null ? showFooter : isLoggedIn;
@@ -169,33 +175,61 @@ export const Page = ({
   const footerLists = {
     list1: [
       { name: t("footer_1"), url: "/dashboard" },
+      { name: t("page_7"), url: "/my-qa" },
+      { name: t("page_6"), url: "/campaigns" },
+      { name: t("footer_9"), url: "/faq" },
+    ],
+    list2: [
       { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
       { name: t("footer_5"), url: "/clients", exact: true },
     ],
-    list2: [
+    list3: [
+      { name: t("contact_us"), url: "/contact-us" },
       { name: t("footer_6"), url: "/terms-of-use" },
       { name: t("footer_7"), url: "/privacy-policy" },
       { name: t("footer_8"), url: "/cookie-policy" },
-      { name: t("footer_9"), url: "/faq" },
     ],
-    list3: [
-      { value: "+7 717 232 28 78", iconName: "call-filled", onClick: "phone" },
-      {
-        value: "Beibitshilik St 10а, Astana 010000, Kazakhstan",
-        iconName: "pin",
+  };
+  const hasPassedValidation = queryClient.getQueryData(["hasPassedValidation"]);
+
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(
+    IS_DEV ? false : !hasPassedValidation
+  );
+  const [passwordError, setPasswordError] = useState("");
+
+  const validatePlatformPasswordMutation = useMutation(
+    async (value) => {
+      return await userSvc.validatePlatformPassword(value);
+    },
+    {
+      onError: (error) => {
+        const { message: errorMessage } = useError(error);
+        setPasswordError(errorMessage);
       },
-      {
-        value: "usupport@7digit.io",
-        iconName: "mail-filled",
-        onClick: "mail",
+      onSuccess: () => {
+        queryClient.setQueryData(["hasPassedValidation"], true);
+        setIsPasswordModalOpen(false);
       },
-    ],
+    }
+  );
+
+  const handlePasswordCheck = (value) => {
+    validatePlatformPasswordMutation.mutate(value);
   };
 
   return (
     <>
+      <PasswordModal
+        label={t("password")}
+        btnLabel={t("submit")}
+        isOpen={isPasswordModalOpen}
+        isLoading={validatePlatformPasswordMutation.isLoading}
+        error={passwordError}
+        handleSubmit={handlePasswordCheck}
+        placeholder={t("password_placeholder")}
+      />
       {isNavbarShown === true && (
         <Navbar
           pages={pages}
@@ -264,12 +298,7 @@ export const Page = ({
         />
       )}
       {isFooterShown && (
-        <Footer
-          lists={footerLists}
-          contactUsText={t("contact_us")}
-          navigate={navigateTo}
-          Link={Link}
-        />
+        <Footer lists={footerLists} navigate={navigateTo} Link={Link} />
       )}
     </>
   );

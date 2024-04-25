@@ -27,6 +27,7 @@ import {
   Campaigns,
   CampaignDetails,
   CustomersQA,
+  PlatformRating,
 } from "#blocks/locales.js";
 
 import {
@@ -53,6 +54,7 @@ import {
   CustomersQA as CustomersQAPage,
   Consultations as ConsultationsPage,
   Notifications as NotificationsPage,
+  PlatformRating as PlatformRatingPage,
 } from "#pages/locales.js";
 
 import {
@@ -101,6 +103,7 @@ const resources = {
     campaigns: Campaigns.en,
     "campaign-details": CampaignDetails.en,
     "customers-qa": CustomersQA.en,
+    "platform-rating": PlatformRating.en,
 
     // Pages
     "not-found-page": NotFoundPage.en,
@@ -126,6 +129,7 @@ const resources = {
     "customers-qa-page": CustomersQAPage.en,
     "consultations-page": ConsultationsPage.en,
     "notifications-page": NotificationsPage.en,
+    "platform-rating-page": PlatformRatingPage.en,
 
     // Backdrops
     "upload-picture": UploadPicture.en,
@@ -173,6 +177,7 @@ const resources = {
     campaigns: Campaigns.ru,
     "campaign-details": CampaignDetails.ru,
     "customers-qa": CustomersQA.ru,
+    "platform-rating": PlatformRating.ru,
 
     // Pages
     "not-found-page": NotFoundPage.ru,
@@ -198,6 +203,7 @@ const resources = {
     "customers-qa-page": CustomersQAPage.ru,
     "consultations-page": ConsultationsPage.ru,
     "notifications-page": NotificationsPage.ru,
+    "platform-rating-page": PlatformRatingPage.ru,
 
     // Backdrops
     "upload-picture": UploadPicture.ru,
@@ -245,6 +251,7 @@ const resources = {
     campaigns: Campaigns.kk,
     "campaign-details": CampaignDetails.kk,
     "customers-qa": CustomersQA.kk,
+    "platform-rating": PlatformRating.kk,
 
     // Pages
     "not-found-page": NotFoundPage.kk,
@@ -270,6 +277,7 @@ const resources = {
     "customers-qa-page": CustomersQAPage.kk,
     "consultations-page": ConsultationsPage.kk,
     "notifications-page": NotificationsPage.kk,
+    "platform-rating-page": PlatformRatingPage.kk,
 
     // Backdrops
     "upload-picture": UploadPicture.kk,
