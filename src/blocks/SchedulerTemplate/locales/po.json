@@ -1,0 +1,13 @@
+{
+  "start_date": "Data rozpoczęcia",
+  "end_date": "Data zakończenia",
+  "monday": "Poniedziałek",
+  "tuesday": "Wtorek",
+  "wednesday": "Środa",
+  "thursday": "Czwartek",
+  "friday": "Piątek",
+  "saturday": "Sobota",
+  "sunday": "Niedziela",
+  "save": "Dodaj dostępność szablonu",
+  "unavailable": "Ustaw dzień jako niedostępny"
+}
