@@ -1,7 +1,7 @@
 {
-  "rating_label": "Оцените нас",
-  "textarea_label": "Ваш комментарий",
-  "textarea_placeholder": "Оставьте свой комментарий здесь",
-  "button_label": "Отправить оценку",
-  "success": "Оценка отправлена успешно"
+  "rating_label": "Оцініть нас",
+  "textarea_label": "Ваш коментар",
+  "textarea_placeholder": "Залиште коментар тут",
+  "button_label": "Надішліть оцінку",
+  "success": "Рейтинг відправлено"
 }

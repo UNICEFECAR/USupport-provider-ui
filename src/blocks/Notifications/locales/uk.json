@@ -1,0 +1,20 @@
+{
+  "consultation_booking": "Вашу консультацію з {{clientName}} заплановано на {{date}} з {{startHour}} по {{endHour}}",
+  "consultation_reschedule": "Клієнт(ка) {{clientName}} переніс(есла) консультацію з {{date}} з {{startHour}} на {{endHour}} на {{newDate}} з {{newStartHour}} на {{newEndHour}}",
+  "consultation_cancellation_provider": "Ви скасували консультацію з {{clientName}}, заплановану на {{date}} з {{startHour}} на {{endHour}}",
+  "consultation_cancellation": "Клієнт(ка) {{clientName}} скасував(ла) консультацію, заплановану на {{date}} з {{startHour}} на {{endHour}}",
+  "consultation_remind_start": "Наступна консультація за {{minutes}} хвилин",
+  "consultation_suggestion": "Ви запропонували консультацію на {{clientName}} для {{date}} з {{startHour}} на {{endHour}}",
+  "consultation_suggestion_booking": "Клієнт(ка) {{clientName}} прийняв(ла) запропоновану консультацію на сайті {{date}} від {{startHour}} до {{endHour}}",
+  "consultation_suggestion_cancellation": "Клієнт(ка) {{clientName}} відхилив(ла) запропоновану консультацію на сайті {{date}} від {{startHour}} до {{endHour}}",
+  "consultation_started": "Ваша консультація з клієнтом(кою) {{clientName}} розпочалася",
+  "join": "Приєднатися",
+  "accept": "Прийняти",
+  "accept_consultation_success": "Консультацію прийнято",
+  "reject": "Відхилити",
+  "reject_consultation_success": "Консультацію відхилено",
+  "no_notifications": "Ще немає сповіщень.",
+  "add_more_availability_slots": "Додайте до розкладу більше слотів доступності ",
+  "weekly_report": "Ви маєте новий щотижневий звіт",
+  "yesterday": "вчора"
+}

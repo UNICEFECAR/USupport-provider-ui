@@ -1,0 +1,40 @@
+{
+  "page_1": "Панель керування",
+  "page_2": "Календар",
+  "page_3": "Історія активності",
+  "page_4": "Консультації",
+  "page_5": "Клієнти(ки)",
+  "page_6": "Кампанії",
+  "page_7": "Мої запитання й відповіді",
+
+  "country_1": "",
+  "country_2": "",
+  "country_3": "",
+
+  "language_1": "",
+  "language_2": "",
+  "language_3": "",
+  "language_4": "",
+  "language_5": "",
+  "language_6": "",
+
+  "footer_1": "Панель керування",
+  "footer_2": "Календар",
+  "footer_3": "Історія активності",
+  "footer_4": "Консультації",
+  "footer_5": "Клієнти(ки)",
+  "footer_6": "Умови надання послуг",
+  "footer_7": "Політика конфіденційності",
+  "footer_8": "Налаштування файлів cookie",
+  "footer_9": "ПОШИРЕНІ ЗАПИТАННЯ",
+
+  "emergency_button": "SOS-центр",
+
+  "button_text": "Перейти до додатку",
+  "contact_us": "Зв'яжіться з нами",
+  "your_profile_text": "Ваш профіль",
+  "password_placeholder": "Password", 
+  "password": "Please enter your password to access the site",
+  "wrong_password": "Wrong password",
+  "submit": "Submit"
+}

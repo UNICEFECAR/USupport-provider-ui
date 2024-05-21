@@ -1,0 +1,10 @@
+{
+  "heading": "Powód archiwizacji",
+  "subheading": "Wybierz powód, dla którego chcesz zarchiwizować to pytanie",
+  "cta_label": "Wyślij do archiwum",
+  "spam_label": "To spam",
+  "duplicate_label": "Pytanie już istnieje",
+  "other_label": "Inny powód",
+  "input_placeholder": "Wpisz powód tutaj",
+  "question_archived": "Pytanie zostało pomyślnie zarchiwizowane"
+}
