@@ -1,0 +1,29 @@
+{
+  "calendar": "Kalendarz",
+  "add_template_availability": "Dodaj dostępność szablonu",
+  "today": "Dzisiaj",
+
+  "sunday": "Niedz.",
+  "monday": "Pon.",
+  "tuesday": "Wt.",
+  "wednesday": "Śr.",
+  "thursday": "Czw.",
+  "friday": "Piąt.",
+  "saturday": "Sob.",
+
+  "consultation_details": "Wyświetl szczegóły",
+  "available": "Jesteś dostępny",
+  "not_available": "Jesteś niedostępny",
+  "set_available": "Ustaw jako dostępny",
+  "set_not_available": "Ustaw jako niedostępny",
+  "view_profile": "Wyświetl profil",
+  "suggest_consultation": "Sugerować konsultację",
+  "cancel": "Anuluj spotkanie",
+  "suggested": "Sugerowane",
+  "join_consultation": "Dołącz do konsultacji",
+  "slot_added": "Przedział czasowy został pomyślnie dodany",
+  "free": "Wolny",
+  "more_campaigns": "{{amount}} kampanie",
+  "provider_inactive": "Nie masz uprawnień do dodawania dostępności",
+  "coupon": "Kupon"
+}

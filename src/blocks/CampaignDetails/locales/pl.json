@@ -1,0 +1,22 @@
+{
+  "upcoming": "Nadchodzące",
+  "completed": "Zakończono",
+  "sunday": "Niedz.",
+  "monday": "Pon.",
+  "tuesday": "Wt.",
+  "wednesday": "Śr.",
+  "thursday": "Czw.",
+  "friday": "Piąt.",
+  "saturday": "Sob.",
+  "no_consultations": "Nie masz żadnych nadchodzących konsultacji",
+  "cancel_consultation": "Anulować konsultację",
+  "suggested": "Sugerowane",
+  "view_profile": "Wyświetl profil",
+  "active": "Na żywo",
+  "no_completed_consultations": "Nie masz ukończonych konsultacji",
+  "no_upcoming_consultations": "Nie masz żadnych nadchodzących konsultacji",
+  "not_conducted": "Nie przeprowadzono",
+  "conducted": "Przeprowadzone",
+  "join": "Dołącz",
+  "details": "Zobacz szczegóły"
+}

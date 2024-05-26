@@ -1,0 +1,32 @@
+{
+  "activity_history_heading": "Історія активності",
+  "button_propose_consultation_label": "Запропонувати консультацію",
+  "button_view_profile_label": "Переглянути особистий профіль",
+  "no_consultation_selected": "Щоб переглянути історію активності, виберіть одне з перелічених ліворуч.",
+  "button_filter_label": "Фільтр",
+  "sunday": "Нд",
+  "monday": "Пн",
+  "tuesday": "Вт",
+  "wednesday": "Ср",
+  "thursday": "Чт",
+  "friday": "Пт",
+  "saturday": "Сб",
+  "no_messages": "У цій консультації немає повідомлень",
+  "no_activity_history": "Наразі не зафіксовано жодної активності",
+  "free": "Безкоштовно",
+
+  "client_joined": "Клієнт(ка) долучився(лася) до консультації",
+  "client_left": "Клієнт(ка) залишив(ла) консультацію",
+  "client_camera_off": "Клієнт(ка) вимкнув(ла) камеру",
+  "client_camera_on": "Клієнт(ка) увімкнув(ла) камеру",
+  "client_microphone_off": "Клієнт(ка) вимкнув(ла) мікрофон",
+  "client_microphone_on": "Клієнт(ка) увімкнув(ла) мікрофон",
+  "chat_history_deleted_by_client": "Історію чату видалено клієнтом(кою)",
+
+  "provider_joined": "Консультант(ка) долучився(лася)  до консультації",
+  "provider_left": "Консультант(ка) залишив(ла) консультацію",
+  "provider_camera_off": "Консультант(ка) вимкнув(ла) камеру",
+  "provider_camera_on": "Консультант(ка) увімкнув(ла) камеру",
+  "provider_microphone_off": "Консультант(ка) вимкнув(ла) мікрофон",
+  "provider_microphone_on": "Консультант(ка) увімкнув(ла) мікрофон"
+}
