@@ -1,0 +1,14 @@
+{
+  "heading": "Napisz odpowiedź",
+  "title_label": "Tytuł",
+  "title_placeholder": "Wpisz tutaj tytuł",
+  "answer_label": "Odpowiedz",
+  "answer_placeholder": "Wpisz tutaj swoją odpowiedź",
+  "tags_label": "Tagi",
+  "title_error_label": "Tytuł jest wymagany",
+  "answer_error_label": "Odpowiedź jest wymagana",
+  "tags_error_label": "Wymagane są tagi",
+  "cta_label": "Wyślij swoją odpowiedź",
+  "selected_tags": "Wybrane tagi",
+  "response_success": "Odpowiedź wysłana pomyślnie"
+}

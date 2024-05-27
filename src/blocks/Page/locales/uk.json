@@ -1,0 +1,39 @@
+{
+  "page_1": "Pulpit nawigacyjny",
+  "page_2": "Kalendarz",
+  "page_3": "Historia aktywności",
+  "page_4": "Konsultacje",
+  "page_5": "Klienci",
+  "page_6": "Kampanie",
+  "page_7": "MOJE PYTANIA I ODPOWIEDZI",
+
+  "country_1": "",
+  "country_2": "",
+  "country_3": "",
+
+  "language_1": "",
+  "language_2": "",
+  "language_3": "",
+  "language_4": "",
+  "language_5": "",
+  "language_6": "",
+
+  "footer_1": "Pulpit nawigacyjny",
+  "footer_2": "Kalendarz",
+  "footer_3": "Historia aktywności",
+  "footer_4": "Konsultacje",
+  "footer_5": "Klienci",
+  "footer_6": "Warunki świadczenia usług",
+  "footer_7": "Polityka prywatności",
+  "footer_8": "Ustawienia plików cookie",
+  "footer_9": "Najczęściej zadawane pytania",
+
+  "emergency_button": "Centrum SOS",
+  "button_text": "Przejdź do aplikacji",
+  "contact_us": "Skontaktuj się z nami",
+  "your_profile_text": "Twój profil",
+  "password_placeholder": "Password", 
+  "password": "Please enter your password to access the site",
+  "wrong_password": "Wrong password",
+  "submit": "Submit"
+}

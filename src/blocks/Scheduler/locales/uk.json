@@ -1,0 +1,29 @@
+{
+  "calendar": "Календар",
+  "add_template_availability": "Додати доступність шаблону",
+  "today": "Сьогодні",
+
+  "sunday": "Нд",
+  "monday": "Пн",
+  "tuesday": "Вт",
+  "wednesday": "Ср",
+  "thursday": "Чт",
+  "friday": "Пт",
+  "saturday": "Сб",
+
+  "consultation_details": "Переглянути деталі",
+  "available": "Ви доступні",
+  "not_available": "Ви недоступні",
+  "set_available": "Встановити як доступний",
+  "set_not_available": "Встановити як недоступний",
+  "view_profile": "Переглянути профіль",
+  "suggest_consultation": "Порадити консультацію",
+  "cancel": "Скасувати зустріч",
+  "suggested": "Запропоновано",
+  "join_consultation": "Приєднуйтесь до консультації",
+  "slot_added": "Слот додано",
+  "free": "Безкоштовно",
+  "more_campaigns": "{{amount}} кампанії",
+  "provider_inactive": "Ви не маєте прав на додавання доступності",
+  "coupon": "Купон"
+}
