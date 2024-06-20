@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { Root } from "./routes";
@@ -35,16 +35,6 @@ function App() {
     once: false,
   });
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", (e) => {
-      if (!(performance.getEntriesByType("navigation")[0].type === "reload")) {
-        // If the page is being refreshed, do nothing
-        e.preventDefault();
-        userSvc.logout();
-      }
-    });
-  }, []);
-
   const getDefaultTheme = () => {
     const localStorageTheme = localStorage.getItem("default-theme");
     return localStorageTheme || "light";
@@ -55,6 +45,18 @@ function App() {
   useEffect(() => {
     localStorage.setItem("default-theme", theme);
   }, [theme]);
+
+  const logoutFunction = useCallback(() => {
+    userSvc.logout();
+  }, []);
+
+  useEffect(() => {
+    const existingSession = sessionStorage.getItem("userSession");
+
+    if (!existingSession) {
+      logoutFunction();
+    }
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
