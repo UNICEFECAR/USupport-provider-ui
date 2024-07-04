@@ -1,11 +1,11 @@
 {
   "heading": "Weryfikacja kodu",
-  "subheading": "Wprowadź kod otrzymany w wiadomości e-mail. Można z niej skorzystać w ciągu 30 minut od otrzymania wiadomości e-mail.",
+  "subheading": "Wprowadź kod otrzymany w wiadomości email. Można z niej skorzystać w ciągu 30 minut od otrzymania wiadomości e-mail.",
   "expiration_text": "Kod wygaśnie w ",
   "button_with_icon_label_view": "Wyświetl kod",
   "button_with_icon_label_hide": "Ukryj kod",
-  "send_button_label": "Wyśłać",
+  "send_button_label": "Wyślij",
   "didnt_get_code": "Nie otrzymałeś kodu?",
-  "resend_code_button_label": "Wyślij ponownie wiadomość e-mail",
+  "resend_code_button_label": "Wyślij ponownie wiadomość email",
   "seconds": " za {{seconds}} sekund"
 }
