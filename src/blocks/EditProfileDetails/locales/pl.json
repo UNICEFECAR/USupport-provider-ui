@@ -1,6 +1,6 @@
 {
   "name_label": "Imie",
-  "patronym_label": "Imię odojcowskie",
+  "patronym_label": "-",
   "surname_label": "Nazwisko",
   "sex_label": "Płeć",
   "email_label": "Email",
@@ -18,7 +18,7 @@
   "video_link_label": "Prezentacja wideo",
 
   "name_placeholder": "Wpisz swoje imię",
-  "patronym_placeholder": "Wprowadź swoje imię odojcowskie",
+  "patronym_placeholder": "-",
   "surname_placeholder": "Wpisz swoje nazwisko",
   "email_placeholder": "user@mail.com",
   "phone_prefix_placeholder": "Prefiks",
