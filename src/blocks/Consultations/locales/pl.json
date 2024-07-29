@@ -11,7 +11,7 @@
   "friday": "Piąt.",
   "saturday": "Sob.",
   "no_consultations": "Nie masz żadnych nadchodzących konsultacji",
-  "cancel_consultation": "Anulować konsultację",
+  "cancel_consultation": "Anuluj konsultację",
   "suggested": "Sugerowane",
   "view_profile": "Wyświetl profil",
   "active": "Na żywo",
@@ -19,7 +19,7 @@
   "no_upcoming_consultations_upcoming": "Nie masz żadnych nadchodzących konsultacji",
   "no_upcoming_consultations_search": "Nie ma konsultacji pasujących do wyszukiwania",
   "not_conducted": "Nie przeprowadzono",
-  "conducted": "Przeprowadzone",
+  "conducted": "Przeprowadzono",
   "join": "Dołącz",
   "free": "Wolny"
 }

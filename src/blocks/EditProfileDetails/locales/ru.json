@@ -1,6 +1,6 @@
 {
   "name_label": "Имя",
-  "patronym_label": "Patronym",
+  "patronym_label": "Отчество",
   "surname_label": "Фамилия",
   "sex_label": "Пол",
   "email_label": "Электронная почта",
