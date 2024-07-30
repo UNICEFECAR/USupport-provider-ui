@@ -3,7 +3,7 @@
   "campaigns_participate": "Kampanie, w których uczestniczysz",
   "sponsor": "Sponsor",
   "campaign": "Kampania",
-  "coupon_single_price": "Pojedyncza cena kupona",
+  "coupon_single_price": "Pojedyncza cena kuponu",
   "period": "Okres",
   "consultations_with_you": "Twoje konsultacje",
   "your_payment": "Twoja płatność",
@@ -20,6 +20,6 @@
   "not_allowed": "Nie masz uprawnień dostępu do kampanii",
   "available_campaigns_tab_label": "Dostępne kampanie",
   "campaigns_participate_tab_label": "Kampanie, w których uczestniczysz",
-  "past_campaigns_tab_label": "Wcześniejsze kampanie, w których brałeś udział",
+  "past_campaigns_tab_label": "Wcześniejsze kampanie, w których brałeś/brałaś udział",
   "search": "Wyszukiwanie"
 }
