@@ -262,11 +262,13 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     startDate,
     slot,
     campaignIds,
+    organizationId,
   }) => {
     await providerSvc.removeMultipleAvailableSlots(
       startDate,
       slot,
-      campaignIds
+      campaignIds,
+      organizationId
     );
     return true;
   };
@@ -274,9 +276,16 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const removeMultipleAvailableSlotsMutation = useMutation(
     removeMultipleAvailableSlots,
     {
-      onMutate: ({ slot, campaignIds }) => {
+      onMutate: ({ slot, campaignIds, organizationId }) => {
         const slotToRemove = new Date(slot * 1000).toISOString();
         const oldSlots = { ...slotsData };
+
+        const newOrganizationSlots = organizationId
+          ? slotsData.organizationSlots.filter(
+              (x) => x.time.toISOString() !== slotToRemove
+            )
+          : slotsData.organizationSlots;
+
         setSlots({
           slots: slotsData.slots.filter((slot) => slot !== slotToRemove),
           campaignSlots: slotsData.campaignSlots.filter((slot) => {
@@ -288,7 +297,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
             }
             return true;
           }),
-          organizationSlots: [...slotsData.organizationSlots],
+          organizationSlots: [...newOrganizationSlots],
         });
         return () => {
           setSlots(oldSlots);
@@ -410,6 +419,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
           startDate,
           slot: timestampSlot,
           campaignIds: campaignId,
+          organizationId,
         });
       } else {
         removeAvailableSlotMutation.mutate({
