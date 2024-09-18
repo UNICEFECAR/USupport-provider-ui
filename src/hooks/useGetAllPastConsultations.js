@@ -18,6 +18,7 @@ export default function useGetAllPastConsultations() {
       campaignId: consultation.campaign_id,
       couponPrice: consultation.coupon_price,
       sponsorImage: consultation.sponsor_image,
+      organizationName: consultation.organization_name,
     }));
   };
 
