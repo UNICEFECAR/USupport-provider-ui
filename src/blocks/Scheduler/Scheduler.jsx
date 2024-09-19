@@ -367,6 +367,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       sponsorImage: consultation.sponsor_image,
       sponsorName: consultation.sponsor_name,
       campaignId: consultation.campaign_id,
+      organizationId: consultation.organization_id,
     };
   };
 
