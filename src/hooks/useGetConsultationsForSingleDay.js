@@ -26,6 +26,7 @@ export const useGetConsultationsForSingleDay = (date, enabled = true) => {
       couponPrice: consultation.coupon_price,
       sponsorImage: consultation.sponsor_image,
       sponsorName: consultation.sponsor_name,
+      organizationId: consultation.organization_id,
     }));
   };
 
