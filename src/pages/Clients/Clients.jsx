@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { InputSearch } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
@@ -25,6 +26,7 @@ import "./clients.scss";
  * @returns {JSX.Element}
  */
 export const Clients = () => {
+  const queryClient = useQueryClient();
   const { width } = useWindowDimensions();
   const { t } = useTranslation("clients-page");
   const providerId = userSvc.getUserID();
@@ -83,6 +85,7 @@ export const Clients = () => {
   const closeCancelConsultation = () => setIsCancelConsultationOpen(false);
 
   const onSuggestConsultationSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["all-clients"] });
     toast(t("consultation_suggest_success"));
     setIsBlockSlotSubmitting(false);
     window.dispatchEvent(new Event("new-notification"));

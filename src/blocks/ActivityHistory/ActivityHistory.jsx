@@ -146,6 +146,7 @@ export const ActivityHistory = ({
             renderIn="provider"
             onClick={() => handleConsultationClick(consultation)}
             couponPrice={consultation.couponPrice}
+            organizationName={consultation.organizationName}
             sponsorImage={consultation.sponsorImage}
             t={t}
           />

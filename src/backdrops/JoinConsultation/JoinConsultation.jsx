@@ -4,7 +4,11 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 import { Backdrop, ButtonSelector } from "@USupport-components-library/src";
-import { messageSvc, videoSvc } from "@USupport-components-library/services";
+import {
+  messageSvc,
+  videoSvc,
+  providerSvc,
+} from "@USupport-components-library/services";
 
 import "./join-consultation.scss";
 
@@ -35,10 +39,16 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
       consultation.consultationId
     );
 
+    const joinConsultationPromise = providerSvc.joinConsultation({
+      consultationId: consultation.consultationId,
+      userType: "provider",
+    });
+
     try {
       const result = await Promise.all([
         systemMessagePromise,
         getConsultationTokenPromise,
+        joinConsultationPromise,
       ]);
       const token = result[1].data.token;
 
