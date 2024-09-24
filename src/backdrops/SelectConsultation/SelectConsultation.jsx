@@ -10,7 +10,10 @@ import {
   Loading,
 } from "@USupport-components-library/src";
 import { providerSvc } from "@USupport-components-library/services";
-import { getTimestampFromUTC } from "@USupport-components-library/utils";
+import {
+  getTimestampFromUTC,
+  parseUTCDate,
+} from "@USupport-components-library/utils";
 
 import { useGetProviderData } from "#hooks";
 
@@ -53,7 +56,35 @@ export const SelectConsultation = ({
       getTimestampFromUTC(startDate),
       getTimestampFromUTC(currentDay)
     );
-    return data;
+
+    const slots = data.map((x) => {
+      if (x.time) {
+        return {
+          time: parseUTCDate(x.time),
+          organization_id: x.organization_id,
+        };
+      }
+      return x;
+    });
+
+    const organizationSlotTimes = slots.reduce((acc, slot) => {
+      if (slot.organization_id) {
+        acc.push(slot.time.getTime());
+      }
+      return acc;
+    }, []);
+
+    // Ensure that there is no overlap between organization slots and regular slots
+    // If there are duplicates, remove the regular slot
+    if (organizationSlotTimes.length > 0) {
+      return slots.filter((slot) => {
+        if (slot.time) return slot;
+        const slotTime = new Date(slot).getTime();
+        return !organizationSlotTimes.includes(slotTime);
+      });
+    }
+
+    return slots;
   };
   const availableSlotsQuery = useQuery(
     ["available-slots", startDate, currentDay, providerId],
@@ -72,7 +103,7 @@ export const SelectConsultation = ({
 
   const renderFreeSlots = () => {
     const todaySlots = availableSlots?.filter((slot) => {
-      const slotDate = new Date(slot).getDate();
+      const slotDate = new Date(slot.time || slot).getDate();
       const currentDayDate = new Date(currentDay).getDate();
       return slotDate === currentDayDate;
     });
@@ -80,8 +111,10 @@ export const SelectConsultation = ({
       return <p>{t("no_slots_available")}</p>;
     const options = todaySlots?.map(
       (slot) => {
-        const slotLocal = new Date(slot);
-        const value = new Date(slot).getTime();
+        const slotLocal = new Date(slot.time || slot);
+
+        const value = new Date(slot.time || slot).getTime();
+
         const getDoubleDigitHour = (hour) =>
           hour === 24 ? "00" : hour < 10 ? `0${hour}` : hour;
 
@@ -108,7 +141,24 @@ export const SelectConsultation = ({
   };
 
   const handleSave = () => {
-    handleBlockSlot(selectedSlot);
+    const allMatchingSlots = availableSlots.filter((slot) => {
+      const isTimeMatching = new Date(slot.time).getTime() === selectedSlot;
+      return isTimeMatching;
+    });
+
+    let slotObject;
+    if (allMatchingSlots.length >= 1) {
+      const hasOrganizationSlot = allMatchingSlots.find(
+        (slot) => !!slot.organization_id
+      );
+      if (hasOrganizationSlot) {
+        slotObject = hasOrganizationSlot;
+      }
+    }
+
+    const time = slotObject || selectedSlot;
+
+    handleBlockSlot(time);
   };
 
   return (

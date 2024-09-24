@@ -149,6 +149,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             handleViewProfile={handleViewProfile}
             couponPrice={consultation.couponPrice}
             sponsorImage={consultation.sponsorImage}
+            withOrganization={!!consultation.organizationId}
             t={t}
           />
         </GridItem>

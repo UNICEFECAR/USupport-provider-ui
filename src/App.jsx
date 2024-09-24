@@ -14,6 +14,8 @@ logger.setLevel("debug");
 import "./App.scss";
 import "./HackTimer.js";
 
+const IS_DEV = process.env.NODE_ENV === "development";
+
 // Create a react-query client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,13 +38,17 @@ function App() {
   });
 
   useEffect(() => {
-    window.addEventListener("beforeunload", (e) => {
-      if (!(performance.getEntriesByType("navigation")[0].type === "reload")) {
-        // If the page is being refreshed, do nothing
-        e.preventDefault();
-        userSvc.logout();
-      }
-    });
+    if (!IS_DEV) {
+      window.addEventListener("beforeunload", (e) => {
+        if (
+          !(performance.getEntriesByType("navigation")[0].type === "reload")
+        ) {
+          // If the page is being refreshed, do nothing
+          e.preventDefault();
+          userSvc.logout();
+        }
+      });
+    }
   }, []);
 
   const getDefaultTheme = () => {
