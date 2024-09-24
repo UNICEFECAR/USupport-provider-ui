@@ -48,6 +48,11 @@ export default function useGetProviderData(id = null, enabled = true) {
       earliestAvailableSlot: data.earliest_available_slot || "",
       videoLink: data.video_link || "",
       status: data.status,
+      organizations:
+        data.organizations.map((x) => ({
+          name: x.name,
+          organizationId: x.organization_id,
+        })) || [],
     };
     return formattedData;
   }, [enabled]);
