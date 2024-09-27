@@ -24,11 +24,14 @@ export default function useGetCalendarData(startDate) {
     }
 
     const slotsData = [...data.slots, ...data.campaign_slots];
+
     for (let i = 0; i < slotsData.length; i++) {
       const slot = slotsData[i];
       const slotTime =
         typeof slot === "object"
           ? new Date(parseUTCDate(slotsData[i].time))
+          : slot.includes("UTC")
+          ? new Date(parseUTCDate(slot))
           : new Date(slotsData[i]);
 
       const key = slotTime.toLocaleDateString();
