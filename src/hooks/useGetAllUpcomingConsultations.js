@@ -39,6 +39,7 @@ export default function useGetAllUpcomingConsultations() {
         campaignId: consultation.campaign_id,
         couponPrice: consultation.coupon_price,
         sponsorImage: consultation.sponsor_image,
+        organizationId: consultation.organization_id,
       }));
   };
 
