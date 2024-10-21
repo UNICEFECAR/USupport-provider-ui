@@ -128,6 +128,7 @@ export const Consultations = ({
             suggested={consultation.status === "suggested"}
             couponPrice={consultation.couponPrice}
             sponsorImage={consultation.sponsorImage}
+            withOrganization={!!consultation.organizationId}
             t={t}
           />
         </GridItem>
