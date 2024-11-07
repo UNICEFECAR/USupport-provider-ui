@@ -473,8 +473,8 @@ export const Consultation = () => {
 
   return (
     <Page
-      showNavbar={width < 768 ? false : true}
-      showFooter={width < 768 ? false : true}
+      showNavbar={false}
+      showFooter={false}
       showEmergencyButton={false}
       classes="page__consultation"
       showGoBackArrow={false}
