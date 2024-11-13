@@ -4,11 +4,15 @@
   max-width: 80rem;
 
   @media screen and (min-width: $screen-md) {
-    min-height: 85vh;
+    min-height: 80vh;
   }
 
   &__question-text {
     text-align: left;
+    padding-left: $spacing_1_2;
+    @media screen and (min-width: $screen_md) {
+      padding-left: 0;
+    }
   }
 
   &__inputs-item {
@@ -19,12 +23,21 @@
     }
 
     &__grid {
+      padding: $spacing_1_2;
       place-items: center;
+
+      @media screen and (min-width: $screen_md) {
+        place-items: start;
+      }
     }
   }
 
   &__tags {
     margin-bottom: $spacing_3_2;
+  }
+
+  &__textarea {
+    margin-top: $spacing_1_2;
   }
 
   & .backdrop__children {
