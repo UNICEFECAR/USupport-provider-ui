@@ -107,14 +107,14 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
       errorMessage={errors.submit || errors.tags}
     >
       <Grid>
-        <GridItem lg={6}>
+        <GridItem md={8} lg={12}>
           <p className="text create-response__question-text">
             {question.question}
           </p>
         </GridItem>
-        <GridItem lg={6} classes="create-response__inputs-item">
+        <GridItem md={8} lg={12} classes="create-response__inputs-item">
           <Grid classes="create-response__inputs-item__grid">
-            <GridItem md={8} lg={12}>
+            <GridItem md={4} lg={6}>
               <Input
                 label={t("title_label") + " *"}
                 placeholder={t("title_placeholder")}
@@ -123,9 +123,8 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
                 onBlur={() => handleBlur("title")}
                 errorMessage={errors.title}
               />
-            </GridItem>
-            <GridItem md={8} lg={12}>
               <Textarea
+                classes="create-response__textarea"
                 label={t("answer_label") + " *"}
                 placeholder={t("answer_placeholder")}
                 value={data.answer}
@@ -134,7 +133,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
                 errorMessage={errors.answer}
               />
             </GridItem>
-            <GridItem md={8} lg={12}>
+            <GridItem md={4} lg={6}>
               <InputWithDropdown
                 label={t("tags_label") + " *"}
                 options={tags}
