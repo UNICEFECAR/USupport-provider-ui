@@ -40,6 +40,8 @@ const fetchCountryMinPrice = async () => {
   };
 };
 
+const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL"];
+
 /**
  * EditProfileDetails
  *
@@ -66,6 +68,8 @@ export const EditProfileDetails = ({
   const [countryMinPrice, setCountryMinPrice] = useState(0);
   const [countryAlpha2, setCountryAlpha2] = useState("");
   const { data } = useQuery(["country-min-price"], fetchCountryMinPrice);
+
+  const isPriceDisabled = COUNTRIES_WITH_DISABLED_PRICE.includes(countryAlpha2);
 
   useEffect(() => {
     if (data) {
@@ -347,9 +351,9 @@ export const EditProfileDetails = ({
               label={t("consultation_price_label", { currencySymbol }) + " *"}
               placeholder={t("consultation_price_placeholder")}
               onBlur={() => handleBlur("consultationPrice")}
-              disabled={countryAlpha2 === "KZ"}
+              disabled={isPriceDisabled}
             />
-            {countryAlpha2 === "KZ" && (
+            {isPriceDisabled && (
               <Error message={t("consultation_price_disabled")} />
             )}
             <Input
