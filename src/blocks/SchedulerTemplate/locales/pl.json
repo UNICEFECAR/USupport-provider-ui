@@ -9,5 +9,7 @@
   "saturday": "Sobota",
   "sunday": "Niedziela",
   "save": "Dodaj dostępność szablonu",
-  "unavailable": "Ustaw dzień jako niedostępny"
+  "unavailable": "Ustaw dzień jako niedostępny",
+  "from": "Od",
+  "to": "do"
 }
