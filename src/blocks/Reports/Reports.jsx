@@ -246,7 +246,7 @@ const Filters = ({
               label={t("start_date")}
               onChange={(e) => handleChange("startDate", e.currentTarget.value)}
               value={data.startDate}
-              placeholder="DD.MM.YYY"
+              placeholder={t("dates_placeholder")}
               classes="reports__filter-modal__date-picker"
             />
             <Input
@@ -254,7 +254,7 @@ const Filters = ({
               label={t("end_date")}
               onChange={(e) => handleChange("endDate", e.currentTarget.value)}
               value={data.endDate}
-              placeholder="DD.MM.YYY"
+              placeholder={t("dates_placeholder")}
               classes="reports__filter-modal__date-picker"
             />
           </div>
