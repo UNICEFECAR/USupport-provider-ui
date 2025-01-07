@@ -6,8 +6,8 @@ import {
   Block,
   Button,
   DropdownWithLabel,
-  Input,
   Modal,
+  DateInput,
 } from "@USupport-components-library/src";
 import {
   getDateView,
@@ -197,7 +197,7 @@ const Filters = ({
     campaign: "",
     client: "",
   };
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState({ ...initialData });
 
   const handleChange = (field, value) => {
     setData({
@@ -212,7 +212,8 @@ const Filters = ({
   };
 
   const handleResetFilters = () => {
-    handleSave(initialData);
+    setData({ ...initialData });
+    handleSave({ ...initialData });
     handleClose();
   };
 
@@ -241,16 +242,14 @@ const Filters = ({
             options={clientOptions}
           />
           <div className="reports__filter-modal__date-container">
-            <Input
-              type="date"
+            <DateInput
               label={t("start_date")}
               onChange={(e) => handleChange("startDate", e.currentTarget.value)}
               value={data.startDate}
               placeholder={t("dates_placeholder")}
               classes="reports__filter-modal__date-picker"
             />
-            <Input
-              type="date"
+            <DateInput
               label={t("end_date")}
               onChange={(e) => handleChange("endDate", e.currentTarget.value)}
               value={data.endDate}
