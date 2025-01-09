@@ -295,7 +295,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
                 />
                 <div className="scheduler-template__grid__day-time-selector">
                   <div className="scheduler-template__grid__day-time-selector__single">
-                    <p>From</p>
+                    <p>{t("from")}</p>
                     <Dropdown
                       disabled={
                         template[day].unavailable || providerStatus !== "active"
@@ -308,7 +308,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
                     />
                   </div>
                   <div className="scheduler-template__grid__day-time-selector__single">
-                    <p>to</p>
+                    <p>{t("to")}</p>
                     <Dropdown
                       disabled={
                         template[day].unavailable || providerStatus !== "active"
