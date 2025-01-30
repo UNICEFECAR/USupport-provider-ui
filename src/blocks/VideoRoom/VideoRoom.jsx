@@ -32,7 +32,7 @@ export function VideoRoom({
     toggleCamera,
     isMicrophoneOn,
     toggleMicrophone,
-  } = useRoom(errorjoinWithVideo, joinWithMicrophone, setIsClientInSession);
+  } = useRoom(error, joinWithVideo, joinWithMicrophone, setIsClientInSession);
 
   useEffect(() => {
     if (error) {
