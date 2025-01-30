@@ -33,7 +33,7 @@ export function VideoRoom({
     toggleCamera,
     isMicrophoneOn,
     toggleMicrophone,
-  } = useRoom(error joinWithVideo, joinWithMicrophone, setIsClientInSession);
+  } = useRoom(error, joinWithVideo, joinWithMicrophone, setIsClientInSession);
 
   useEffect(() => {
     if (error) {
@@ -91,7 +91,7 @@ export function VideoRoom({
           isInSession={isClientInSession}
           t={t}
         />
-      ):null}
+      ) : null}
 
       <div
         className={`video-room__participants ${
@@ -109,13 +109,13 @@ export function VideoRoom({
           </div>
         ) : null}
         <div className="video-room__remote-participant">
-          {hasRemoteParticipants ?(
+          {hasRemoteParticipants ? (
             <Participant
               type={"remote"}
               participant={remoteParticipants[remoteParticipants.length - 1]}
               room={room}
             />
-          ):null}
+          ) : null}
         </div>
       </div>
     </div>
