@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+
 import Participant from "./Participant";
 import useRoom from "./utils/useRoom";
 
@@ -32,7 +33,7 @@ export function VideoRoom({
     toggleCamera,
     isMicrophoneOn,
     toggleMicrophone,
-  } = useRoom(error, joinWithVideo, joinWithMicrophone, setIsClientInSession);
+  } = useRoom(error joinWithVideo, joinWithMicrophone, setIsClientInSession);
 
   useEffect(() => {
     if (error) {
@@ -74,7 +75,7 @@ export function VideoRoom({
       >
         <p>{t("allow_permissions")}</p>
       </Modal>
-      {!hideControls && (
+      {!hideControls ? (
         <Controls
           consultation={consultation}
           toggleCamera={toggleCamera}
@@ -90,7 +91,7 @@ export function VideoRoom({
           isInSession={isClientInSession}
           t={t}
         />
-      )}
+      ):null}
 
       <div
         className={`video-room__participants ${
@@ -108,13 +109,13 @@ export function VideoRoom({
           </div>
         ) : null}
         <div className="video-room__remote-participant">
-          {hasRemoteParticipants && (
+          {hasRemoteParticipants ?(
             <Participant
               type={"remote"}
               participant={remoteParticipants[remoteParticipants.length - 1]}
               room={room}
             />
-          )}
+          ):null}
         </div>
       </div>
     </div>
