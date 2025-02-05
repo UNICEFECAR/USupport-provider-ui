@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -9,9 +9,10 @@ import {
   Loading,
   Answer,
   InputSearch,
+  DropdownWithLabel,
 } from "@USupport-components-library/src";
 
-import { useGetQuestions } from "#hooks";
+import { useGetQuestions, useGetLanguages } from "#hooks";
 
 import "./customers-qa.scss";
 
@@ -38,16 +39,38 @@ export const CustomersQA = ({
     { value: "self_answered", isSelected: false },
   ]);
   const [searchValue, setSearchValue] = useState("");
+  const [selectedLanuage, setSelectedLanguage] = useState("all");
 
+  const { data: languages } = useGetLanguages();
   const questionsQuery = useGetQuestions(
-    tabs.find((tab) => tab.isSelected).value
+    tabs.find((tab) => tab.isSelected).value,
+    selectedLanuage
   );
+
+  const languageOptions = useMemo(() => {
+    const showAllOption = {
+      value: "all",
+      label: t("all"),
+    };
+
+    if (!languages) return [showAllOption];
+
+    return [
+      showAllOption,
+      ...languages.map((x) => ({
+        value: x.language_id,
+        label: x.local_name,
+      })),
+    ];
+  }, [languages, t]);
 
   const renderQuestions = () => {
     if (questionsQuery.data.length === 0) {
       return (
         <GridItem md={8} lg={12}>
-          <p className="text">{t("no_questions_found")}</p>
+          <p className="text customers-qa__no-data">
+            {t("no_questions_found")}
+          </p>
         </GridItem>
       );
     }
@@ -74,7 +97,9 @@ export const CustomersQA = ({
     if (!filteredQuestions.length) {
       return (
         <GridItem md={8} lg={12}>
-          <p>{t("no_questions_found")}</p>
+          <p className="text customers-qa__no-data">
+            {t("no_questions_found")}
+          </p>
         </GridItem>
       );
     }
@@ -132,12 +157,22 @@ export const CustomersQA = ({
               />
             </div>
             {isFilterShown && (
-              <InputSearch
-                placeholder={t("search_placeholder")}
-                value={searchValue}
-                onChange={(value) => setSearchValue(value.toLowerCase())}
-                classes="customers-qa__tab-and-search-wrapper__input"
-              />
+              <div className="customers-qa__tab-and-search-wrapper__search">
+                <InputSearch
+                  placeholder={t("search_placeholder")}
+                  value={searchValue}
+                  onChange={(value) => setSearchValue(value.toLowerCase())}
+                  classes="customers-qa__tab-and-search-wrapper__input"
+                />
+
+                <DropdownWithLabel
+                  options={languageOptions}
+                  selected={selectedLanuage}
+                  setSelected={(lang) => setSelectedLanguage(lang)}
+                  label={t("language")}
+                  placeholder={t("placeholder")}
+                />
+              </div>
             )}
           </div>
         </GridItem>
