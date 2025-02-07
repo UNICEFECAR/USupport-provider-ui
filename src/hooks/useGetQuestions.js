@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
 
-export function useGetQuestions(type) {
+export function useGetQuestions(type, languageId) {
   /**
    *
    * @returns
    */
 
   const getQuestions = async () => {
-    const { data } = await providerSvc.getQuestions(type);
+    const { data } = await providerSvc.getQuestions(type, languageId);
 
     return data.map((question) => {
       return {
@@ -30,7 +30,10 @@ export function useGetQuestions(type) {
     });
   };
 
-  const getQuestionsQuery = useQuery(["getQuestions", type], getQuestions);
+  const getQuestionsQuery = useQuery(
+    ["getQuestions", type, languageId],
+    getQuestions
+  );
 
   return getQuestionsQuery;
 }
