@@ -560,6 +560,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                       const campaignId = isAvailable.campaignSlot?.campaignId;
                       const organizationId =
                         isAvailable.organizationSlot?.organizationId;
+                      const isPastDay = new Date(day) < new Date();
 
                       const organizationForSlot =
                         organizations?.find(
@@ -624,6 +625,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                           organizationForSlot={organizationForSlot}
                           dayIndex={dayIndex}
                           slot={slotDate}
+                          isDisabled={isPastDay}
                           t={t}
                         />
                       );
