@@ -4,11 +4,21 @@ import { providerSvc } from "@USupport-components-library/services";
 export const useGetConsultationsForSingleDay = (date, enabled = true) => {
   const getconsultationsForSingleDay = async () => {
     const { data } = await providerSvc.getConsultationsForSingleDay(date);
+    const currentDate = new Date(date * 1000).toISOString();
+    const dateWithoutTime = currentDate.split("T")[0];
+    const currentDayDate = dateWithoutTime.split("-")[2];
+    const currentDayMonth = dateWithoutTime.split("-")[1];
+    const currentDayYear = dateWithoutTime.split("-")[0];
+
     const filtered = data.filter((consultation) => {
-      if (
-        new Date(consultation.time).toLocaleDateString() !==
-        new Date(date * 1000).toLocaleDateString()
-      ) {
+      const cDate = new Date(consultation.time);
+
+      const isSameDay =
+        cDate.getDate() === Number(currentDayDate) &&
+        cDate.getMonth() === Number(currentDayMonth) - 1 &&
+        cDate.getFullYear() === Number(currentDayYear);
+
+      if (!isSameDay) {
         return false;
       }
       return true;
