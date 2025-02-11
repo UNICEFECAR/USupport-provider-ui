@@ -145,6 +145,12 @@ export const Consultations = ({
   ]);
 
   const renderAllConsultations = useMemo(() => {
+    if (consultationsQuery.isLoading)
+      return (
+        <GridItem md={8} lg={12}>
+          <Loading />;
+        </GridItem>
+      );
     if (!consultationsQuery.data || consultationsQuery.data?.length === 0)
       return (
         <GridItem
