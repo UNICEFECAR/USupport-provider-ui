@@ -1,5 +1,6 @@
 {
-    "heading": "Pytania i odpowiedzi klientów",
-    "subheading": "Odpowiedz na anonimowe pytania użytkowników i pomóż im w rozwiązywaniu problemów.",
-    "filter": "Filtruj tagi"
+  "heading": "Pytania i odpowiedzi klientów",
+  "subheading": "Odpowiedz na anonimowe pytania użytkowników i pomóż im w rozwiązywaniu problemów.",
+  "filter": "Filtruj tagi",
+  "provider_inactive": "Nie masz uprawnień do odpowiadania na pytania."
 }

@@ -1,5 +1,6 @@
 {
-    "heading": "Clients Q&A",
-    "subheading" : "Answer users anonymous questions and help them.",
-    "filter": "Filter tags"
+  "heading": "Clients Q&A",
+  "subheading": "Answer users anonymous questions and help them.",
+  "filter": "Filter tags",
+  "provider_inactive": "You don't have permissions to answer questions."
 }

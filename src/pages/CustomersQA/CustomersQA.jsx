@@ -10,8 +10,10 @@ import {
   QuestionDetails,
   FilterQuestions,
 } from "#backdrops";
+import { useGetProviderData } from "#hooks";
 
 import "./customers-qa.scss";
+import { toast } from "react-toastify";
 
 /**
  * CustomersQA
@@ -35,12 +37,23 @@ export const CustomersQA = () => {
   const [isFilterShown, setIsFilterShown] = useState(false);
   const [filterTag, setFilterTag] = useState();
 
+  const providerQuery = useGetProviderData()[0];
+  const providerStatus = providerQuery?.data?.status;
+
   const openCreateRespondBackdrop = (question) => {
+    if (providerStatus === "inactive") {
+      toast.error(t("provider_inactive"));
+      return;
+    }
     setQuestion(question);
     setIsCreateResponseBackdropOpen(true);
   };
 
   const handleOpenArchive = (question) => {
+    if (providerStatus === "inactive") {
+      toast.error(t("provider_inactive"));
+      return;
+    }
     setQuestion(question);
     setIsArchiveQuestionBackdropOpen(true);
   };
