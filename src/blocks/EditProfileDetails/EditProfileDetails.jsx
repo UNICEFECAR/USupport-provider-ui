@@ -247,6 +247,7 @@ export const EditProfileDetails = ({
       });
       return;
     }
+    delete providerData.organizations;
     if ((await validate(providerData, schema, setErrors)) === null) {
       updateProviderMutation.mutate(providerData);
     }
