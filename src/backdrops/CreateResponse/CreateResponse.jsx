@@ -12,6 +12,7 @@ import {
   Textarea,
   InputWithDropdown,
   DropdownWithLabel,
+  Error,
 } from "@USupport-components-library/src";
 import { validate, validateProperty } from "@USupport-components-library/utils";
 import {
@@ -118,7 +119,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
       ctaLabel={t("cta_label")}
       ctaHandleClick={handleSendAnswer}
       isCtaLoading={addAnswerMutation.isLoading}
-      errorMessage={errors.submit || errors.tags}
+      errorMessage={errors.submit}
     >
       <Grid>
         <GridItem md={8} lg={12}>
@@ -158,6 +159,8 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
                 classes="create-response__tags"
                 t={t}
               />
+              <Error message={errors.tags} />
+
               <DropdownWithLabel
                 options={
                   languages?.map((x) => ({
@@ -172,6 +175,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
                 label={t("language")}
                 placeholder={t("placeholder")}
               />
+              <Error message={errors.languageId} />
             </GridItem>
           </Grid>
         </GridItem>
