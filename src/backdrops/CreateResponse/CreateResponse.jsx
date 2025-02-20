@@ -173,7 +173,6 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
                   hanldeChange("languageId", lang);
                 }}
                 label={t("language")}
-                placeholder={t("placeholder")}
               />
               <Error message={errors.languageId} />
             </GridItem>
