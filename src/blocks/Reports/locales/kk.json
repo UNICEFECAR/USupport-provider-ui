@@ -1,9 +1,9 @@
 {
   "client": "Клиент",
-  "time": "рет",
+  "time": "Уақыт",
   "price": "Бағасы",
   "campaign": "Науқан",
-  "free": "Бос",
+  "free": "Тегін",
   "export_label": "Экспорт",
   "filter": "Сүзгі",
   "filters": "Сүзгілер",

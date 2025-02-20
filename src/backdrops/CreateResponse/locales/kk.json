@@ -10,5 +10,7 @@
   "tags_error_label": "Тегтер болуы міндетті",
   "cta_label": "Жауабыңызды жіберіңіз",
   "selected_tags": "Таңдалған тегтер",
-  "response_success": "Жауап сәтті жіберілді"
+  "response_success": "Жауап сәтті жіберілді",
+  "language": "Тіл",
+  "language_error_label": "Тіл міндетті"
 }

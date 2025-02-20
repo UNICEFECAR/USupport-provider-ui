@@ -9,5 +9,7 @@
   "archive": "Archive",
   "read_more": "Read more",
   "search_placeholder": "Search",
-  "no_questions_found": "No results found."
+  "no_questions_found": "No results found.",
+  "language": "Language",
+  "all": "All"
 }

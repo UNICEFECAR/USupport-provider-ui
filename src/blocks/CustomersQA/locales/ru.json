@@ -9,5 +9,7 @@
   "archive": "Архив",
   "read_more": "Узнать больше",
   "search_placeholder": "Поиск",
-  "no_questions_found": "Ничего не нашлось"
+  "no_questions_found": "Ничего не нашлось",
+  "language": "Язык",
+  "all": "Все"
 }
