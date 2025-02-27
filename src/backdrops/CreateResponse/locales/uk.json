@@ -10,5 +10,7 @@
   "tags_error_label": "Теґи обов'язкові",
   "cta_label": "Надішліть відповідь",
   "selected_tags": "Вибрані теґи",
-  "response_success": "Відповідь відправлено"
+  "response_success": "Відповідь відправлено",
+  "language": "Мова",
+  "language_error_label": "Мова обов'язкова"
 }

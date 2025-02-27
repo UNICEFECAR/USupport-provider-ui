@@ -247,6 +247,7 @@ export const EditProfileDetails = ({
       });
       return;
     }
+    delete providerData.organizations;
     if ((await validate(providerData, schema, setErrors)) === null) {
       updateProviderMutation.mutate(providerData);
     }
@@ -459,15 +460,6 @@ export const EditProfileDetails = ({
           </GridItem>
         </Grid>
       )}
-
-      {/* <Modal
-        isOpen={isDeleteLanguageModalOpen}
-        onClose={closeDeleteLanguageModal}
-        heading={t("delete_language_modal_title")}
-        text={t("delete_language_modal_text")}
-        ctaLabel={t("delete_language_modal_button_text")}
-        ctaHandleClick={handleDeleteLanguage}
-      /> */}
     </Block>
   );
 };

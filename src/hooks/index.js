@@ -40,3 +40,4 @@ export * from "./useArchiveQuestion.js";
 export * from "./useMarkAllNotificationsAsRead.js";
 export * from "./useGetAllChatHistoryData.js";
 export * from "./useAddPlatformRating.js";
+export * from "./useGetLanguages.js";

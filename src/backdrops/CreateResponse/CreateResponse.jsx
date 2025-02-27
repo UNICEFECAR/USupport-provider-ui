@@ -11,9 +11,15 @@ import {
   Input,
   Textarea,
   InputWithDropdown,
+  DropdownWithLabel,
+  Error,
 } from "@USupport-components-library/src";
 import { validate, validateProperty } from "@USupport-components-library/utils";
-import { useGetQuestionsTags, useAddAnswerToQuestion } from "#hooks";
+import {
+  useGetQuestionsTags,
+  useAddAnswerToQuestion,
+  useGetLanguages,
+} from "#hooks";
 
 import "./create-response.scss";
 
@@ -34,7 +40,12 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
   useGetQuestionsTags(onSuccess);
 
   const [errors, setErrors] = useState({});
-  const [data, setData] = useState({ title: "", answer: "", tags: [] });
+  const [data, setData] = useState({
+    title: "",
+    answer: "",
+    tags: [],
+    languageId: "",
+  });
   const [initialTagsOptions, setInitialTagsOptions] = useState([]);
   const [tags, setTags] = useState([...initialTagsOptions]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -43,10 +54,13 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
     setTags([...initialTagsOptions]);
   }, [initialTagsOptions]);
 
+  const { data: languages, isLoading: languagesLoading } = useGetLanguages();
+
   const schema = Joi.object({
     title: Joi.string().label(t("title_error_label")),
     answer: Joi.string().label(t("answer_error_label")),
     tags: Joi.array().min(1).label(t("tags_error_label")),
+    languageId: Joi.string().label(t("language_error_label")),
   });
 
   const hanldeChange = (field, value) => {
@@ -90,6 +104,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
         title: data.title,
         text: data.answer,
         tags: tagsToSend,
+        languageId: data.languageId,
       };
       addAnswerMutation.mutate(payload);
     }
@@ -104,7 +119,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
       ctaLabel={t("cta_label")}
       ctaHandleClick={handleSendAnswer}
       isCtaLoading={addAnswerMutation.isLoading}
-      errorMessage={errors.submit || errors.tags}
+      errorMessage={errors.submit}
     >
       <Grid>
         <GridItem md={8} lg={12}>
@@ -144,6 +159,22 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
                 classes="create-response__tags"
                 t={t}
               />
+              <Error message={errors.tags} />
+
+              <DropdownWithLabel
+                options={
+                  languages?.map((x) => ({
+                    value: x.language_id,
+                    label: x.local_name,
+                  })) || []
+                }
+                selected={data.languageId}
+                setSelected={(lang) => {
+                  hanldeChange("languageId", lang);
+                }}
+                label={t("language")}
+              />
+              <Error message={errors.languageId} />
             </GridItem>
           </Grid>
         </GridItem>
