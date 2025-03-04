@@ -35,7 +35,7 @@ export const ContactUs = () => {
   const initialIssues = [
     { value: "information", label: "contact_reason_1" },
     { value: "technical-problem", label: "contact_reason_2" },
-    { value: "join-as-provider", label: "contact_reason_3" },
+    // { value: "join-as-provider", label: "contact_reason_3" },
     { value: "partnerships", label: "contact_reason_4" },
     { value: "other", label: "contact_reason_5" },
   ];
