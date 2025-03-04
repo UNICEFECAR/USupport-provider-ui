@@ -127,7 +127,6 @@ export const ContactUs = () => {
             label={t("issue")}
             errorMessage={errors.issue}
             classes="contact-us__issue-input"
-            placeholder={t("issue_placeholder")}
             options={issues.map((x) => ({
               ...x,
               label: t(x.label),
