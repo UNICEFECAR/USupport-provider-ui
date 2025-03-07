@@ -23,6 +23,7 @@
   "join_consultation": "Dołącz do konsultacji",
   "slot_added": "Przedział czasowy został pomyślnie dodany",
   "free": "Wolny",
+  "booked": "Zarezerwowany",
   "more_campaigns": "{{amount}} kampanie",
   "provider_inactive": "Nie masz uprawnień do dodawania dostępności",
   "coupon": "Kupon"
