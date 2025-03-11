@@ -80,6 +80,9 @@ export const Welcome = () => {
     fetchLanguages,
     {
       retry: false,
+      staleTime: Infinity,
+      cacheTime: 1000 * 60 * 60 * 24, // Keep cached for 24 hours
+      enabled: !!selectedCountry,
     }
   );
 
@@ -92,7 +95,7 @@ export const Welcome = () => {
       countriesQuery.data.find((x) => x.value === selectedCountry).id
     );
     localStorage.setItem("language", language);
-
+    window.dispatchEvent(new Event("countryChanged"));
     i18n.changeLanguage(language);
 
     navigate("/login");
