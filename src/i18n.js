@@ -298,7 +298,7 @@ const resources = {
     root: Root.kk,
   },
 
-  uk: {
+  ua: {
     // Blocks
     page: Page.uk,
     "contact-us-block": ContactUs.uk,
