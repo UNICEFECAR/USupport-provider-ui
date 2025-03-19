@@ -67,52 +67,72 @@ export const Page = ({
   );
   const [selectedCountry, setSelectedCountry] = useState();
 
+  useEventListener("countryChanged", () => {
+    const country = localStorage.getItem("country");
+    if (country) {
+      setSelectedCountry(country);
+    }
+  });
+
+  const handleCountrySelection = (countries) => {
+    let hasSetDefaultCountry = false;
+
+    const usersCountry = getCountryFromTimezone();
+    const validCountry = countries.find((x) => x.value === usersCountry);
+
+    for (let i = 0; i < countries.length; i++) {
+      const country = countries[i];
+
+      if (localStorageCountry === country.value) {
+        localStorage.setItem("country_id", country.countryID);
+        localStorage.setItem("currency_symbol", country.currencySymbol);
+
+        setSelectedCountry(country);
+      } else if (!localStorageCountry || localStorageCountry === "undefined") {
+        if (validCountry?.value === country.value) {
+          hasSetDefaultCountry = true;
+
+          localStorage.setItem("country", country.value);
+          localStorage.setItem("country_id", country.countryID);
+          localStorage.setItem("currency_symbol", country.currencySymbol);
+
+          setSelectedCountry(country);
+        }
+      }
+    }
+
+    if (!hasSetDefaultCountry && !localStorageCountry) {
+      const kazakhstanCountryObject = countries.find(
+        (x) => x.value === kazakhstanCountry.value
+      );
+
+      localStorage.setItem("country", kazakhstanCountry.value);
+      localStorage.setItem("country_id", kazakhstanCountryObject.countryID);
+      localStorage.setItem(
+        "currency_symbol",
+        kazakhstanCountryObject.currencySymbol
+      );
+    }
+  };
+
   const fetchCountries = async () => {
     const res = await countrySvc.getActiveCountries();
-    const usersCountry = getCountryFromTimezone();
-    const validCountry = res.data.find((x) => x.alpha2 === usersCountry);
-    let hasSetDefaultCountry = false;
+
     const countries = res.data.map((x) => {
       const countryObject = {
         value: x.alpha2,
         label: x.name,
         countryID: x["country_id"],
         iconName: x.alpha2,
+        minAge: x["min_client_age"],
+        maxAge: x["max_client_age"],
         currencySymbol: x["symbol"],
         localName: x.local_name,
       };
-      if (localStorageCountry === x.alpha2) {
-        localStorage.setItem("currency_symbol", countryObject.currencySymbol);
-        localStorage.setItem("country_id", countryObject.countryID);
-
-        setSelectedCountry(countryObject);
-      } else if (!localStorageCountry || localStorageCountry === "undefined") {
-        if (validCountry?.alpha2 === x.alpha2) {
-          hasSetDefaultCountry = true;
-
-          localStorage.setItem("country", x.alpha2);
-          localStorage.setItem("currency_symbol", countryObject.currencySymbol);
-          localStorage.setItem("country_id", countryObject.countryID);
-
-          setSelectedCountry(countryObject);
-        }
-      }
-
       return countryObject;
     });
 
-    if (!hasSetDefaultCountry && !localStorageCountry) {
-      localStorage.setItem("country", kazakhstanCountry.value);
-      localStorage.setItem(
-        "country_id",
-        countries.find((x) => x.value === kazakhstanCountry.value).countryID
-      );
-      localStorage.setItem(
-        "currency_symbol",
-        countries.find((x) => x.value === kazakhstanCountry.value)
-          .currencySymbol
-      );
-    }
+    handleCountrySelection(countries);
 
     return countries;
   };
@@ -138,12 +158,27 @@ export const Page = ({
     return languages;
   };
 
-  const { data: countries } = useQuery(["countries"], fetchCountries);
-  const { data: languages } = useQuery(["languages"], fetchLanguages);
+  const { data: countries } = useQuery(["countries"], fetchCountries, {
+    staleTime: Infinity,
+  });
+  const { data: languages } = useQuery(
+    ["languages", selectedCountry],
+    fetchLanguages,
+    {
+      staleTime: Infinity,
+      cacheTime: 1000 * 60 * 60 * 24, // Keep cached for 24 hours
+      enabled: !!selectedCountry,
+    }
+  );
 
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
   useEffect(() => {
+    const countries = queryClient.getQueryData(["countries"]);
+    if (countries) {
+      handleCountrySelection(countries);
+    }
+
     const hasUnreadNotificationsData = queryClient.getQueryData([
       "has-unread-notifications",
     ]);
