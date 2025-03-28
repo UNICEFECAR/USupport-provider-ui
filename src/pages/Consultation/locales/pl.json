@@ -4,7 +4,7 @@
   "tuesday": "Wt.",
   "wednesday": "Śr.",
   "thursday": "Czw.",
-  "friday": "Piąt.",
+  "friday": "Pt.",
   "saturday": "Sob.",
 
   "client_joined": "Klient dołączył do konsultacji",
@@ -23,13 +23,13 @@
   "chat_history_deleted_by_client": "Historia czatu usunięta przez klienta",
 
   "show_system_messages": "Wyświetlanie komunikatów systemowych",
-  "show_previous_consultations": "Pokazać poprzednie konsultacje",
+  "show_previous_consultations": "Pokaż poprzednie konsultacje",
   "hide_options": "Ukryj ustawienia",
   "show_options": "Ustawienia",
   "search": "Wyszukiwanie",
   "sponsored_by": "Ta sesja jest sponsorowana przez: ",
   "consultation_end_reminder": "Konsultacja zakończy się za {{minutes}} minut",
   "textarea_placeholder": "Wpisz swoją wiadmość tutaj",
-  "permissions_error": "Odmówiłeś udzielenia uprawnień",
+  "permissions_error": "Nie wyraziłeś zgody",
   "allow_permissions": "Uprawnienia do korzystania z kamery i/lub mikrofonu zostały odrzucone. Jeśli chcesz porozmawiać z klientem, włącz uprawnienia w ustawieniach przeglądarki lub za pomocą ikony informacji na pasku adresu."
 }
