@@ -7,9 +7,9 @@
   "notifications_settings_button_label": "Ustawienia powiadomień",
   "contact_us_button_label": "Skontaktuj się z nami",
   "reports_button_label": "Raporty",
-  "privacy_policy_button_label": "Polityka prywatności",
-  "FAQ_button_label": "Najczęściej zadawane pytania",
-  "terms_of_use": "Warunki użytkowania",
-  "cookie_policy": "Polityka plików cookie",
-  "user_guide": "Wykorzystanie platformy"
+  "privacy_policy_button_label": "Polityką prywatności",
+  "FAQ_button_label": "Najczęściej zadawane pytania",
+  "terms_of_use": "Regulamin",
+  "cookie_policy": "Polityka plików cookies",
+  "user_guide": "Instrukcja użytkowania platformy"
 }

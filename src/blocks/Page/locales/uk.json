@@ -1,11 +1,11 @@
 {
-  "page_1": "Pulpit nawigacyjny",
-  "page_2": "Kalendarz",
-  "page_3": "Historia aktywności",
-  "page_4": "Konsultacje",
-  "page_5": "Klienci",
-  "page_6": "Kampanie",
-  "page_7": "MOJE PYTANIA I ODPOWIEDZI",
+  "page_1": "Огляд",
+  "page_2": "Календар",
+  "page_3": "Активність",
+  "page_4": "Консультації",
+  "page_5": "Клієнти(ки)",
+  "page_6": "Кампанії",
+  "page_7": "Мої Q&A",
 
   "country_1": "",
   "country_2": "",
@@ -32,7 +32,7 @@
   "button_text": "Перейти до додатку",
   "contact_us": "Зв'яжіться з нами",
   "your_profile_text": "Ваш профіль",
-  "password_placeholder": "Пароль", 
+  "password_placeholder": "Пароль",
   "password": "Будь ласка, введіть пароль для доступу на сайт",
   "wrong_password": "Невірний пароль",
   "submit": "Надіслати"
