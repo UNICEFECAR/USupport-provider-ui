@@ -1,6 +1,6 @@
 {
-  "heading": "Czy na pewno chcesz anulować konsultację?",
-  "paid_heading": "Czy na pewno chcesz anulować konsultację? Nie otrzymasz płatności",
+  "heading": "Czy na pewno chcesz odwołać konsultację?",
+  "paid_heading": "Czy na pewno chcesz odwołać konsultację? Nie otrzymasz płatności",
   "paid_subheading": "Utracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi.",
   "cancel_button_label": "Anuluj konsultację",
   "keep_button_label": "Prowadzenie konsultacji",
@@ -10,6 +10,6 @@
   "tuesday": "Wt.",
   "wednesday": "Śr.",
   "thursday": "Czw.",
-  "friday": "Piąt.",
+  "friday": "Pt.",
   "saturday": "Sob."
 }

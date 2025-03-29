@@ -1,11 +1,11 @@
 {
-  "page_1": "Панель керування",
-  "page_2": "Календар",
-  "page_3": "Історія активності",
-  "page_4": "Консультації",
-  "page_5": "Клієнти(ки)",
-  "page_6": "Кампанії",
-  "page_7": "Мої запитання й відповіді",
+  "page_1": "Pulpit",
+  "page_2": "Kalendarz",
+  "page_3": "Historia",
+  "page_4": "Konsultacje",
+  "page_5": "Klienci",
+  "page_6": "Kampanie",
+  "page_7": "Moje Q&A",
 
   "country_1": "",
   "country_2": "",
@@ -24,16 +24,16 @@
   "footer_4": "Konsultacje",
   "footer_5": "Klienci",
   "footer_6": "Warunki świadczenia usług",
-  "footer_7": "Polityka prywatności",
+  "footer_7": "Polityką prywatności",
   "footer_8": "Ustawienia plików cookie",
-  "footer_9": "Najczęściej zadawane pytania",
+  "footer_9": "Najczęściej szadawane pytania",
 
   "emergency_button": "Centrum SOS",
 
   "button_text": "Przejdź do aplikacji",
   "contact_us": "Skontaktuj się z nami",
   "your_profile_text": "Twój profil",
-  "password_placeholder": "Hasło", 
+  "password_placeholder": "Hasło",
   "password": "Wprowadź hasło, aby uzyskać dostęp do strony",
   "wrong_password": "Nieprawidłowe hasło",
   "submit": "Wyślij"
