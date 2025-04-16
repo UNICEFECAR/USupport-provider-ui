@@ -15,7 +15,11 @@ import {
   languageSvc,
   userSvc,
 } from "@USupport-components-library/services";
-import { getCountryFromTimezone } from "@USupport-components-library/utils";
+import {
+  getCountryFromTimezone,
+  replaceLanguageInUrl,
+  getLanguageFromUrl,
+} from "@USupport-components-library/utils";
 import { useIsLoggedIn, useEventListener, useError } from "#hooks";
 import classNames from "classnames";
 
@@ -149,6 +153,9 @@ export const Page = ({
 
   const fetchLanguages = async () => {
     const res = await languageSvc.getActiveLanguages();
+
+    const languageFromUrl = getLanguageFromUrl();
+
     const languages = res.data.map((x) => {
       const languageObject = {
         value: x.alpha2,
@@ -156,15 +163,24 @@ export const Page = ({
         localName: x.local_name,
         id: x.language_id,
       };
-      if (localStorageLanguage === x.alpha2) {
-        setSelectedLanguage(languageObject);
-        i18n.changeLanguage(localStorageLanguage);
-      } else if (!localStorageLanguage) {
+      if (!localStorageLanguage || !languageFromUrl) {
         localStorage.setItem("language", "en");
         i18n.changeLanguage("en");
+        replaceLanguageInUrl("en");
       }
       return languageObject;
     });
+
+    const foundLanguageFromUrl = languages.find(
+      (x) => x.value === languageFromUrl
+    );
+    if (foundLanguageFromUrl) {
+      localStorage.setItem("language", languageFromUrl);
+      setSelectedLanguage(foundLanguageFromUrl);
+      i18n.changeLanguage(languageFromUrl);
+      replaceLanguageInUrl(languageFromUrl);
+    }
+
     return languages;
   };
 
@@ -338,12 +354,21 @@ export const Page = ({
         <CircleIconButton
           iconName="phone-emergency"
           classes="page__emergency-button"
-          onClick={() => navigateTo("/sos-center")}
+          onClick={() =>
+            navigateTo(`
+              /${localStorageLanguage}/provider/sos-center
+            `)
+          }
           label={t("emergency_button")}
         />
       )}
       {isFooterShown && (
-        <Footer lists={footerLists} navigate={navigateTo} Link={Link} />
+        <Footer
+          renderIn="provider"
+          lists={footerLists}
+          navigate={navigateTo}
+          Link={Link}
+        />
       )}
     </>
   );

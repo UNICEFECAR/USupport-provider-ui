@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { Page, EditProfileDetails as EditProfileDetailsBlock } from "#blocks";
 import { UploadPicture, DeleteProfilePicture } from "#backdrops";
 

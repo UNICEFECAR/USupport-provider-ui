@@ -1,10 +1,10 @@
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Page, ResetPassword as ResetPasswordBlock } from "#blocks";
 import { Loading } from "@USupport-components-library/src";
 
-import { useIsLoggedIn } from "#hooks";
+import { useIsLoggedIn, useCustomNavigate as useNavigate } from "#hooks";
 
 import "./reset-password.scss";
 
@@ -25,7 +25,12 @@ export const ResetPassword = () => {
   const isLoggedIn = useIsLoggedIn();
 
   if (isLoggedIn === "loading") return <Loading />;
-  if (isLoggedIn === true) return <Navigate to="/dashboard" />;
+  if (isLoggedIn === true)
+    return (
+      <Navigate
+        to={`/${localStorage.getItem("language")}/provider/dashboard`}
+      />
+    );
 
   return (
     <Page

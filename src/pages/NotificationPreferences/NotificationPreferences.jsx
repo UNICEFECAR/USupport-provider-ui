@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { Page, NotificationPreferences } from "#blocks";
 import { useTranslation } from "react-i18next";
 
