@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { toast } from "react-toastify";
 
 import { Page, Notifications as NotificationsBlock } from "#blocks";

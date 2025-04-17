@@ -1,11 +1,15 @@
 /* eslint-disable */
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Page, Login as LoginBlock } from "#blocks";
-import { useIsLoggedIn, useError } from "#hooks";
+import {
+  useIsLoggedIn,
+  useError,
+  useCustomNavigate as useNavigate,
+} from "#hooks";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { RadialCircle, Loading } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
@@ -131,7 +135,12 @@ export const Login = () => {
   });
 
   if (isLoggedIn === "loading") return <Loading />;
-  if (isLoggedIn === true) return <Navigate to="/dashboard" />;
+  if (isLoggedIn === true)
+    return (
+      <Navigate
+        to={`/${localStorage.getItem("language")}/provider/dashboard`}
+      />
+    );
 
   const openCodeVerification = () => setIsCodeVerificationOpen(true);
 

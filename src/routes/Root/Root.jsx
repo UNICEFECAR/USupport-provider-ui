@@ -1,5 +1,11 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 
@@ -37,14 +43,262 @@ import {
   CampaignDetails,
   CustomersQA,
   PlatformRating,
+  // JitsiRoom,
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
 const RootContext = React.createContext();
 
+const LanguageLayout = () => {
+  const { language } = useParams();
+
+  const allLangs = ["en", "ru", "kk", "pl", "uk"];
+
+  if (!allLangs.includes(language) || !language) {
+    return <Navigate to="/en/provider" />;
+  }
+  return (
+    <Routes>
+      <Route
+        path="/provider/my-qa"
+        element={
+          <ProtectedRoute>
+            <CustomersQA />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/clients"
+        element={
+          <ProtectedRoute>
+            <Clients />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/contact-us"
+        element={
+          <ProtectedRoute>
+            <ContactUs />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/activity-history"
+        element={
+          <ProtectedRoute>
+            <ActivityHistory />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/notification-preferences"
+        element={
+          <ProtectedRoute>
+            <NotificationPreferencesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/login"
+        element={
+          <CountryValidationRoute>
+            <Login />
+          </CountryValidationRoute>
+        }
+      />
+      <Route
+        path="/provider/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/notifications"
+        element={
+          <ProtectedRoute>
+            <Notifications />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      {/* <Route
+      path="/provider/consultation"
+      element={
+        <ProtectedRoute>
+          <Consultation />
+        </ProtectedRoute>
+      }
+    /> */}
+      <Route
+        path="/provider/consultation"
+        element={
+          <ProtectedRoute>
+            {/* <JitsiRoom /> */}
+            <Consultation />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/profile"
+        element={
+          <ProtectedRoute>
+            <ProviderProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/profile/details"
+        element={
+          <ProtectedRoute>
+            <ProviderOverview />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/profile/details/edit"
+        element={
+          <ProtectedRoute>
+            <EditProfileDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/calendar"
+        element={
+          <ProtectedRoute>
+            <Scheduler />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/calendar/template"
+        element={
+          <ProtectedRoute>
+            <SchedulerTemplate />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/privacy-policy"
+        element={
+          <CountryValidationRoute>
+            <PrivacyPolicy />
+          </CountryValidationRoute>
+        }
+      />
+      <Route
+        path="/provider/cookie-policy"
+        element={
+          <CountryValidationRoute>
+            <CookiePolicy />
+          </CountryValidationRoute>
+        }
+      />
+      <Route
+        path="/provider/terms-of-use"
+        element={
+          <CountryValidationRoute>
+            <TermsOfUse />
+          </CountryValidationRoute>
+        }
+      />
+      <Route
+        path="/provider/forgot-password"
+        element={
+          <CountryValidationRoute>
+            <ForgotPassword />
+          </CountryValidationRoute>
+        }
+      />
+      <Route
+        path="/provider/reset-password"
+        element={
+          <CountryValidationRoute>
+            <ResetPassword />
+          </CountryValidationRoute>
+        }
+      />
+      <Route
+        path="/provider/faq"
+        element={
+          <ProtectedRoute>
+            <FAQ />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/consultations"
+        element={
+          <ProtectedRoute>
+            <Consultations />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/reports"
+        element={
+          <ProtectedRoute>
+            <Reports />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/campaigns"
+        element={
+          <ProtectedRoute>
+            <Campaigns />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/campaigns/add-availability"
+        element={
+          <ProtectedRoute>
+            <AddCampaignAvailability />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/campaigns/details/:id"
+        element={
+          <ProtectedRoute>
+            <CampaignDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/provider/platform-rating"
+        element={
+          <ProtectedRoute>
+            <PlatformRating />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/provider/login" element={<Login />} />
+      <Route path="/provider/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/provider/forgot-password" element={<ForgotPassword />} />
+      <Route path="/provider/reset-password" element={<ResetPassword />} />
+      <Route path="/provider/faq" element={<FAQ />} />
+      <Route path="/provider/" element={<Welcome />} />
+      <Route path="/provider/*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
 export default function Root() {
   const token = localStorage.getItem("token");
   const [loggedIn, setLoggedIn] = useState(!!token);
+  const language = localStorage.getItem("language");
 
   const { t } = useTranslation("root");
 
@@ -113,227 +367,10 @@ export default function Root() {
       )}
       <Routes>
         <Route
-          path="/my-qa"
-          element={
-            <ProtectedRoute>
-              <CustomersQA />
-            </ProtectedRoute>
-          }
+          path="/:language"
+          element={<Navigate to={`/${language}/provider`} replace />}
         />
-        <Route
-          path="/clients"
-          element={
-            <ProtectedRoute>
-              <Clients />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/contact-us"
-          element={
-            <ProtectedRoute>
-              <ContactUs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/activity-history"
-          element={
-            <ProtectedRoute>
-              <ActivityHistory />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/notification-preferences"
-          element={
-            <ProtectedRoute>
-              <NotificationPreferencesPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <CountryValidationRoute>
-              <Login />
-            </CountryValidationRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            <ProtectedRoute>
-              <Notifications />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/consultation"
-          element={
-            <ProtectedRoute>
-              <Consultation />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProviderProfile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile/details"
-          element={
-            <ProtectedRoute>
-              <ProviderOverview />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile/details/edit"
-          element={
-            <ProtectedRoute>
-              <EditProfileDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <ProtectedRoute>
-              <Scheduler />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/calendar/template"
-          element={
-            <ProtectedRoute>
-              <SchedulerTemplate />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/privacy-policy"
-          element={
-            <CountryValidationRoute>
-              <PrivacyPolicy />
-            </CountryValidationRoute>
-          }
-        />
-        <Route
-          path="/cookie-policy"
-          element={
-            <CountryValidationRoute>
-              <CookiePolicy />
-            </CountryValidationRoute>
-          }
-        />
-        <Route
-          path="/terms-of-use"
-          element={
-            <CountryValidationRoute>
-              <TermsOfUse />
-            </CountryValidationRoute>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <CountryValidationRoute>
-              <ForgotPassword />
-            </CountryValidationRoute>
-          }
-        />
-        <Route
-          path="/reset-password"
-          element={
-            <CountryValidationRoute>
-              <ResetPassword />
-            </CountryValidationRoute>
-          }
-        />
-        <Route
-          path="/faq"
-          element={
-            <ProtectedRoute>
-              <FAQ />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/consultations"
-          element={
-            <ProtectedRoute>
-              <Consultations />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/reports"
-          element={
-            <ProtectedRoute>
-              <Reports />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/campaigns"
-          element={
-            <ProtectedRoute>
-              <Campaigns />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/campaigns/add-availability"
-          element={
-            <ProtectedRoute>
-              <AddCampaignAvailability />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/campaigns/details/:id"
-          element={
-            <ProtectedRoute>
-              <CampaignDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/platform-rating"
-          element={
-            <ProtectedRoute>
-              <PlatformRating />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/" element={<Welcome />} />
+        <Route path=":language/*" element={<LanguageLayout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </RootContext.Provider>
