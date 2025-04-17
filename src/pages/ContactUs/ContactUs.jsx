@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { useTranslation } from "react-i18next";
 import { RadialCircle } from "@USupport-components-library/src";
 import { useWindowDimensions } from "@USupport-components-library/utils";

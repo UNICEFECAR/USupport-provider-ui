@@ -7,7 +7,7 @@ import React, {
   useMemo,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import io from "socket.io-client";
 
@@ -36,6 +36,7 @@ import {
   useLeaveConsultation,
   useDebounce,
   useGetAllChatHistoryData,
+  useCustomNavigate as useNavigate,
 } from "#hooks";
 
 import { Page, VideoRoom } from "#blocks";
@@ -74,7 +75,8 @@ export const Consultation = () => {
 
   const { leaveConsultationFn } = useContext(RootContext);
 
-  if (!consultation) return <Navigate to="/consultations" />;
+  if (!consultation)
+    return <Navigate to={`/${language}/provider/consultations`} />;
 
   const [isChatShownOnMobile, setIsChatShownOnMobile] = useState(
     !joinWithVideo

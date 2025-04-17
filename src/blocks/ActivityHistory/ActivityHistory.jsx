@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 
 import {
   Avatar,

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { Page, CampaignDetails as CampaignDetailsBlock } from "#blocks";
-import { useGetCampaigns } from "#hooks";
+import { useCustomNavigate as useNavigate, useGetCampaigns } from "#hooks";
 import { CancelConsultation, JoinConsultation } from "#backdrops";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;

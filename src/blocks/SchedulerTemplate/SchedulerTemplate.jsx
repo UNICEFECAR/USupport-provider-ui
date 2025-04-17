@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { toast } from "react-toastify";
 import {
   Block,

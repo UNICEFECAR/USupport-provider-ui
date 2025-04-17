@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import {
   Block,
   Button,
@@ -35,7 +35,7 @@ export const ProviderOverview = ({
   const image = AMAZON_S3_BUCKET + "/" + (provider?.image || "default");
 
   const handleEditRedirect = () => {
-    navigate("edit");
+    navigate("/edit");
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { useTranslation } from "react-i18next";
 import {
   Block,
@@ -53,7 +53,7 @@ export const ProviderProfile = () => {
           <ButtonSelector
             label={displayName || t("guest")}
             classes="provider-profile__grid__item__button "
-            onClick={() => handleRedirect("/profile/details")}
+            onClick={() => handleRedirect("profile/details")}
             avatar={`${AMAZON_S3_BUCKET}/${providerData?.image || "default"}`}
           />
         </GridItem>
@@ -65,7 +65,7 @@ export const ProviderProfile = () => {
             label={t("notifications_settings_button_label")}
             iconName="notifications"
             classes="provider-profile__grid__item__button"
-            onClick={() => handleRedirect("/notification-preferences")}
+            onClick={() => handleRedirect("notification-preferences")}
           />
         </GridItem>
         <GridItem md={8} lg={12} classes="provider-profile__grid__item">
@@ -88,19 +88,19 @@ export const ProviderProfile = () => {
             label={t("privacy_policy_button_label")}
             iconName="document"
             classes="provider-profile__grid__item__button"
-            onClick={() => handleRedirect("/privacy-policy")}
+            onClick={() => handleRedirect("privacy-policy")}
           />
           <ButtonSelector
             label={t("terms_of_use")}
             iconName="document"
             classes="provider-profile__grid__item__button"
-            onClick={() => handleRedirect("/terms-of-use")}
+            onClick={() => handleRedirect("terms-of-use")}
           />
           <ButtonSelector
             label={t("cookie_policy")}
             iconName="document"
             classes="provider-profile__grid__item__button"
-            onClick={() => handleRedirect("/cookie-policy")}
+            onClick={() => handleRedirect("cookie-policy")}
           />
           <ButtonSelector
             label={t("user_guide")}
@@ -114,7 +114,7 @@ export const ProviderProfile = () => {
             label={t("FAQ_button_label")}
             iconName="info"
             classes="provider-profile__grid__item__button"
-            onClick={() => handleRedirect("/faq")}
+            onClick={() => handleRedirect("faq")}
           />
         </GridItem>
       </Grid>

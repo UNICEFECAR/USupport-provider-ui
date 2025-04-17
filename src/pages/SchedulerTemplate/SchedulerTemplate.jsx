@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate as useNavigate } from "#hooks";
 import { Page, SchedulerTemplate as SchedulerTemplateBlock } from "#blocks";
 
 import "./scheduler-template.scss";
