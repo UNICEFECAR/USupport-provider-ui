@@ -28,5 +28,7 @@
   "provider_camera_off": "Konsultant wyłączył kamerę",
   "provider_camera_on": "Konsultant włączył kamerę",
   "provider_microphone_off": "Konsultant wyłączył mikrofon",
-  "provider_microphone_on": "Konsultant włączył mikrofon"
+  "provider_microphone_on": "Konsultant włączył mikrofon",
+
+  "canceled": "Anulowane"
 }
