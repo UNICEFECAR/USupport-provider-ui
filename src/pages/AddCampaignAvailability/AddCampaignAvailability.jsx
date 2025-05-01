@@ -42,7 +42,7 @@ export const AddCampaignAvailability = () => {
   if (!campaignId)
     return (
       <Navigate
-        to={`/${localStorage.getItem("language")}/provider/campaigns`}
+        to={`/provider/${localStorage.getItem("language")}/campaigns`}
       />
     );
 

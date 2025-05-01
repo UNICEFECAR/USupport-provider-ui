@@ -28,7 +28,7 @@ export const ForgotPassword = () => {
   if (isLoggedIn === true)
     return (
       <Navigate
-        to={`/${localStorage.getItem("language")}/provider/dashboard`}
+        to={`/provider/${localStorage.getItem("language")}/dashboard`}
       />
     );
 

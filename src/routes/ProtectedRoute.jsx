@@ -18,7 +18,9 @@ export const ProtectedRoute = ({ children }) => {
   }, [location]);
 
   if (!isLoggedIn || !isProvider)
-    return <Navigate to={`${localStorage.getItem("language")}/provider/`} />;
+    return (
+      <Navigate to={`/provider/${localStorage.getItem("language")}`} replace />
+    );
 
   return children;
 };
