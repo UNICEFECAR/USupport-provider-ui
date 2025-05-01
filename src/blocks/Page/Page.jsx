@@ -356,7 +356,7 @@ export const Page = ({
           classes="page__emergency-button"
           onClick={() =>
             navigateTo(`
-              /${localStorageLanguage}/provider/sos-center
+              /provider${localStorageLanguage}/sos-center
             `)
           }
           label={t("emergency_button")}
