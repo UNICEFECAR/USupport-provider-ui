@@ -10,7 +10,7 @@ export const useCustomNavigate = () => {
       navigate(-1);
       return;
     }
-    navigate(`/${language}/provider${url}`, state);
+    navigate(`/provider/${language}${url}`, state);
   };
 
   return customNavigate;
