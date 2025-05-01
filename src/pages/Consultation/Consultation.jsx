@@ -76,7 +76,7 @@ export const Consultation = () => {
   const { leaveConsultationFn } = useContext(RootContext);
 
   if (!consultation)
-    return <Navigate to={`/${language}/provider/consultations`} />;
+    return <Navigate to={`/provider/${language}/consultations`} />;
 
   const [isChatShownOnMobile, setIsChatShownOnMobile] = useState(
     !joinWithVideo

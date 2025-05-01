@@ -51,16 +51,15 @@ const RootContext = React.createContext();
 
 const LanguageLayout = () => {
   const { language } = useParams();
-
+  console.log(language, "language");
   const allLangs = ["en", "ru", "kk", "pl", "uk"];
-
-  if (!allLangs.includes(language) || !language) {
-    return <Navigate to="/en/provider" />;
+  if (!language || !allLangs.includes(language.toLowerCase())) {
+    return <Navigate to="/en" replace />;
   }
   return (
     <Routes>
       <Route
-        path="/provider/my-qa"
+        path="my-qa"
         element={
           <ProtectedRoute>
             <CustomersQA />
@@ -68,7 +67,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/clients"
+        path="clients"
         element={
           <ProtectedRoute>
             <Clients />
@@ -76,7 +75,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/contact-us"
+        path="contact-us"
         element={
           <ProtectedRoute>
             <ContactUs />
@@ -84,7 +83,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/activity-history"
+        path="activity-history"
         element={
           <ProtectedRoute>
             <ActivityHistory />
@@ -92,7 +91,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/notification-preferences"
+        path="notification-preferences"
         element={
           <ProtectedRoute>
             <NotificationPreferencesPage />
@@ -100,7 +99,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/login"
+        path="login"
         element={
           <CountryValidationRoute>
             <Login />
@@ -108,7 +107,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/dashboard"
+        path="dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -116,7 +115,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/notifications"
+        path="notifications"
         element={
           <ProtectedRoute>
             <Notifications />
@@ -124,7 +123,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/dashboard"
+        path="dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -132,7 +131,7 @@ const LanguageLayout = () => {
         }
       />
       {/* <Route
-      path="/provider/consultation"
+      path="consultation"
       element={
         <ProtectedRoute>
           <Consultation />
@@ -140,7 +139,7 @@ const LanguageLayout = () => {
       }
     /> */}
       <Route
-        path="/provider/consultation"
+        path="consultation"
         element={
           <ProtectedRoute>
             {/* <JitsiRoom /> */}
@@ -149,7 +148,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/profile"
+        path="profile"
         element={
           <ProtectedRoute>
             <ProviderProfile />
@@ -157,7 +156,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/profile/details"
+        path="profile/details"
         element={
           <ProtectedRoute>
             <ProviderOverview />
@@ -165,7 +164,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/profile/details/edit"
+        path="profile/details/edit"
         element={
           <ProtectedRoute>
             <EditProfileDetails />
@@ -173,7 +172,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/calendar"
+        path="calendar"
         element={
           <ProtectedRoute>
             <Scheduler />
@@ -181,7 +180,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/calendar/template"
+        path="calendar/template"
         element={
           <ProtectedRoute>
             <SchedulerTemplate />
@@ -189,7 +188,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/privacy-policy"
+        path="privacy-policy"
         element={
           <CountryValidationRoute>
             <PrivacyPolicy />
@@ -197,7 +196,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/cookie-policy"
+        path="cookie-policy"
         element={
           <CountryValidationRoute>
             <CookiePolicy />
@@ -205,7 +204,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/terms-of-use"
+        path="terms-of-use"
         element={
           <CountryValidationRoute>
             <TermsOfUse />
@@ -213,7 +212,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/forgot-password"
+        path="forgot-password"
         element={
           <CountryValidationRoute>
             <ForgotPassword />
@@ -221,7 +220,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/reset-password"
+        path="reset-password"
         element={
           <CountryValidationRoute>
             <ResetPassword />
@@ -229,7 +228,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/faq"
+        path="faq"
         element={
           <ProtectedRoute>
             <FAQ />
@@ -237,7 +236,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/consultations"
+        path="consultations"
         element={
           <ProtectedRoute>
             <Consultations />
@@ -245,7 +244,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/reports"
+        path="reports"
         element={
           <ProtectedRoute>
             <Reports />
@@ -253,7 +252,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/campaigns"
+        path="campaigns"
         element={
           <ProtectedRoute>
             <Campaigns />
@@ -261,7 +260,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/campaigns/add-availability"
+        path="campaigns/add-availability"
         element={
           <ProtectedRoute>
             <AddCampaignAvailability />
@@ -269,7 +268,7 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/campaigns/details/:id"
+        path="campaigns/details/:id"
         element={
           <ProtectedRoute>
             <CampaignDetails />
@@ -277,20 +276,20 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="/provider/platform-rating"
+        path="platform-rating"
         element={
           <ProtectedRoute>
             <PlatformRating />
           </ProtectedRoute>
         }
       />
-      <Route path="/provider/login" element={<Login />} />
-      <Route path="/provider/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/provider/forgot-password" element={<ForgotPassword />} />
-      <Route path="/provider/reset-password" element={<ResetPassword />} />
-      <Route path="/provider/faq" element={<FAQ />} />
-      <Route path="/provider/" element={<Welcome />} />
-      <Route path="/provider/*" element={<NotFound />} />
+      <Route path="login" element={<Login />} />
+      <Route path="privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
+      <Route path="reset-password" element={<ResetPassword />} />
+      <Route path="faq" element={<FAQ />} />
+      <Route path="/" element={<Welcome />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
@@ -352,6 +351,7 @@ export default function Root() {
       setHideIdleTimer(false);
     }
   }, [location]);
+  console.log(language, "language here");
   return (
     <RootContext.Provider
       value={{
@@ -367,10 +367,10 @@ export default function Root() {
       )}
       <Routes>
         <Route
-          path="/:language"
-          element={<Navigate to={`/${language}/provider`} replace />}
+          path="/provider"
+          element={<Navigate to={`/provider/${language || "en"}`} replace />}
         />
-        <Route path=":language/*" element={<LanguageLayout />} />
+        <Route path="/provider/:language/*" element={<LanguageLayout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </RootContext.Provider>
