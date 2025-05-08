@@ -1,10 +1,10 @@
 import React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { Page, SchedulerTemplate } from "#blocks";
-import { useGetCampaigns } from "#hooks";
+import { useCustomNavigate as useNavigate, useGetCampaigns } from "#hooks";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
@@ -39,7 +39,12 @@ export const AddCampaignAvailability = () => {
     (x) => x.campaignId === campaignId
   );
 
-  if (!campaignId) return <Navigate to="/campaigns" />;
+  if (!campaignId)
+    return (
+      <Navigate
+        to={`/provider/${localStorage.getItem("language")}/campaigns`}
+      />
+    );
 
   return (
     <Page

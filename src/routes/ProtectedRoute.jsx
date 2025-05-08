@@ -17,7 +17,10 @@ export const ProtectedRoute = ({ children }) => {
     unreadNotificationsQuery.refetch();
   }, [location]);
 
-  if (!isLoggedIn || !isProvider) return <Navigate to="/" />;
+  if (!isLoggedIn || !isProvider)
+    return (
+      <Navigate to={`/provider/${localStorage.getItem("language")}`} replace />
+    );
 
   return children;
 };
