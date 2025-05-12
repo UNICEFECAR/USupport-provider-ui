@@ -19,6 +19,7 @@ import {
   getCountryFromTimezone,
   replaceLanguageInUrl,
   getLanguageFromUrl,
+  redirectToLocalStorageCountry,
 } from "@USupport-components-library/utils";
 import { useIsLoggedIn, useEventListener, useError } from "#hooks";
 import classNames from "classnames";
@@ -124,6 +125,10 @@ export const Page = ({
   const fetchCountries = async () => {
     const res = await countrySvc.getActiveCountries();
     const subdomain = window.location.hostname.split(".")[0];
+
+    if (subdomain === "usupport") {
+      redirectToLocalStorageCountry("provider");
+    }
 
     if (subdomain && subdomain !== "www" && subdomain !== "usupport") {
       localStorageCountry =
