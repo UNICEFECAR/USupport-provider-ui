@@ -107,28 +107,11 @@ export const Page = ({
         }
       }
     }
-
-    if (!hasSetDefaultCountry && !localStorageCountry) {
-      const kazakhstanCountryObject = countries.find(
-        (x) => x.value === kazakhstanCountry.value
-      );
-
-      localStorage.setItem("country", kazakhstanCountry.value);
-      localStorage.setItem("country_id", kazakhstanCountryObject.countryID);
-      localStorage.setItem(
-        "currency_symbol",
-        kazakhstanCountryObject.currencySymbol
-      );
-    }
   };
 
   const fetchCountries = async () => {
     const res = await countrySvc.getActiveCountries();
     const subdomain = window.location.hostname.split(".")[0];
-
-    if (subdomain === "usupport") {
-      redirectToLocalStorageCountry("provider");
-    }
 
     if (subdomain && subdomain !== "www" && subdomain !== "usupport") {
       localStorageCountry =
