@@ -3,8 +3,9 @@ import { Navigate } from "react-router-dom";
 
 export const CountryValidationRoute = ({ children }) => {
   const country = localStorage.getItem("country");
-  console.log(country, "country");
-  if (!country) return <Navigate to="/" />;
+  const language = localStorage.getItem("language") || "en";
+
+  if (!country) return <Navigate to={`/provider/${language}/`} />;
 
   return children;
 };
