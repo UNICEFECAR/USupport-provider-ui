@@ -5,7 +5,8 @@ export const CountryValidationRoute = ({ children }) => {
   const country = localStorage.getItem("country");
   const language = localStorage.getItem("language") || "en";
 
-  if (!country) return <Navigate to={`/provider/${language}/`} />;
+  if (!country || country === "global")
+    return <Navigate to={`/provider/${language}/`} />;
 
   return children;
 };
