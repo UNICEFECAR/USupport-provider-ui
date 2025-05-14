@@ -5,7 +5,12 @@ import { useIsLoggedIn, useCheckHasUnreadNotifications } from "#hooks";
 
 export const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  const decoded = token ? jwtDecode(token) : null;
+  let decoded = null;
+  try {
+    decoded = token ? jwtDecode(token) : null;
+  } catch (error) {
+    console.log(error);
+  }
   const isProvider = decoded?.userType === "provider";
   const isLoggedIn = useIsLoggedIn();
 
