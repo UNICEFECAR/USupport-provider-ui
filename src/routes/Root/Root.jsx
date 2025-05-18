@@ -51,7 +51,6 @@ const RootContext = React.createContext();
 
 const LanguageLayout = () => {
   const { language } = useParams();
-  console.log(language, "language");
   const allLangs = ["en", "ru", "kk", "pl", "uk"];
   if (!language || !allLangs.includes(language.toLowerCase())) {
     return <Navigate to="/en" replace />;
@@ -351,7 +350,7 @@ export default function Root() {
       setHideIdleTimer(false);
     }
   }, [location]);
-  console.log(language, "language here");
+
   return (
     <RootContext.Provider
       value={{
