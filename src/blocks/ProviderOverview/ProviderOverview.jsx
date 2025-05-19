@@ -35,7 +35,7 @@ export const ProviderOverview = ({
   const image = AMAZON_S3_BUCKET + "/" + (provider?.image || "default");
 
   const handleEditRedirect = () => {
-    navigate("/edit");
+    navigate("/profile/details/edit");
   };
 
   return (
