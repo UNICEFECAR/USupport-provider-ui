@@ -95,10 +95,14 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
     if ((await validate(dataCopy, schema, setErrors)) === null) {
       const tagsToSend = dataCopy.tags.map((tag) => {
         const tagExists = initialTagsOptions.find(
-          (initialTag) => initialTag.id === tag.id
+          (initialTag) =>
+            initialTag.id === tag.id || initialTag.label === tag.label.trim()
         );
-        return tagExists ? { tagId: tag.id } : { tag: tag.label, isNew: true };
+        return tagExists
+          ? { tagId: tagExists.id }
+          : { tag: tag.label, isNew: true };
       });
+
       const payload = {
         question_id: question.questionId,
         title: data.title,

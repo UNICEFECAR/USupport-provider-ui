@@ -6,6 +6,7 @@ import {
   GridItem,
   CollapsibleFAQ,
   Loading,
+  InputSearch,
 } from "@USupport-components-library/src";
 import { useTranslation } from "react-i18next";
 import { useEventListener } from "#hooks";
@@ -22,6 +23,7 @@ import "./faq.scss";
  */
 export const FAQ = () => {
   const { i18n, t } = useTranslation("faq");
+  const [searchQuery, setSearchQuery] = useState("");
 
   //--------------------- Country Change Event Listener ----------------------//
   const [currentCountry, setCurrentCountry] = useState(
@@ -73,18 +75,34 @@ export const FAQ = () => {
     enabled: !faqIdsQuerry.isLoading && faqIdsQuerry.data?.length > 0,
   });
 
+  const filteredFAQs = FAQsData?.filter((faq) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      faq.question.toLowerCase().includes(searchLower) ||
+      faq.answer.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <Block classes="faq">
       <Grid>
         <GridItem md={8} lg={12}>
-          {FAQsData && <CollapsibleFAQ data={FAQsData} />}
+          <InputSearch
+            value={searchQuery}
+            onChange={(value) => setSearchQuery(value)}
+            placeholder={t("search")}
+            classes="faq__search"
+          />
+        </GridItem>
+        <GridItem md={8} lg={12}>
+          {filteredFAQs && <CollapsibleFAQ data={filteredFAQs} />}
           {faqIdsQuerry.data?.length > 0 && !FAQsData && FAQsLoading && (
             <Loading />
           )}
-          {(!FAQsData?.length && !FAQsLoading && isFAQsFetched) ||
-            (faqIdsQuerry.data?.length === 0 && (
-              <h3 className="page__faq__no-results">{t("no_results")}</h3>
-            ))}
+          {(!filteredFAQs?.length && !FAQsLoading && isFAQsFetched) ||
+          faqIdsQuerry.data?.length === 0 ? (
+            <h3 className="page__faq__no-results">{t("no_results")}</h3>
+          ) : null}
         </GridItem>
       </Grid>
     </Block>
