@@ -41,4 +41,5 @@ export * from "./useMarkAllNotificationsAsRead.js";
 export * from "./useGetAllChatHistoryData.js";
 export * from "./useAddPlatformRating.js";
 export * from "./useGetLanguages.js";
+export * from "./useConsultationSocket.js";
 export * from "./useCustomNavigate.js";
