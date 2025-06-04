@@ -68,6 +68,9 @@ export const JitsiRoom = () => {
   const location = useLocation();
   const { width } = useWindowDimensions();
 
+  if (!location?.state) {
+    return <Navigate to={`/provider/${language}/consultations`} />;
+  }
   const { consultation, videoOn, microphoneOn, token } = location?.state;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +84,7 @@ export const JitsiRoom = () => {
     hasUnreadMessages: false,
     isClientInSession: false,
   });
+  const interfacesRef = useRef(interfaces);
 
   const [messages, setMessages] = useState({
     currentSession: [],
@@ -90,30 +94,23 @@ export const JitsiRoom = () => {
   useSessionEndReminder(consultation.timestamp, t);
 
   const receiveMessage = (message) => {
+    const interfacesCopy = { ...interfacesRef.current };
     if (message.content === "client_left") {
-      setInterfaceData({
-        ...interfaces,
-        isClientInSession: false,
-      });
+      interfacesCopy.isClientInSession = false;
     } else if (message.content === "client_joined") {
-      setInterfaceData({
-        ...interfaces,
-        isClientInSession: true,
-      });
+      interfacesCopy.isClientInSession = true;
     }
     if (!interfaces.isChatShownOnTablet && !interfaces.isChatShownOnMobile) {
-      console.log("set hasUnreadMessages to true");
-      setInterfaceData((prev) => ({
-        ...prev,
-        hasUnreadMessages: true,
-      }));
+      interfacesCopy.hasUnreadMessages = true;
     }
     setMessages((messages) => {
       return {
         ...messages,
         currentSession: [...messages.currentSession, message],
       };
+      2;
     });
+    setInterfaceData(interfacesCopy);
   };
 
   const socketRef = useConsultationSocket({
@@ -122,6 +119,10 @@ export const JitsiRoom = () => {
     receiveMessage,
     setInterfaceData,
   });
+
+  useEffect(() => {
+    interfacesRef.current = interfaces;
+  }, [interfaces]);
 
   useEffect(() => {
     // If the chat is shown but user shrinks the window:
