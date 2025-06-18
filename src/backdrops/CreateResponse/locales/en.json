@@ -11,6 +11,6 @@
   "cta_label": "Send your response",
   "selected_tags": "Selected tags",
   "response_success": "Response sent successfully",
-  "language": "Language",
+  "language": "Language*",
   "language_error_label": "Language is required"
 }

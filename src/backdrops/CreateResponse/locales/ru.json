@@ -11,6 +11,6 @@
   "cta_label": "Отправьте свой ответ",
   "selected_tags": "Выбранные теги",
   "response_success": "Ответ успешно отправлен",
-  "language": "Язык",
+  "language": "Язык*",
   "language_error_label": "Требуется язык"
 }
