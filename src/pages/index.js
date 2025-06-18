@@ -26,3 +26,4 @@ export * from "./AddCampaignAvailability";
 export * from "./CampaignDetails";
 export * from "./CustomersQA";
 export * from "./PlatformRating";
+export * from "./JitsiRoom";

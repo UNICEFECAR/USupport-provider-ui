@@ -43,7 +43,7 @@ import {
   CampaignDetails,
   CustomersQA,
   PlatformRating,
-  // JitsiRoom,
+  JitsiRoom,
 } from "#pages";
 
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
@@ -141,8 +141,8 @@ const LanguageLayout = () => {
         path="consultation"
         element={
           <ProtectedRoute>
-            {/* <JitsiRoom /> */}
-            <Consultation />
+            <JitsiRoom />
+            {/* <Consultation /> */}
           </ProtectedRoute>
         }
       />
