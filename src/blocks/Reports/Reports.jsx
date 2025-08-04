@@ -28,7 +28,7 @@ import "./reports.scss";
  * @return {jsx}
  */
 export const Reports = () => {
-  const { t, i18n } = useTranslation("reports");
+  const { t, i18n } = useTranslation("blocks", { keyPrefix: "reports" });
   const [dataToDisplay, setDataToDisplay] = useState();
 
   const rows = useMemo(() => {

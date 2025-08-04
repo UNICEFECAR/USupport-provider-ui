@@ -27,7 +27,7 @@ export const CancelConsultation = ({
   onSuccess = () => {},
 }) => {
   const queryClient = useQueryClient();
-  const { t } = useTranslation("cancel-consultation");
+  const { t } = useTranslation("modals", { keyPrefix: "cancel-consultation" });
   const [error, setError] = useState();
   const currencySymbol = localStorage.getItem("currency_symbol");
 

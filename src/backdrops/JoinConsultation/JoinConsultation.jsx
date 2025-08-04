@@ -20,7 +20,7 @@ import "./join-consultation.scss";
  * @return {jsx}
  */
 export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
-  const { t } = useTranslation("join-consultation");
+  const { t } = useTranslation("modals", { keyPrefix: "join-consultation" });
   const navigate = useNavigate();
 
   const handleClick = async (redirectTo) => {

@@ -20,7 +20,7 @@ import "./archive-question.scss";
  * @return {jsx}
  */
 export const ArchiveQuestion = ({ isOpen, onClose, question }) => {
-  const { t } = useTranslation("archive-question");
+  const { t } = useTranslation("modals", { keyPrefix: "archive-question" });
   const queryClient = useQueryClient();
 
   const [selectedReasonValue, setSelectedReasonValue] = useState("");

@@ -33,7 +33,7 @@ export const Consultations = ({
   searchValue,
 }) => {
   const navigate = useNavigate();
-  const { t } = useTranslation("consultations");
+  const { t } = useTranslation("blocks", { keyPrefix: "consultations" });
 
   const [filter, setFilter] = useState("today");
 

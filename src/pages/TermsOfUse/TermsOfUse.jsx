@@ -12,7 +12,7 @@ import { Page, TermsOfUse as TermsOfUseBlock } from "#blocks";
  * @returns {JSX.Element}
  */
 export const TermsOfUse = () => {
-  const { t } = useTranslation("terms-of-use-page");
+  const { t } = useTranslation("pages", { keyPrefix: "terms-of-use-page" });
   const navigate = useNavigate();
 
   return (

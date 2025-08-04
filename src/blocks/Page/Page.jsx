@@ -59,7 +59,7 @@ export const Page = ({
 
   const navigateTo = useNavigate();
   const queryClient = useQueryClient();
-  const { t, i18n } = useTranslation("page");
+  const { t, i18n } = useTranslation("blocks", { keyPrefix: "page" });
   const IS_DEV = process.env.NODE_ENV === "development";
   const isLoggedIn = useIsLoggedIn();
   const isNavbarShown = showNavbar !== null ? showNavbar : isLoggedIn;

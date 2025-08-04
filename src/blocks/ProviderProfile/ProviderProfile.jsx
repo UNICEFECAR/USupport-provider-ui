@@ -23,7 +23,7 @@ import "./provider-profile.scss";
  */
 export const ProviderProfile = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("provider-profile");
+  const { t } = useTranslation("blocks", { keyPrefix: "provider-profile" });
 
   const [displayName, setDisplayName] = useState("");
 

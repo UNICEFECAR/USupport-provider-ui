@@ -12,7 +12,7 @@ import { Page, CookiePolicy as CookiePolicyBlock } from "#blocks";
  * @returns {JSX.Element}
  */
 export const CookiePolicy = () => {
-  const { t } = useTranslation("cookie-policy-page");
+  const { t } = useTranslation("pages", { keyPrefix: "cookie-policy-page" });
   const navigate = useNavigate();
 
   return (

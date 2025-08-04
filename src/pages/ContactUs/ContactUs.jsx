@@ -17,7 +17,7 @@ import "./contact-us.scss";
 export const ContactUs = () => {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
-  const { t } = useTranslation("contact-us-page");
+  const { t } = useTranslation("pages", { keyPrefix: "contact-us-page" });
 
   const handleGoBack = () => navigate(-1);
 

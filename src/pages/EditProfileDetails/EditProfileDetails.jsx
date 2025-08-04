@@ -14,7 +14,9 @@ import { useTranslation } from "react-i18next";
  * @returns {JSX.Element}
  */
 export const EditProfileDetails = () => {
-  const { t } = useTranslation("edit-profile-details-page");
+  const { t } = useTranslation("pages", {
+    keyPrefix: "edit-profile-details-page",
+  });
   const navigate = useNavigate();
 
   const [isUploadPictureBackdropOpen, setIsUploadPictureBackdropOpen] =
