@@ -17,7 +17,9 @@ import { ChangePassword, DeleteAccount } from "../../backdrops";
  */
 export const ProviderOverview = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("provider-overview-page");
+  const { t } = useTranslation("pages", {
+    keyPrefix: "provider-overview-page",
+  });
   const { width } = useWindowDimensions();
 
   const [isChangePasswordBackdropOpen, setIsChangePasswordBackdropOpen] =

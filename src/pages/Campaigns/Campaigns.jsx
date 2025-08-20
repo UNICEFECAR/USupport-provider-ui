@@ -14,7 +14,7 @@ import "./campaigns.scss";
  * @returns {JSX.Element}
  */
 export const Campaigns = () => {
-  const { t } = useTranslation("campaigns-page");
+  const { t } = useTranslation("pages", { keyPrefix: "campaigns-page" });
   const IS_KZ = localStorage.getItem("country") === "KZ";
 
   if (!IS_KZ) {

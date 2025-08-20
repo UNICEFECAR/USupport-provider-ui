@@ -59,7 +59,7 @@ const SOCKET_IO_URL = `${import.meta.env.VITE_SOCKET_IO_URL}`;
  * @returns {JSX.Element}
  */
 export const Consultation = () => {
-  const { t } = useTranslation("consultation-page");
+  const { t } = useTranslation("pages", { keyPrefix: "consultation-page" });
   const language = localStorage.getItem("language");
   const country = localStorage.getItem("country");
   const { width } = useWindowDimensions();

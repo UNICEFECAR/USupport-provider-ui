@@ -27,7 +27,7 @@ export const CampaignDetails = ({
   openCancelConsultation,
 }) => {
   const navigate = useNavigate();
-  const { t } = useTranslation("campaign-details");
+  const { t } = useTranslation("blocks", { keyPrefix: "campaign-details" });
   const consultationsQuery = useGetConsultationsForCampaign(campaignId);
 
   const handleViewProfile = (clientInformation) => {

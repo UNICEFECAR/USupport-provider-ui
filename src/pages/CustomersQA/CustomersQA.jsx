@@ -23,7 +23,7 @@ import { toast } from "react-toastify";
  * @returns {JSX.Element}
  */
 export const CustomersQA = () => {
-  const { t } = useTranslation("customers-qa-page");
+  const { t } = useTranslation("pages", { keyPrefix: "customers-qa-page" });
 
   const [isCreateResponseBackdropOpen, setIsCreateResponseBackdropOpen] =
     useState(false);

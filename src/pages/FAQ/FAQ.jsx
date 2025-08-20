@@ -12,7 +12,7 @@ import { Page, FAQ as FAQBlock } from "#blocks";
  * @returns {JSX.Element}
  */
 export const FAQ = () => {
-  const { t } = useTranslation("faq-page");
+  const { t } = useTranslation("pages", { keyPrefix: "faq-page" });
   const navigate = useNavigate();
 
   return (

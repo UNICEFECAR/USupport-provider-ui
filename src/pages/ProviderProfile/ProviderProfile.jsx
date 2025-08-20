@@ -16,7 +16,7 @@ import "./provider-profile.scss";
  */
 export const ProviderProfile = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("provider-profile-page");
+  const { t } = useTranslation("pages", { keyPrefix: "provider-profile-page" });
   const { width } = useWindowDimensions();
 
   const handleLogout = () => {

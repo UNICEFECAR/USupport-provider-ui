@@ -44,7 +44,7 @@ export const ActivityHistory = ({
   preselectedConsultation,
 }) => {
   const navigate = useNavigate();
-  const { t } = useTranslation("activity-history");
+  const { t } = useTranslation("blocks", { keyPrefix: "activity-history" });
 
   const { width } = useWindowDimensions();
 

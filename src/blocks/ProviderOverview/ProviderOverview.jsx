@@ -27,7 +27,7 @@ export const ProviderOverview = ({
   openChangePasswordBackdrop,
   openDeleteAccountBackdrop,
 }) => {
-  const { t } = useTranslation("provider-overview");
+  const { t } = useTranslation("blocks", { keyPrefix: "provider-overview" });
   const navigate = useNavigate();
 
   const [providerDataQuery] = useGetProviderData();

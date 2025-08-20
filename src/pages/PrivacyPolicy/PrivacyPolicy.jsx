@@ -12,7 +12,7 @@ import { Page, PrivacyPolicy as PrivacyPolicyBlock } from "#blocks";
  * @returns {JSX.Element}
  */
 export const PrivacyPolicy = () => {
-  const { t } = useTranslation("privacy-policy-page");
+  const { t } = useTranslation("pages", { keyPrefix: "privacy-policy-page" });
   const navigate = useNavigate();
 
   return (
