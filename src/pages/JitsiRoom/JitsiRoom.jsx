@@ -387,6 +387,7 @@ export const JitsiRoom = () => {
             }
 
             externalApi.executeCommand("joinConference");
+            externalApi.executeCommand("grantModerator", false);
             externalApi.executeCommand(
               "avatarUrl",
               `${AMAZON_S3_BUCKET}/${providerData?.image}`
