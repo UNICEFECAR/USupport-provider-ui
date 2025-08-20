@@ -30,7 +30,7 @@ const initialData = {
  */
 export const ContactUs = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("contact-us-block");
+  const { t } = useTranslation("blocks", { keyPrefix: "contact-us-block" });
 
   const initialIssues = [
     { value: "information", label: "contact_reason_1" },

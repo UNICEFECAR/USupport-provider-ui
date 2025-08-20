@@ -16,7 +16,7 @@ import "./delete-account.scss";
  * @return {jsx}
  */
 export const DeleteAccount = ({ isOpen, onClose }) => {
-  const { t } = useTranslation("delete-account");
+  const { t } = useTranslation("modals", { keyPrefix: "delete-account" });
   const navigate = useNavigate();
 
   const [data, setData] = useState({ password: "" });

@@ -20,7 +20,7 @@ import "./upload-picture.scss";
  * @return {jsx}
  */
 export const UploadPicture = ({ isOpen, onClose, setProviderImageUrl }) => {
-  const { t } = useTranslation("upload-picture");
+  const { t } = useTranslation("modals", { keyPrefix: "upload-picture" });
 
   const queryClient = useQueryClient();
   const providerData = queryClient.getQueryData(["provider-data"]);

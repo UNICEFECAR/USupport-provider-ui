@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
  */
 export const NotFound = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("not-found-page");
+  const { t } = useTranslation("pages", { keyPrefix: "not-found-page" });
   return (
     <Page showGoBackArrow={false}>
       <NotFoundBlock

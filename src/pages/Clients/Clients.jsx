@@ -28,7 +28,7 @@ import "./clients.scss";
 export const Clients = () => {
   const queryClient = useQueryClient();
   const { width } = useWindowDimensions();
-  const { t } = useTranslation("clients-page");
+  const { t } = useTranslation("pages", { keyPrefix: "clients-page" });
   const providerId = userSvc.getUserID();
 
   const [selectedClientId, setSelectedClientId] = useState();

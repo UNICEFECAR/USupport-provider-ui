@@ -42,7 +42,7 @@ import "./notifications.scss";
  * @return {jsx}
  */
 export const Notifications = ({ openJoinConsultation }) => {
-  const { t } = useTranslation("notifications");
+  const { t } = useTranslation("blocks", { keyPrefix: "notifications" });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

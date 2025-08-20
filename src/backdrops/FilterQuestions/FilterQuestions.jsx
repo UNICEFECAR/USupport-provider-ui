@@ -23,7 +23,7 @@ export const FilterQuestions = ({
   selectedTag,
   setSelectedTag,
 }) => {
-  const { t } = useTranslation("filter-questions");
+  const { t } = useTranslation("modals", { keyPrefix: "filter-questions" });
 
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState(null);
