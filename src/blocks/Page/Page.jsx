@@ -61,6 +61,7 @@ export const Page = ({
   const queryClient = useQueryClient();
   const { t, i18n } = useTranslation("page");
   const IS_DEV = process.env.NODE_ENV === "development";
+  const IS_KZ = localStorage.getItem("country") === "KZ";
   const isLoggedIn = useIsLoggedIn();
   const isNavbarShown = showNavbar !== null ? showNavbar : isLoggedIn;
   const isFooterShown = showFooter !== null ? showFooter : isLoggedIn;
@@ -224,7 +225,7 @@ export const Page = ({
     { name: t("page_3"), url: "/activity-history" },
     { name: t("page_4"), url: "/consultations" },
     { name: t("page_5"), url: "/clients" },
-    { name: t("page_6"), url: "/campaigns" },
+    !IS_KZ && { name: t("page_6"), url: "/campaigns" },
     { name: t("page_7"), url: "/my-qa" },
   ];
 
