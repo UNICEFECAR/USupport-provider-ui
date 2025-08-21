@@ -25,6 +25,7 @@ import {
 import { MessageList } from "./MessageList";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
+const JITSI_API_URL = `${import.meta.env.VITE_JITSI_API_URL}`;
 
 import "./jitsi-room.scss";
 
@@ -351,7 +352,7 @@ export const JitsiRoom = () => {
           </div>
         )}
         <JitsiMeeting
-          domain={"jitsi.usupport.online"}
+          domain={JITSI_API_URL}
           roomName={consultation.consultationId}
           ssl={false}
           spinner={Loading}
