@@ -20,7 +20,9 @@ export const DeleteProfilePicture = ({
   onClose,
   setProviderImageUrl,
 }) => {
-  const { t } = useTranslation("delete-profile-picture");
+  const { t } = useTranslation("modals", {
+    keyPrefix: "delete-profile-picture",
+  });
   const [error, setError] = useState();
   const queryClient = useQueryClient();
 

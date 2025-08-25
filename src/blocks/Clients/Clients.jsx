@@ -48,7 +48,7 @@ export const Clients = ({
   selectedConsultation,
   setSelectedConsultation,
 }) => {
-  const { t } = useTranslation("clients");
+  const { t } = useTranslation("blocks", { keyPrefix: "clients" });
   const { width } = useWindowDimensions();
 
   const clientsQuery = useGetAllClients();

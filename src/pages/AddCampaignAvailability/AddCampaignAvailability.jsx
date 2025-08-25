@@ -18,7 +18,9 @@ import "./add-campaign-availability.scss";
  * @returns {JSX.Element}
  */
 export const AddCampaignAvailability = () => {
-  const { t } = useTranslation("add-campaign-availability-page");
+  const { t } = useTranslation("pages", {
+    keyPrefix: "add-campaign-availability-page",
+  });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

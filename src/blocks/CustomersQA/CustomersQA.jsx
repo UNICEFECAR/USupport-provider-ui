@@ -31,7 +31,7 @@ export const CustomersQA = ({
   setIsFilterShown,
   filterTag,
 }) => {
-  const { t } = useTranslation("customers-qa");
+  const { t } = useTranslation("blocks", { keyPrefix: "customers-qa" });
 
   const [tabs, setTabs] = useState([
     { value: "unanswered", isSelected: true },

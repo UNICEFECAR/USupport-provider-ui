@@ -56,7 +56,7 @@ export const EditProfileDetails = ({
 }) => {
   const currencySymbol = localStorage.getItem("currency_symbol");
 
-  const { t } = useTranslation("edit-profile-details");
+  const { t } = useTranslation("blocks", { keyPrefix: "edit-profile-details" });
   const [providersQuery, providerData, setProviderData] = useGetProviderData();
   const [canSaveChanges, setCanSaveChanges] = useState(false);
 

@@ -16,7 +16,7 @@ import "./consultations.scss";
  * @returns {JSX.Element}
  */
 export const Consultations = () => {
-  const { t } = useTranslation("consultations-page");
+  const { t } = useTranslation("pages", { keyPrefix: "consultations-page" });
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState("");

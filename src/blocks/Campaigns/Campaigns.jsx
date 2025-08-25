@@ -33,7 +33,7 @@ import "./campaigns.scss";
  */
 export const Campaigns = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation("campaigns");
+  const { t, i18n } = useTranslation("blocks", { keyPrefix: "campaigns" });
   const currencySymbol = localStorage.getItem("currency_symbol");
 
   const [isModalOpen, setIsModalOpen] = useState(false);

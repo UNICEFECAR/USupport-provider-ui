@@ -14,7 +14,9 @@ import "./scheduler-template.scss";
  */
 export const SchedulerTemplate = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("scheduler-template-page");
+  const { t } = useTranslation("pages", {
+    keyPrefix: "scheduler-template-page",
+  });
 
   const handleGoBack = () => navigate(-1);
   return (

@@ -31,7 +31,7 @@ import "./create-response.scss";
  * @return {jsx}
  */
 export const CreateResponse = ({ isOpen, onClose, question }) => {
-  const { t } = useTranslation("create-response");
+  const { t } = useTranslation("modals", { keyPrefix: "create-response" });
   const queryClient = useQueryClient();
 
   const onSuccess = (data) => {

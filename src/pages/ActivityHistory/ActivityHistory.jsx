@@ -18,7 +18,7 @@ import "./activity-history.scss";
  * @returns {JSX.Element}
  */
 export const ActivityHistory = () => {
-  const { t } = useTranslation("activity-history-page");
+  const { t } = useTranslation("pages", { keyPrefix: "activity-history-page" });
   const location = useLocation();
 
   const preselectedConsultation = location.state?.consultation;

@@ -12,7 +12,9 @@ import "./cancel-paid-consultation.scss";
  * @return {jsx}
  */
 export const CancelPaidConsultation = ({ isOpen, onClose }) => {
-  const { t } = useTranslation("cancel-paid-consultation");
+  const { t } = useTranslation("modals", {
+    keyPrefix: "cancel-paid-consultation",
+  });
 
   const handleCancelConsultation = () => {
     console.log("Cancel paid consultation");

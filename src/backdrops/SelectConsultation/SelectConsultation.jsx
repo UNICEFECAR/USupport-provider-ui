@@ -35,7 +35,7 @@ export const SelectConsultation = ({
   isCtaDisabled = false,
   errorMessage,
 }) => {
-  const { t } = useTranslation("select-consultation");
+  const { t } = useTranslation("modals", { keyPrefix: "select-consultation" });
 
   const providerData = useGetProviderData()[0].data;
 

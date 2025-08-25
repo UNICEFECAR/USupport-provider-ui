@@ -51,7 +51,7 @@ const RootContext = React.createContext();
 
 const LanguageLayout = () => {
   const { language } = useParams();
-  const allLangs = ["en", "ru", "kk", "pl", "uk"];
+  const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
   if (!language || !allLangs.includes(language.toLowerCase())) {
     return <Navigate to="/en" replace />;
   }

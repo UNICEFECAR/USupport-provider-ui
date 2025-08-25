@@ -25,6 +25,7 @@ import {
 import { MessageList } from "./MessageList";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
+const JITSI_API_URL = `${import.meta.env.VITE_JITSI_API_URL}`;
 
 import "./jitsi-room.scss";
 
@@ -55,7 +56,7 @@ export const JitsiRoom = () => {
   const language = localStorage.getItem("language");
   const country = localStorage.getItem("country");
 
-  const { t } = useTranslation("consultation-page");
+  const { t } = useTranslation("pages", { keyPrefix: "consultation-page" });
 
   const { theme } = useContext(ThemeContext);
   const { leaveConsultationFn } = useContext(RootContext);
@@ -351,7 +352,7 @@ export const JitsiRoom = () => {
           </div>
         )}
         <JitsiMeeting
-          domain={"jitsi.usupport.online"}
+          domain={JITSI_API_URL}
           roomName={consultation.consultationId}
           ssl={false}
           spinner={Loading}
@@ -387,6 +388,7 @@ export const JitsiRoom = () => {
             }
 
             externalApi.executeCommand("joinConference");
+            externalApi.executeCommand("grantModerator", false);
             externalApi.executeCommand(
               "avatarUrl",
               `${AMAZON_S3_BUCKET}/${providerData?.image}`

@@ -39,7 +39,7 @@ const days = [
  * @return {jsx}
  */
 export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
-  const { t } = useTranslation("dashboard");
+  const { t } = useTranslation("blocks", { keyPrefix: "dashboard" });
   const navigate = useNavigate();
   const today = new Date();
 

@@ -48,7 +48,7 @@ const namesOfDays = [
  * @return {jsx}
  */
 export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
-  const { t } = useTranslation("scheduler");
+  const { t } = useTranslation("blocks", { keyPrefix: "scheduler" });
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
 

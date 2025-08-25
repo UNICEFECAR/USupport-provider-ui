@@ -27,7 +27,9 @@ import "./notification-preferences.scss";
  * @return {jsx}
  */
 export const NotificationPreferences = () => {
-  const { t } = useTranslation("notification-preferences");
+  const { t } = useTranslation("blocks", {
+    keyPrefix: "notification-preferences",
+  });
 
   const [minutes, setMinutes] = useState([
     { value: 15, label: "15 " + t("minutes_before"), isSelected: false },

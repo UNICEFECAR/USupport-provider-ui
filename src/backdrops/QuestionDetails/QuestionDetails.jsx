@@ -29,7 +29,7 @@ export const QuestionDetails = ({
   isOpen,
   onClose,
 }) => {
-  const { t } = useTranslation("question-details");
+  const { t } = useTranslation("modals", { keyPrefix: "question-details" });
 
   const providerInfo = question.providerData;
 
