@@ -53,8 +53,8 @@
       "modal_text": "Skontaktujemy się z Tobą tak szybko, jak to możliwe",
       "modal_cta_label": "Wróć do strony głównej",
       "contact_reason_1": "Potrzebuję więcej informacji na temat usług świadczonych za pośrednictwem platformy",
-      "contact_reason_2": "Jestem konsultantką/konsultantem i mam problem techniczny",
-      "contact_reason_3": "Jestem konsultantką/konsultantem i jestem zainteresowany dołączeniem do platformy",
+      "contact_reason_2": "Jestem konsultantem/ką i mam problem techniczny",
+      "contact_reason_3": "Jestem konsultantem/ką i jestem zainteresowany/a dołączeniem do platformy",
       "contact_reason_4": "Przedstawiam podmiot gospodarczy i jesteśmy zainteresowani wsparciem platformy",
       "contact_reason_5": "Coś innego",
       "contact_form": "Formularz kontaktowy"
@@ -77,7 +77,7 @@
       "try_again": "Spróbuj ponownie za",
       "seconds": "sekund",
       "heading": "Witamy w",
-      "provider": "Konsultant/Konsultantka"
+      "provider": "Konsultant/ka"
     },
     "privacy-policy": {
       "no_results": "Brak wyników dla wybranego kraju i języka."
@@ -88,7 +88,7 @@
       "language": "Język",
       "placeholder": "Wybrać",
       "button": "Kontynuuj",
-      "provider": "Konsultant/Konsultantka"
+      "provider": "Konsultant/ka"
     },
     "faq": {
       "no_results": "Nie znaleziono żadnych wyników.",
@@ -100,9 +100,9 @@
       "reset_password_button_label": "Zresetuj hasło",
       "register_redirect_button_label": "Nie mam konta",
       "modal_heading": "Sprawdź swój email",
-      "modal_text": "Jeśli jesteś zarejestrowany/zarejestrowana na platformie, otrzymasz link do zresetowania hasła.",
+      "modal_text": "Jeśli jesteś zarejestrowany/a na platformie, otrzymasz link do zresetowania hasła.",
       "heading": "Witamy w",
-      "provider": "Konsultant/Konsultantka"
+      "provider": "Konsultant/ka"
     },
     "reset-password": {
       "label": "Nowe hasło",
@@ -122,7 +122,7 @@
       "description_label": "O mnie",
       "language_label": "Język",
       "street_label": "Ulica",
-      "city_label": "Miasto",
+      "city_label": "Miejscowość",
       "postcode_label": "Kod pocztowy",
       "education_label": "Edukacja",
       "change_photo": "Zmień zdjęcie",
@@ -137,7 +137,7 @@
       "phone_placeholder": "Numer telefonu",
       "sex_placeholder": "Wybierz swoją płeć",
       "street_placeholder": "Wprowadź swoją ulicę",
-      "city_placeholder": "Wpisz swoje miasto",
+      "city_placeholder": "Wpisz swoją miejscowość",
       "postcode_placeholder": "Wprowadź swój kod pocztowy",
       "consultation_price_placeholder": "Cena konsultacji",
       "description_placeholder": "Wprowadź opis",
@@ -148,9 +148,9 @@
       "sex_unspecified": "Nieokreślony",
       "sex_none": "Wolę nie mówić",
 
-      "psychologist": "Psycholog",
+      "psychologist": "Psycholog/żka",
       "psychiatrist": "Psychiatra",
-      "psychotherapist": "Psychoterapeuta",
+      "psychotherapist": "Psychoterapeuta/ka",
 
       "name_error": "Imię jest wymagane",
       "surname_error": "Nazwisko jest wymagane",
@@ -159,7 +159,7 @@
       "phone_prefix_error": "Prefiks telefonu jest wymagany",
       "phone_error": "Numer telefonu jest wymagany",
       "street_error": "Ulica jest wymagana",
-      "city_error": "Miasto jest wymagane",
+      "city_error": "Miejscowość jest wymagana",
       "postcode_error": "Kod pocztowy jest wymagany",
       "min_price_error": "Minimalna cena konsultacji wynosi {{minPrice}}{{currencySymbol}}",
       "consultation_price_disabled": "Płatne konsultacje nie są dostępne w twoim kraju",
@@ -186,7 +186,7 @@
       "eating_disorder": "Zaburzenia odżywiania",
       "depression": "Depresja i zaburzenia nastroju",
       "anxiety": "Niepokój",
-      "panic_attack": "Atak paniki",
+      "panic_attack": "Ataki paniki",
       "relationship": "Relacje",
       "personal_development": "Rozwój osobisty",
       "ptsd": "Zespół Stresu Pourazowego (PTSD)",
@@ -196,10 +196,10 @@
       "goal": "Wyznaczanie celów i rozwój osobisty",
       "emotional_intelligence": "Inteligencja emocjonalna i samoregulacja",
       "productivity": "Produktywność i zarządzanie czasem",
-      "self_care": "Praktyki dbania o siebie",
+      "self_care": "Praktyki z zakresu dbania o siebie",
       "insomnia": "Bezsenność i problemy ze snem",
       "motivation": "Motywacja i samodoskonalenie",
-      "anger": "Zarządzanie gniewem",
+      "anger": "Zarządzanie złością",
       "bullying": "Bullying i presja rówieśnicza",
       "grief": "Żałoba i strata",
       "gender_identity": "Tożsamość płciowa",
@@ -220,7 +220,7 @@
       "remove": "Usuń"
     },
     "provider-overview": {
-      "earliest_slot_label": "Najwcześniejszy dostępny przedział czasowy dla konsultacji",
+      "earliest_slot_label": "Najwcześniejszy termin konsultacji",
       "languages_label": "Języki",
       "education_label": "Edukacja",
       "work_with_label": "Specjalności",
@@ -232,13 +232,13 @@
       "delete_account": "Usuń konto",
       "no_available_slot": "Brak dostępnych terminów",
       "video_label": "Prezentacja wideo",
-      "city_label": "Miasto",
+      "city_label": "Miejscowość",
       "street_label": "Ulica",
       "postcode_label": "Kod pocztowy",
 
-      "psychologist": "Psycholog",
+      "psychologist": "Psycholog/żka",
       "psychiatrist": "Psychiatra",
-      "psychotherapist": "Psychoterapeuta",
+      "psychotherapist": "Psychoterapeuta/ka",
 
       "addiction": "Uzależnienie",
       "stress": "Stres",
@@ -246,7 +246,7 @@
       "eating_disorder": "Zaburzenia odżywiania",
       "depression": "Depresja i zaburzenia nastroju",
       "anxiety": "Niepokój",
-      "panic_attack": "Atak paniki",
+      "panic_attack": "Ataki paniki",
       "relationship": "Relacje",
       "personal_development": "Rozwój osobisty",
       "ptsd": "Zespół Stresu Pourazowego (PTSD)",
@@ -256,10 +256,10 @@
       "goal": "Wyznaczanie celów i rozwój osobisty",
       "emotional_intelligence": "Inteligencja emocjonalna i samoregulacja",
       "productivity": "Produktywność i zarządzanie czasem",
-      "self_care": "Praktyki dbania o siebie",
+      "self_care": "Praktyki z zakresu dbania o siebie",
       "insomnia": "Bezsenność i problemy ze snem",
       "motivation": "Motywacja i samodoskonalenie",
-      "anger": "Zarządzanie gniewem",
+      "anger": "Zarządzanie złością",
       "bullying": "Bullying i presja rówieśnicza",
       "grief": "Żałoba i strata",
       "gender_identity": "Tożsamość płciowa",
@@ -274,7 +274,7 @@
 
       "hour_consultation": "za 1 godzinę konsultacji",
       "organizations_label": "Organizacje",
-      "free": "bezpłatnie"
+      "free": "Bezpłatne"
     },
     "provider-profile": {
       "your_profile": "Twój profil",
@@ -285,17 +285,17 @@
       "notifications_settings_button_label": "Ustawienia powiadomień",
       "contact_us_button_label": "Skontaktuj się z nami",
       "reports_button_label": "Raporty",
-      "privacy_policy_button_label": "Polityką prywatności",
+      "privacy_policy_button_label": "Polityka prywatności",
       "FAQ_button_label": "Najczęściej zadawane pytania",
       "terms_of_use": "Regulamin",
-      "cookie_policy": "Polityka plików cookies",
-      "user_guide": "Instrukcja użytkowania platformy"
+      "cookie_policy": "Polityka plików cookie",
+      "user_guide": "Instrukcja platformy"
     },
     "activity-history": {
       "activity_history_heading": "Historia aktywności",
       "button_propose_consultation_label": "Zaproponuj konsultację",
       "button_view_profile_label": "Wyświetl profil osobisty",
-      "no_consultation_selected": "Aby przejrzeć historię aktywności, wybierz jedną z list po lewej stronie.",
+      "no_consultation_selected": "Aby przejrzeć historię aktywności, wybierz klienta/kę po lewej stronie.",
       "button_filter_label": "Filtr",
       "sunday": "Niedz.",
       "monday": "Pon.",
@@ -306,22 +306,22 @@
       "saturday": "Sob.",
       "no_messages": "W tej konsultacji nie ma żadnych wiadomości",
       "no_activity_history": "Jak dotąd nie odnotowano żadnej aktywności",
-      "free": "Wolny",
+      "free": "Bezpłatne",
 
-      "client_joined": "Klient dołączył do konsultacji",
-      "client_left": "Klient opuścił konsultację",
-      "client_camera_off": "Klient wyłączył kamerę",
-      "client_camera_on": "Klient włączył kamerę",
-      "client_microphone_off": "Klient wyłączył mikrofon",
-      "client_microphone_on": "Klient włączył mikrofon",
-      "chat_history_deleted_by_client": "Historia czatu usunięta przez klienta",
+      "client_joined": "Klient/ka dołączył/a do konsultacji",
+      "client_left": "Klient/ka opuścił/a konsultację",
+      "client_camera_off": "Klient/ka wyłączył/a kamerę",
+      "client_camera_on": "Klient/ka włączył/a kamerę",
+      "client_microphone_off": "Klient/ka wyłączył/a mikrofon",
+      "client_microphone_on": "Klient/ka włączył/a mikrofon",
+      "chat_history_deleted_by_client": "Historia czatu usunięta przez klienta/kę",
 
-      "provider_joined": "Konsultant dołączył do konsultacji",
-      "provider_left": "Konsultant opuścił konsultację",
-      "provider_camera_off": "Konsultant wyłączył kamerę",
-      "provider_camera_on": "Konsultant włączył kamerę",
-      "provider_microphone_off": "Konsultant wyłączył mikrofon",
-      "provider_microphone_on": "Konsultant włączył mikrofon",
+      "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
+      "provider_left": "Konsultant/ka opuścił/a konsultację",
+      "provider_camera_off": "Konsultant/ka wyłączył/a kamerę",
+      "provider_camera_on": "Konsultant/ka włączył/a kamerę",
+      "provider_microphone_off": "Konsultant/ka wyłączył/a mikrofon",
+      "provider_microphone_on": "Konsultant/ka włączył/a mikrofon",
 
       "canceled": "Anulowane"
     },
@@ -348,12 +348,12 @@
       "not_conducted": "Nie przeprowadzono",
       "conducted": "Przeprowadzono",
       "join": "Dołącz",
-      "free": "Wolny"
+      "free": "Bezpłatne"
     },
     "clients": {
       "clients_heading": "Klienci",
       "input_search_placeholder": "Wyszukiwanie",
-      "no_consultation_selected": "Aby przejrzeć historię aktywności, wybierz jedną z list po lewej stronie.",
+      "no_consultation_selected": "Aby przejrzeć historię aktywności, wybierz klienta/kę po lewej stronie.",
       "button_propose_consultation_label": "Zaproponuj konsultację",
       "propose_consultation_label": "Zaproponuj konsultację",
       "sunday": "Niedz.",
@@ -370,29 +370,29 @@
       "no_scheduled": "Brak zaplanowanych konsultacji",
       "suggested": "Sugerowane",
       "join": "Dołącz",
-      "no_consultations": "Nie masz żadnych konsultacji z tym klientem",
+      "no_consultations": "Nie masz żadnych konsultacji z tym/ą klientem/ką",
       "no_messages": "W tej konsultacji nie ma wiadomości",
       "no_clients_search": "Nie ma klientów pasujących do wyszukiwania",
       "no_clients": "Nie masz jeszcze klientów",
-      "free": "Wolny",
+      "free": "Bezpłatne",
 
-      "client_joined": "Klient dołączył do konsultacji",
-      "client_left": "Klient opuścił konsultację",
-      "client_camera_off": "Klient wyłączył kamerę",
-      "client_camera_on": "Klient włączył kamerę",
-      "client_microphone_off": "Klient wyłączył mikrofon",
-      "client_microphone_on": "Klient włączył mikrofon",
+      "client_joined": "Klient/ka dołączył/a do konsultacji",
+      "client_left": "Klient/ka opuścił/a konsultację",
+      "client_camera_off": "Klient/ka wyłączył/a kamerę",
+      "client_camera_on": "Klient/ka włączyła kamerę",
+      "client_microphone_off": "Klient/ka wyłączył/a mikrofon",
+      "client_microphone_on": "Klient/ka włączył/a mikrofon",
 
-      "provider_joined": "Konsultant dołączył do konsultacji",
-      "provider_left": "Konsultant opuścił konsultację",
-      "provider_camera_off": "Konsultant wyłączył kamerę",
-      "provider_camera_on": "Konsultant włączył kamerę",
-      "provider_microphone_off": "Konsultant wyłączył mikrofon",
-      "provider_microphone_on": "Konsultant włączył mikrofon"
+      "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
+      "provider_left": "Konsultant/la opuścił/a konsultację",
+      "provider_camera_off": "Konsultant/ka wyłączył/a kamerę",
+      "provider_camera_on": "Konsultant/ka włączył/a kamerę",
+      "provider_microphone_off": "Konsultant/ka wyłączył/a mikrofon",
+      "provider_microphone_on": "Konsultant/ka włączył/a mikrofon"
     },
     "scheduler": {
       "calendar": "Kalendarz",
-      "add_template_availability": "Dodaj dostępność szablonu",
+      "add_template_availability": "Dodaj szablon dostępności",
       "today": "Dzisiaj",
 
       "sunday": "Niedz.",
@@ -404,17 +404,17 @@
       "saturday": "Sob.",
 
       "consultation_details": "Wyświetl szczegóły",
-      "available": "Jesteś dostępny",
-      "not_available": "Jesteś niedostępny",
-      "set_available": "Ustaw jako dostępny",
-      "set_not_available": "Ustaw jako niedostępny",
+      "available": "Jesteś dostępny/a",
+      "not_available": "Jesteś niedostępny/a",
+      "set_available": "Ustaw jako dostępny/a",
+      "set_not_available": "Ustaw jako niedostępny/a",
       "view_profile": "Wyświetl profil",
       "suggest_consultation": "Zasugeruj konsultację",
       "cancel": "Anuluj spotkanie",
       "suggested": "Sugerowane",
       "join_consultation": "Dołącz do konsultacji",
       "slot_added": "Przedział czasowy został pomyślnie dodany",
-      "free": "Wolny",
+      "free": "Bezpłatne",
       "booked": "Zarezerwowany",
       "more_campaigns": "{{amount}} kampanie",
       "provider_inactive": "Nie masz uprawnień do dodawania dostępności",
@@ -430,7 +430,7 @@
       "friday": "Piątek",
       "saturday": "Sobota",
       "sunday": "Niedziela",
-      "save": "Dodaj dostępność szablonu",
+      "save": "Dodaj szablon dostępności",
       "unavailable": "Ustaw dzień jako niedostępny",
       "from": "Od",
       "to": "do"
@@ -453,7 +453,7 @@
       "sunday": "Niedz.",
       "today": "Dzisiaj",
       "no_consultations": "Na ten dzień nie przewidziano żadnych konsultacji",
-      "no_availability": "Nie jesteś dostępny w tym dniu",
+      "no_availability": "Nie jesteś dostępny/a w tym dniu",
       "cancel_consultation": "Anulować konsultację",
       "view_profile": "Wyświetl profil osobisty",
       "join": "Dołącz",
@@ -463,7 +463,7 @@
       "active": "Na żywo",
       "consultation": "Konsultacja",
       "consultations": "Konsultacje",
-      "not_available": "Jesteś niedostępny",
+      "not_available": "Jesteś niedostępny/a",
 
       "month_1": "Styczeń",
       "month_2": "Luty",
@@ -481,18 +481,18 @@
       "ordinal_nd": ".",
       "ordinal_rd": ".",
       "ordinal_th": ".",
-      "free": "Wolny"
+      "free": "Bezpłatne"
     },
     "notifications": {
       "consultation_booking": "Twoja konsultacja z {{clientName}} została zaplanowana na {{date}} od {{startHour}} do {{endHour}}",
-      "consultation_reschedule": "Klient {{clientName}} przełożył konsultację z {{date}} od {{startHour}} do {{endHour}} na {{newDate}} od {{newStartHour}} do {{newEndHour}}",
-      "consultation_cancellation_provider": "Anulowałeś konsultację z {{clientName}} zaplanowaną na {{date}} od {{startHour}} do {{endHour}}",
-      "consultation_cancellation": "Klient {{clientName}} anulował konsultację zaplanowaną na {{date}} od {{startHour}} do {{endHour}}",
+      "consultation_reschedule": "Klient/ka {{clientName}} przełożył/a konsultację z {{date}} od {{startHour}} do {{endHour}} na {{newDate}} od {{newStartHour}} do {{newEndHour}}",
+      "consultation_cancellation_provider": "Anulowałeś/aś konsultację z {{clientName}} zaplanowaną na {{date}} od {{startHour}} do {{endHour}}",
+      "consultation_cancellation": "Klient/ka {{clientName}} anulował konsultację zaplanowaną na {{date}} od {{startHour}} do {{endHour}}",
       "consultation_remind_start": "Nadchodząca konsultacja za {{minutes}} minut",
-      "consultation_suggestion": "Sugerowałeś konsultację dla {{clientName}} na {{date}} od {{startHour}} do {{endHour}}",
-      "consultation_suggestion_booking": "Klient {{clientName}} zaakceptował sugerowaną konsultację w terminie {{date}} od {{startHour}} do {{endHour}}",
-      "consultation_suggestion_cancellation": "Klient {{clientName}} odrzucił sugerowaną konsultację w terminie {{date}} od {{startHour}} do {{endHour}}",
-      "consultation_started": "Rozpoczęła się Twoja konsultacja z klientem {{clientName}}",
+      "consultation_suggestion": "Zasugerowałeś/aś konsultację dla {{clientName}} na {{date}} od {{startHour}} do {{endHour}}",
+      "consultation_suggestion_booking": "Klient/ka {{clientName}} zaakceptował/a zasugerowaną konsultację w terminie {{date}} od {{startHour}} do {{endHour}}",
+      "consultation_suggestion_cancellation": "Klient/ka {{clientName}} odrzucił/a sugerowaną konsultację w terminie {{date}} od {{startHour}} do {{endHour}}",
+      "consultation_started": "Rozpoczęła się Twoja konsultacja z klientem/ką {{clientName}}",
       "join": "Dołącz",
       "accept": "Akceptuj",
       "accept_consultation_success": "Konsultacja została pomyślnie zaakceptowana",
@@ -508,11 +508,11 @@
       "time": "raz",
       "price": "Cena",
       "campaign": "Kampania",
-      "free": "Wolny",
+      "free": "Bezpłatne",
       "export_label": "Eksport",
       "filter": "Filtr",
       "filters": "Filtry",
-      "no_results": "Nie znaleziono żadnej działalności",
+      "no_results": "Nie znaleziono żadnej aktywności",
       "start_date": "Data rozpoczęcia",
       "end_date": "Data zakończenia",
       "all": "Wszystkie",
@@ -544,7 +544,7 @@
       "not_allowed": "Nie masz uprawnień dostępu do kampanii",
       "available_campaigns_tab_label": "Dostępne kampanie",
       "campaigns_participate_tab_label": "Kampanie, w których uczestniczysz",
-      "past_campaigns_tab_label": "Wcześniejsze kampanie, w których brałeś/brałaś udział",
+      "past_campaigns_tab_label": "Wcześniejsze kampanie, w których brałeś/aś udział",
       "search": "Wyszukiwanie"
     },
     "campaign-details": {
@@ -596,7 +596,7 @@
   "pages": {
     "not-found-page": {
       "heading": "Ups! Nie możemy znaleźć strony, której szukasz...",
-      "subheading": "Wygląda na to, że ta strona zaginęła lub nie jest obecnie dostępna.",
+      "subheading": "Wygląda na to, że ta strona nie istnieje lub nie jest obecnie dostępna.",
       "button": "Przejdź do strony głównej"
     },
     "contact-us-page": {
@@ -630,16 +630,16 @@
     "provider-profile-page": {
       "heading": "Profil użytkownika",
       "subheading": "Tutaj możesz znaleźć wszystkie informacje dotyczące Twojego profilu i ustawień konta.",
-      "button_label": "Wylogowanie"
+      "button_label": "Wyloguj"
     },
     "provider-overview-page": {
       "heading": "Szczegóły profilu",
       "button_label": "Historia aktywności"
     },
     "scheduler-template-page": {
-      "heading": "Edytuj dostępność szablonu",
+      "heading": "Edytuj szablon dostępności",
       "subheading": "Tutaj możesz ustawić swój zwykły harmonogram, a w kalendarzu możesz edytować określone dni, które różnią się od szablonu",
-      "save": "Zapisz dostępność szablonu"
+      "save": "Zapisz szablon dostępności"
     },
     "cookie-policy-page": {
       "heading": "Polityka plików cookies"
@@ -649,12 +649,12 @@
     },
     "activity-history-page": {
       "heading": "Historia aktywności",
-      "consultation_suggest_success": "Pomyślnie zasugerowana konsultacja"
+      "consultation_suggest_success": "Pomyślnie zasugerowano konsultację"
     },
     "clients-page": {
       "heading": "Klienci",
       "input_search_placeholder": "Wyszukiwanie",
-      "consultation_suggest_success": "Pomyślnie zasugerowana konsultacja"
+      "consultation_suggest_success": "Pomyślnie zasugerowano konsultację"
     },
     "consultation-page": {
       "sunday": "Niedz.",
@@ -665,19 +665,19 @@
       "friday": "Pt.",
       "saturday": "Sob.",
 
-      "client_joined": "Klient dołączył do konsultacji",
-      "client_left": "Klient opuścił konsultację",
-      "client_camera_off": "Klient wyłączył kamerę",
-      "client_camera_on": "Klient włączył kamerę",
-      "client_microphone_off": "Klient wyłączył mikrofon",
-      "client_microphone_on": "Klient włączył mikrofon",
+      "client_joined": "Klient/ka dołączył/a do konsultacji",
+      "client_left": "Klient/ka opuścił/a konsultację",
+      "client_camera_off": "Klient/ka wyłączył/a kamerę",
+      "client_camera_on": "Klient/ka włączył/a kamerę",
+      "client_microphone_off": "Klient/ka wyłączył/a mikrofon",
+      "client_microphone_on": "Klient/ka włączył/a mikrofon",
 
-      "provider_joined": "Konsultant dołączył do konsultacji",
-      "provider_left": "Konsultant opuścił konsultację",
-      "provider_camera_off": "Konsultant wyłączył kamerę",
-      "provider_camera_on": "Konsultant włączył kamerę",
-      "provider_microphone_off": "Konsultant wyłączył mikrofon",
-      "provider_microphone_on": "Konsultant włączył mikrofon",
+      "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
+      "provider_left": "Konsultant/ka opuścił/a konsultację",
+      "provider_camera_off": "Konsultant/ka wyłączył/a kamerę",
+      "provider_camera_on": "Konsultant/ka włączył/a kamerę",
+      "provider_microphone_off": "Konsultant/ka wyłączył/a mikrofon",
+      "provider_microphone_on": "Konsultant/ka włączył/a mikrofon",
       "chat_history_deleted_by_client": "Historia czatu usunięta przez klienta",
 
       "show_system_messages": "Wyświetlanie komunikatów systemowych",
@@ -701,7 +701,7 @@
       "heading": "Dodaj dostępność"
     },
     "customers-qa-page": {
-      "heading": "Pytania i odpowiedzi klientów",
+      "heading": "Q&A klientów",
       "subheading": "Odpowiedz na anonimowe pytania użytkowników i pomóż im w rozwiązywaniu problemów.",
       "filter": "Filtruj tagi",
       "provider_inactive": "Nie masz uprawnień do odpowiadania na pytania."
@@ -712,12 +712,12 @@
     },
     "notifications-page": {
       "heading": "Profil użytkownika",
-      "subheading": "Tutaj możesz znaleźć wszystkie informacje dotyczące Twojego profilu i ustawień konta.",
+      "subheading": "Tutaj można znaleźć wszystkie powiadomienia dotyczące profilu i ustawień konta.",
       "mark_read": "Wylogowanie"
     },
     "platform-rating-page": {
       "heading": "Chcesz nas ocenić?",
-      "subheading": "Będziemy liczyć gwiazdy. Bądźmy szczerzy. Powiedz nam, co sądzisz o tej platformie. Oceń nas i zostaw nam swój komentarz."
+      "subheading": "Będziemy liczyć gwiazdki. Bądźmy szczerzy. Powiedz nam, co sądzisz o tej platformie. Oceń nas i zostaw nam swój komentarz."
     }
   },
 
@@ -757,9 +757,9 @@
     "cancel-consultation": {
       "heading": "Czy na pewno chcesz odwołać konsultację?",
       "paid_heading": "Czy na pewno chcesz odwołać konsultację? Nie otrzymasz płatności",
-      "paid_subheading": "Utracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi.",
+      "paid_subheading": "Stracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi/ce.",
       "cancel_button_label": "Anuluj konsultację",
-      "keep_button_label": "Prowadzenie konsultacji",
+      "keep_button_label": "Utrzymaj konsultację",
       "cancel_success": "Konsultacja została anulowana",
       "sunday": "Niedz.",
       "monday": "Pon.",
@@ -774,7 +774,7 @@
       "modal_paragraph": "Wybierz typ komunikacji, który najbardziej Ci odpowiada.",
       "button_label_1": "Konsultacja wideo/audio",
       "button_label_2": "Konsultacja tekstowa",
-      "provider_joined": "Konsultant dołączył do konsultacji"
+      "provider_joined": "Konsultant/ka dołączył/a do konsultacji"
     },
     "select-consultation": {
       "heading_edit": "Zaproponuj zmianę",
@@ -805,7 +805,7 @@
     },
     "code-verification": {
       "heading": "Weryfikacja kodu",
-      "subheading": "Wprowadź kod otrzymany w wiadomości email. Można z niej skorzystać w ciągu 30 minut od otrzymania wiadomości e-mail.",
+      "subheading": "Wprowadź kod otrzymany w wiadomości email. Można z niego skorzystać w ciągu 30 minut od otrzymania wiadomości e-mail.",
       "expiration_text": "Kod wygaśnie za",
       "button_with_icon_label_view": "Wyświetl kod",
       "button_with_icon_label_hide": "Ukryj kod",
@@ -816,7 +816,7 @@
     },
     "cancel-paid-consultation": {
       "heading": "Czy na pewno chcesz odwołać konsultację? Nie otrzymasz płatności.",
-      "subheading": "Utracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi.",
+      "subheading": "Stracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi/ce.",
       "go_back_label": "Wróć",
       "cancel_consultation_label": "Anuluj konsultację"
     },

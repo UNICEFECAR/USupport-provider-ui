@@ -220,14 +220,22 @@ export const Page = ({
   const image = queryClient.getQueryData(["provider-data"])?.image;
 
   const pages = [
-    { name: t("page_1"), url: "/dashboard", exact: true },
-    { name: t("page_2"), url: "/calendar" },
-    { name: t("page_3"), url: "/activity-history" },
-    { name: t("page_4"), url: "/consultations" },
-    { name: t("page_5"), url: "/clients" },
-    !IS_KZ && { name: t("page_6"), url: "/campaigns" },
-    { name: t("page_7"), url: "/my-qa" },
+    { name: t("page_1"), url: "/dashboard", exact: true, icon: "home" },
+    { name: t("page_2"), url: "/calendar", icon: "calendar" },
+    { name: t("page_3"), url: "/activity-history", icon: "document" },
+    { name: t("page_4"), url: "/consultations", icon: "two-people" },
+    { name: t("page_5"), url: "/clients", icon: "three-people" },
+    // !IS_KZ ? { name: t("page_6"), url: "/campaigns", icon: "campaign" },
+    // { name: t("page_7"), url: "/my-qa" },
   ];
+  if (!IS_KZ) {
+    pages.push({
+      name: t("page_6"),
+      url: "/campaigns",
+      icon: "payment-history",
+    });
+  }
+  pages.push({ name: t("page_7"), url: "/my-qa", icon: "info" });
 
   const footerLists = {
     list1: [
