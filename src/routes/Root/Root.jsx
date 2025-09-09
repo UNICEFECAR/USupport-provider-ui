@@ -16,6 +16,7 @@ import {
   constructWebsiteUrl,
   redirectToUrl,
   getCountryDefaultLanguage,
+  getLanguageFromUrl,
 } from "@USupport-components-library/utils";
 
 import { useEventListener, useGetProviderData } from "#hooks";
@@ -55,13 +56,14 @@ import {
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
 const RootContext = React.createContext();
 
+const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
+
 const LanguageLayout = () => {
   let { language } = useParams();
 
   if (!language) {
     language = getCountryDefaultLanguage();
   }
-  const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
   if (!allLangs.includes(language) || !language) {
     return <Navigate to={`/provider/${language}`} replace />;
   }
@@ -309,7 +311,12 @@ export default function Root() {
 
   let language = localStorage.getItem("language");
   if (!language) {
-    language = getCountryDefaultLanguage();
+    const languageFromUrl = getLanguageFromUrl();
+    if (allLangs.includes(languageFromUrl)) {
+      language = languageFromUrl;
+    } else {
+      language = getCountryDefaultLanguage();
+    }
   }
 
   const { t } = useTranslation("root");
