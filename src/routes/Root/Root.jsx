@@ -61,10 +61,9 @@ const LanguageLayout = () => {
   if (!language) {
     language = getCountryDefaultLanguage();
   }
-
   const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
-  if (!language || !allLangs.includes(language.toLowerCase())) {
-    return <Navigate to="/en" replace />;
+  if (!allLangs.includes(language) || !language) {
+    return <Navigate to={`/provider/${language}`} replace />;
   }
   return (
     <Routes>
@@ -389,6 +388,10 @@ export default function Root() {
       <Routes>
         <Route
           path="/provider"
+          element={<Navigate to={`/provider/${language}`} replace />}
+        />
+        <Route
+          path="/provider/"
           element={<Navigate to={`/provider/${language}`} replace />}
         />
         <Route path="/provider/:language/*" element={<LanguageLayout />} />
