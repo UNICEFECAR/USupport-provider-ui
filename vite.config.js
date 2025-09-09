@@ -20,7 +20,9 @@ export default defineConfig(() => {
         "#backdrops": path.resolve(__dirname, "./src/backdrops"),
         "#hooks": path.resolve(__dirname, "./src/hooks"),
         "#routes": path.resolve(__dirname, "./src/routes"),
+        "#minpath": "vfile/lib/minpath.browser.js",
       },
+      preserveSymlinks: true,
     },
   };
 });
