@@ -11,6 +11,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import { IdleTimer } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
+import {
+  getCountryFromSubdomain,
+  constructWebsiteUrl,
+  redirectToUrl,
+  getCountryDefaultLanguage,
+} from "@USupport-components-library/utils";
 
 import { useEventListener, useGetProviderData } from "#hooks";
 
@@ -50,7 +56,12 @@ import { ProtectedRoute, CountryValidationRoute } from "../../routes";
 const RootContext = React.createContext();
 
 const LanguageLayout = () => {
-  const { language } = useParams();
+  let { language } = useParams();
+
+  if (!language) {
+    language = getCountryDefaultLanguage();
+  }
+
   const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
   if (!language || !allLangs.includes(language.toLowerCase())) {
     return <Navigate to="/en" replace />;
@@ -296,7 +307,11 @@ const LanguageLayout = () => {
 export default function Root() {
   const token = localStorage.getItem("token");
   const [loggedIn, setLoggedIn] = useState(!!token);
-  const language = localStorage.getItem("language");
+
+  let language = localStorage.getItem("language");
+  if (!language) {
+    language = getCountryDefaultLanguage();
+  }
 
   const { t } = useTranslation("root");
 
@@ -351,6 +366,13 @@ export default function Root() {
     }
   }, [location]);
 
+  const country = getCountryFromSubdomain();
+
+  if (country === "RO") {
+    const websiteUrl = constructWebsiteUrl("");
+    redirectToUrl(websiteUrl);
+  }
+
   return (
     <RootContext.Provider
       value={{
@@ -367,7 +389,7 @@ export default function Root() {
       <Routes>
         <Route
           path="/provider"
-          element={<Navigate to={`/provider/${language || "en"}`} replace />}
+          element={<Navigate to={`/provider/${language}`} replace />}
         />
         <Route path="/provider/:language/*" element={<LanguageLayout />} />
         <Route path="*" element={<NotFound />} />
