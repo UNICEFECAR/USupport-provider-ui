@@ -32,13 +32,25 @@ export const ContactUs = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("blocks", { keyPrefix: "contact-us-block" });
 
-  const initialIssues = [
-    { value: "information", label: "contact_reason_1" },
-    { value: "technical-problem", label: "contact_reason_2" },
-    // { value: "join-as-provider", label: "contact_reason_3" },
-    { value: "partnerships", label: "contact_reason_4" },
-    { value: "other", label: "contact_reason_5" },
-  ];
+  const IS_PL = localStorage.getItem("country") === "PL";
+
+  const initialIssues = IS_PL
+    ? [
+        { value: "pl-1", label: "contact_reason_1_pl" },
+        { value: "pl-2", label: "contact_reason_2_pl" },
+        { value: "pl-3", label: "contact_reason_3_pl" },
+        { value: "pl-4", label: "contact_reason_4_pl" },
+        { value: "pl-5", label: "contact_reason_5_pl" },
+        { value: "pl-6", label: "contact_reason_6_pl" },
+        { value: "pl-7", label: "contact_reason_7_pl" },
+      ]
+    : [
+        { value: "information", label: "contact_reason_1" },
+        { value: "technical-problem", label: "contact_reason_2" },
+        // { value: "join-as-provider", label: "contact_reason_3" },
+        { value: "partnerships", label: "contact_reason_4" },
+        { value: "other", label: "contact_reason_5" },
+      ];
 
   const [data, setData] = useState({ ...initialData });
   const [issues, setIssues] = useState([...initialIssues]);
