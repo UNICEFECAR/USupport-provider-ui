@@ -35,7 +35,7 @@ import "./scheduler-template.scss";
  * @return {jsx}
  */
 export const SchedulerTemplate = ({ campaignId }) => {
-  const { t } = useTranslation("block", { keyPrefix: "scheduler-template" });
+  const { t } = useTranslation("blocks", { keyPrefix: "scheduler-template" });
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const daysOfWeek = [

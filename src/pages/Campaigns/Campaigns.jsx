@@ -15,9 +15,9 @@ import "./campaigns.scss";
  */
 export const Campaigns = () => {
   const { t } = useTranslation("pages", { keyPrefix: "campaigns-page" });
-  const IS_KZ = localStorage.getItem("country") === "KZ";
+  const IS_PL = localStorage.getItem("country") === "PL";
 
-  if (!IS_KZ) {
+  if (!IS_PL) {
     return (
       <Navigate
         to={`/provider/${localStorage.getItem("language")}/dashboard`}

@@ -11,6 +11,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { IdleTimer } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
+import {
+  getCountryFromSubdomain,
+  constructWebsiteUrl,
+  redirectToUrl,
+  getCountryDefaultLanguage,
+  getLanguageFromUrl,
+} from "@USupport-components-library/utils";
 
 import { useEventListener, useGetProviderData } from "#hooks";
 
@@ -49,11 +56,16 @@ import {
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
 const RootContext = React.createContext();
 
+const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
+
 const LanguageLayout = () => {
-  const { language } = useParams();
-  const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
-  if (!language || !allLangs.includes(language.toLowerCase())) {
-    return <Navigate to="/en" replace />;
+  let { language } = useParams();
+
+  if (!language) {
+    language = getCountryDefaultLanguage();
+  }
+  if (!allLangs.includes(language) || !language) {
+    return <Navigate to={`/provider/${language}`} replace />;
   }
   return (
     <Routes>
@@ -296,7 +308,16 @@ const LanguageLayout = () => {
 export default function Root() {
   const token = localStorage.getItem("token");
   const [loggedIn, setLoggedIn] = useState(!!token);
-  const language = localStorage.getItem("language");
+
+  let language = localStorage.getItem("language");
+  if (!language) {
+    const languageFromUrl = getLanguageFromUrl();
+    if (allLangs.includes(languageFromUrl)) {
+      language = languageFromUrl;
+    } else {
+      language = getCountryDefaultLanguage();
+    }
+  }
 
   const { t } = useTranslation("root");
 
@@ -351,6 +372,13 @@ export default function Root() {
     }
   }, [location]);
 
+  const country = getCountryFromSubdomain();
+
+  if (country === "RO") {
+    const websiteUrl = constructWebsiteUrl("");
+    redirectToUrl(websiteUrl);
+  }
+
   return (
     <RootContext.Provider
       value={{
@@ -367,7 +395,11 @@ export default function Root() {
       <Routes>
         <Route
           path="/provider"
-          element={<Navigate to={`/provider/${language || "en"}`} replace />}
+          element={<Navigate to={`/provider/${language}`} replace />}
+        />
+        <Route
+          path="/provider/"
+          element={<Navigate to={`/provider/${language}`} replace />}
         />
         <Route path="/provider/:language/*" element={<LanguageLayout />} />
         <Route path="*" element={<NotFound />} />
