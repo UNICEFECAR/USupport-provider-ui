@@ -57,6 +57,13 @@
       "contact_reason_3": "I am a provider and I am interested to join the platform",
       "contact_reason_4": "I am presenting a business entity and we are interested in supporting the platform",
       "contact_reason_5": "Something else",
+      "contact_reason_1_pl": "Information about uSupport",
+      "contact_reason_2_pl": "Technical problem",
+      "contact_reason_3_pl": "Service-related issue",
+      "contact_reason_4_pl": "Platform usage issue",
+      "contact_reason_5_pl": "Complaint",
+      "contact_reason_6_pl": "Crisis Situation Report",
+      "contact_reason_7_pl": "Something else",
       "contact_form": "Contact form"
     },
     "notification-preferences": {
