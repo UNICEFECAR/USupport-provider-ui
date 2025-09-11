@@ -56,6 +56,13 @@
       "contact_reason_3": "Я консультант(ка), і зацікавлений(а) приєднатися до платформи",
       "contact_reason_4": "Я представляю бізнес-структуру, і ми зацікавлені у підтримці платформи",
       "contact_reason_5": "Ще дещо.",
+      "contact_reason_1_pl": "Інформація про службу підтримки",
+      "contact_reason_2_pl": "Технічна проблема",
+      "contact_reason_3_pl": "Проблема, пов'язана з послугою",
+      "contact_reason_4_pl": "Проблема з використанням платформи",
+      "contact_reason_5_pl": "Скарга",
+      "contact_reason_6_pl": "Звіт про кризову ситуацію",
+      "contact_reason_7_pl": "Ще дещо",
       "contact_form": "Контактна форма"
     },
     "notification-preferences": {

@@ -57,6 +57,13 @@
       "contact_reason_3": "Jestem konsultantem/ką i jestem zainteresowany/a dołączeniem do platformy",
       "contact_reason_4": "Przedstawiam podmiot gospodarczy i jesteśmy zainteresowani wsparciem platformy",
       "contact_reason_5": "Coś innego",
+      "contact_reason_1_pl": "Informacje o uSupport",
+      "contact_reason_2_pl": "Problem techniczny",
+      "contact_reason_3_pl": "Problem związany z usługą",
+      "contact_reason_4_pl": "Problem z obsługą platformy",
+      "contact_reason_5_pl": "Skarga",
+      "contact_reason_6_pl": "Raport sytuacji kryzysowej",
+      "contact_reason_7_pl": "Coś innego",
       "contact_form": "Formularz kontaktowy"
     },
     "notification-preferences": {
