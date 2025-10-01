@@ -478,6 +478,7 @@ export const Chat = ({
   const [showOptions, setShowOptions] = useState(false);
   const [showAllMessages, setShowAllMessages] = useState(false);
   const [areSystemMessagesShown, setAreSystemMessagesShown] = useState(true);
+  const [search, setSearch] = useState("");
 
   // Handle message visibility
   useEffect(() => {
@@ -567,6 +568,8 @@ export const Chat = ({
       setShowAllMessages={setShowAllMessages}
       onTextareaFocus={handleTextareaFocus}
       emitTyping={emitTyping}
+      search={search}
+      setSearch={setSearch}
       isChatShownOnTablet={isChatShownOnTablet}
       isChatShownOnMobile={isChatShownOnMobile}
       setIsChatShownOnMobile={setIsChatShownOnMobile}
