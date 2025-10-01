@@ -43,6 +43,7 @@ const defaultConfig = {
   prejoinConfig: {
     enabled: false,
   },
+  disableSelfViewSettings: true,
 };
 
 /**
