@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useCustomNavigate as useNavigate } from "#hooks";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-import { Backdrop, ButtonSelector } from "@USupport-components-library/src";
+import {
+  Backdrop,
+  ButtonSelector,
+  Modal,
+} from "@USupport-components-library/src";
 import {
   messageSvc,
   videoSvc,
@@ -22,6 +26,46 @@ import "./join-consultation.scss";
 export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
   const { t } = useTranslation("modals", { keyPrefix: "join-consultation" });
   const navigate = useNavigate();
+
+  const [showPermissionsModal, setShowPermissionsModal] = useState(false);
+  const [micEnabled, setMicEnabled] = useState(false);
+  const [camEnabled, setCamEnabled] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      const checkPermissions = async () => {
+        const cameraPermission = await navigator.permissions.query({
+          name: "camera",
+        });
+        const microphonePermission = await navigator.permissions.query({
+          name: "microphone",
+        });
+
+        if (
+          cameraPermission.state !== "granted" &&
+          microphonePermission.state !== "granted"
+        ) {
+          setShowPermissionsModal(true);
+        }
+      };
+
+      const checkCamMicPermissions = async () => {
+        await checkPermissions();
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+        if (stream.active) {
+          setCamEnabled(true);
+          setMicEnabled(true);
+          setShowPermissionsModal(false);
+        }
+        stream.getTracks().forEach((track) => track.stop());
+      };
+
+      checkCamMicPermissions();
+    }
+  }, [isOpen]);
 
   const handleClick = async (redirectTo) => {
     const sytemMessage = {
@@ -55,8 +99,8 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
       navigate("/consultation", {
         state: {
           consultation,
-          videoOn: redirectTo === "video",
-          microphoneOn: redirectTo === "video",
+          videoOn: redirectTo === "video" && camEnabled && micEnabled,
+          microphoneOn: redirectTo === "video" && camEnabled && micEnabled,
           token,
         },
       });
@@ -68,26 +112,36 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
   };
 
   return (
-    <Backdrop
-      classes="join-consultation"
-      title="JoinConsultation"
-      isOpen={isOpen}
-      onClose={onClose}
-      heading={t("heading")}
-      text={t("modal_paragraph")}
-    >
-      <ButtonSelector
-        label={t("button_label_1")}
-        iconName="video"
-        classes="join-consultation__button-selector"
-        onClick={() => handleClick("video")}
-      />
-      <ButtonSelector
-        label={t("button_label_2")}
-        iconName="comment"
-        classes="join-consultation__button-selector"
-        onClick={() => handleClick("chat")}
-      />
-    </Backdrop>
+    <React.Fragment>
+      <Backdrop
+        classes="join-consultation"
+        title="JoinConsultation"
+        isOpen={isOpen}
+        onClose={onClose}
+        heading={t("heading")}
+        text={t("modal_paragraph")}
+      >
+        <ButtonSelector
+          label={t("button_label_1")}
+          iconName="video"
+          classes="join-consultation__button-selector"
+          onClick={() => handleClick("video")}
+        />
+        <ButtonSelector
+          label={t("button_label_2")}
+          iconName="comment"
+          classes="join-consultation__button-selector"
+          onClick={() => handleClick("chat")}
+        />
+      </Backdrop>
+      <Modal
+        classes="join-consultation__permissions-modal"
+        isOpen={showPermissionsModal}
+        heading={t("permissions_error")}
+        closeModal={() => setShowPermissionsModal(false)}
+      >
+        <p>{t("allow_permissions")}</p>
+      </Modal>
+    </React.Fragment>
   );
 };
