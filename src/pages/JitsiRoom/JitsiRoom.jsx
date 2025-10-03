@@ -317,34 +317,34 @@ export const JitsiRoom = () => {
               left: "20px",
             }}
           >
-            {!hideControls && (
-              <Controls
-                t={t}
-                consultation={consultation}
-                handleSendMessage={handleSendMessage}
-                leaveConsultation={leaveConsultation}
-                hasUnreadMessages={interfaces.hasUnreadMessages}
-                toggleCamera={() => {
-                  api.current.executeCommand("toggleVideo");
-                  setInterfaceData({
-                    ...interfaces,
-                    videoOn: !interfaces.videoOn,
-                  });
-                }}
-                toggleMicrophone={() => {
-                  api.current.executeCommand("toggleAudio");
-                  setInterfaceData({
-                    ...interfaces,
-                    microphoneOn: !interfaces.microphoneOn,
-                  });
-                }}
-                toggleChat={toggleChat}
-                isCameraOn={interfaces.videoOn}
-                isMicrophoneOn={interfaces.microphoneOn}
-                renderIn="provider"
-                isInSession={interfaces.isClientInSession}
-              />
-            )}
+            <Controls
+              t={t}
+              consultation={consultation}
+              handleSendMessage={handleSendMessage}
+              leaveConsultation={leaveConsultation}
+              hasUnreadMessages={interfaces.hasUnreadMessages}
+              toggleCamera={() => {
+                api.current.executeCommand("toggleVideo");
+                setInterfaceData({
+                  ...interfaces,
+                  videoOn: !interfaces.videoOn,
+                });
+              }}
+              toggleMicrophone={() => {
+                api.current.executeCommand("toggleAudio");
+                setInterfaceData({
+                  ...interfaces,
+                  microphoneOn: !interfaces.microphoneOn,
+                });
+              }}
+              toggleChat={toggleChat}
+              isCameraOn={interfaces.videoOn}
+              isMicrophoneOn={interfaces.microphoneOn}
+              renderIn="provider"
+              isInSession={interfaces.isClientInSession}
+              isHidden={hideControls}
+              toggleControlsVisibility={() => setHideControls(false)}
+            />
           </div>
         </div>
         {isLoading && (
@@ -434,6 +434,12 @@ export const JitsiRoom = () => {
             });
             externalApi.addListener("videoConferenceJoined", () => {
               setIsLoading(false);
+            });
+            externalApi.addListener("toolbarButtonClicked", (event) => {
+              if (event.key === "settings") {
+                setHideControls(true);
+                event.preventExecution = false;
+              }
             });
           }}
           getIFrameRef={(iframeRef) => {
