@@ -363,6 +363,9 @@ export const JitsiRoom = () => {
             startWithVideoMuted: !videoOn,
             hideConferenceSubject: true,
             SETTINGS_SECTIONS: ["language"],
+            buttonsWithNotifyClick: [
+              { key: "settings", preventExecution: false },
+            ],
           }}
           interfaceConfigOverwrite={{
             SHOW_JITSI_WATERMARK: false,
@@ -438,7 +441,6 @@ export const JitsiRoom = () => {
             externalApi.addListener("toolbarButtonClicked", (event) => {
               if (event.key === "settings") {
                 setHideControls(true);
-                event.preventExecution = false;
               }
             });
           }}
