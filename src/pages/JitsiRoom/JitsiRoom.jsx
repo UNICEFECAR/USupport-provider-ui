@@ -317,34 +317,34 @@ export const JitsiRoom = () => {
               left: "20px",
             }}
           >
-            {!hideControls && (
-              <Controls
-                t={t}
-                consultation={consultation}
-                handleSendMessage={handleSendMessage}
-                leaveConsultation={leaveConsultation}
-                hasUnreadMessages={interfaces.hasUnreadMessages}
-                toggleCamera={() => {
-                  api.current.executeCommand("toggleVideo");
-                  setInterfaceData({
-                    ...interfaces,
-                    videoOn: !interfaces.videoOn,
-                  });
-                }}
-                toggleMicrophone={() => {
-                  api.current.executeCommand("toggleAudio");
-                  setInterfaceData({
-                    ...interfaces,
-                    microphoneOn: !interfaces.microphoneOn,
-                  });
-                }}
-                toggleChat={toggleChat}
-                isCameraOn={interfaces.videoOn}
-                isMicrophoneOn={interfaces.microphoneOn}
-                renderIn="provider"
-                isInSession={interfaces.isClientInSession}
-              />
-            )}
+            <Controls
+              t={t}
+              consultation={consultation}
+              handleSendMessage={handleSendMessage}
+              leaveConsultation={leaveConsultation}
+              hasUnreadMessages={interfaces.hasUnreadMessages}
+              toggleCamera={() => {
+                api.current.executeCommand("toggleVideo");
+                setInterfaceData({
+                  ...interfaces,
+                  videoOn: !interfaces.videoOn,
+                });
+              }}
+              toggleMicrophone={() => {
+                api.current.executeCommand("toggleAudio");
+                setInterfaceData({
+                  ...interfaces,
+                  microphoneOn: !interfaces.microphoneOn,
+                });
+              }}
+              toggleChat={toggleChat}
+              isCameraOn={interfaces.videoOn}
+              isMicrophoneOn={interfaces.microphoneOn}
+              renderIn="provider"
+              isInSession={interfaces.isClientInSession}
+              isHidden={hideControls}
+              toggleControlsVisibility={() => setHideControls(false)}
+            />
           </div>
         </div>
         {isLoading && (
@@ -363,6 +363,9 @@ export const JitsiRoom = () => {
             startWithVideoMuted: !videoOn,
             hideConferenceSubject: true,
             SETTINGS_SECTIONS: ["language"],
+            buttonsWithNotifyClick: [
+              { key: "settings", preventExecution: false },
+            ],
           }}
           interfaceConfigOverwrite={{
             SHOW_JITSI_WATERMARK: false,
@@ -394,6 +397,25 @@ export const JitsiRoom = () => {
               "avatarUrl",
               `${AMAZON_S3_BUCKET}/${providerData?.image}`
             );
+
+            externalApi.addListener("cameraError", (error) => {
+              if (error.type === "gum.permission_denied") {
+                setInterfaceData({
+                  ...interfaces,
+                  videoOn: false,
+                });
+              }
+            });
+
+            externalApi.addListener("micError", (error) => {
+              if (error.type === "gum.permission_denied") {
+                setInterfaceData({
+                  ...interfaces,
+                  microphoneOn: false,
+                });
+              }
+            });
+
             externalApi.addListener(
               "participantJoined",
               ({ displayName, id }) => {
@@ -415,6 +437,11 @@ export const JitsiRoom = () => {
             });
             externalApi.addListener("videoConferenceJoined", () => {
               setIsLoading(false);
+            });
+            externalApi.addListener("toolbarButtonClicked", (event) => {
+              if (event.key === "settings") {
+                setHideControls(true);
+              }
             });
           }}
           getIFrameRef={(iframeRef) => {

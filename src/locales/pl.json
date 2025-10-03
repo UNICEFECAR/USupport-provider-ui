@@ -781,7 +781,9 @@
       "modal_paragraph": "Wybierz typ komunikacji, który najbardziej Ci odpowiada.",
       "button_label_1": "Konsultacja wideo/audio",
       "button_label_2": "Konsultacja tekstowa",
-      "provider_joined": "Konsultant/ka dołączył/a do konsultacji"
+      "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
+      "permissions_error": "Zezwól na dostęp do kamery i mikrofonu",
+      "allow_permissions": "Jeśli chcesz porozmawiać z klientem, włącz te uprawnienia w ustawieniach przeglądarki lub z ikony informacji na pasku adresu."
     },
     "select-consultation": {
       "heading_edit": "Zaproponuj zmianę",

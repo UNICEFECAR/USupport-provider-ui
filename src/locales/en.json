@@ -781,7 +781,9 @@
       "modal_paragraph": "Select the communication type that fits you best.",
       "button_label_1": "Video/audio consultation",
       "button_label_2": "Text consultation",
-      "provider_joined": "Provider joined the consultation"
+      "provider_joined": "Provider joined the consultation",
+      "permissions_error": "Allow camera and microphone permissions",
+      "allow_permissions": "If you want to talk to the client, please allow the permissions in your browser settings or from the information icon in the address bar."
     },
     "select-consultation": {
       "heading_edit": "Propose a change",
