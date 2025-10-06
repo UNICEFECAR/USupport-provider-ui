@@ -45,7 +45,9 @@ export const SelectConsultation = ({
   useEffect(() => {
     if (providerData) {
       const earliestAvailableSlot = providerData?.earliestAvailableSlot;
-      setCurrentDay(new Date(earliestAvailableSlot).getTime());
+      if (earliestAvailableSlot) {
+        setCurrentDay(new Date(earliestAvailableSlot).getTime());
+      }
     }
   }, [providerData]);
 
