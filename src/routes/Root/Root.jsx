@@ -42,7 +42,7 @@ import {
   CookiePolicy,
   TermsOfUse,
   Dashboard,
-  Consultation,
+  // Consultation,
   Notifications,
   Reports,
   Campaigns,
@@ -56,7 +56,7 @@ import {
 import { ProtectedRoute, CountryValidationRoute } from "../../routes";
 const RootContext = React.createContext();
 
-const allLangs = ["en", "ru", "kk", "pl", "uk", "hy"];
+const allLangs = ["en", "ru", "kk", "pl", "uk", "hy", "ro"];
 
 const LanguageLayout = () => {
   let { language } = useParams();
