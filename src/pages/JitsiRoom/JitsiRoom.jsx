@@ -20,6 +20,7 @@ import {
   useSendMessage,
   useLeaveConsultation,
   useCustomNavigate as useNavigate,
+  useGetProviderData,
 } from "#hooks";
 
 import { MessageList } from "./MessageList";
@@ -71,9 +72,14 @@ export const JitsiRoom = () => {
   const { width } = useWindowDimensions();
 
   if (!location?.state) {
+    console.log("No consultation state");
     return <Navigate to={`/provider/${language}/consultations`} />;
   }
   const { consultation, videoOn, microphoneOn, token } = location?.state;
+
+  const [providerDataQuery] = useGetProviderData();
+  const providerData = providerDataQuery?.data;
+  const isProviderDataLoading = providerDataQuery?.isLoading;
 
   const [isLoading, setIsLoading] = useState(true);
   const [hideControls, setHideControls] = useState(false);
@@ -172,12 +178,13 @@ export const JitsiRoom = () => {
     }
   }, [width, interfaces.isChatShownOnMobile, consultationRef]);
 
-  const providerData = queryClient.getQueryData({
-    queryKey: ["provider-data"],
-  });
-
-  if (!consultation || !token || !providerData)
+  if (!consultation || !token || (!providerData && !isProviderDataLoading)) {
+    console.log("No consultation or token or provider data");
+    console.log("consultation: ", consultation);
+    console.log("token: ", token);
+    console.log("providerData: ", providerData);
     return <Navigate to={`/provider/${language}/consultations`} />;
+  }
 
   const toggleChat = () => {
     const { isChatShownOnMobile, hasUnreadMessages } = interfaces;
