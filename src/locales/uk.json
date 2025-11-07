@@ -177,6 +177,7 @@
       "description_error": "Опис обов'язковий",
       "sex_error": "Виберіть стать",
       "consultation_price_error": "Ціна має бути 0 або додатнім числом",
+      "video_link_error": "Будь ласка, введіть коректний URL",
 
       "add_more_languages": "Додати більше мов",
       "add_more_work_with": "Додати більше категорій",
