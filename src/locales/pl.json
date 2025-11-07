@@ -178,6 +178,7 @@
       "description_error": "Opis jest wymagany",
       "sex_error": "Wybierz swoją płeć",
       "consultation_price_error": "Cena konsultacji musi być liczbą dodatnią",
+      "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
 
       "add_more_languages": "Dodaj więcej języków",
       "add_more_work_with": "Dodaj więcej kategorii",

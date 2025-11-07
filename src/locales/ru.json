@@ -171,6 +171,7 @@
       "description_error": "Необходимо указать описание",
       "sex_error": "Выберите свой пол",
       "consultation_price_error": "Цена должна быть 0 или положительное число",
+      "video_link_error": "Пожалуйста, введите корректный URL",
 
       "add_more_languages": "Добавить больше языков",
       "add_more_work_with": "Добавить больше категорий",
