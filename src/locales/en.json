@@ -178,6 +178,7 @@
       "description_error": "Description is required",
       "sex_error": "Select your sex",
       "consultation_price_error": "The price must be 0 or a positive number",
+      "video_link_error": "Please enter a valid URL",
 
       "add_more_languages": "Add more languages",
       "add_more_work_with": "Add more categories",
@@ -440,7 +441,12 @@
       "save": "Add template availability",
       "unavailable": "Set the day as unavailable",
       "from": "From",
-      "to": "to"
+      "to": "to",
+      "campaign": "Campaigns",
+      "organization": "Organization",
+      "campaign_placeholder": "Select campaigns",
+      "organization_placeholder": "Select organizations",
+      "selection_required": "Select at least one campaign or organization"
     },
     "cookie-policy": {
       "no_results": "There are no results for the selected country and language."
