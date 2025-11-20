@@ -144,6 +144,7 @@ export const Welcome = () => {
       window.location.href = newUrl;
     } else {
       localStorage.setItem("country", country);
+      localStorage.setItem("has_normal_slots", countryObject.hasNormalSlots);
     }
   };
 
