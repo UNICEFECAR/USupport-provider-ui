@@ -51,6 +51,8 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "scheduler" });
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
+  const countryHasNormalSlots =
+    localStorage.getItem("has_normal_slots") === "true";
 
   const todayText = t("today");
   const today = new Date();
@@ -627,6 +629,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                           slot={slotDate}
                           isDisabled={isPastDay}
                           t={t}
+                          countryHasNormalSlots={countryHasNormalSlots}
                         />
                       );
                     })}
