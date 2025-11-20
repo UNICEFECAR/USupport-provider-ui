@@ -95,7 +95,6 @@ export const Page = ({
         localStorage.setItem("country_id", country.countryID);
         localStorage.setItem("currency_symbol", country.currencySymbol);
         localStorage.setItem("has_normal_slots", country.hasNormalSlots);
-        console.log(country.hasNormalSlots, "country.hasNormalSlots");
 
         setSelectedCountry(country);
       } else if (!localStorageCountry || localStorageCountry === "undefined") {
@@ -143,7 +142,6 @@ export const Page = ({
         hasNormalSlots: x.has_normal_slots,
       };
 
-      console.log(countryObject, "countryObject");
       return countryObject;
     });
 
