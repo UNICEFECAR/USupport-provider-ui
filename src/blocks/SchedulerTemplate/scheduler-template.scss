@@ -19,6 +19,42 @@
       & .dropdown-content {
         width: 13.4rem;
       }
+
+      & .scheduler-template__grid__multi-select {
+        &:first-of-type {
+          margin-right: $spacing_1_2;
+        }
+
+        .select-container {
+          width: 25rem;
+          position: relative;
+          z-index: 200;
+        }
+
+        .dropdown {
+          width: 25rem;
+          position: relative;
+          z-index: 150;
+        }
+
+        .dropdown-content {
+          width: 25rem;
+          position: relative;
+          z-index: 150;
+        }
+
+        .select__menu,
+        .select__menu--dark {
+          width: 25rem;
+          z-index: 300;
+        }
+
+        & .dropdown-with-label {
+          &__label {
+            text-align: left;
+          }
+        }
+      }
     }
 
     &__item {

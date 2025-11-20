@@ -441,7 +441,12 @@
       "save": "Dodaj szablon dostępności",
       "unavailable": "Ustaw dzień jako niedostępny",
       "from": "Od",
-      "to": "do"
+      "to": "do",
+      "campaign": "Kampanie",
+      "organization": "Organizacje",
+      "campaign_placeholder": "Wybierz kampanie",
+      "organization_placeholder": "Wybierz organizacje",
+      "selection_required": "Wybierz co najmniej jedną kampanię lub organizację"
     },
     "cookie-policy": {
       "no_results": "Brak wyników dla wybranego kraju i języka."

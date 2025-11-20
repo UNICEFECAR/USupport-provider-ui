@@ -94,6 +94,8 @@ export const Page = ({
       if (localStorageCountry === country.value) {
         localStorage.setItem("country_id", country.countryID);
         localStorage.setItem("currency_symbol", country.currencySymbol);
+        localStorage.setItem("has_normal_slots", country.hasNormalSlots);
+        console.log(country.hasNormalSlots, "country.hasNormalSlots");
 
         setSelectedCountry(country);
       } else if (!localStorageCountry || localStorageCountry === "undefined") {
@@ -138,7 +140,10 @@ export const Page = ({
         maxAge: x["max_client_age"],
         currencySymbol: x["symbol"],
         localName: x.local_name,
+        hasNormalSlots: x.has_normal_slots,
       };
+
+      console.log(countryObject, "countryObject");
       return countryObject;
     });
 
