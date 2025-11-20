@@ -105,9 +105,25 @@ export const SchedulerTemplate = ({ campaignId }) => {
     }));
   }, [organizations]);
 
-  const hasSelection = hasNormalSlots
-    ? true
-    : selectedCampaignIds.length > 0 || !!selectedOrganizationId;
+  const hasSelection =
+    selectedCampaignIds.length > 0 || !!selectedOrganizationId;
+
+  // Check if the template contains any actual time ranges (start/end) that
+  // would create availability slots. If there are no such ranges and the user
+  // only marks days as "unavailable", we allow submission even without
+  // selecting organization / campaign.
+  const hasTimeRangesSelected = useMemo(
+    () =>
+      Object.values(template).some(
+        ({ unavailable, start, end }) => !unavailable && start && end
+      ),
+    [template]
+  );
+
+  // Selection (campaign / organization) is only required in countries that do
+  // NOT support normal slots, and only when the user is actually adding new
+  // availability time ranges.
+  const isSelectionRequired = !hasNormalSlots && hasTimeRangesSelected;
 
   const handleChangeIsAvailable = (day) => {
     const newTemplate = { ...template };
@@ -183,7 +199,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
     if (providerStatus !== "active") {
       return;
     }
-    if (!hasSelection) {
+    if (isSelectionRequired && !hasSelection) {
       setShowSelectionError(true);
       toast(
         t("selection_required", {
@@ -371,7 +387,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
                 classes="scheduler-template__grid__multi-select"
                 isDisabled={providerStatus !== "active"}
                 errorMessage={
-                  showSelectionError && !hasSelection
+                  showSelectionError && isSelectionRequired && !hasSelection
                     ? t("selection_required", {
                         defaultValue:
                           "Select at least one campaign or organization",
@@ -422,12 +438,13 @@ export const SchedulerTemplate = ({ campaignId }) => {
         {daysOfWeek.map((day, index) => {
           return (
             <GridItem
+              key={index}
               md={width < 900 ? 8 : 4}
               lg={index === 6 ? 12 : 6}
               classes={
-                index % 2 === 0 &&
-                index !== 6 &&
-                "scheduler-template__grid__item"
+                index % 2 === 0 && index !== 6
+                  ? "scheduler-template__grid__item"
+                  : ""
               }
             >
               <div key={day + index} className="scheduler-template__grid__day">
@@ -479,7 +496,11 @@ export const SchedulerTemplate = ({ campaignId }) => {
             label={t("save")}
             size="lg"
             classes="scheduler-template__grid__save-button"
-            disabled={!templateStartDate || !templateEndDate || !hasSelection}
+            disabled={
+              !templateStartDate ||
+              !templateEndDate ||
+              (isSelectionRequired && !hasSelection)
+            }
             loading={addTemplateAvailabilityMutation.isLoading}
           />
         </GridItem>
