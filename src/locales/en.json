@@ -446,7 +446,8 @@
       "organization": "Organization",
       "campaign_placeholder": "Select campaigns",
       "organization_placeholder": "Select organizations",
-      "selection_required": "Select at least one campaign or organization"
+      "selection_required": "Select at least one campaign or organization",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "There are no results for the selected country and language."

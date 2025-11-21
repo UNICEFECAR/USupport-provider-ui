@@ -445,7 +445,8 @@
       "organization": "Організації",
       "campaign_placeholder": "Виберіть кампанії",
       "organization_placeholder": "Виберіть організації",
-      "selection_required": "Виберіть принаймні одну кампанію або організацію"
+      "selection_required": "Виберіть принаймні одну кампанію або організацію",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Для обраної країни й мови немає результатів."

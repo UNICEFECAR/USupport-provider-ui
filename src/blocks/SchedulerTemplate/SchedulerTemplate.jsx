@@ -38,6 +38,7 @@ import "./scheduler-template.scss";
 export const SchedulerTemplate = ({ campaignId }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "scheduler-template" });
   const hasNormalSlots = localStorage.getItem("has_normal_slots") === "true";
+  const IS_KZ_COUNTRY = localStorage.getItem("country") === "KZ";
 
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -99,11 +100,25 @@ export const SchedulerTemplate = ({ campaignId }) => {
   }, [providerCampaigns, selectedCampaignIds]);
 
   const organizationDropdownOptions = useMemo(() => {
-    return organizations.map((o) => ({
+    const noneLabel = t("organization_none", {
+      defaultValue: t("organization_placeholder"),
+    });
+
+    const baseOptions = organizations.map((o) => ({
       label: o.name,
       value: o.organizationId,
     }));
-  }, [organizations]);
+
+    // Add a "none" option on top so the user can clear the selection.
+    // This sets the selected organization ID to an empty string.
+    return [
+      {
+        label: noneLabel,
+        value: "",
+      },
+      ...baseOptions,
+    ];
+  }, [organizations, t]);
 
   const hasSelection =
     selectedCampaignIds.length > 0 || !!selectedOrganizationId;
@@ -124,6 +139,17 @@ export const SchedulerTemplate = ({ campaignId }) => {
   // NOT support normal slots, and only when the user is actually adding new
   // availability time ranges.
   const isSelectionRequired = !hasNormalSlots && hasTimeRangesSelected;
+
+  // The save button should only be enabled when the user has either:
+  // - selected at least one time range (start & end), or
+  // - marked at least one day as "unavailable".
+  const hasAnyDayConfigured = useMemo(
+    () =>
+      Object.values(template).some(
+        ({ unavailable, start, end }) => unavailable || (start && end)
+      ),
+    [template]
+  );
 
   const handleChangeIsAvailable = (day) => {
     const newTemplate = { ...template };
@@ -284,7 +310,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
         if (!start || !end) continue;
         const startHour = parseInt(start.split(":")[0]);
         const endHour = parseInt(end.split(":")[0]);
-        for (let j = startHour; j <= endHour; j++) {
+        for (let j = startHour; j < endHour; j++) {
           const currentTimestamp = day + j * 60 * 60;
           const currentTimestampStr = JSON.stringify(currentTimestamp);
 
@@ -369,33 +395,35 @@ export const SchedulerTemplate = ({ campaignId }) => {
           lg={12}
           classes="scheduler-template__grid__week-selector"
         >
-          <Grid>
-            <GridItem md={4} lg={6}>
-              <Select
-                options={campaignSelectOptions}
-                handleChange={(opts) => {
-                  const values = opts
-                    .filter((o) => o.selected)
-                    .map((o) => o.value);
-                  setSelectedCampaignIds(values);
-                  if (values.length > 0 || !!selectedOrganizationId) {
-                    setShowSelectionError(false);
+          <Grid classes="scheduler-template__grid__week-selector__campaign-organization-selector">
+            {IS_KZ_COUNTRY || campaignSelectOptions.length === 0 ? null : (
+              <GridItem md={4} lg={6}>
+                <Select
+                  options={campaignSelectOptions}
+                  handleChange={(opts) => {
+                    const values = opts
+                      .filter((o) => o.selected)
+                      .map((o) => o.value);
+                    setSelectedCampaignIds(values);
+                    if (values.length > 0 || !!selectedOrganizationId) {
+                      setShowSelectionError(false);
+                    }
+                  }}
+                  label={t("campaign")}
+                  placeholder={t("campaign_placeholder")}
+                  classes="scheduler-template__grid__multi-select"
+                  isDisabled={providerStatus !== "active"}
+                  errorMessage={
+                    showSelectionError && isSelectionRequired && !hasSelection
+                      ? t("selection_required", {
+                          defaultValue:
+                            "Select at least one campaign or organization",
+                        })
+                      : null
                   }
-                }}
-                label={t("campaign")}
-                placeholder={t("campaign_placeholder")}
-                classes="scheduler-template__grid__multi-select"
-                isDisabled={providerStatus !== "active"}
-                errorMessage={
-                  showSelectionError && isSelectionRequired && !hasSelection
-                    ? t("selection_required", {
-                        defaultValue:
-                          "Select at least one campaign or organization",
-                      })
-                    : null
-                }
-              />
-            </GridItem>
+                />
+              </GridItem>
+            )}
             <GridItem md={4} lg={6}>
               <DropdownWithLabel
                 options={organizationDropdownOptions}
@@ -499,7 +527,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
             disabled={
               !templateStartDate ||
               !templateEndDate ||
-              (isSelectionRequired && !hasSelection)
+              (isSelectionRequired && !hasSelection) ||
+              !hasAnyDayConfigured
             }
             loading={addTemplateAvailabilityMutation.isLoading}
           />

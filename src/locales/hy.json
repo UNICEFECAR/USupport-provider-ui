@@ -413,7 +413,8 @@
       "organization": "Կազմակերպություններ",
       "campaign_placeholder": "Ընտրել արշավներ",
       "organization_placeholder": "Ընտրել կազմակերպություններ",
-      "selection_required": "Ընտրեք առնվազն մեկ արշավ կամ կազմակերպություն"
+      "selection_required": "Ընտրեք առնվազն մեկ արշավ կամ կազմակերպություն",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Ընտրված երկրի և լեզվի վերաբերյալ արդյունքներ չեն գտնվել"

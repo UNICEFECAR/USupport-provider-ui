@@ -38,9 +38,8 @@
         }
 
         .dropdown-content {
-          width: 25rem;
-          position: relative;
-          z-index: 150;
+          width: 23rem;
+          position: absolute;
         }
 
         .select__menu,
@@ -53,6 +52,13 @@
           &__label {
             text-align: left;
           }
+        }
+      }
+
+      &__campaign-organization-selector {
+        > .grid-item:only-child {
+          grid-column: 1 / -1;
+          justify-self: center;
         }
       }
     }
