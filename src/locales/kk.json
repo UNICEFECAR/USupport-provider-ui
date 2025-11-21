@@ -439,7 +439,8 @@
       "organization": "Ұйымдар",
       "campaign_placeholder": "Науқандарды таңдаңыз",
       "organization_placeholder": "Ұйымдарды таңдаңыз",
-      "selection_required": "Кемінде бір науқан немесе ұйымды таңдаңыз"
+      "selection_required": "Кемінде бір науқан немесе ұйымды таңдаңыз",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Таңдалған ел мен тіл үшін ештеңе табылмады."

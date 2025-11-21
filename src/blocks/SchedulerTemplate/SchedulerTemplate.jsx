@@ -99,11 +99,25 @@ export const SchedulerTemplate = ({ campaignId }) => {
   }, [providerCampaigns, selectedCampaignIds]);
 
   const organizationDropdownOptions = useMemo(() => {
-    return organizations.map((o) => ({
+    const noneLabel = t("organization_none", {
+      defaultValue: t("organization_placeholder"),
+    });
+
+    const baseOptions = organizations.map((o) => ({
       label: o.name,
       value: o.organizationId,
     }));
-  }, [organizations]);
+
+    // Add a "none" option on top so the user can clear the selection.
+    // This sets the selected organization ID to an empty string.
+    return [
+      {
+        label: noneLabel,
+        value: "",
+      },
+      ...baseOptions,
+    ];
+  }, [organizations, t]);
 
   const hasSelection =
     selectedCampaignIds.length > 0 || !!selectedOrganizationId;
@@ -124,6 +138,17 @@ export const SchedulerTemplate = ({ campaignId }) => {
   // NOT support normal slots, and only when the user is actually adding new
   // availability time ranges.
   const isSelectionRequired = !hasNormalSlots && hasTimeRangesSelected;
+
+  // The save button should only be enabled when the user has either:
+  // - selected at least one time range (start & end), or
+  // - marked at least one day as "unavailable".
+  const hasAnyDayConfigured = useMemo(
+    () =>
+      Object.values(template).some(
+        ({ unavailable, start, end }) => unavailable || (start && end)
+      ),
+    [template]
+  );
 
   const handleChangeIsAvailable = (day) => {
     const newTemplate = { ...template };
@@ -284,7 +309,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
         if (!start || !end) continue;
         const startHour = parseInt(start.split(":")[0]);
         const endHour = parseInt(end.split(":")[0]);
-        for (let j = startHour; j <= endHour; j++) {
+        for (let j = startHour; j < endHour; j++) {
           const currentTimestamp = day + j * 60 * 60;
           const currentTimestampStr = JSON.stringify(currentTimestamp);
 
@@ -499,7 +524,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
             disabled={
               !templateStartDate ||
               !templateEndDate ||
-              (isSelectionRequired && !hasSelection)
+              (isSelectionRequired && !hasSelection) ||
+              !hasAnyDayConfigured
             }
             loading={addTemplateAvailabilityMutation.isLoading}
           />
