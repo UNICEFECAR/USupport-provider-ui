@@ -38,6 +38,7 @@ import "./scheduler-template.scss";
 export const SchedulerTemplate = ({ campaignId }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "scheduler-template" });
   const hasNormalSlots = localStorage.getItem("has_normal_slots") === "true";
+  const IS_KZ_COUNTRY = localStorage.getItem("country") === "KZ";
 
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -394,33 +395,35 @@ export const SchedulerTemplate = ({ campaignId }) => {
           lg={12}
           classes="scheduler-template__grid__week-selector"
         >
-          <Grid>
-            <GridItem md={4} lg={6}>
-              <Select
-                options={campaignSelectOptions}
-                handleChange={(opts) => {
-                  const values = opts
-                    .filter((o) => o.selected)
-                    .map((o) => o.value);
-                  setSelectedCampaignIds(values);
-                  if (values.length > 0 || !!selectedOrganizationId) {
-                    setShowSelectionError(false);
+          <Grid classes="scheduler-template__grid__week-selector__campaign-organization-selector">
+            {IS_KZ_COUNTRY || campaignSelectOptions.length === 0 ? null : (
+              <GridItem md={4} lg={6}>
+                <Select
+                  options={campaignSelectOptions}
+                  handleChange={(opts) => {
+                    const values = opts
+                      .filter((o) => o.selected)
+                      .map((o) => o.value);
+                    setSelectedCampaignIds(values);
+                    if (values.length > 0 || !!selectedOrganizationId) {
+                      setShowSelectionError(false);
+                    }
+                  }}
+                  label={t("campaign")}
+                  placeholder={t("campaign_placeholder")}
+                  classes="scheduler-template__grid__multi-select"
+                  isDisabled={providerStatus !== "active"}
+                  errorMessage={
+                    showSelectionError && isSelectionRequired && !hasSelection
+                      ? t("selection_required", {
+                          defaultValue:
+                            "Select at least one campaign or organization",
+                        })
+                      : null
                   }
-                }}
-                label={t("campaign")}
-                placeholder={t("campaign_placeholder")}
-                classes="scheduler-template__grid__multi-select"
-                isDisabled={providerStatus !== "active"}
-                errorMessage={
-                  showSelectionError && isSelectionRequired && !hasSelection
-                    ? t("selection_required", {
-                        defaultValue:
-                          "Select at least one campaign or organization",
-                      })
-                    : null
-                }
-              />
-            </GridItem>
+                />
+              </GridItem>
+            )}
             <GridItem md={4} lg={6}>
               <DropdownWithLabel
                 options={organizationDropdownOptions}

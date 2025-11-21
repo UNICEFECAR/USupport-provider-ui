@@ -54,6 +54,13 @@
           }
         }
       }
+
+      &__campaign-organization-selector {
+        > .grid-item:only-child {
+          grid-column: 1 / -1;
+          justify-self: center;
+        }
+      }
     }
 
     &__item {
