@@ -160,6 +160,7 @@
       "description_error": "Անհրաժեշտ է նշել նկարագրությունը",
       "sex_error": "Ընտրեք ձեր սեռը",
       "consultation_price_error": "Քրժեքը պետք է լինի 0 կամ դրական թիվ",
+      "video_link_error": "Խնդրում ենք մուտքագրել ճիշտ URL",
       "add_more_languages": "Ավելացնել այլ լեզուներ",
       "add_more_work_with": "Ավելացնել այլ կատեգորիաներ",
       "add_more_education": "Ավելացնել այլ",
@@ -407,7 +408,13 @@
       "save": "Ավելացնել ձևաթղթի հասանելիություն",
       "unavailable": "Օրը նշել որպես ոչ հասանելի",
       "from": "From",
-      "to": "to"
+      "to": "to",
+      "campaign": "Արշավներ",
+      "organization": "Կազմակերպություններ",
+      "campaign_placeholder": "Ընտրել արշավներ",
+      "organization_placeholder": "Ընտրել կազմակերպություններ",
+      "selection_required": "Ընտրեք առնվազն մեկ արշավ կամ կազմակերպություն",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Ընտրված երկրի և լեզվի վերաբերյալ արդյունքներ չեն գտնվել"

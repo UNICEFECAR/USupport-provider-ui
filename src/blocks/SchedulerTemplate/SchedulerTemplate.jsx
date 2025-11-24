@@ -11,6 +11,7 @@ import {
   DropdownWithLabel,
   Button,
   CheckBox,
+  Select,
 } from "@USupport-components-library/src";
 import {
   getDateView,
@@ -23,7 +24,7 @@ import {
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
-import { useGetProviderData, useError } from "#hooks";
+import { useGetProviderData, useError, useGetCampaigns } from "#hooks";
 
 import "./scheduler-template.scss";
 
@@ -36,6 +37,9 @@ import "./scheduler-template.scss";
  */
 export const SchedulerTemplate = ({ campaignId }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "scheduler-template" });
+  const hasNormalSlots = localStorage.getItem("has_normal_slots") === "true";
+  const IS_KZ_COUNTRY = localStorage.getItem("country") === "KZ";
+
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
   const daysOfWeek = [
@@ -50,6 +54,10 @@ export const SchedulerTemplate = ({ campaignId }) => {
 
   const providerQuery = useGetProviderData()[0];
   const providerStatus = providerQuery?.data?.status;
+  const organizations = providerQuery?.data?.organizations || [];
+
+  const campaignsQuery = useGetCampaigns();
+  const providerCampaigns = campaignsQuery?.data?.providerCampaigns || [];
 
   const initialTemplate = {};
   daysOfWeek.forEach(
@@ -76,7 +84,72 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const [template, setTemplate] = useState(initialTemplate);
   const [templateStartDate, setTemplateStartDate] = useState("");
   const [templateEndDate, setTemplateEndDate] = useState("");
+  const [selectedCampaignIds, setSelectedCampaignIds] = useState(
+    campaignId ? [campaignId] : []
+  );
+  const [selectedOrganizationId, setSelectedOrganizationId] = useState("");
+  const [showSelectionError, setShowSelectionError] = useState(false);
   const hoursOptions = hours.map((hour) => ({ label: hour, value: hour }));
+
+  const campaignSelectOptions = useMemo(() => {
+    return providerCampaigns.map((c) => ({
+      label: `${c.sponsorName} / ${c.campaignName}`,
+      value: c.campaignId,
+      selected: selectedCampaignIds.includes(c.campaignId),
+    }));
+  }, [providerCampaigns, selectedCampaignIds]);
+
+  const organizationDropdownOptions = useMemo(() => {
+    const noneLabel = t("organization_none", {
+      defaultValue: t("organization_placeholder"),
+    });
+
+    const baseOptions = organizations.map((o) => ({
+      label: o.name,
+      value: o.organizationId,
+    }));
+
+    // Add a "none" option on top so the user can clear the selection.
+    // This sets the selected organization ID to an empty string.
+    return [
+      {
+        label: noneLabel,
+        value: "",
+      },
+      ...baseOptions,
+    ];
+  }, [organizations, t]);
+
+  const hasSelection =
+    selectedCampaignIds.length > 0 || !!selectedOrganizationId;
+
+  // Check if the template contains any actual time ranges (start/end) that
+  // would create availability slots. If there are no such ranges and the user
+  // only marks days as "unavailable", we allow submission even without
+  // selecting organization / campaign.
+  const hasTimeRangesSelected = useMemo(
+    () =>
+      Object.values(template).some(
+        ({ unavailable, start, end }) => !unavailable && start && end
+      ),
+    [template]
+  );
+
+  // Selection (campaign / organization) is only required in countries that do
+  // NOT support normal slots, and only when the user is actually adding new
+  // availability time ranges.
+  const isSelectionRequired = !hasNormalSlots && hasTimeRangesSelected;
+
+  // The save button should only be enabled when the user has either:
+  // - selected at least one time range (start & end), or
+  // - marked at least one day as "unavailable".
+  const hasAnyDayConfigured = useMemo(
+    () =>
+      Object.values(template).some(
+        ({ unavailable, start, end }) => unavailable || (start && end)
+      ),
+    [template]
+  );
 
   const handleChangeIsAvailable = (day) => {
     const newTemplate = { ...template };
@@ -117,10 +190,24 @@ export const SchedulerTemplate = ({ campaignId }) => {
   };
 
   const addTemplateAvailability = async (timestamps) => {
-    const res = await providerSvc.addTemplateAvailability({
-      template: timestamps,
-      campaignId,
-    });
+    const payload = { template: timestamps };
+
+    // Always send arrays
+    const finalCampaignIds =
+      selectedCampaignIds?.length > 0
+        ? selectedCampaignIds
+        : campaignId
+        ? [campaignId]
+        : [];
+    const finalOrganizationIds = selectedOrganizationId
+      ? [selectedOrganizationId]
+      : [];
+
+    if (finalCampaignIds.length > 0) payload.campaignIds = finalCampaignIds;
+    if (finalOrganizationIds.length > 0)
+      payload.organizationIds = finalOrganizationIds;
+
+    const res = await providerSvc.addTemplateAvailability(payload);
     return res;
   };
   const addTemplateAvailabilityMutation = useMutation(addTemplateAvailability, {
@@ -136,6 +223,16 @@ export const SchedulerTemplate = ({ campaignId }) => {
 
   const handleSubmit = async () => {
     if (providerStatus !== "active") {
+      return;
+    }
+    if (isSelectionRequired && !hasSelection) {
+      setShowSelectionError(true);
+      toast(
+        t("selection_required", {
+          defaultValue: "Select at least one campaign or organization",
+        }),
+        { type: "error" }
+      );
       return;
     }
     const start = templateStartDate;
@@ -156,6 +253,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
      */
 
     const timestamps = [];
+    const removalJobs = [];
     mondays.forEach((monday) => {
       const currentTimeZoneOffset =
         new Date(monday * 1000).getTimezoneOffset() * 60;
@@ -176,16 +274,43 @@ export const SchedulerTemplate = ({ campaignId }) => {
 
       for (let i = 0; i < 7; i++) {
         const day = monday + getXDaysInSeconds(i);
-        if (template[daysOfWeek[i]].unavailable) {
-          continue;
-        }
+        const isUnavailable = template[daysOfWeek[i]].unavailable;
         const { start, end } = template[daysOfWeek[i]];
-        if (!start || !end) {
+        // If the day is marked as unavailable, schedule removal for all hourly slots of that day
+        if (isUnavailable) {
+          const finalCampaignIds =
+            selectedCampaignIds?.length > 0
+              ? selectedCampaignIds
+              : campaignId
+              ? [campaignId]
+              : [];
+          const finalOrganizationId = selectedOrganizationId || null;
+          // Use the shared hours list to generate per-hour timestamps for the day
+          for (let j = 0; j < hours.length; j++) {
+            const hour = parseInt(hours[j].split(":")[0]);
+            const currentTimestamp = day + hour * 60 * 60;
+            let targetMondayStart = startDate;
+            if (currentTimestamp < startDate) {
+              targetMondayStart = startDate - getXDaysInSeconds(7);
+            } else if (currentTimestamp > endDate) {
+              targetMondayStart = startDate + getXDaysInSeconds(7);
+            }
+            removalJobs.push(
+              providerSvc.removeMultipleAvailableSlots(
+                targetMondayStart,
+                currentTimestamp,
+                finalCampaignIds,
+                finalOrganizationId
+              )
+            );
+          }
           continue;
         }
+        // Else, add template availability for selected time window
+        if (!start || !end) continue;
         const startHour = parseInt(start.split(":")[0]);
         const endHour = parseInt(end.split(":")[0]);
-        for (let j = startHour; j <= endHour; j++) {
+        for (let j = startHour; j < endHour; j++) {
           const currentTimestamp = day + j * 60 * 60;
           const currentTimestampStr = JSON.stringify(currentTimestamp);
 
@@ -244,12 +369,78 @@ export const SchedulerTemplate = ({ campaignId }) => {
       }
     });
 
-    addTemplateAvailabilityMutation.mutate(timestamps);
+    try {
+      if (removalJobs.length > 0) {
+        await Promise.all(removalJobs);
+      }
+    } catch (error) {
+      const { message: errorMessage } = useError(error);
+      toast(errorMessage, { type: "error" });
+      return;
+    }
+
+    if (timestamps.length > 0) {
+      addTemplateAvailabilityMutation.mutate(timestamps);
+    } else {
+      toast(t("successfully_saved", { defaultValue: "Changes saved" }));
+      navigate("/calendar");
+    }
   };
 
   return (
     <Block classes="scheduler-template">
       <Grid classes="scheduler-template__grid">
+        <GridItem
+          md={8}
+          lg={12}
+          classes="scheduler-template__grid__week-selector"
+        >
+          <Grid classes="scheduler-template__grid__week-selector__campaign-organization-selector">
+            {IS_KZ_COUNTRY || campaignSelectOptions.length === 0 ? null : (
+              <GridItem md={4} lg={6}>
+                <Select
+                  options={campaignSelectOptions}
+                  handleChange={(opts) => {
+                    const values = opts
+                      .filter((o) => o.selected)
+                      .map((o) => o.value);
+                    setSelectedCampaignIds(values);
+                    if (values.length > 0 || !!selectedOrganizationId) {
+                      setShowSelectionError(false);
+                    }
+                  }}
+                  label={t("campaign")}
+                  placeholder={t("campaign_placeholder")}
+                  classes="scheduler-template__grid__multi-select"
+                  isDisabled={providerStatus !== "active"}
+                  errorMessage={
+                    showSelectionError && isSelectionRequired && !hasSelection
+                      ? t("selection_required", {
+                          defaultValue:
+                            "Select at least one campaign or organization",
+                        })
+                      : null
+                  }
+                />
+              </GridItem>
+            )}
+            <GridItem md={4} lg={6}>
+              <DropdownWithLabel
+                options={organizationDropdownOptions}
+                selected={selectedOrganizationId}
+                setSelected={(value) => {
+                  setSelectedOrganizationId(value);
+                  if (value || selectedCampaignIds.length > 0) {
+                    setShowSelectionError(false);
+                  }
+                }}
+                label={t("organization")}
+                disabled={providerStatus !== "active"}
+                classes="scheduler-template__grid__multi-select"
+              />
+            </GridItem>
+          </Grid>
+        </GridItem>
         <GridItem
           md={8}
           lg={12}
@@ -275,12 +466,13 @@ export const SchedulerTemplate = ({ campaignId }) => {
         {daysOfWeek.map((day, index) => {
           return (
             <GridItem
+              key={index}
               md={width < 900 ? 8 : 4}
               lg={index === 6 ? 12 : 6}
               classes={
-                index % 2 === 0 &&
-                index !== 6 &&
-                "scheduler-template__grid__item"
+                index % 2 === 0 && index !== 6
+                  ? "scheduler-template__grid__item"
+                  : ""
               }
             >
               <div key={day + index} className="scheduler-template__grid__day">
@@ -332,7 +524,12 @@ export const SchedulerTemplate = ({ campaignId }) => {
             label={t("save")}
             size="lg"
             classes="scheduler-template__grid__save-button"
-            disabled={!templateStartDate || !templateEndDate}
+            disabled={
+              !templateStartDate ||
+              !templateEndDate ||
+              (isSelectionRequired && !hasSelection) ||
+              !hasAnyDayConfigured
+            }
             loading={addTemplateAvailabilityMutation.isLoading}
           />
         </GridItem>

@@ -171,6 +171,7 @@
       "description_error": "Сипаттаманы енгізу қажет",
       "sex_error": "Жынысыңызды таңдаңыз",
       "consultation_price_error": "Баға 0 немесе оң сан болуы керек",
+      "video_link_error": "Жарамды URL енгізіңіз",
 
       "add_more_languages": "Көбірек тіл қосу",
       "add_more_work_with": "Көбірек категория қосу",
@@ -433,7 +434,13 @@
       "save": "Қолжетімділік үлгісін қосу",
       "unavailable": "Осы күнді қолжетімсіз етіп белгілеу",
       "from": "Бастап",
-      "to": "дейін"
+      "to": "дейін",
+      "campaign": "Науқандар",
+      "organization": "Ұйымдар",
+      "campaign_placeholder": "Науқандарды таңдаңыз",
+      "organization_placeholder": "Ұйымдарды таңдаңыз",
+      "selection_required": "Кемінде бір науқан немесе ұйымды таңдаңыз",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Таңдалған ел мен тіл үшін ештеңе табылмады."

@@ -171,6 +171,7 @@
       "description_error": "Необходимо указать описание",
       "sex_error": "Выберите свой пол",
       "consultation_price_error": "Цена должна быть 0 или положительное число",
+      "video_link_error": "Пожалуйста, введите корректный URL",
 
       "add_more_languages": "Добавить больше языков",
       "add_more_work_with": "Добавить больше категорий",
@@ -433,7 +434,13 @@
       "save": "Добавить шаблон доступности",
       "unavailable": "Установить день как недоступный",
       "from": "От",
-      "to": "до"
+      "to": "до",
+      "campaign": "Кампании",
+      "organization": "Организации",
+      "campaign_placeholder": "Выберите кампании",
+      "organization_placeholder": "Выберите организации",
+      "selection_required": "Выберите хотя бы одну кампанию или организацию",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Для выбранной страны и языка ничего не нашлось."

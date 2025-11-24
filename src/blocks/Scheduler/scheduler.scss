@@ -18,6 +18,14 @@
     left: 0;
     right: 0;
     z-index: $z_index_2;
+    top: 66px;
+
+    @media screen and (min-width: $navbar-spread) {
+      top: 70px;
+    }
+    @media screen and (min-width: $screen-xl) {
+      top: 80px;
+    }
   }
 
   &__heading-grid {

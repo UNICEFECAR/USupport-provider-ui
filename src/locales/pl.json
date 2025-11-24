@@ -178,6 +178,7 @@
       "description_error": "Opis jest wymagany",
       "sex_error": "Wybierz swoją płeć",
       "consultation_price_error": "Cena konsultacji musi być liczbą dodatnią",
+      "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
 
       "add_more_languages": "Dodaj więcej języków",
       "add_more_work_with": "Dodaj więcej kategorii",
@@ -440,7 +441,13 @@
       "save": "Dodaj szablon dostępności",
       "unavailable": "Ustaw dzień jako niedostępny",
       "from": "Od",
-      "to": "do"
+      "to": "do",
+      "campaign": "Kampanie",
+      "organization": "Organizacje",
+      "campaign_placeholder": "Wybierz kampanie",
+      "organization_placeholder": "Wybierz organizacje",
+      "selection_required": "Wybierz co najmniej jedną kampanię lub organizację",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Brak wyników dla wybranego kraju i języka."

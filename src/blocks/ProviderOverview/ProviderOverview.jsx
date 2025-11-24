@@ -47,6 +47,7 @@ export const ProviderOverview = ({
           provider={provider}
           t={t}
           image={image}
+          hasCookies={false}
           buttonComponent={
             <GridItem md={8} lg={12} classes="provider-profile__buttons-item">
               <div className="provider-profile__controls">

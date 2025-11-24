@@ -177,6 +177,7 @@
       "description_error": "Опис обов'язковий",
       "sex_error": "Виберіть стать",
       "consultation_price_error": "Ціна має бути 0 або додатнім числом",
+      "video_link_error": "Будь ласка, введіть коректний URL",
 
       "add_more_languages": "Додати більше мов",
       "add_more_work_with": "Додати більше категорій",
@@ -439,7 +440,13 @@
       "save": "Додати доступність шаблону",
       "unavailable": "Встановити день як недоступний",
       "from": "Від",
-      "to": "до"
+      "to": "до",
+      "campaign": "Кампанії",
+      "organization": "Організації",
+      "campaign_placeholder": "Виберіть кампанії",
+      "organization_placeholder": "Виберіть організації",
+      "selection_required": "Виберіть принаймні одну кампанію або організацію",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Для обраної країни й мови немає результатів."
