@@ -441,7 +441,13 @@
       "save": "Dodaj szablon dostępności",
       "unavailable": "Ustaw dzień jako niedostępny",
       "from": "Od",
-      "to": "do"
+      "to": "do",
+      "campaign": "Kampanie",
+      "organization": "Organizacje",
+      "campaign_placeholder": "Wybierz kampanie",
+      "organization_placeholder": "Wybierz organizacje",
+      "selection_required": "Wybierz co najmniej jedną kampanię lub organizację",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Brak wyników dla wybranego kraju i języka."
@@ -590,7 +596,8 @@
       "search_placeholder": "Wyszukiwanie",
       "no_questions_found": "Nie znaleziono żadnych wyników.",
       "language": "Język",
-      "all": "Wszystkie"
+      "all": "Wszystkie",
+      "date_answered": "від {{date}}"
     },
     "platform-rating": {
       "rating_label": "Oceń nas",

@@ -408,7 +408,13 @@
       "save": "Ավելացնել ձևաթղթի հասանելիություն",
       "unavailable": "Օրը նշել որպես ոչ հասանելի",
       "from": "From",
-      "to": "to"
+      "to": "to",
+      "campaign": "Արշավներ",
+      "organization": "Կազմակերպություններ",
+      "campaign_placeholder": "Ընտրել արշավներ",
+      "organization_placeholder": "Ընտրել կազմակերպություններ",
+      "selection_required": "Ընտրեք առնվազն մեկ արշավ կամ կազմակերպություն",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Ընտրված երկրի և լեզվի վերաբերյալ արդյունքներ չեն գտնվել"
@@ -556,7 +562,8 @@
       "search_placeholder": "Որոնում",
       "no_questions_found": "Հարցեր չկան",
       "language": "Լեզու",
-      "all": "Բոլորը"
+      "all": "Բոլորը",
+      "date_answered": "ըստ {{date}}"
     },
     "platform-rating": {
       "rating_label": "Գնահատեք մեզ",

@@ -434,7 +434,13 @@
       "save": "Добавить шаблон доступности",
       "unavailable": "Установить день как недоступный",
       "from": "От",
-      "to": "до"
+      "to": "до",
+      "campaign": "Кампании",
+      "organization": "Организации",
+      "campaign_placeholder": "Выберите кампании",
+      "organization_placeholder": "Выберите организации",
+      "selection_required": "Выберите хотя бы одну кампанию или организацию",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Для выбранной страны и языка ничего не нашлось."
@@ -583,7 +589,8 @@
       "search_placeholder": "Поиск",
       "no_questions_found": "Ничего не нашлось",
       "language": "Язык",
-      "all": "Все"
+      "all": "Все",
+      "date_answered": "от {{date}}"
     },
     "platform-rating": {
       "rating_label": "Оцените нас",

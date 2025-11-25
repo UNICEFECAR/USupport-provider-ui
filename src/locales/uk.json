@@ -440,7 +440,13 @@
       "save": "Додай шаблон доступності",
       "unavailable": "Встанови день як зайнятий",
       "from": "Від",
-      "to": "до"
+      "to": "до",
+      "campaign": "Кампанії",
+      "organization": "Організації",
+      "campaign_placeholder": "Виберіть кампанії",
+      "organization_placeholder": "Виберіть організації",
+      "selection_required": "Виберіть принаймні одну кампанію або організацію",
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Для обраної країни й мови немає результатів."
@@ -589,7 +595,8 @@
       "search_placeholder": "Пошук",
       "no_questions_found": "Результатів не знайдено.",
       "language": "Мова",
-      "all": "Усі"
+      "all": "Усі",
+      "date_answered": "від {{date}}"
     },
     "platform-rating": {
       "rating_label": "Оціни нас",

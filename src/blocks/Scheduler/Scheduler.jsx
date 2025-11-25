@@ -51,6 +51,8 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "scheduler" });
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
+  const countryHasNormalSlots =
+    localStorage.getItem("has_normal_slots") === "true";
 
   const todayText = t("today");
   const today = new Date();
@@ -627,6 +629,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
                           slot={slotDate}
                           isDisabled={isPastDay}
                           t={t}
+                          countryHasNormalSlots={countryHasNormalSlots}
                         />
                       );
                     })}
@@ -656,9 +659,7 @@ const Heading = ({
           <GridItem xs={2} md={2}>
             <h3>{t("calendar")}</h3>
           </GridItem>
-          {/* TODO: Add edit template availability button and remove the empty grid item */}
-          <GridItem xs={2} md={2}></GridItem>
-          {/* <GridItem
+          <GridItem
             xs={2}
             md={2}
             classes="scheduler__heading-grid__edit"
@@ -666,7 +667,7 @@ const Heading = ({
           >
             <Icon color="#9749FA" name="calendar" />
             <p className="small-text">{t("add_template_availability")}</p>
-          </GridItem> */}
+          </GridItem>
           <GridItem md={4} lg={8}>
             <ChangeWeek
               startDate={startDate}
