@@ -562,7 +562,8 @@
       "search_placeholder": "Որոնում",
       "no_questions_found": "Հարցեր չկան",
       "language": "Լեզու",
-      "all": "Բոլորը"
+      "all": "Բոլորը",
+      "date_answered": "ըստ {{date}}"
     },
     "platform-rating": {
       "rating_label": "Գնահատեք մեզ",
