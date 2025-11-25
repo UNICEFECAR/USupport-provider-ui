@@ -596,7 +596,8 @@
       "search_placeholder": "Search",
       "no_questions_found": "No results found.",
       "language": "Language",
-      "all": "All"
+      "all": "All",
+      "date_answered": "on {{date}}"
     },
     "platform-rating": {
       "rating_label": "Rate us",

@@ -595,7 +595,8 @@
       "search_placeholder": "Пошук",
       "no_questions_found": "Результатів не знайдено.",
       "language": "Мова",
-      "all": "Усі"
+      "all": "Усі",
+      "date_answered": "від {{date}}"
     },
     "platform-rating": {
       "rating_label": "Оцініть нас",

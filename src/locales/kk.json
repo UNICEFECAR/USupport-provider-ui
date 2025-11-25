@@ -589,7 +589,8 @@
       "search_placeholder": "Іздеу",
       "no_questions_found": "Ештеңе табылмады",
       "language": "Тіл",
-      "all": "Барлығы"
+      "all": "Барлығы",
+      "date_answered": "{{date}} күні"
     },
     "platform-rating": {
       "rating_label": "Бізге баға беріңіз",

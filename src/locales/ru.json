@@ -589,7 +589,8 @@
       "search_placeholder": "Поиск",
       "no_questions_found": "Ничего не нашлось",
       "language": "Язык",
-      "all": "Все"
+      "all": "Все",
+      "date_answered": "от {{date}}"
     },
     "platform-rating": {
       "rating_label": "Оцените нас",
