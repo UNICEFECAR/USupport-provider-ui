@@ -880,5 +880,10 @@
 
   "routes": {
     "root": {}
+  },
+
+  "meta": {
+    "title": "uSupport Provider",
+    "description": "Specialist dashboard for providing care, organizing schedules, managing sessions and profiles, and responding to Q&A."
   }
 }

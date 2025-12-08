@@ -880,5 +880,10 @@
 
   "routes": {
     "root": {}
+  },
+
+  "meta": {
+    "title": "uSupport Konsultant",
+    "description": "Panel specjalistyczny do świadczenia opieki, organizowania harmonogramów, zarządzania sesjami i profilami oraz odpowiadania na pytania i odpowiedzi."
   }
 }
