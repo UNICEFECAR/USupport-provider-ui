@@ -356,7 +356,8 @@
       "not_conducted": "Nie przeprowadzono",
       "conducted": "Przeprowadzono",
       "join": "Dołącz",
-      "free": "Bezpłatne"
+      "free": "Bezpłatne",
+      "cancel": "Anuluj"
     },
     "clients": {
       "clients_heading": "Klienci",
@@ -772,11 +773,14 @@
     },
     "cancel-consultation": {
       "heading": "Czy na pewno chcesz odwołać konsultację?",
+      "heading_suggested": "Czy na pewno chcesz odwołać proponowaną konsultację?",
       "paid_heading": "Czy na pewno chcesz odwołać konsultację? Nie otrzymasz płatności",
       "paid_subheading": "Stracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi/ce.",
       "cancel_button_label": "Anuluj konsultację",
       "keep_button_label": "Utrzymaj konsultację",
       "cancel_success": "Konsultacja została anulowana",
+      "suggest_new_time": "Zaproponuj nowy termin",
+      "suggest_success": "Nowy termin został pomyślnie zaproponowany",
       "sunday": "Niedz.",
       "monday": "Pon.",
       "tuesday": "Wt.",
