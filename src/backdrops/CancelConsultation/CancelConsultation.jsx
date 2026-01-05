@@ -5,8 +5,15 @@ import { toast } from "react-toastify";
 import {
   Backdrop,
   ConsultationInformation,
+  Button,
 } from "@USupport-components-library/src";
-import { useCancelConsultation } from "#hooks";
+import { userSvc } from "@USupport-components-library/services";
+import {
+  useCancelConsultation,
+  useBlockSlot,
+  useSuggestConsultation,
+} from "#hooks";
+import { SelectConsultation } from "#backdrops";
 
 import { ONE_HOUR } from "@USupport-components-library/utils";
 
@@ -29,10 +36,16 @@ export const CancelConsultation = ({
   const queryClient = useQueryClient();
   const { t } = useTranslation("modals", { keyPrefix: "cancel-consultation" });
   const [error, setError] = useState();
+  const [isSelectConsultationOpen, setIsSelectConsultationOpen] =
+    useState(false);
+  const [blockSlotError, setBlockSlotError] = useState();
+  const [isBlockSlotSubmitting, setIsBlockSlotSubmitting] = useState(false);
   const currencySymbol = localStorage.getItem("currency_symbol");
+  const providerId = userSvc.getUserID();
 
   const {
     clientName,
+    clientDetailId,
     timestamp,
     time,
     image,
@@ -52,14 +65,22 @@ export const CancelConsultation = ({
   const isConsultationLessThan24HoursBefore =
     new Date().getTime() + 24 * ONE_HOUR >= startDate.getTime();
 
-  const onCancelSuccess = () => {
-    onSuccess();
+  const invalidateQueries = () => {
     queryClient.invalidateQueries({ queryKey: ["upcoming-consultations"] });
     queryClient.invalidateQueries({ queryKey: ["consultations-single-day"] });
     queryClient.invalidateQueries({ queryKey: ["campaign-consultations"] });
     queryClient.invalidateQueries({ queryKey: ["all-clients"] });
+    queryClient.invalidateQueries({ queryKey: ["calendar-data"] });
+  };
+
+  const onCancelSuccess = () => {
+    onSuccess();
+    invalidateQueries();
     onClose();
-    toast(t("cancel_success"));
+
+    if (consultation.status !== "suggested") {
+      toast(t("cancel_success"));
+    }
   };
   const onCancelError = (error) => {
     setError(error);
@@ -84,48 +105,127 @@ export const CancelConsultation = ({
     });
   };
 
+  // Suggest new time functionality
+  const onSuggestConsultationSuccess = () => {
+    // After suggesting, cancel the original consultation
+    cancelConsultationMutation.mutate({
+      consultationId: consultation.consultationId,
+      price,
+      shouldRefund,
+    });
+    setIsBlockSlotSubmitting(false);
+    setIsSelectConsultationOpen(false);
+    window.dispatchEvent(new Event("new-notification"));
+    setBlockSlotError(null);
+    toast(t("suggest_success"));
+  };
+
+  const onSuggestConsultationError = (error) => {
+    setBlockSlotError(error);
+    setIsBlockSlotSubmitting(false);
+  };
+
+  const suggestConsultationMutation = useSuggestConsultation(
+    onSuggestConsultationSuccess,
+    onSuggestConsultationError
+  );
+
+  const onBlockSlotSuccess = (consultationId) => {
+    suggestConsultationMutation.mutate(consultationId);
+  };
+
+  const onBlockSlotError = (error) => {
+    setBlockSlotError(error);
+    setIsBlockSlotSubmitting(false);
+  };
+
+  const blockSlotMutation = useBlockSlot(onBlockSlotSuccess, onBlockSlotError);
+
+  const handleBlockSlot = (slot) => {
+    setIsBlockSlotSubmitting(true);
+    blockSlotMutation.mutate({
+      slot,
+      clientId: clientDetailId,
+    });
+  };
+
+  const handleSuggestNewTime = () => {
+    setIsSelectConsultationOpen(true);
+  };
+
+  const closeSelectConsultation = () => {
+    setIsSelectConsultationOpen(false);
+    setBlockSlotError(null);
+  };
+  console.log(consultation.status, "consultation status");
   return (
-    <Backdrop
-      classes="cancel-consultation"
-      title="CancelConsultation"
-      isOpen={isOpen}
-      onClose={onClose}
-      heading={price > 0 ? t("paid_heading", { price }) : t("heading")}
-      text={
-        price > 0 && !couponPrice && !consultationCouponPrice
-          ? t("paid_subheading")
-          : ""
-      }
-      ctaHandleClick={onClose}
-      ctaLabel={t("keep_button_label")}
-      secondaryCtaLabel={t("cancel_button_label")}
-      secondaryCtaHandleClick={handleCancelClick}
-      secondaryCtaColor={price > 0 ? "red" : "green"}
-      showLoadingIfDisabled
-      isSecondaryCtaDisabled={cancelConsultationMutation.isLoading}
-      errorMessage={error}
-    >
-      <div className="cancel-consultation__content-container">
-        <ConsultationInformation
-          startDate={startDate}
-          endDate={endDate}
-          providerName={clientName}
-          providerImage={image || "default"}
-          classes="cancel-consultation__provider-consultation"
-          t={t}
-        />
-        <div
-          className={[
-            "cancel-consultation__price-badge",
-            !price && "cancel-consultation__price-badge--free",
-          ].join(" ")}
-        >
-          <p className="small-text">
-            {price}
-            {currencySymbol}
-          </p>
+    <>
+      <Backdrop
+        classes="cancel-consultation"
+        title="CancelConsultation"
+        isOpen={isOpen}
+        onClose={onClose}
+        heading={
+          price > 0
+            ? t("paid_heading", { price })
+            : consultation.status === "suggested"
+            ? t("heading_suggested")
+            : t("heading")
+        }
+        text={
+          price > 0 && !couponPrice && !consultationCouponPrice
+            ? t("paid_subheading")
+            : ""
+        }
+        ctaHandleClick={onClose}
+        ctaLabel={t("keep_button_label")}
+        secondaryCtaLabel={t("cancel_button_label")}
+        secondaryCtaHandleClick={handleCancelClick}
+        secondaryCtaColor={price > 0 ? "red" : "green"}
+        showLoadingIfDisabled
+        isSecondaryCtaDisabled={cancelConsultationMutation.isLoading}
+        errorMessage={error}
+        customButton={
+          consultation.status !== "suggested" && (
+            <Button
+              size="lg"
+              label={t("suggest_new_time")}
+              onClick={handleSuggestNewTime}
+              classes="cancel-consultation__suggest-btn"
+            />
+          )
+        }
+      >
+        <div className="cancel-consultation__content-container">
+          <ConsultationInformation
+            startDate={startDate}
+            endDate={endDate}
+            providerName={clientName}
+            providerImage={image || "default"}
+            classes="cancel-consultation__provider-consultation"
+            t={t}
+          />
+          <div
+            className={[
+              "cancel-consultation__price-badge",
+              !price && "cancel-consultation__price-badge--free",
+            ].join(" ")}
+          >
+            <p className="small-text">
+              {price}
+              {currencySymbol}
+            </p>
+          </div>
         </div>
-      </div>
-    </Backdrop>
+      </Backdrop>
+      <SelectConsultation
+        isOpen={isSelectConsultationOpen}
+        onClose={closeSelectConsultation}
+        providerId={providerId}
+        handleBlockSlot={handleBlockSlot}
+        errorMessage={blockSlotError}
+        isCtaDisabled={isBlockSlotSubmitting}
+      />
+    </>
   );
 };
