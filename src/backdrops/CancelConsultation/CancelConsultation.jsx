@@ -186,14 +186,12 @@ export const CancelConsultation = ({
         isSecondaryCtaDisabled={cancelConsultationMutation.isLoading}
         errorMessage={error}
         customButton={
-          consultation.status !== "suggested" && (
-            <Button
-              size="lg"
-              label={t("suggest_new_time")}
-              onClick={handleSuggestNewTime}
-              classes="cancel-consultation__suggest-btn"
-            />
-          )
+          <Button
+            size="lg"
+            label={t("suggest_new_time")}
+            onClick={handleSuggestNewTime}
+            classes="cancel-consultation__suggest-btn"
+          />
         }
       >
         <div className="cancel-consultation__content-container">
