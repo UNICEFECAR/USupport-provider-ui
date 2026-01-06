@@ -469,7 +469,8 @@
       "ordinal_nd": "η",
       "ordinal_rd": "η",
       "ordinal_th": "η",
-      "free": "Δωρεάν"
+      "free": "Δωρεάν",
+      "cancel": "Ακύρωση"
     },
     "notifications": {
       "consultation_booking": "Η συνεδρία σας με <0>{{clientName}}</0>έχει <0>προγραμματιστεί</0> για <0>{{date}}</0> από <0>{{startHour}}</0> έως <0>{{endHour}}</0>",

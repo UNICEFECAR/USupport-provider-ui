@@ -489,7 +489,8 @@
       "ordinal_nd": "",
       "ordinal_rd": "",
       "ordinal_th": "",
-      "free": "Бесплатно"
+      "free": "Бесплатно",
+      "cancel": "Отмена"
     },
     "notifications": {
       "consultation_booking": "Ваша консультация с <0>{{clientName}} запланирована</0> на <0>{{date}}</0> с <0>{{startHour}}</0> до <0>{{endHour}}</0>.",

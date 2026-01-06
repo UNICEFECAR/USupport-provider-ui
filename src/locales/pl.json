@@ -496,7 +496,8 @@
       "ordinal_nd": ".",
       "ordinal_rd": ".",
       "ordinal_th": ".",
-      "free": "Bezpłatne"
+      "free": "Bezpłatne",
+      "cancel": "Anuluj"
     },
     "notifications": {
       "consultation_booking": "Twoja konsultacja z {{clientName}} została zaplanowana na {{date}} od {{startHour}} do {{endHour}}",
