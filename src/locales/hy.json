@@ -462,7 +462,8 @@
       "ordinal_nd": "րդ",
       "ordinal_rd": "րդ",
       "ordinal_th": "րդ",
-      "free": "Անվճար"
+      "free": "Անվճար",
+      "cancel": "Չեղարկել"
     },
     "notifications": {
       "consultation_booking": "ի<0>{{clientName}} ձեր խորհրդատվությունը</0> պլանավորված<0>էր ամսի</0>{{date}}</0> -ից <0>{{startHour}}</0> մինչև <0>{{endHour}}</0>",

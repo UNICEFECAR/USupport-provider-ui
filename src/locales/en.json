@@ -496,7 +496,8 @@
       "ordinal_nd": "nd",
       "ordinal_rd": "rd",
       "ordinal_th": "th",
-      "free": "Free"
+      "free": "Free",
+      "cancel": "Cancel"
     },
     "notifications": {
       "consultation_booking": "Your consultation with <0>{{clientName}}</0> was <0>scheduled</0> for <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",

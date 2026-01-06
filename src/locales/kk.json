@@ -489,7 +489,8 @@
       "ordinal_nd": "-ші",
       "ordinal_rd": "-ші",
       "ordinal_th": "-ші/-шы",
-      "free": "Тегін"
+      "free": "Тегін",
+      "cancel": "Болдырмау"
     },
     "notifications": {
       "consultation_booking": "Сіздің <0>{{clientName}}</0> консультацияңыз {{date}} {{startHour}} бастап {{endHour}} дейін жоспарланған.",
