@@ -356,7 +356,8 @@
       "not_conducted": "Not conducted",
       "conducted": "Conducted",
       "join": "Join",
-      "free": "Free"
+      "free": "Free",
+      "cancel": "Cancel"
     },
     "clients": {
       "clients_heading": "Clients",
@@ -495,7 +496,8 @@
       "ordinal_nd": "nd",
       "ordinal_rd": "rd",
       "ordinal_th": "th",
-      "free": "Free"
+      "free": "Free",
+      "cancel": "Cancel"
     },
     "notifications": {
       "consultation_booking": "Your consultation with <0>{{clientName}}</0> was <0>scheduled</0> for <0>{{date}}</0> from <0>{{startHour}}</0> to <0>{{endHour}}</0>",
@@ -772,11 +774,14 @@
     },
     "cancel-consultation": {
       "heading": "Are you sure you want to cancel your consultation",
+      "heading_suggested": "Are you sure you want to cancel your suggested consultation",
       "paid_heading": "Are you sure you want to cancel your consultation? You will not receive the payment",
       "paid_subheading": "You will lose the payment. The money for this consultation will be returned back to the client",
       "cancel_button_label": "Cancel consultation",
       "keep_button_label": "Keep the consultation",
       "cancel_success": "The consultation has been cancelled",
+      "suggest_new_time": "Suggest new time",
+      "suggest_success": "New time suggested successfully",
       "sunday": "Sun",
       "monday": "Mon",
       "tuesday": "Tue",
