@@ -40,7 +40,7 @@ const fetchCountryMinPrice = async () => {
   };
 };
 
-const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL"];
+const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL", "CY"];
 
 /**
  * EditProfileDetails
