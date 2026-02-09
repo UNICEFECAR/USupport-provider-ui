@@ -5,7 +5,7 @@ import { useError } from "../hooks";
 export default function useSendIssueEmail(onSuccess, onError) {
   /**
    *
-   * @param {Object} payload with fields "subject", "title" and "text"
+   * @param {Object} payload with fields "subject", "title", "text" and "email"
    * @returns {Promise}
    */
   const sendIssueEmail = async (payload) => {
@@ -13,6 +13,7 @@ export default function useSendIssueEmail(onSuccess, onError) {
       subject: payload.subjectLabel,
       title: payload.title,
       text: payload.text,
+      email: payload.email,
     });
 
     const addFormPromise = userSvc.addContactForm({
