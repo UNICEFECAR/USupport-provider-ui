@@ -40,7 +40,7 @@ const fetchCountryMinPrice = async () => {
   };
 };
 
-const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL", "CY"];
+const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL", "CY", "AM"];
 
 /**
  * EditProfileDetails
@@ -148,7 +148,7 @@ export const EditProfileDetails = ({
     if (localizationQuery.data && providerData) {
       // Get all language ID's from the provider data
       const providerLanguages = providerData.languages.map(
-        (x) => x.language_id || x
+        (x) => x.language_id || x,
       );
       for (let i = 0; i < localizationQuery.data.languages.length; i++) {
         const newLanguageOption = {};
@@ -160,10 +160,10 @@ export const EditProfileDetails = ({
             ? language.name
             : `${language.name} (${language.local_name})`;
         newLanguageOption.selected = providerLanguages.includes(
-          language.language_id
+          language.language_id,
         );
         newLanguageOption.selectedIndex = providerLanguages.indexOf(
-          language.language_id
+          language.language_id,
         );
         languageOptions.push(newLanguageOption);
       }
@@ -175,7 +175,7 @@ export const EditProfileDetails = ({
     const workWithOptions = [];
     if (workWithQuery.data && providerData) {
       const providerWorkWith = providerData.workWith.map(
-        (x) => x.work_with_id || x
+        (x) => x.work_with_id || x,
       ); // Get all work with ids from provider data
       for (let i = 0; i < workWithQuery.data.length; i++) {
         const newWorkWith = {};
@@ -185,7 +185,7 @@ export const EditProfileDetails = ({
         newWorkWith.label = t(category.topic.replaceAll("-", "_"));
         newWorkWith.selected = providerWorkWith.includes(category.work_with_id);
         newWorkWith.selectedIndex = providerWorkWith.indexOf(
-          category.work_with_id
+          category.work_with_id,
         );
         workWithOptions.push(newWorkWith);
       }
@@ -228,7 +228,7 @@ export const EditProfileDetails = ({
   };
   const updateProviderMutation = useUpdateProviderData(
     onUpdateSuccess,
-    onUpdateError
+    onUpdateError,
   );
 
   const handleSave = async () => {
