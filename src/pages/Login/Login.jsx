@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams, useNavigate as useRawNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -27,8 +27,11 @@ import "./login.scss";
  */
 export const Login = () => {
   const navigate = useNavigate();
+  const rawNavigate = useRawNavigate();
   const { t } = useTranslation("pages", { keyPrefix: "login-page" });
   const { width } = useWindowDimensions();
+  const [searchParams] = useSearchParams();
+  const nextPath = searchParams.get("next");
   const queryClient = useQueryClient();
 
   const [isCodeVerificationOpen, setIsCodeVerificationOpen] = useState(false);
@@ -122,7 +125,11 @@ export const Login = () => {
 
       window.dispatchEvent(new Event("login"));
       setErrors({});
-      navigate("/dashboard");
+      if (nextPath && nextPath.startsWith("/provider/")) {
+        rawNavigate(nextPath);
+      } else {
+        navigate("/dashboard");
+      }
       const language = localStorage.getItem("language");
       userSvc.changeLanguage(language).catch((err) => {
         console.log(err, "Error when changing language");
@@ -135,12 +142,13 @@ export const Login = () => {
   });
 
   if (isLoggedIn === "loading") return <Loading />;
-  if (isLoggedIn === true)
-    return (
-      <Navigate
-        to={`/provider/${localStorage.getItem("language")}/dashboard`}
-      />
-    );
+  if (isLoggedIn === true) {
+    const redirectTo =
+      nextPath && nextPath.startsWith("/provider/")
+        ? nextPath
+        : `/provider/${localStorage.getItem("language")}/dashboard`;
+    return <Navigate to={redirectTo} replace />;
+  }
 
   const openCodeVerification = () => setIsCodeVerificationOpen(true);
 
