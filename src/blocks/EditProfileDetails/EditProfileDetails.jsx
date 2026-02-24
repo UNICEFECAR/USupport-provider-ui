@@ -30,17 +30,12 @@ import Joi from "joi";
 
 import "./edit-profile-details.scss";
 
-const fetchCountryMinPrice = async () => {
+const fetchCountryData = async () => {
   const { data } = await countrySvc.getActiveCountries();
   const currentCountryId = localStorage.getItem("country_id");
   const currentCountry = data.find((x) => x.country_id === currentCountryId);
-  return {
-    minPrice: currentCountry?.min_price,
-    countryAlpha2: currentCountry?.alpha2,
-  };
+  return currentCountry;
 };
-
-const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL", "CY", "AM"];
 
 /**
  * EditProfileDetails
@@ -65,18 +60,12 @@ export const EditProfileDetails = ({
 
   const [errors, setErrors] = useState({});
 
-  const [countryMinPrice, setCountryMinPrice] = useState(0);
-  const [countryAlpha2, setCountryAlpha2] = useState("");
-  const { data } = useQuery(["country-min-price"], fetchCountryMinPrice);
+  const { data: countryData } = useQuery(["country-data"], fetchCountryData);
 
-  const isPriceDisabled = COUNTRIES_WITH_DISABLED_PRICE.includes(countryAlpha2);
+  const countryMinPrice = countryData?.min_price;
+  const hasPayments = countryData?.has_payments;
 
-  useEffect(() => {
-    if (data) {
-      setCountryMinPrice(data.minPrice);
-      setCountryAlpha2(data.countryAlpha2);
-    }
-  }, [data]);
+  const isPriceDisabled = !hasPayments;
 
   const specializationOptions = [
     { value: "psychologist", label: t("psychologist"), selected: false },
@@ -148,7 +137,7 @@ export const EditProfileDetails = ({
     if (localizationQuery.data && providerData) {
       // Get all language ID's from the provider data
       const providerLanguages = providerData.languages.map(
-        (x) => x.language_id || x,
+        (x) => x.language_id || x
       );
       for (let i = 0; i < localizationQuery.data.languages.length; i++) {
         const newLanguageOption = {};
@@ -160,10 +149,10 @@ export const EditProfileDetails = ({
             ? language.name
             : `${language.name} (${language.local_name})`;
         newLanguageOption.selected = providerLanguages.includes(
-          language.language_id,
+          language.language_id
         );
         newLanguageOption.selectedIndex = providerLanguages.indexOf(
-          language.language_id,
+          language.language_id
         );
         languageOptions.push(newLanguageOption);
       }
@@ -175,7 +164,7 @@ export const EditProfileDetails = ({
     const workWithOptions = [];
     if (workWithQuery.data && providerData) {
       const providerWorkWith = providerData.workWith.map(
-        (x) => x.work_with_id || x,
+        (x) => x.work_with_id || x
       ); // Get all work with ids from provider data
       for (let i = 0; i < workWithQuery.data.length; i++) {
         const newWorkWith = {};
@@ -185,7 +174,7 @@ export const EditProfileDetails = ({
         newWorkWith.label = t(category.topic.replaceAll("-", "_"));
         newWorkWith.selected = providerWorkWith.includes(category.work_with_id);
         newWorkWith.selectedIndex = providerWorkWith.indexOf(
-          category.work_with_id,
+          category.work_with_id
         );
         workWithOptions.push(newWorkWith);
       }
@@ -228,7 +217,7 @@ export const EditProfileDetails = ({
   };
   const updateProviderMutation = useUpdateProviderData(
     onUpdateSuccess,
-    onUpdateError,
+    onUpdateError
   );
 
   const handleSave = async () => {
