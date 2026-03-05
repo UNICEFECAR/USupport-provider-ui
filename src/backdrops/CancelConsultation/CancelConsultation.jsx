@@ -112,6 +112,7 @@ export const CancelConsultation = ({
       consultationId: consultation.consultationId,
       price,
       shouldRefund,
+      isSuggesting: true,
     });
     setIsBlockSlotSubmitting(false);
     setIsSelectConsultationOpen(false);
@@ -131,7 +132,10 @@ export const CancelConsultation = ({
   );
 
   const onBlockSlotSuccess = (consultationId) => {
-    suggestConsultationMutation.mutate(consultationId);
+    suggestConsultationMutation.mutate({
+      consultationId,
+      isSuggestingNewTime: true,
+    });
   };
 
   const onBlockSlotError = (error) => {
