@@ -10,11 +10,12 @@ export default function useCancelConsultation(onSuccess, onError) {
     consultationId,
     price,
     shouldRefund,
+    isSuggesting = false,
   }) => {
-    if (price > 0 && shouldRefund) {
+    if (price > 0 && shouldRefund && !isSuggesting) {
       await paymentsSvc.refund(consultationId);
     } else {
-      await providerSvc.cancelConsultation(consultationId);
+      await providerSvc.cancelConsultation(consultationId, isSuggesting);
     }
     return true;
   };
