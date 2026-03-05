@@ -3,8 +3,14 @@ import { useError } from "#hooks";
 import { providerSvc } from "@USupport-components-library/services";
 
 export default function useSuggestConsultation(onSuccess, onError) {
-  const suggestConsultation = async (consultationId) => {
-    const res = await providerSvc.suggestConsultation(consultationId);
+  const suggestConsultation = async ({
+    consultationId,
+    isSuggestingNewTime = false,
+  }) => {
+    const res = await providerSvc.suggestConsultation(
+      consultationId,
+      isSuggestingNewTime
+    );
     return res.data;
   };
   const suggestConsultationMutation = useMutation(suggestConsultation, {

@@ -57,7 +57,7 @@ export const ActivityHistory = () => {
   );
 
   const onBlockSlotSuccess = (consultationId) => {
-    suggestConsultationMutation.mutate(consultationId);
+    suggestConsultationMutation.mutate({ consultationId });
     setIsBlockSlotSubmitting(false);
   };
   const onBlockSlotError = (error) => {
