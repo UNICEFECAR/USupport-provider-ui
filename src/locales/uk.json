@@ -7,20 +7,8 @@
       "page_4": "Консультації",
       "page_5": "Клієнти",
       "page_6": "Кампанії",
-      "page_7": "Мої Q&A",
-
-      "country_1": "",
-      "country_2": "",
-      "country_3": "",
-
-      "language_1": "",
-      "language_2": "",
-      "language_3": "",
-      "language_4": "",
-      "language_5": "",
-      "language_6": "",
-
-      "footer_1": "Навігаційна панель",
+      "page_7": "Запитай психолога",
+      "footer_1": "Панель керування",
       "footer_2": "Календар",
       "footer_3": "Історія активності",
       "footer_4": "Консультації",
@@ -29,41 +17,48 @@
       "footer_7": "Політика конфіденційності",
       "footer_8": "Налаштування файлів cookie",
       "footer_9": "Поширені запитання",
-
-      "emergency_button": "Центр SOS",
-      "button_text": "Перейди до додатку",
-      "contact_us": "Зв'яжися з нами",
-      "your_profile_text": "Твій профіль",
+      "emergency_button": "SOS-центр",
+      "button_text": "Перейти до додатку",
+      "contact_us": "Зв'яжіться з нами",
+      "your_profile_text": "Ваш профіль",
       "password_placeholder": "Пароль",
       "password": "Введи пароль для доступу на сайт",
       "wrong_password": "Невірний пароль",
-      "submit": "Надішли"
+      "submit": "Надіслати",
+      "country_1": "",
+      "country_2": "",
+      "country_3": "",
+      "language_1": "",
+      "language_2": "",
+      "language_3": "",
+      "language_4": "",
+      "language_5": "",
+      "language_6": ""
     },
     "contact-us-block": {
       "issue": "Проблема",
       "issue_placeholder": "Вибери проблему",
       "issue_error": "Будь ласка, вибери проблему",
       "message": "Повідомлення",
-      "message_placeholder": "Твоє повідомлення для нас",
-      "message_error": "Введи повідомлення",
-      "button": "Надішли повідомлення",
-
-      "modal_title": "Твоє повідомлення відправлено",
-      "modal_text": "Найближчим часом ми зв'яжемося з тобою",
-      "modal_cta_label": "На головну сторінку",
-      "contact_reason_1": "Мені потрібна додаткова інформація про послуги, що надаються платформою",
-      "contact_reason_2": "Я консультант/ка, і у мене виникла технічна проблема",
-      "contact_reason_3": "Я консультант/ка, і хочу приєднатися до платформи",
+      "message_placeholder": "Ваше повідомлення для нас",
+      "message_error": "Будь ласка, введіть повідомлення",
+      "button": "Надіслати повідомлення",
+      "modal_title": "Повідомлення відправлено",
+      "modal_text": "Найближчим часом ми зв'яжемося з Вами",
+      "modal_cta_label": "Повернутися на головну сторінку",
+      "contact_reason_1": "Мені потрібна додаткова інформація про послуги, що надаються через платформу",
+      "contact_reason_2": "Я консультант(ка), і у мене виникла технічна проблема",
+      "contact_reason_3": "Я консультант(ка), і зацікавлений(а) приєднатися до платформи",
       "contact_reason_4": "Я представляю бізнес-структуру, і ми зацікавлені у підтримці платформи",
-      "contact_reason_5": "Щось інше.",
+      "contact_reason_5": "Ще дещо.",
+      "contact_form": "Контактна форма",
       "contact_reason_1_pl": "Інформація про службу підтримки",
       "contact_reason_2_pl": "Технічна проблема",
       "contact_reason_3_pl": "Проблема, пов'язана з послугою",
       "contact_reason_4_pl": "Проблема з використанням платформи",
       "contact_reason_5_pl": "Скарга",
       "contact_reason_6_pl": "Звіт про кризову ситуацію",
-      "contact_reason_7_pl": "Ще дещо",
-      "contact_form": "Контактна форма"
+      "contact_reason_7_pl": "Ще дещо"
     },
     "notification-preferences": {
       "email": "Повідомлення електронною поштою",
@@ -132,12 +127,11 @@
       "postcode_label": "Поштовий індекс",
       "education_label": "Освіта",
       "change_photo": "Змінити фото",
-      "work_with_label": "Спеціальності",
-      "video_link_label": "Відеопрезентація",
-
-      "name_placeholder": "Введи своє ім'я",
-      "patronym_placeholder": "Введи своє по батькові",
-      "surname_placeholder": "Введи своє прізвище",
+      "work_with_label": "Спеціалізація",
+      "video_link_label": "Відеоряд",
+      "name_placeholder": "Введіть ім'я",
+      "patronym_placeholder": "Введітьпо батькові",
+      "surname_placeholder": "Введіть прізвище",
       "email_placeholder": "user@mail.com",
       "phone_prefix_placeholder": "Код країни",
       "phone_placeholder": "Номер телефону",
@@ -148,45 +142,37 @@
       "consultation_price_placeholder": "Ціна консультації",
       "description_placeholder": "Введи опис",
       "video_link_placeholder": "https://video.link",
-
       "sex_male": "Чоловік",
       "sex_female": "Жінка",
       "sex_unspecified": "Не визначено",
-      "sex_none": "Не хочу вказувати",
-
-      "psychologist": "Психолог/иня",
-      "psychiatrist": "Психіатр/иня",
-      "psychotherapist": "Психотерапевт/ка",
-
-      "name_error": "Ім'я є обов'язковим",
-      "surname_error": "Прізвище є обов'язковим",
-      "nickname_error": "Нікнейм є обов'язковим",
-      "email_error": "Електронна пошта є обов'язковою",
-      "phone_prefix_error": "Код країни є обов'язковим",
-      "phone_error": "Номер телефону є обов'язковим",
-      "street_error": "Вулиця є обов'язковою",
-      "city_error": "Населений пункт є обов'язковим",
-      "postcode_error": "Поштовий індекс є обов'язковим",
-      "min_price_error": "Мінімальна ціна консультації становить {{minPrice}}{{currencySymbol}}",
-      "consultation_price_disabled": "Проведення платних консультацій для твоєї країни неможливе",
-
-      "specializations_error": "Вибери хоча б одну спеціалізацію",
-      "work_with_error": "Вибери хоча б одну категорію",
-      "languages_error": "Вибери хоча б одну мову",
-      "education_error": "Освіта є обов'язковою",
-      "description_error": "Опис є обов'язковим",
-      "sex_error": "Вибери свою стать",
+      "sex_none": "Волію не казати",
+      "psychologist": "Психолог(иня)",
+      "psychiatrist": "Психіатр(иня)",
+      "psychotherapist": "Психотерапевт(ка)",
+      "name_error": "Ім'я обов'язкове",
+      "surname_error": "Прізвище обов'язкове",
+      "nickname_error": "Нікнейм обов'язковий",
+      "email_error": "Електронна пошта обов'язкова",
+      "phone_prefix_error": "Телефонний код обов'язковий",
+      "phone_error": "Номер телефону обов'язковий",
+      "street_error": "Вулиця обов'язкова",
+      "city_error": "Місто обов'язкове",
+      "postcode_error": "Поштовий індекс обов'язковий",
+      "min_price_error": "Мінімальна вартість консультації становить {{minPrice}}{{currencySymbol}}",
+      "consultation_price_disabled": "Платные консультации в вашей стране не доступны.",
+      "specializations_error": "Оберіть принаймні одну спеціалізацію",
+      "work_with_error": "Виберіть принаймні одну категорію",
+      "languages_error": "Виберіть принаймні одну мову",
+      "education_error": "Освіта обов'язкова",
+      "description_error": "Опис обов'язковий",
+      "sex_error": "Виберіть стать",
       "consultation_price_error": "Ціна має бути 0 або додатнім числом",
-      "video_link_error": "Будь ласка, введіть коректний URL",
-
-      "add_more_languages": "Додай більше мов",
-      "add_more_work_with": "Додай більше категорій",
-      "add_more_education": "Додай більше",
-      "add_more_specializations": "Додай більше спеціалізацій",
-
-      "button_text": "Збережи зміни",
-      "button_secondary_text": "Скасуй зміни",
-
+      "add_more_languages": "Додати більше мов",
+      "add_more_work_with": "Додати більше категорій",
+      "add_more_education": "Додати більше",
+      "add_more_specializations": "Додати більше спеціалізацій",
+      "button_text": "Зберегти зміни",
+      "button_secondary_text": "Відкинути зміни",
       "addiction": "Залежність",
       "stress": "Стрес",
       "burnout": "Вигорання",
@@ -218,13 +204,12 @@
       "love": "Кохання та романтичні стосунки",
       "social_skills": "Соціальні навички та дружба",
       "body_image": "Образ тіла та самооцінка",
-
       "edit_succes": "Профіль оновлено",
-
       "search": "Пошук",
-      "no_data_found": "Даних не знайдено",
-      "select": "Вибери",
-      "remove": "Видали"
+      "no_data_found": "Дані не знайдено",
+      "select": "Виберіть",
+      "remove": "Видалити",
+      "video_link_error": "Будь ласка, введіть коректний URL"
     },
     "provider-overview": {
       "earliest_slot_label": "Найближчий часовий слот для консультації",
@@ -242,11 +227,9 @@
       "city_label": "Населений пункт",
       "street_label": "Вулиця",
       "postcode_label": "Поштовий індекс",
-
-      "psychologist": "Психолог/иня",
-      "psychiatrist": "Психіатр/иня",
-      "psychotherapist": "Психотерапевт/ка",
-
+      "psychologist": "Психолог(иня)",
+      "psychiatrist": "Психіатр(иня)",
+      "psychotherapist": "Психотерапевт(ка)",
       "addiction": "Залежність",
       "stress": "Стрес",
       "burnout": "Вигорання і стрес пов'язаний з навчанням",
@@ -278,10 +261,9 @@
       "love": "Кохання та романтичні стосунки",
       "social_skills": "Соціальні навички та дружба",
       "body_image": "Образ тіла та самооцінка",
-
       "hour_consultation": "за 1 годину консультації",
-      "organizations_label": "Організації",
-      "free": "безкоштовно"
+      "free": "безкоштовно",
+      "organizations_label": "Організації"
     },
     "provider-profile": {
       "your_profile": "Профіль користувача/ки",
@@ -314,22 +296,19 @@
       "no_messages": "У цій консультації немає повідомлень",
       "no_activity_history": "Наразі не зафіксовано жодної активності",
       "free": "Безкоштовно",
-
-      "client_joined": "Клієнт/ка долучився/лася до консультації",
-      "client_left": "Клієнт/ка залишив/ла консультацію",
-      "client_camera_off": "Клієнт/ка вимкнув/ла камеру",
-      "client_camera_on": "Клієнт/ка увімкнув/ла камеру",
-      "client_microphone_off": "Клієнт/ка вимкнув/ла мікрофон",
-      "client_microphone_on": "Клієнт/ка увімкнув/ла мікрофон",
-      "chat_history_deleted_by_client": "Історію чату видалено клієнтом/кою",
-
-      "provider_joined": "Консультант/ка долучився/лася до консультації",
-      "provider_left": "Консультант/ка залишив/ла консультацію",
-      "provider_camera_off": "Консультант/ка вимкнув/ла камеру",
-      "provider_camera_on": "Консультант/ка увімкнув/ла камеру",
-      "provider_microphone_off": "Консультант/ка вимкнув/ла мікрофон",
-      "provider_microphone_on": "Консультант/ка увімкнув/ла мікрофон",
-
+      "client_joined": "Клієнт(ка) долучився(лася) до консультації",
+      "client_left": "Клієнт(ка) залишив(ла) консультацію",
+      "client_camera_off": "Клієнт(ка) вимкнув(ла) камеру",
+      "client_camera_on": "Клієнт(ка) увімкнув(ла) камеру",
+      "client_microphone_off": "Клієнт(ка) вимкнув(ла) мікрофон",
+      "client_microphone_on": "Клієнт(ка) увімкнув(ла) мікрофон",
+      "chat_history_deleted_by_client": "Історію чату видалено клієнтом(кою)",
+      "provider_joined": "Консультант(ка) долучився(лася)  до консультації",
+      "provider_left": "Консультант(ка) залишив(ла) консультацію",
+      "provider_camera_off": "Консультант(ка) вимкнув(ла) камеру",
+      "provider_camera_on": "Консультант(ка) увімкнув(ла) камеру",
+      "provider_microphone_off": "Консультант(ка) вимкнув(ла) мікрофон",
+      "provider_microphone_on": "Консультант(ка) увімкнув(ла) мікрофон",
       "canceled": "Скасовано"
     },
     "consultations": {
@@ -383,26 +362,23 @@
       "no_clients_search": "Немає клієнтів/ток, які відповідають твоєму запиту",
       "no_clients": "В тебе ще немає клієнтів",
       "free": "Безкоштовно",
-
-      "client_joined": "Клієнт/ка долучився/лася до консультації",
-      "client_left": "Клієнт/ка залишив/ла консультацію",
-      "client_camera_off": "Клієнт/ка вимкнув/ла камеру",
-      "client_camera_on": "Клієнт/ка увімкнув/ла камеру",
-      "client_microphone_off": "Клієнт/ка вимкнув/ла мікрофон",
-      "client_microphone_on": "Клієнт/ка увімкнув/ла мікрофон",
-
-      "provider_joined": "Консультант/ка долучився/лася до консультації",
-      "provider_left": "Консультант/ка залишив/ла консультацію",
-      "provider_camera_off": "Консультант/ка вимкнув/ла камеру",
-      "provider_camera_on": "Консультант/ка увімкнув/ла камеру",
-      "provider_microphone_off": "Консультант/ка вимкнув/ла мікрофон",
-      "provider_microphone_on": "Консультант/ка увімкнув/ла мікрофон"
+      "client_joined": "Клієнт(ка) долучився(лася) до консультації",
+      "client_left": "Клієнт(ка) залишив(ла) консультацію",
+      "client_camera_off": "Клієнт(ка) вимкнув(ла) камеру",
+      "client_camera_on": "Клієнт(ка) увімкнув(ла) камеру",
+      "client_microphone_off": "Клієнт(ка) вимкнув(ла) мікрофон",
+      "client_microphone_on": "Клієнт(ка) увімкнув(ла) мікрофон",
+      "provider_joined": "Консультант(ка) долучився(лася)  до консультації",
+      "provider_left": "Консультант(ка) залишив(ла) консультацію",
+      "provider_camera_off": "Консультант(ка) вимкнув(ла) камеру",
+      "provider_camera_on": "Консультант(ка) увімкнув(ла) камеру",
+      "provider_microphone_off": "Консультант(ка) вимкнув(ла) мікрофон",
+      "provider_microphone_on": "Консультант(ка) увімкнув(ла) мікрофон"
     },
     "scheduler": {
       "calendar": "Календар",
       "add_template_availability": "Додай шаблон доступності",
       "today": "Сьогодні",
-
       "sunday": "Нд",
       "monday": "Пн",
       "tuesday": "Вт",
@@ -410,15 +386,14 @@
       "thursday": "Чт",
       "friday": "Пт",
       "saturday": "Сб",
-
-      "consultation_details": "Переглянь деталі",
-      "available": "Ти вільний/а",
-      "not_available": "Ти зайнятий/а",
-      "set_available": "Встанови як вільний/а",
-      "set_not_available": "Встанови як зайнятий/а",
-      "view_profile": "Переглянь профіль",
-      "suggest_consultation": "Запропонуй консультацію",
-      "cancel": "Скасуй зустріч",
+      "consultation_details": "Переглянути деталі",
+      "available": "Ви доступні",
+      "not_available": "Ви недоступні",
+      "set_available": "Встановити як доступний",
+      "set_not_available": "Встановити як недоступний",
+      "view_profile": "Переглянути профіль",
+      "suggest_consultation": "Порадити консультацію",
+      "cancel": "Скасувати зустріч",
       "suggested": "Запропоновано",
       "join_consultation": "Приєднайся до консультації",
       "slot_added": "Слот додано",
@@ -477,8 +452,7 @@
       "active": "Наживо",
       "consultation": "Консультація",
       "consultations": "Консультації",
-      "not_available": "Ти зайнятий/а",
-
+      "not_available": "Ви недоступні",
       "month_1": "Січ.",
       "month_2": "Лют.",
       "month_3": "Берез.",
@@ -608,7 +582,6 @@
       "success": "Оцінку надіслано успішно"
     }
   },
-
   "pages": {
     "not-found-page": {
       "heading": "Ой! Ми не можемо знайти сторінку, яку ти шукаєш...",
@@ -680,25 +653,22 @@
       "thursday": "Чт",
       "friday": "Пт",
       "saturday": "Сб",
-
-      "client_joined": "Клієнт/ка долучився/лася до консультації",
-      "client_left": "Клієнт/ка залишив/ла консультацію",
-      "client_camera_off": "Клієнт/ка вимкнув/ла камеру",
-      "client_camera_on": "Клієнт/ка увімкнув/ла камеру",
-      "client_microphone_off": "Клієнт/ка вимкнув/ла мікрофон",
-      "client_microphone_on": "Клієнт/ка увімкнув/ла мікрофон",
-
-      "provider_joined": "Консультант/ка долучився/лася до консультації",
-      "provider_left": "Консультант/ка залишив/ла консультацію",
-      "provider_camera_off": "Консультант/ка вимкнув/ла камеру",
-      "provider_camera_on": "Консультант/ка увімкнув/ла камеру",
-      "provider_microphone_off": "Консультант/ка вимкнув/ла мікрофон",
-      "provider_microphone_on": "Консультант/ка увімкнув/ла мікрофон",
-      "chat_history_deleted_by_client": "Історію чату видалено клієнтом/кою",
-
-      "show_system_messages": "Переглянь системні повідомлення",
-      "show_previous_consultations": "Переглянь попередні консультації",
-      "hide_options": "Приховай налаштування",
+      "client_joined": "Клієнт(ка) долучився(лася) до консультації",
+      "client_left": "Клієнт(ка) залишив(ла) консультацію",
+      "client_camera_off": "Клієнт(ка) вимкнув(ла) камеру",
+      "client_camera_on": "Клієнт(ка) увімкнув(ла) камеру",
+      "client_microphone_off": "Клієнт(ка) вимкнув(ла) мікрофон",
+      "client_microphone_on": "Клієнт(ка) увімкнув(ла) мікрофон",
+      "provider_joined": "Консультант(ка) долучився(лася)  до консультації",
+      "provider_left": "Консультант(ка) залишив(ла) консультацію",
+      "provider_camera_off": "Консультант(ка) вимкнув(ла) камеру",
+      "provider_camera_on": "Консультант(ка) увімкнув(ла) камеру",
+      "provider_microphone_off": "Консультант(ка) вимкнув(ла) мікрофон",
+      "provider_microphone_on": "Консультант(ка) увімкнув(ла) мікрофон",
+      "chat_history_deleted_by_client": "Історію чату видалено клієнтом(кою)",
+      "show_system_messages": "Показати системні повідомлення",
+      "show_previous_consultations": "Показати попередні консультації",
+      "hide_options": "Приховати налаштування",
       "show_options": "Налаштування",
       "search": "Пошук",
       "sponsored_by": "Ця сесія відбувається за підтримки ",
@@ -718,10 +688,10 @@
       "heading": "Додай доступність"
     },
     "customers-qa-page": {
-      "heading": "Q&A клієнтів",
-      "subheading": "Відповідай на анонімні запитання користувачів і допомагай їм у вирішенні їхніх проблем",
-      "filter": "Фільтруй теги",
-      "provider_inactive": "У тебе немає доступу, щоб відповідати на запитання."
+      "heading": "Питання клієнтів",
+      "subheading": "Відповідайте на анонімні запитання користувачів і допомагайте їм у вирішенні їхніх проблем",
+      "filter": "Фільтрувати теґи",
+      "provider_inactive": "Ви не маєте прав відповідати на запитання."
     },
     "consultations-page": {
       "heading": "Консультації",
@@ -737,7 +707,6 @@
       "subheading": "Давай рахувати зірки! Будьмо відверті. Скажи нам, що ти думаєш про цю платформу. Оціни нас і залиш свій коментар."
     }
   },
-
   "modals": {
     "upload-picture": {
       "heading": "Зміни фото профілю",
@@ -773,21 +742,21 @@
     },
     "cancel-consultation": {
       "heading": "Впевнені, що хочете скасувати консультацію?",
-      "heading_suggested": "Впевнені, що хочете скасувати запропоновану консультацію?",
       "paid_heading": "Впевнені, що хочете скасувати консультацію? Ви не отримаєте платіж",
       "paid_subheading": "Ви втратите платіж. Гроші за цю консультацію будуть повернуті клієнтові(ці).",
       "cancel_button_label": "Скасувати консультацію",
       "keep_button_label": "Зберегти консультацію",
       "cancel_success": "Консультацію скасовано",
-      "suggest_new_time": "Запропонувати новий час",
-      "suggest_success": "Новий час успішно запропоновано",
       "sunday": "Нд",
       "monday": "Пн",
       "tuesday": "Вт",
       "wednesday": "Ср",
       "thursday": "Чт",
       "friday": "Пт",
-      "saturday": "Сб"
+      "saturday": "Сб",
+      "heading_suggested": "Впевнені, що хочете скасувати запропоновану консультацію?",
+      "suggest_new_time": "Запропонувати новий час",
+      "suggest_success": "Новий час успішно запропоновано"
     },
     "join-consultation": {
       "heading": "Вибери спосіб комунікації",
@@ -881,13 +850,15 @@
       "secondary_cta_label": "Скинь фільтри"
     }
   },
-
   "routes": {
-    "root": {}
+    "root": {
+      "heading": "",
+      "text": "",
+      "cta": ""
+    }
   },
-
   "meta": {
     "title": "uSupport Консультант",
-    "description": "Панель спеціаліста для надання допомоги, організації розкладів, управління сесіями та профілями, а також відповідей на запитання та відповіді."
+    "description": "Панель спеціаліста для надання послуг, керування розкладом, проведення сесій, управління профілями та відповіді на запитання клієнтів."
   }
 }

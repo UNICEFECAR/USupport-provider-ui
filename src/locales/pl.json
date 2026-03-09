@@ -7,19 +7,7 @@
       "page_4": "Konsultacje",
       "page_5": "Klienci",
       "page_6": "Kampanie",
-      "page_7": "Moje Q&A",
-
-      "country_1": "",
-      "country_2": "",
-      "country_3": "",
-
-      "language_1": "",
-      "language_2": "",
-      "language_3": "",
-      "language_4": "",
-      "language_5": "",
-      "language_6": "",
-
+      "page_7": "Запитай психолога",
       "footer_1": "Pulpit nawigacyjny",
       "footer_2": "Kalendarz",
       "footer_3": "Historia aktywności",
@@ -29,16 +17,23 @@
       "footer_7": "Polityką prywatności",
       "footer_8": "Ustawienia plików cookie",
       "footer_9": "Najczęściej szadawane pytania",
-
       "emergency_button": "Centrum SOS",
-
       "button_text": "Przejdź do aplikacji",
       "contact_us": "Skontaktuj się z nami",
       "your_profile_text": "Twój profil",
       "password_placeholder": "Hasło",
       "password": "Wprowadź hasło, aby uzyskać dostęp do strony",
       "wrong_password": "Nieprawidłowe hasło",
-      "submit": "Wyślij"
+      "submit": "Wyślij",
+      "country_1": "",
+      "country_2": "",
+      "country_3": "",
+      "language_1": "",
+      "language_2": "",
+      "language_3": "",
+      "language_4": "",
+      "language_5": "",
+      "language_6": ""
     },
     "contact-us-block": {
       "issue": "Zagadnienie",
@@ -48,7 +43,6 @@
       "message_placeholder": "Twoja wiadomość do nas",
       "message_error": "Wprowadź wiadomość",
       "button": "Wyślij wiadomość",
-
       "modal_title": "Twoja wiadomość została pomyślnie wysłana",
       "modal_text": "Skontaktujemy się z Tobą tak szybko, jak to możliwe",
       "modal_cta_label": "Wróć do strony głównej",
@@ -57,14 +51,14 @@
       "contact_reason_3": "Jestem konsultantem/ką i jestem zainteresowany/a dołączeniem do platformy",
       "contact_reason_4": "Przedstawiam podmiot gospodarczy i jesteśmy zainteresowani wsparciem platformy",
       "contact_reason_5": "Coś innego",
+      "contact_form": "Formularz kontaktowy",
       "contact_reason_1_pl": "Informacje o uSupport",
       "contact_reason_2_pl": "Problem techniczny",
       "contact_reason_3_pl": "Problem związany z usługą",
       "contact_reason_4_pl": "Problem z obsługą platformy",
       "contact_reason_5_pl": "Skarga",
       "contact_reason_6_pl": "Raport sytuacji kryzysowej",
-      "contact_reason_7_pl": "Coś innego",
-      "contact_form": "Formularz kontaktowy"
+      "contact_reason_7_pl": "Coś innego"
     },
     "notification-preferences": {
       "email": "Powiadomienia email",
@@ -135,7 +129,6 @@
       "change_photo": "Zmień zdjęcie",
       "work_with_label": "Specjalności",
       "video_link_label": "Prezentacja wideo",
-
       "name_placeholder": "Wpisz swoje imię",
       "patronym_placeholder": "-",
       "surname_placeholder": "Wpisz swoje nazwisko",
@@ -149,16 +142,13 @@
       "consultation_price_placeholder": "Cena konsultacji",
       "description_placeholder": "Wprowadź opis",
       "video_link_placeholder": "https://video.link",
-
       "sex_male": "Mężczyzna",
       "sex_female": "Kobieta",
       "sex_unspecified": "Nieokreślony",
       "sex_none": "Wolę nie mówić",
-
       "psychologist": "Psycholog/żka",
       "psychiatrist": "Psychiatra",
       "psychotherapist": "Psychoterapeuta/ka",
-
       "name_error": "Imię jest wymagane",
       "surname_error": "Nazwisko jest wymagane",
       "nickname_error": "Nick jest wymagany",
@@ -170,7 +160,6 @@
       "postcode_error": "Kod pocztowy jest wymagany",
       "min_price_error": "Minimalna cena konsultacji wynosi {{minPrice}}{{currencySymbol}}",
       "consultation_price_disabled": "Płatne konsultacje nie są dostępne w twoim kraju",
-
       "specializations_error": "Wybierz co najmniej jedną specjalizację",
       "work_with_error": "Wybierz co najmniej jedną kategorię",
       "languages_error": "Wybierz co najmniej jeden język",
@@ -178,16 +167,12 @@
       "description_error": "Opis jest wymagany",
       "sex_error": "Wybierz swoją płeć",
       "consultation_price_error": "Cena konsultacji musi być liczbą dodatnią",
-      "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
-
       "add_more_languages": "Dodaj więcej języków",
       "add_more_work_with": "Dodaj więcej kategorii",
       "add_more_education": "Dodaj więcej",
       "add_more_specializations": "Dodaj więcej specjalizacji",
-
       "button_text": "Zapisz zmiany",
       "button_secondary_text": "Odrzuć zmiany",
-
       "addiction": "Uzależnienie",
       "stress": "Stres",
       "burnout": "Wypalenie i stres akademicki",
@@ -219,13 +204,12 @@
       "love": "Miłość i relacje romantyczne",
       "social_skills": "Umiejętności społeczne i przyjaźń",
       "body_image": "Obraz ciała i poczucie własnej wartości",
-
       "edit_succes": "Profil został pomyślnie zaktualizowany",
-
       "search": "Wyszukiwanie",
       "no_data_found": "Nie znaleziono danych",
       "select": "Wybierz",
-      "remove": "Usuń"
+      "remove": "Usuń",
+      "video_link_error": "Proszę wprowadzić prawidłowy adres URL"
     },
     "provider-overview": {
       "earliest_slot_label": "Najwcześniejszy termin konsultacji",
@@ -243,11 +227,9 @@
       "city_label": "Miejscowość",
       "street_label": "Ulica",
       "postcode_label": "Kod pocztowy",
-
       "psychologist": "Psycholog/żka",
       "psychiatrist": "Psychiatra",
       "psychotherapist": "Psychoterapeuta/ka",
-
       "addiction": "Uzależnienie",
       "stress": "Stres",
       "burnout": "Wypalenie i stres akademicki",
@@ -279,10 +261,9 @@
       "love": "Miłość i relacje romantyczne",
       "social_skills": "Umiejętności społeczne i przyjaźń",
       "body_image": "Obraz ciała i poczucie własnej wartości",
-
       "hour_consultation": "za 1 godzinę konsultacji",
-      "organizations_label": "Organizacje",
-      "free": "Bezpłatne"
+      "free": "Bezpłatne",
+      "organizations_label": "Organizacje"
     },
     "provider-profile": {
       "your_profile": "Twój profil",
@@ -315,7 +296,6 @@
       "no_messages": "W tej konsultacji nie ma żadnych wiadomości",
       "no_activity_history": "Jak dotąd nie odnotowano żadnej aktywności",
       "free": "Bezpłatne",
-
       "client_joined": "Klient/ka dołączył/a do konsultacji",
       "client_left": "Klient/ka opuścił/a konsultację",
       "client_camera_off": "Klient/ka wyłączył/a kamerę",
@@ -323,14 +303,12 @@
       "client_microphone_off": "Klient/ka wyłączył/a mikrofon",
       "client_microphone_on": "Klient/ka włączył/a mikrofon",
       "chat_history_deleted_by_client": "Historia czatu usunięta przez klienta/kę",
-
       "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
       "provider_left": "Konsultant/ka opuścił/a konsultację",
       "provider_camera_off": "Konsultant/ka wyłączył/a kamerę",
       "provider_camera_on": "Konsultant/ka włączył/a kamerę",
       "provider_microphone_off": "Konsultant/ka wyłączył/a mikrofon",
       "provider_microphone_on": "Konsultant/ka włączył/a mikrofon",
-
       "canceled": "Anulowane"
     },
     "consultations": {
@@ -384,14 +362,12 @@
       "no_clients_search": "Nie ma klientów pasujących do wyszukiwania",
       "no_clients": "Nie masz jeszcze klientów",
       "free": "Bezpłatne",
-
       "client_joined": "Klient/ka dołączył/a do konsultacji",
       "client_left": "Klient/ka opuścił/a konsultację",
       "client_camera_off": "Klient/ka wyłączył/a kamerę",
       "client_camera_on": "Klient/ka włączyła kamerę",
       "client_microphone_off": "Klient/ka wyłączył/a mikrofon",
       "client_microphone_on": "Klient/ka włączył/a mikrofon",
-
       "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
       "provider_left": "Konsultant/la opuścił/a konsultację",
       "provider_camera_off": "Konsultant/ka wyłączył/a kamerę",
@@ -403,7 +379,6 @@
       "calendar": "Kalendarz",
       "add_template_availability": "Dodaj szablon dostępności",
       "today": "Dzisiaj",
-
       "sunday": "Niedz.",
       "monday": "Pon.",
       "tuesday": "Wt.",
@@ -411,7 +386,6 @@
       "thursday": "Czw.",
       "friday": "Pt.",
       "saturday": "Sob.",
-
       "consultation_details": "Wyświetl szczegóły",
       "available": "Jesteś dostępny/a",
       "not_available": "Jesteś niedostępny/a",
@@ -479,7 +453,6 @@
       "consultation": "Konsultacja",
       "consultations": "Konsultacje",
       "not_available": "Jesteś niedostępny/a",
-
       "month_1": "Styczeń",
       "month_2": "Luty",
       "month_3": "Marzec",
@@ -609,7 +582,6 @@
       "success": "Twoja ocena została wysłana. "
     }
   },
-
   "pages": {
     "not-found-page": {
       "heading": "Ups! Nie możemy znaleźć strony, której szukasz...",
@@ -681,14 +653,12 @@
       "thursday": "Czw.",
       "friday": "Pt.",
       "saturday": "Sob.",
-
       "client_joined": "Klient/ka dołączył/a do konsultacji",
       "client_left": "Klient/ka opuścił/a konsultację",
       "client_camera_off": "Klient/ka wyłączył/a kamerę",
       "client_camera_on": "Klient/ka włączył/a kamerę",
       "client_microphone_off": "Klient/ka wyłączył/a mikrofon",
       "client_microphone_on": "Klient/ka włączył/a mikrofon",
-
       "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
       "provider_left": "Konsultant/ka opuścił/a konsultację",
       "provider_camera_off": "Konsultant/ka wyłączył/a kamerę",
@@ -696,7 +666,6 @@
       "provider_microphone_off": "Konsultant/ka wyłączył/a mikrofon",
       "provider_microphone_on": "Konsultant/ka włączył/a mikrofon",
       "chat_history_deleted_by_client": "Historia czatu usunięta przez klienta",
-
       "show_system_messages": "Wyświetlanie komunikatów systemowych",
       "show_previous_consultations": "Pokaż poprzednie konsultacje",
       "hide_options": "Ukryj ustawienia",
@@ -719,7 +688,7 @@
       "heading": "Dodaj dostępność"
     },
     "customers-qa-page": {
-      "heading": "Q&A klientów",
+      "heading": "Pytania klientów",
       "subheading": "Odpowiedz na anonimowe pytania użytkowników i pomóż im w rozwiązywaniu problemów.",
       "filter": "Filtruj tagi",
       "provider_inactive": "Nie masz uprawnień do odpowiadania na pytania."
@@ -738,7 +707,6 @@
       "subheading": "Będziemy liczyć gwiazdki. Bądźmy szczerzy. Powiedz nam, co sądzisz o tej platformie. Oceń nas i zostaw nam swój komentarz."
     }
   },
-
   "modals": {
     "upload-picture": {
       "heading": "Zmień zdjęcie profilowe",
@@ -774,21 +742,21 @@
     },
     "cancel-consultation": {
       "heading": "Czy na pewno chcesz odwołać konsultację?",
-      "heading_suggested": "Czy na pewno chcesz odwołać proponowaną konsultację?",
       "paid_heading": "Czy na pewno chcesz odwołać konsultację? Nie otrzymasz płatności",
       "paid_subheading": "Stracisz płatność. Pieniądze za tę konsultację zostaną zwrócone klientowi/ce.",
       "cancel_button_label": "Anuluj konsultację",
       "keep_button_label": "Utrzymaj konsultację",
       "cancel_success": "Konsultacja została anulowana",
-      "suggest_new_time": "Zaproponuj nowy termin",
-      "suggest_success": "Nowy termin został pomyślnie zaproponowany",
       "sunday": "Niedz.",
       "monday": "Pon.",
       "tuesday": "Wt.",
       "wednesday": "Śr.",
       "thursday": "Czw.",
       "friday": "Pt.",
-      "saturday": "Sob."
+      "saturday": "Sob.",
+      "heading_suggested": "Czy na pewno chcesz odwołać proponowaną konsultację?",
+      "suggest_new_time": "Zaproponuj nowy termin",
+      "suggest_success": "Nowy termin został pomyślnie zaproponowany"
     },
     "join-consultation": {
       "heading": "Wybierz sposób komunikacji",
@@ -882,13 +850,15 @@
       "secondary_cta_label": "Zresetuj filtry"
     }
   },
-
   "routes": {
-    "root": {}
+    "root": {
+      "heading": "",
+      "text": "",
+      "cta": ""
+    }
   },
-
   "meta": {
     "title": "uSupport Konsultant",
-    "description": "Panel specjalistyczny do świadczenia opieki, organizowania harmonogramów, zarządzania sesjami i profilami oraz odpowiadania na pytania i odpowiedzi."
+    "description": "Panel specjalisty do świadczenia opieki, zarządzania harmonogramem, prowadzenia sesji, zarządzania profilami oraz odpowiadania na pytania klientów."
   }
 }
