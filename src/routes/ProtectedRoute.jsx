@@ -25,7 +25,7 @@ export const ProtectedRoute = ({ children }) => {
   if (!isLoggedIn || !isProvider)
     return (
       <Navigate
-        to={`/provider/${localStorage.getItem("language") || "en"}`}
+        to={`/provider/${localStorage.getItem("language") || "en"}/login?next=${encodeURIComponent(location.pathname + location.search)}`}
         replace
       />
     );

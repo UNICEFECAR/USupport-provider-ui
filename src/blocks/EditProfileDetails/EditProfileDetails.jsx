@@ -30,17 +30,12 @@ import Joi from "joi";
 
 import "./edit-profile-details.scss";
 
-const fetchCountryMinPrice = async () => {
+const fetchCountryData = async () => {
   const { data } = await countrySvc.getActiveCountries();
   const currentCountryId = localStorage.getItem("country_id");
   const currentCountry = data.find((x) => x.country_id === currentCountryId);
-  return {
-    minPrice: currentCountry?.min_price,
-    countryAlpha2: currentCountry?.alpha2,
-  };
+  return currentCountry;
 };
-
-const COUNTRIES_WITH_DISABLED_PRICE = ["KZ", "PL", "CY"];
 
 /**
  * EditProfileDetails
@@ -65,18 +60,12 @@ export const EditProfileDetails = ({
 
   const [errors, setErrors] = useState({});
 
-  const [countryMinPrice, setCountryMinPrice] = useState(0);
-  const [countryAlpha2, setCountryAlpha2] = useState("");
-  const { data } = useQuery(["country-min-price"], fetchCountryMinPrice);
+  const { data: countryData } = useQuery(["country-data"], fetchCountryData);
 
-  const isPriceDisabled = COUNTRIES_WITH_DISABLED_PRICE.includes(countryAlpha2);
+  const countryMinPrice = countryData?.min_price;
+  const hasPayments = countryData?.has_payments;
 
-  useEffect(() => {
-    if (data) {
-      setCountryMinPrice(data.minPrice);
-      setCountryAlpha2(data.countryAlpha2);
-    }
-  }, [data]);
+  const isPriceDisabled = !hasPayments;
 
   const specializationOptions = [
     { value: "psychologist", label: t("psychologist"), selected: false },

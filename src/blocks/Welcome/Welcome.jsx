@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCustomNavigate as useNavigate } from "#hooks";
@@ -33,6 +34,8 @@ export const Welcome = () => {
   const { t, i18n } = useTranslation("blocks", { keyPrefix: "welcome" });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const nextPath = searchParams.get("next");
   const { setIsInWelcome } = useContext(ThemeContext);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
@@ -166,7 +169,11 @@ export const Welcome = () => {
     window.dispatchEvent(new Event("countryChanged"));
     i18n.changeLanguage(language);
 
-    navigate("/login");
+    const loginPath =
+      nextPath && nextPath.startsWith("/provider/")
+        ? `/login?next=${encodeURIComponent(nextPath)}`
+        : "/login";
+    navigate(loginPath);
   };
 
   return (

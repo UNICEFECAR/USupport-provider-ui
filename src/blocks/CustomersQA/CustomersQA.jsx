@@ -9,7 +9,7 @@ import {
   Loading,
   Answer,
   InputSearch,
-  DropdownWithLabel,
+  Dropdown,
 } from "@USupport-components-library/src";
 
 import { useGetQuestions, useGetLanguages } from "#hooks";
@@ -44,7 +44,7 @@ export const CustomersQA = ({
   const { data: languages } = useGetLanguages();
   const questionsQuery = useGetQuestions(
     tabs.find((tab) => tab.isSelected).value,
-    selectedLanuage
+    selectedLanuage,
   );
 
   const languageOptions = useMemo(() => {
@@ -135,7 +135,7 @@ export const CustomersQA = ({
     setTabs(tabsCopy);
 
     setIsFilterShown(
-      tabsCopy.find((tab) => tab.isSelected).value !== "unanswered"
+      tabsCopy.find((tab) => tab.isSelected).value !== "unanswered",
     );
   };
 
@@ -143,38 +143,47 @@ export const CustomersQA = ({
     <Block classes="customers-qa">
       <Grid>
         <GridItem md={8} lg={12}>
-          <div className="customers-qa__tab-and-search-wrapper">
-            <div className="customers-qa__tabs-container">
-              <Tabs
-                options={tabs.map((tab) => {
-                  return {
-                    label: t(tab.value),
-                    value: tab.value,
-                    isSelected: tab.isSelected,
-                  };
-                })}
-                handleSelect={handleSelectTab}
-              />
-            </div>
+          <Grid classes="customers-qa__tabs-grid">
             {isFilterShown && (
-              <div className="customers-qa__tab-and-search-wrapper__search">
+              <GridItem
+                md={8}
+                lg={12}
+                classes="customers-qa__tabs-grid__search-container"
+              >
                 <InputSearch
                   placeholder={t("search_placeholder")}
                   value={searchValue}
                   onChange={(value) => setSearchValue(value.toLowerCase())}
-                  classes="customers-qa__tab-and-search-wrapper__input"
+                  classes="customers-qa__tabs-grid__search-container__input"
                 />
-
-                <DropdownWithLabel
+                <Dropdown
                   options={languageOptions}
                   selected={selectedLanuage}
                   setSelected={(lang) => setSelectedLanguage(lang)}
-                  label={t("language")}
                   placeholder={t("placeholder")}
+                  classes="customers-qa__categories-item__language-dropdown"
+                />
+              </GridItem>
+            )}
+            <GridItem
+              md={8}
+              lg={12}
+              classes="customers-qa__tabs-grid__filter-button-item"
+            >
+              <div className="customers-qa__tabs-container">
+                <Tabs
+                  options={tabs.map((tab) => {
+                    return {
+                      label: t(tab.value),
+                      value: tab.value,
+                      isSelected: tab.isSelected,
+                    };
+                  })}
+                  handleSelect={handleSelectTab}
                 />
               </div>
-            )}
-          </div>
+            </GridItem>
+          </Grid>
         </GridItem>
         <GridItem md={8} lg={12}>
           {questionsQuery.isLoading ? (
