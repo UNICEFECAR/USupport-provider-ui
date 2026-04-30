@@ -27,6 +27,14 @@ export default function useUpdateProviderData(onSuccess, onError) {
     });
 
     newPayload.consultationPrice = Number(newPayload.consultationPrice);
+    if (newPayload.translations) {
+      newPayload.translations = Object.entries(newPayload.translations).map(
+        ([languageId, values]) => ({
+          languageId,
+          ...values,
+        })
+      );
+    }
     delete newPayload.workWith;
     delete newPayload.languages;
     delete newPayload.providerDetailId;
