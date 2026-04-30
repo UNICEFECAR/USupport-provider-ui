@@ -1,55 +1,171 @@
 @import "@USupport-components-library/styles";
 
 .edit-profile-details {
-  &__grid {
-    place-items: center;
-    padding-bottom: $spacing_20_0;
+  padding-bottom: $spacing_4_0;
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_2_4;
     padding-top: $spacing_3_0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 120rem;
 
     @media screen and (min-width: $screen-md) {
       padding-top: $spacing_4_0;
     }
+  }
+
+  &__tabs {
+    width: 100%;
+  }
+
+  &__section {
+    padding: $spacing_2_4;
+    border-radius: $border_radius_2_4;
+
+    @media screen and (min-width: $screen-md) {
+      padding: $spacing_3_0;
+    }
+  }
+
+  &__section-title {
+    margin-bottom: $spacing_2_0;
+    color: $color_blue_3d527b;
+    font-weight: $font_extra_bold !important;
+    font-size: $font_size_3_2 !important;
+    line-height: $line_height_3_8 !important;
+    text-align: left;
+  }
+
+  &__section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing_2_4;
 
     @media screen and (min-width: $screen-lg) {
-      place-items: unset;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
-    & .grid-item {
-      justify-items: center;
-      width: 34.3rem;
+  &__section-grid--profile {
+    @media screen and (min-width: $screen-lg) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
-    & .input-container,
-    & .textarea--container,
-    &__sex-dropdown {
-      margin-top: $spacing_2_4;
-      text-align: left;
-    }
+  &__section-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_1_2;
+  }
 
-    & .dropdown-group {
-      margin-top: $spacing_2_4;
-      width: 34.3rem;
+  &__profile-preview-row {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-      @media screen and (min-width: $screen_md) {
-        width: 36.8rem;
-      }
-    }
+  & .input-container,
+  & .textarea--container,
+  & .dropdown-with-label,
+  & .input-group,
+  & .add-sponsor__grid__phone {
+    width: 100%;
+    margin-top: 0;
+    text-align: left;
+  }
 
-    &__submit-error {
-      align-self: center;
-    }
+  & .textarea--container {
+    align-items: flex-start;
+  }
 
-    &__buttons-item {
-      justify-self: center;
-    }
+  & .input-container__label,
+  & .dropdown-with-label__label,
+  & .input-group__label,
+  & .error-message,
+  & .text,
+  & p {
+    text-align: left;
+  }
 
-    &__save-button {
-      margin-top: $spacing_3_2;
-    }
+  & .textarea--container .textarea,
+  & .textarea--container textarea {
+    min-height: 16rem;
+  }
 
-    &__discard-button {
-      margin-top: $spacing_1_6;
-    }
+  &__consultation-price-group {
+    width: 100%;
+  }
+
+  &__pill-group {
+    width: 100%;
+  }
+
+  &__pill-group-label {
+    margin: 0 0 $spacing_0_4 0;
+    color: $color_blue_3d527b;
+    font-weight: $font_semi_bold;
+    text-align: left;
+  }
+
+  &__pill-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing_0_8;
+    max-height: 18rem;
+    overflow-y: auto;
+    padding: $spacing_0_8;
+    border-radius: $border_radius_1_6;
+    border: 0.1rem solid $color_gray_d2dcde;
+    @include scrollbar-secondary;
+  }
+
+  &__pill {
+    border: 0.1rem solid $color_blue_c1d7e0;
+    background: $color_white_ff;
+    border-radius: $border_radius_2_4;
+    padding: $spacing_0_6 $spacing_1_2;
+    color: $color_blue_3d527b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  &__pill:hover {
+    border-color: $color_primary_20809e;
+  }
+
+  &__pill--selected {
+    border-color: $color_primary_20809e;
+    background: $color_green_f4f7fe;
+    color: $color_primary_20809e;
+    font-weight: $font_semi_bold;
+  }
+
+  &__pill-empty {
+    color: $color_gray_66768d;
+    margin: 0;
+    text-align: left;
+  }
+
+  &__grid__submit-error {
+    align-self: center;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: $spacing_0_8;
+  }
+
+  &__grid__save-button {
+    margin-top: $spacing_1_6;
+  }
+
+  &__grid__discard-button {
+    margin-top: $spacing_1_2;
   }
 }
