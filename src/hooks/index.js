@@ -6,6 +6,7 @@ export * from "./useGetNotificationPreferences.js";
 export * from "./useUpdateNotificationPreferences.js";
 export * from "./useUpdateNotificationPreferences.js";
 export * from "./useGetProviderData.js";
+export * from "./useGetProviderTranslations.js";
 export * from "./useGetCountryAndLanguages.js";
 export * from "./useGetWorkWithCategories.js";
 export * from "./useUpdateProviderData.js";
