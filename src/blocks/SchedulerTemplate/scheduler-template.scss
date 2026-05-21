@@ -2,45 +2,25 @@
 
 .scheduler-template {
   @include full-height-page-navbar;
+  padding-bottom: $spacing_4_0;
 
-  position: relative;
-  overflow: visible;
-
-  &--v1 {
-    padding-top: 0;
-    padding-bottom: 10rem;
-  }
-
-  .theme-light & {
-    .box--liquid-glass,
-    .card--liquid-glass {
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(224, 233, 255, 0.7);
-      box-shadow: 0 0.6rem 1rem rgba(9, 14, 26, 0.08);
-    }
-  }
-
-  &__surface {
-    @include content-surface;
+  &__content {
     display: flex;
     flex-direction: column;
     gap: $spacing_2_4;
-    max-width: 144rem;
-    margin: $spacing_1_6 auto 0;
-    padding: $spacing_2_4 $spacing_2_4 $spacing_4_0;
-    min-width: 0;
+    padding-top: $spacing_3_0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 120rem;
 
     @media screen and (min-width: $screen-md) {
-      padding: $spacing_3_2 $spacing_3_2 $spacing_5_0;
-      margin-top: $spacing_2_4;
+      padding-top: $spacing_4_0;
     }
   }
 
   &__section {
     padding: $spacing_2_4;
     border-radius: $border_radius_2_4;
-    backdrop-filter: blur(10px) saturate(1.12);
-    -webkit-backdrop-filter: blur(10px) saturate(1.12);
 
     @media screen and (min-width: $screen-md) {
       padding: $spacing_3_0;
@@ -116,7 +96,16 @@
     flex-direction: column;
     gap: $spacing_1_2;
     padding: $spacing_1_6;
-    @include content-inset-surface;
+    border-radius: $border_radius_1_6;
+    @include themify($themes, "border-color", "color_gray_ea");
+    border: 0.1rem solid $color_gray_d2dcde;
+    @include themify($themes, "background-color", "color_white_ff");
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(193, 215, 224, 0.2);
+    }
 
     &--full-width {
       @media screen and (min-width: $screen-lg) {

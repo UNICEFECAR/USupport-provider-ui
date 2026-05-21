@@ -58,7 +58,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
 
   const initialTemplate = {};
   daysOfWeek.forEach(
-    (day) => (initialTemplate[day] = { unavailable: false, start: "", end: "" })
+    (day) =>
+      (initialTemplate[day] = { unavailable: false, start: "", end: "" }),
   );
 
   const today = new Date();
@@ -82,7 +83,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const [templateStartDate, setTemplateStartDate] = useState("");
   const [templateEndDate, setTemplateEndDate] = useState("");
   const [selectedCampaignIds, setSelectedCampaignIds] = useState(
-    campaignId ? [campaignId] : []
+    campaignId ? [campaignId] : [],
   );
   const [selectedOrganizationId, setSelectedOrganizationId] = useState("");
   const [showSelectionError, setShowSelectionError] = useState(false);
@@ -127,9 +128,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const hasTimeRangesSelected = useMemo(
     () =>
       Object.values(template).some(
-        ({ unavailable, start, end }) => !unavailable && start && end
+        ({ unavailable, start, end }) => !unavailable && start && end,
       ),
-    [template]
+    [template],
   );
 
   // Selection (campaign / organization) is only required in countries that do
@@ -143,9 +144,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const hasAnyDayConfigured = useMemo(
     () =>
       Object.values(template).some(
-        ({ unavailable, start, end }) => unavailable || (start && end)
+        ({ unavailable, start, end }) => unavailable || (start && end),
       ),
-    [template]
+    [template],
   );
 
   const handleChangeIsAvailable = (day) => {
@@ -194,8 +195,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
       selectedCampaignIds?.length > 0
         ? selectedCampaignIds
         : campaignId
-        ? [campaignId]
-        : [];
+          ? [campaignId]
+          : [];
     const finalOrganizationIds = selectedOrganizationId
       ? [selectedOrganizationId]
       : [];
@@ -228,7 +229,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
         t("selection_required", {
           defaultValue: "Select at least one campaign or organization",
         }),
-        { type: "error" }
+        { type: "error" },
       );
       return;
     }
@@ -261,7 +262,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
       const endDate =
         getTimestamp(
           new Date((monday + getXDaysInSeconds(6)) * 1000),
-          "23:59:59"
+          "23:59:59",
         ) - currentTimeZoneOffset;
 
       const mondayTimestamps = {
@@ -279,8 +280,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
             selectedCampaignIds?.length > 0
               ? selectedCampaignIds
               : campaignId
-              ? [campaignId]
-              : [];
+                ? [campaignId]
+                : [];
           const finalOrganizationId = selectedOrganizationId || null;
           // Use the shared hours list to generate per-hour timestamps for the day
           for (let j = 0; j < hours.length; j++) {
@@ -297,8 +298,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
                 targetMondayStart,
                 currentTimestamp,
                 finalCampaignIds,
-                finalOrganizationId
-              )
+                finalOrganizationId,
+              ),
             );
           }
           continue;
@@ -316,8 +317,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
             const index = timestamps.indexOf(
               timestamps.find(
                 (timestamp) =>
-                  timestamp.startDate === JSON.stringify(previousMonday)
-              )
+                  timestamp.startDate === JSON.stringify(previousMonday),
+              ),
             );
             if (index === -1) {
               const newTimestampObject = {
@@ -335,8 +336,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
             const index = timestamps.indexOf(
               timestamps.find(
                 (timestamp) =>
-                  timestamp.startDate === JSON.stringify(nextMonday)
-              )
+                  timestamp.startDate === JSON.stringify(nextMonday),
+              ),
             );
             if (index === -1) {
               const newTimestampObject = {
@@ -356,8 +357,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
 
       const startDateIndex = timestamps.indexOf(
         timestamps.find(
-          (timestamp) => timestamp.startDate === mondayTimestamps.startDate
-        )
+          (timestamp) => timestamp.startDate === mondayTimestamps.startDate,
+        ),
       );
       if (startDateIndex === -1) {
         timestamps.push(mondayTimestamps);
@@ -385,9 +386,9 @@ export const SchedulerTemplate = ({ campaignId }) => {
   };
 
   return (
-    <Block classes="scheduler-template scheduler-template--v1">
-      <div className="scheduler-template__surface">
-        <Box liquidGlass borderSize="md" classes="scheduler-template__section">
+    <Block classes="scheduler-template">
+      <div className="scheduler-template__content">
+        <Box classes="scheduler-template__section" boxShadow={3}>
           <h3 className="scheduler-template__section-title">
             {t("section_assignment", {
               defaultValue: "Campaign and organization",
@@ -436,7 +437,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
           </div>
         </Box>
 
-        <Box liquidGlass borderSize="md" classes="scheduler-template__section">
+        <Box classes="scheduler-template__section" boxShadow={3}>
           <h3 className="scheduler-template__section-title">
             {t("section_date_range", {
               defaultValue: "Date range",
@@ -464,7 +465,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
           </div>
         </Box>
 
-        <Box liquidGlass borderSize="md" classes="scheduler-template__section">
+        <Box classes="scheduler-template__section" boxShadow={3}>
           <h3 className="scheduler-template__section-title">
             {t("section_weekly_hours", {
               defaultValue: "Weekly schedule",
@@ -500,8 +501,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
                     </p>
                     <Dropdown
                       disabled={
-                        template[day].unavailable ||
-                        providerStatus !== "active"
+                        template[day].unavailable || providerStatus !== "active"
                       }
                       options={hoursOptions}
                       selected={template[day].start || ""}
@@ -522,8 +522,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
                     </p>
                     <Dropdown
                       disabled={
-                        template[day].unavailable ||
-                        providerStatus !== "active"
+                        template[day].unavailable || providerStatus !== "active"
                       }
                       options={getEndHoursOptions(template[day].start)}
                       selected={template[day].end || ""}
