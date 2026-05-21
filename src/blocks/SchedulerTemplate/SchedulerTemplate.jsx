@@ -5,11 +5,10 @@ import { useCustomNavigate as useNavigate } from "#hooks";
 import { toast } from "react-toastify";
 import {
   Block,
-  Grid,
-  GridItem,
+  Box,
   Dropdown,
   DropdownWithLabel,
-  Button,
+  NewButton,
   CheckBox,
   Select,
 } from "@USupport-components-library/src";
@@ -20,7 +19,6 @@ import {
   getTimestamp,
   getTimestampFromUTC,
   hours,
-  useWindowDimensions,
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
@@ -41,7 +39,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const IS_KZ_COUNTRY = localStorage.getItem("country") === "KZ";
 
   const navigate = useNavigate();
-  const { width } = useWindowDimensions();
   const daysOfWeek = [
     "monday",
     "tuesday",
@@ -388,109 +385,123 @@ export const SchedulerTemplate = ({ campaignId }) => {
   };
 
   return (
-    <Block classes="scheduler-template">
-      <Grid classes="scheduler-template__grid">
-        <GridItem
-          md={8}
-          lg={12}
-          classes="scheduler-template__grid__week-selector"
-        >
-          <Grid classes="scheduler-template__grid__week-selector__campaign-organization-selector">
-            {IS_KZ_COUNTRY || campaignSelectOptions.length === 0 ? null : (
-              <GridItem md={4} lg={6}>
-                <Select
-                  options={campaignSelectOptions}
-                  handleChange={(opts) => {
-                    const values = opts
-                      .filter((o) => o.selected)
-                      .map((o) => o.value);
-                    setSelectedCampaignIds(values);
-                    if (values.length > 0 || !!selectedOrganizationId) {
-                      setShowSelectionError(false);
-                    }
-                  }}
-                  label={t("campaign")}
-                  placeholder={t("campaign_placeholder")}
-                  classes="scheduler-template__grid__multi-select"
-                  isDisabled={providerStatus !== "active"}
-                  errorMessage={
-                    showSelectionError && isSelectionRequired && !hasSelection
-                      ? t("selection_required", {
-                          defaultValue:
-                            "Select at least one campaign or organization",
-                        })
-                      : null
-                  }
-                />
-              </GridItem>
-            )}
-            <GridItem md={4} lg={6}>
-              <DropdownWithLabel
-                options={organizationDropdownOptions}
-                selected={selectedOrganizationId}
-                setSelected={(value) => {
-                  setSelectedOrganizationId(value);
-                  if (value || selectedCampaignIds.length > 0) {
+    <Block classes="scheduler-template scheduler-template--v1">
+      <div className="scheduler-template__surface">
+        <Box liquidGlass borderSize="md" classes="scheduler-template__section">
+          <h3 className="scheduler-template__section-title">
+            {t("section_assignment", {
+              defaultValue: "Campaign and organization",
+            })}
+          </h3>
+          <div className="scheduler-template__section-grid">
+            {!IS_KZ_COUNTRY && campaignSelectOptions.length > 0 ? (
+              <Select
+                options={campaignSelectOptions}
+                handleChange={(opts) => {
+                  const values = opts
+                    .filter((o) => o.selected)
+                    .map((o) => o.value);
+                  setSelectedCampaignIds(values);
+                  if (values.length > 0 || !!selectedOrganizationId) {
                     setShowSelectionError(false);
                   }
                 }}
-                label={t("organization")}
-                disabled={providerStatus !== "active"}
-                classes="scheduler-template__grid__multi-select"
+                label={t("campaign")}
+                placeholder={t("campaign_placeholder")}
+                classes="scheduler-template__field"
+                isDisabled={providerStatus !== "active"}
+                errorMessage={
+                  showSelectionError && isSelectionRequired && !hasSelection
+                    ? t("selection_required", {
+                        defaultValue:
+                          "Select at least one campaign or organization",
+                      })
+                    : null
+                }
               />
-            </GridItem>
-          </Grid>
-        </GridItem>
-        <GridItem
-          md={8}
-          lg={12}
-          classes="scheduler-template__grid__week-selector"
-        >
-          <DropdownWithLabel
-            options={getMondayOptions}
-            selected={templateStartDate}
-            setSelected={(value) => {
-              setTemplateStartDate(value);
-            }}
-            label={t("start_date")}
-            disabled={providerStatus !== "active"}
-          />
-          <DropdownWithLabel
-            options={getSundayOptions}
-            selected={templateEndDate}
-            setSelected={(value) => setTemplateEndDate(value)}
-            label={t("end_date")}
-            disabled={providerStatus !== "active"}
-          />
-        </GridItem>
-        {daysOfWeek.map((day, index) => {
-          return (
-            <GridItem
-              key={index}
-              md={width < 900 ? 8 : 4}
-              lg={index === 6 ? 12 : 6}
-              classes={
-                index % 2 === 0 && index !== 6
-                  ? "scheduler-template__grid__item"
-                  : ""
-              }
-            >
-              <div key={day + index} className="scheduler-template__grid__day">
-                <h4 className="scheduler-template__grid__day-heading">
-                  {t(day)}
-                </h4>
+            ) : null}
+            <DropdownWithLabel
+              options={organizationDropdownOptions}
+              selected={selectedOrganizationId}
+              setSelected={(value) => {
+                setSelectedOrganizationId(value);
+                if (value || selectedCampaignIds.length > 0) {
+                  setShowSelectionError(false);
+                }
+              }}
+              label={t("organization")}
+              disabled={providerStatus !== "active"}
+              classes="scheduler-template__field"
+            />
+          </div>
+        </Box>
+
+        <Box liquidGlass borderSize="md" classes="scheduler-template__section">
+          <h3 className="scheduler-template__section-title">
+            {t("section_date_range", {
+              defaultValue: "Date range",
+            })}
+          </h3>
+          <div className="scheduler-template__section-grid scheduler-template__section-grid--dates">
+            <DropdownWithLabel
+              options={getMondayOptions}
+              selected={templateStartDate}
+              setSelected={(value) => {
+                setTemplateStartDate(value);
+              }}
+              label={t("start_date")}
+              disabled={providerStatus !== "active"}
+              classes="scheduler-template__field"
+            />
+            <DropdownWithLabel
+              options={getSundayOptions}
+              selected={templateEndDate}
+              setSelected={(value) => setTemplateEndDate(value)}
+              label={t("end_date")}
+              disabled={providerStatus !== "active"}
+              classes="scheduler-template__field"
+            />
+          </div>
+        </Box>
+
+        <Box liquidGlass borderSize="md" classes="scheduler-template__section">
+          <h3 className="scheduler-template__section-title">
+            {t("section_weekly_hours", {
+              defaultValue: "Weekly schedule",
+            })}
+          </h3>
+          <div className="scheduler-template__days-grid">
+            {daysOfWeek.map((day, index) => (
+              <div
+                key={day}
+                className={[
+                  "scheduler-template__day",
+                  index === 6 ? "scheduler-template__day--full-width" : "",
+                ].join(" ")}
+              >
+                <h4 className="scheduler-template__day-heading">{t(day)}</h4>
                 <CheckBox
                   isChecked={template[day].unavailable}
                   setIsChecked={() => handleChangeIsAvailable(day)}
                   label={t("unavailable")}
-                  classes="scheduler-template__grid__day__checkbox"
+                  classes="scheduler-template__day__checkbox"
                 />
-                <div className="scheduler-template__grid__day-time-selector">
-                  <div className="scheduler-template__grid__day-time-selector__single">
-                    <p>{t("from")}</p>
+                <div
+                  className={[
+                    "scheduler-template__day-times",
+                    template[day].unavailable
+                      ? "scheduler-template__day-times--disabled"
+                      : "",
+                  ].join(" ")}
+                >
+                  <div className="scheduler-template__day-times__field">
+                    <p className="text scheduler-template__day-times__label">
+                      {t("from")}
+                    </p>
                     <Dropdown
                       disabled={
-                        template[day].unavailable || providerStatus !== "active"
+                        template[day].unavailable ||
+                        providerStatus !== "active"
                       }
                       options={hoursOptions}
                       selected={template[day].start || ""}
@@ -499,11 +510,20 @@ export const SchedulerTemplate = ({ campaignId }) => {
                       }
                     />
                   </div>
-                  <div className="scheduler-template__grid__day-time-selector__single">
-                    <p>{t("to")}</p>
+                  <span
+                    className="scheduler-template__day-times__divider"
+                    aria-hidden="true"
+                  >
+                    –
+                  </span>
+                  <div className="scheduler-template__day-times__field">
+                    <p className="text scheduler-template__day-times__label">
+                      {t("to")}
+                    </p>
                     <Dropdown
                       disabled={
-                        template[day].unavailable || providerStatus !== "active"
+                        template[day].unavailable ||
+                        providerStatus !== "active"
                       }
                       options={getEndHoursOptions(template[day].start)}
                       selected={template[day].end || ""}
@@ -514,16 +534,17 @@ export const SchedulerTemplate = ({ campaignId }) => {
                   </div>
                 </div>
               </div>
-            </GridItem>
-          );
-        })}
-        <GridItem md={8} lg={12}>
-          <Button
+            ))}
+          </div>
+        </Box>
+
+        <div className="scheduler-template__buttons">
+          <NewButton
             onClick={handleSubmit}
-            type="primary"
+            type="gradient"
             label={t("save")}
             size="lg"
-            classes="scheduler-template__grid__save-button"
+            classes="scheduler-template__save-button"
             disabled={
               !templateStartDate ||
               !templateEndDate ||
@@ -532,8 +553,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
             }
             loading={addTemplateAvailabilityMutation.isLoading}
           />
-        </GridItem>
-      </Grid>
+        </div>
+      </div>
     </Block>
   );
 };
