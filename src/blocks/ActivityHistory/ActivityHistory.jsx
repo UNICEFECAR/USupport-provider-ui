@@ -6,13 +6,14 @@ import { useCustomNavigate as useNavigate } from "#hooks";
 import {
   Avatar,
   Block,
-  Button,
+  Box,
   Consultation,
   Grid,
   GridItem,
   Icon,
   Loading,
   Message,
+  NewButton,
   SystemMessage,
 } from "@USupport-components-library/src";
 import {
@@ -199,17 +200,17 @@ export const ActivityHistory = ({
     AMAZON_S3_BUCKET + "/" + (selectedConsultation?.image || "default");
 
   return (
-    <Block classes="activity-history">
+    <Block classes="activity-history activity-history--v1">
       <div className="activity-history__content">
         {((width < 1366 && !selectedConsultation) || width >= 1366) && (
-          <div className="activity-history__main-container">
+          <Box classes="activity-history__main-container">
             <Grid classes="activity-history__main-container__grid">
               {renderAllConsultations()}
             </Grid>
-          </div>
+          </Box>
         )}
         {((width < 1366 && selectedConsultation) || width >= 1366) && (
-          <div className="activity-history__consultation-container">
+          <Box classes="activity-history__consultation-container">
             {!selectedConsultation ? (
               <div className="activity-history__consultation-container__no-selected">
                 <img src={mascot} alt="Mascot" className="mascot" />
@@ -220,24 +221,29 @@ export const ActivityHistory = ({
             ) : (
               <div className="activity-history__consultation-container__consultation">
                 <div className="activity-history__consultation-container__consultation__header">
-                  <div className="activity-history__consultation-container__consultation__header__client-container">
-                    {width < 1366 && (
-                      <Icon
-                        name="arrow-chevron-back"
-                        color="#20809E"
-                        onClick={() => handleGoBack()}
-                      />
-                    )}
-                    <Avatar size="sm" image={selectedClientImage} />
-                    <h4 className="client-name">
-                      {selectedConsultation.clientName}
-                    </h4>
-                  </div>
-                  <Icon
-                    name="three-dots-vertical"
-                    color="#20809E"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  />
+                  <Box
+                    liquidGlass
+                    classes="activity-history__consultation-container__consultation__header__client-container"
+                  >
+                    <div className="activity-history__consultation-container__consultation__header__client-container__identity">
+                      {width < 1366 && (
+                        <Icon
+                          name="arrow-chevron-back"
+                          color="#20809E"
+                          onClick={() => handleGoBack()}
+                        />
+                      )}
+                      <Avatar size="sm" image={selectedClientImage} />
+                      <h4 className="client-name">
+                        {selectedConsultation.clientName}
+                      </h4>
+                    </div>
+                    <Icon
+                      name="three-dots-vertical"
+                      color="#20809E"
+                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    />
+                  </Box>
                 </div>
                 <div className="activity-history__consultation-container__consultation__messages">
                   {chatQuery.isLoading ? (
@@ -247,8 +253,10 @@ export const ActivityHistory = ({
                   )}
                 </div>
                 {providerStatus === "active" ? (
-                  <Button
+                  <NewButton
+                    type="gradient"
                     size="lg"
+                    iconName="share-front"
                     label={t("button_propose_consultation_label")}
                     onClick={handleProposeConsultation}
                     classes="activity-history__consultation-container__consultation__button"
@@ -263,7 +271,7 @@ export const ActivityHistory = ({
                 </div>
               </OutsideClickHandler>
             )}
-          </div>
+          </Box>
         )}
       </div>
     </Block>

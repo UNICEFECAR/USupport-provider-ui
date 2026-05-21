@@ -2,7 +2,57 @@
 
 .page {
   padding-top: $spacing_6_6;
+  @include themify($themes, "background-color", "color_white_ff");
   min-width: 34rem;
+  background-image: url("./assets/mobile-hero.png");
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: repeat-y;
+
+  @media screen and (min-width: $screen-md) {
+    background-image: url("./assets/tablet-hero.png");
+  }
+
+  @media screen and (min-width: $screen-lg) {
+    background-image: url("./assets/hero.png");
+    &--dark-background {
+      background-image: url("./assets/hero-dark.png");
+    }
+  }
+
+  .theme-dark & {
+    background:
+      radial-gradient(
+        760px 320px at 15% 78%,
+        rgba(63, 81, 132, 0.3),
+        transparent 72%
+      ),
+      radial-gradient(
+        820px 340px at 82% 68%,
+        rgba(46, 65, 112, 0.3),
+        transparent 72%
+      ),
+      radial-gradient(
+        620px 260px at 45% 90%,
+        rgba(38, 52, 91, 0.26),
+        transparent 74%
+      ),
+      radial-gradient(
+        980px 420px at 8% 8%,
+        rgba(78, 100, 162, 0.34),
+        transparent 70%
+      ),
+      radial-gradient(
+        860px 360px at 92% 20%,
+        rgba(108, 88, 180, 0.3),
+        transparent 72%
+      ),
+      linear-gradient(135deg, #0f1728 0%, #122039 42%, #182a46 100%);
+  }
+
+  .theme-highContrast & {
+    background-image: none;
+  }
 
   &--no-additional-top-padding {
     padding-top: 0;
@@ -15,71 +65,61 @@
     }
   }
 
-  @media screen and (min-width: 1050px) {
-    padding-top: $spacing_8_0;
-    &--no-additional-top-padding {
-      padding-top: 0;
-    }
-  }
-
   &__header {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    padding: $spacing_3_2 $spacing_1_6 $spacing_1_6 $spacing_2_4;
+    padding-top: $spacing_3_2;
+    padding-bottom: $spacing_1_6;
 
     @media screen and (min-width: $screen-md) {
       padding-top: $spacing_5_0;
-      padding-left: $spacing_5_0;
-      padding-right: $spacing_5_0;
     }
     @media screen and (min-width: $screen-lg) {
       padding-top: $spacing_5_0;
-      padding-left: $spacing_23_0;
-      padding-right: $spacing_23_0;
+    }
+
+    &__text-container {
+      display: column;
+      flex-direction: row;
+      align-items: center;
+
+      &__go-back {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        margin-bottom: 1rem;
+      }
+    }
+
+    &__title-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: $spacing_1_6;
+
+      .page__header-heading {
+        flex: 1;
+        min-width: 0;
+      }
     }
 
     &-heading {
       max-width: 75rem;
-      width: 75%;
-      word-break: break-all;
+      word-break: break-word;
       text-align: left;
-
-      &__no-go-back-arrow {
-        @media screen and (min-width: $screen_md) {
-          padding-left: $spacing_6_0;
-        }
-      }
     }
 
-    &-icon {
-      cursor: pointer;
-      margin-right: $spacing_2_4;
-      @media screen and (min-width: $screen-md) {
-        margin-right: $spacing_3_2;
-      }
-    }
-
-    &-button {
+    &-button-container {
       display: flex;
       flex: 1;
       justify-content: flex-end;
-
-      @media screen and (min-width: $screen-md) {
-        padding-right: $spacing_3_2;
-      }
-
-      @media screen and (min-width: $screen-lg) {
-        padding-right: $spacing_5_0;
-      }
     }
 
     &__image {
       width: 3.2rem;
       height: 3.2rem;
       border-radius: 50%;
-      margin-right: $spacing_1_6;
       object-fit: cover;
+      flex-shrink: 0;
 
       @media screen and (min-width: $screen-lg) {
         width: 5rem;
@@ -89,26 +129,8 @@
   }
 
   &__subheading-text {
+    white-space: pre-line;
     text-align: left;
-    padding-left: $spacing_2_2;
-
-    @media screen and (min-width: $screen-md) {
-      padding-left: calc($spacing_2_6 + $spacing_8_0);
-    }
-
-    @media screen and (min-width: $screen-lg) {
-      padding-left: calc($spacing_23_0 + $spacing_5_6);
-    }
-
-    &__no-go-back-arrow {
-      @media screen and (min-width: $screen-md) {
-        padding-left: calc($spacing_5_0 + $spacing_6_0);
-      }
-
-      @media screen and (min-width: $screen-lg) {
-        padding-left: calc($spacing_23_0 + $spacing_6_5);
-      }
-    }
   }
 
   &__emergency-button {

@@ -33,7 +33,21 @@
       "language_3": "",
       "language_4": "",
       "language_5": "",
-      "language_6": ""
+      "language_6": "",
+      "go_back": "Назад",
+      "notifications_heading": "Сповіщення",
+      "notifications_mark_read": "Позначити всі як прочитані",
+      "notifications_empty": "Поки що немає сповіщень",
+      "all": "Усі",
+      "new": "Нові",
+      "read": "Прочитані",
+      "dark": "Темний",
+      "light": "Світлий",
+      "high_contrast": "Висока контрастність",
+      "edit_profile": "Редагувати профіль",
+      "logout": "Вийти",
+      "language_label": "Мова",
+      "footer_text": "Ваше ментальне здоровʼя важливе — uSupport надає персоналізовану, приватну та безпечну психологічну допомогу."
     },
     "contact-us-block": {
       "issue": "Проблема",
@@ -171,6 +185,10 @@
       "add_more_work_with": "Додати більше категорій",
       "add_more_education": "Додати більше",
       "add_more_specializations": "Додати більше спеціалізацій",
+      "section_personal_information": "Особиста інформація",
+      "section_professional_information": "Професійна інформація",
+      "section_location": "Місцезнаходження",
+      "section_languages_specialties": "Мови та спеціалізації",
       "button_text": "Зберегти зміни",
       "button_secondary_text": "Відкинути зміни",
       "addiction": "Залежність",
@@ -222,6 +240,9 @@
       "edit_details": "Редагувати дані",
       "change_password": "Змінити пароль",
       "delete_account": "Видалити обліковий запис",
+      "phone_label": "Телефон",
+      "email_label": "Електронна пошта",
+      "consultations": "консультації",
       "no_available_slot": "Немає вільного слоту",
       "video_label": "Відеоряд",
       "city_label": "Місто",
@@ -263,7 +284,15 @@
       "body_image": "Образ тіла та самооцінка",
       "hour_consultation": "за 1 годину консультації",
       "free": "безкоштовно",
-      "organizations_label": "Організації"
+      "organizations_label": "Організації",
+      "coupon": "Купон",
+      "monday": "Понеділок",
+      "tuesday": "Вівторок",
+      "wednesday": "Середа",
+      "thursday": "Четвер",
+      "friday": "Пʼятниця",
+      "saturday": "Субота",
+      "sunday": "Неділя"
     },
     "provider-profile": {
       "your_profile": "Ваш профіль",
@@ -315,6 +344,8 @@
       "heading": "Консультації",
       "today_tab_label": "Сьогодні",
       "upcoming_tab_label": "Найближчим часом",
+      "past_tab_label": "Попередні",
+      "no_upcoming_consultations": "У тебе немає майбутніх консультацій",
       "input_search_label": "Пошук",
       "sunday": "Нд",
       "monday": "Пн",
@@ -355,6 +386,7 @@
       "see_profile": "Дивіться профіль",
       "past_consultations": "минулі консультації",
       "no_scheduled": "Консультація не запланована",
+      "next_consultation_label": "Наступна консультація",
       "suggested": "Запропоновано",
       "join": "Приєднатися",
       "no_consultations": "Ви не маєте консультацій із цим клієнтом",
@@ -378,6 +410,13 @@
     "scheduler": {
       "calendar": "Календар",
       "add_template_availability": "Додати доступність шаблону",
+      "add_appointment": "Додати зустріч",
+      "appointments_today": "Зустрічі на сьогодні",
+      "appointments_for_date": "Зустрічі {{date}}",
+      "no_appointments_day": "На цей день зустрічей немає.",
+      "consultation": "Консультація",
+      "organization_appointment": "Організація",
+      "view": "Переглянути",
       "today": "Сьогодні",
       "sunday": "Нд",
       "monday": "Пн",
@@ -401,7 +440,25 @@
       "booked": "Заброньовано",
       "more_campaigns": "{{amount}} кампанії",
       "provider_inactive": "Ви не маєте прав на додавання доступності",
-      "coupon": "Купон"
+      "coupon": "Купон",
+      "day": "День",
+      "week": "Тиждень",
+      "month": "Місяць",
+      "picker_hint_day": "Виберіть день",
+      "picker_hint_week": "Виберіть тиждень",
+      "picker_hint_month": "Виберіть місяць",
+      "month_section_appointments": "Зустрічі",
+      "month_section_availability": "Доступність",
+      "month_availability_helper": "Натисніть на порожній слот і виберіть «Встановити як доступний», щоб відкрити новий час.",
+      "month_appointments_count_one": "{{count}} зустріч",
+      "month_appointments_count_other": "{{count}} зустрічей",
+      "month_open_slots_count_one": "{{count}} вільний слот",
+      "month_open_slots_count_other": "{{count}} вільних слотів",
+      "month_available_slots_count_one": "{{count}} доступний слот",
+      "month_available_slots_count_other": "{{count}} доступних слотів",
+      "month_unavailable_slots_count_one": "{{count}} недоступний слот",
+      "month_unavailable_slots_count_other": "{{count}} недоступних слотів",
+      "month_no_upcoming_slots": "На цей день немає майбутніх часових слотів."
     },
     "scheduler-template": {
       "start_date": "Дата початку",
@@ -614,7 +671,8 @@
       "heading": "Скинути пароль"
     },
     "edit-profile-details-page": {
-      "heading": "Редагувати дані профілю"
+      "heading": "Редагувати дані профілю",
+      "subheading": "Оновіть інформацію профілю, фото та налаштування консультацій."
     },
     "provider-profile-page": {
       "heading": "Профіль користувача(ки)",
@@ -623,6 +681,7 @@
     },
     "provider-overview-page": {
       "heading": "Інформація про профіль",
+      "subheading": "Переглядайте та керуйте особистою та професійною інформацією профілю.",
       "button_label": "Історія активності"
     },
     "scheduler-template-page": {
@@ -695,6 +754,7 @@
     },
     "consultations-page": {
       "heading": "Консультації",
+      "subheading": "Переглядайте сьогоднішні консультації та керуйте майбутнім розкладом.",
       "input_search_label": "Пошук"
     },
     "notifications-page": {

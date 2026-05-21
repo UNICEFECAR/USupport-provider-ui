@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import { ButtonWithIcon } from "@USupport-components-library/src";
+import { toast } from "react-toastify";
 
 import { Page, CustomersQA as CustomersQABlock } from "#blocks";
 import {
@@ -13,7 +12,6 @@ import {
 import { useGetProviderData } from "#hooks";
 
 import "./customers-qa.scss";
-import { toast } from "react-toastify";
 
 /**
  * CustomersQA
@@ -70,25 +68,13 @@ export const CustomersQA = () => {
   return (
     <Page
       classes="page__customers-qa"
+      showNavbar={true}
+      showFooter={true}
       showGoBackArrow={false}
-      heading={t("heading")}
-      subheading={t("subheading")}
-      headingButton={
-        isFilterShown && (
-          <ButtonWithIcon
-            label={t("filter")}
-            iconName="filter"
-            iconColor="#ffffff"
-            iconSize="sm"
-            color="purple"
-            size="sm"
-            classes="page__customers-qa__filter-button"
-            onClick={handleFilterTags}
-          />
-        )
-      }
     >
       <CustomersQABlock
+        subheading={t("subheading")}
+        filterButtonLabel={t("filter")}
         handleOpenResposeBackdrop={openCreateRespondBackdrop}
         handleOpenArchive={handleOpenArchive}
         handleReadMore={handleReadMore}

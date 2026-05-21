@@ -2,10 +2,26 @@
 
 .cookie-policy {
   @include full-height-page-navbar;
-  padding: $spacing_3_4 $spacing_1_5 $spacing_4_0 $spacing_1_5;
 
-  @media screen and (min-width: $screen-lg) {
-    padding: $spacing_3_4 $spacing_40_3 $spacing_4_0 $spacing_40_3;
+  position: relative;
+  overflow: visible;
+
+  &--v1 {
+    padding-top: 0;
+    padding-bottom: 10rem;
+  }
+
+  &__surface {
+    @include content-surface;
+    max-width: 144rem;
+    margin: $spacing_1_6 auto 0;
+    padding: $spacing_2_4 $spacing_2_4 $spacing_4_0;
+    min-width: 0;
+
+    @media screen and (min-width: $screen-md) {
+      padding: $spacing_3_2 $spacing_3_2 $spacing_5_0;
+      margin-top: $spacing_2_4;
+    }
   }
 
   &__no-results {

@@ -2,15 +2,15 @@ import React, { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Block,
-  Grid,
-  GridItem,
   CollapsibleFAQ,
   Loading,
   InputSearch,
 } from "@USupport-components-library/src";
 import { useTranslation } from "react-i18next";
 import { useEventListener } from "#hooks";
+
 import { cmsSvc, adminSvc } from "@USupport-components-library/services";
+import { mascotConfusedBlue } from "@USupport-components-library/assets";
 
 import "./faq.scss";
 
@@ -38,7 +38,6 @@ export const FAQ = () => {
   useEventListener("countryChanged", handler);
 
   //--------------------- FAQs ----------------------//
-
   const getFAQIds = async () => {
     // Request faq ids from the master DB for provider platform
     const faqIds = await adminSvc.getFAQs("provider");
@@ -49,13 +48,12 @@ export const FAQ = () => {
   const faqIdsQuerry = useQuery(["faqIds", currentCountry], getFAQIds);
 
   const getFAQs = async () => {
-    const faqs = [];
-
     let { data } = await cmsSvc.getFAQs({
       locale: i18n.language,
       ids: faqIdsQuerry.data,
     });
 
+    const faqs = [];
     data.data.forEach((faq) => {
       faqs.push({
         question: faq.attributes.question,
@@ -71,7 +69,6 @@ export const FAQ = () => {
     isLoading: FAQsLoading,
     isFetched: isFAQsFetched,
   } = useQuery(["FAQs", faqIdsQuerry.data, i18n.language], getFAQs, {
-    // Run the query when the getCategories and getAgeGroups queries have finished running
     enabled: !faqIdsQuerry.isLoading && faqIdsQuerry.data?.length > 0,
   });
 
@@ -85,16 +82,14 @@ export const FAQ = () => {
 
   return (
     <Block classes="faq">
-      <Grid>
-        <GridItem md={8} lg={12}>
+      <div className="faq__content-container">
+        <div className="faq__content-container__left-side">
           <InputSearch
             value={searchQuery}
             onChange={(value) => setSearchQuery(value)}
             placeholder={t("search")}
             classes="faq__search"
           />
-        </GridItem>
-        <GridItem md={8} lg={12}>
           {filteredFAQs && <CollapsibleFAQ data={filteredFAQs} />}
           {faqIdsQuerry.data?.length > 0 && !FAQsData && FAQsLoading && (
             <Loading />
@@ -103,8 +98,11 @@ export const FAQ = () => {
           faqIdsQuerry.data?.length === 0 ? (
             <h3 className="page__faq__no-results">{t("no_results")}</h3>
           ) : null}
-        </GridItem>
-      </Grid>
+        </div>
+        <div className="faq__content-container__right-side">
+          <img src={mascotConfusedBlue} alt="mascot confused blue" />
+        </div>
+      </div>
     </Block>
   );
 };

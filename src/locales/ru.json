@@ -8,18 +8,15 @@
       "page_5": "Клиенты",
       "page_6": "Кампании",
       "page_7": "Мой Q&A",
-
       "country_1": "",
       "country_2": "",
       "country_3": "",
-
       "language_1": "",
       "language_2": "",
       "language_3": "",
       "language_4": "",
       "language_5": "",
       "language_6": "",
-
       "footer_1": "Панель индикаторов",
       "footer_2": "Календарь",
       "footer_3": "История активности",
@@ -29,16 +26,28 @@
       "footer_7": "Политика конфиденциальности",
       "footer_8": "Настройки файлов cookie",
       "footer_9": "Часто задаваемые вопросы",
-
       "emergency_button": "Экстренная помощь",
-
       "button_text": "Перейти к приложению",
       "contact_us": "Свяжитесь с нами",
       "your_profile_text": "Профиль",
       "password_placeholder": "Пароль",
       "password": "Пожалуйста, введите пароль для доступа к сайту",
       "wrong_password": "Неверный пароль",
-      "submit": "Отправить"
+      "submit": "Отправить",
+      "dark": "Темный",
+      "light": "Светлый",
+      "high_contrast": "Высокая контрастность",
+      "edit_profile": "Редактировать профиль",
+      "logout": "Выйти",
+      "language_label": "Язык",
+      "go_back": "Назад",
+      "footer_text": "Ваше психическое здоровье важно — uSupport предоставляет персонализированную, конфиденциальную и безопасную психологическую помощь.",
+      "notifications_heading": "Уведомления",
+      "notifications_mark_read": "Отметить все как прочитанные",
+      "notifications_empty": "Пока нет уведомлений",
+      "all": "Все",
+      "new": "Новые",
+      "read": "Прочитанные"
     },
     "contact-us-block": {
       "issue": "Проблема",
@@ -48,7 +57,6 @@
       "message_placeholder": "Ваше сообщение для нас",
       "message_error": "Пожалуйста, введите свое сообщение",
       "button": "Отправить сообщение",
-
       "modal_title": "Ваше сообщение было успешно отправлено",
       "modal_text": "Мы свяжемся с Вами в самое ближайшее время",
       "modal_cta_label": "Вернуться на главную страницу",
@@ -57,7 +65,14 @@
       "contact_reason_3": "Я консультант, и мне интересно присоединиться к платформе",
       "contact_reason_4": "Я представляю бизнес-организацию, и мы заинтересованы в поддержке платформы",
       "contact_reason_5": "Прочее",
-      "contact_form": "Контактная форма"
+      "contact_form": "Контактная форма",
+      "contact_reason_1_pl": "Информация о uSupport",
+      "contact_reason_2_pl": "Техническая проблема",
+      "contact_reason_3_pl": "Проблема, связанная с услугой",
+      "contact_reason_4_pl": "Проблема с использованием платформы",
+      "contact_reason_5_pl": "Жалоба",
+      "contact_reason_6_pl": "Сообщение о кризисной ситуации",
+      "contact_reason_7_pl": "Другое"
     },
     "notification-preferences": {
       "email": "Уведомления по электронной почте",
@@ -128,7 +143,6 @@
       "change_photo": "Изменить фотографию",
       "work_with_label": "Специальности",
       "video_link_label": "Видео-представление",
-
       "name_placeholder": "Введите свое имя",
       "patronym_placeholder": "Введите свое отчество",
       "surname_placeholder": "Введите свою фамилию",
@@ -142,16 +156,13 @@
       "consultation_price_placeholder": "Стоимость консультации",
       "description_placeholder": "Введите описание",
       "video_link_placeholder": "https://video.link",
-
       "sex_male": "Мужчина",
       "sex_female": "Женщина",
       "sex_unspecified": "Не указано",
       "sex_none": "Предпочитаю не говорить",
-
       "psychologist": "Психолог",
       "psychiatrist": "Психиатр",
       "psychotherapist": "Психотерапевт",
-
       "name_error": "Необходимо указать имя",
       "surname_error": "Необходимо указать фамилию",
       "nickname_error": "Необходимо указать псевдоним",
@@ -163,7 +174,6 @@
       "postcode_error": "Необходимо указать почтовый индекс",
       "min_price_error": "Минимальная стоимость консультации  {{minPrice}}{{currencySymbol}}",
       "consultation_price_disabled": "Платные консультации в вашей стране не доступны.",
-
       "specializations_error": "Выберите хотя бы одну специализацию",
       "work_with_error": "Выберите хотя бы одну категорию",
       "languages_error": "Выберите хотя бы один язык",
@@ -172,15 +182,12 @@
       "sex_error": "Выберите свой пол",
       "consultation_price_error": "Цена должна быть 0 или положительное число",
       "video_link_error": "Пожалуйста, введите корректный URL",
-
       "add_more_languages": "Добавить больше языков",
       "add_more_work_with": "Добавить больше категорий",
       "add_more_education": "Добавить больше",
       "add_more_specializations": "Добавить больше специализаций",
-
       "button_text": "Сохранить изменения",
       "button_secondary_text": "Отменить изменения",
-
       "addiction": "Зависимости и токсикомании",
       "stress": "Управление стрессом",
       "burnout": "Выгорание и академический стресс",
@@ -212,13 +219,15 @@
       "love": "Любовь и романтические отношения",
       "social_skills": "Социальные навыки и дружба",
       "body_image": "Самооценка и образ тела",
-
       "edit_succes": "Профиль успешно обновлен",
-
       "search": "Поиск",
       "no_data_found": "Данные не найдены",
       "select": "Выбрать",
-      "remove": "Удалить"
+      "remove": "Удалить",
+      "section_personal_information": "Личная информация",
+      "section_professional_information": "Профессиональная информация",
+      "section_location": "Местоположение",
+      "section_languages_specialties": "Языки и специальности"
     },
     "provider-overview": {
       "earliest_slot_label": "Самый ранний доступный слот свободного времени для консультации",
@@ -236,11 +245,9 @@
       "city_label": "Город",
       "street_label": "Улица",
       "postcode_label": "Почтовый индекс",
-
       "psychologist": "Психолог",
       "psychiatrist": "Психиатр",
       "psychotherapist": "Психотерапевт",
-
       "addiction": "Зависимости и токсикомании",
       "stress": "Управление стрессом",
       "burnout": "Выгорание и академический стресс",
@@ -272,10 +279,20 @@
       "love": "Любовь и романтические отношения",
       "social_skills": "Социальные навыки и дружба",
       "body_image": "Самооценка и образ тела",
-
       "hour_consultation": "за 1 часовую консультацию",
       "organizations_label": "Организации",
-      "free": "бесплатно"
+      "free": "бесплатно",
+      "phone_label": "Телефон",
+      "email_label": "Электронная почта",
+      "consultations": "консультации",
+      "coupon": "Купон",
+      "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье"
     },
     "provider-profile": {
       "your_profile": "Ваш профиль",
@@ -308,7 +325,6 @@
       "no_messages": "В этой консультации нет сообщений",
       "no_activity_history": "Активность пока не зафиксирована",
       "free": "Бесплатно",
-
       "client_joined": "Клиент присоединился к консультации",
       "client_left": "Клиент покинул консультацию",
       "client_camera_off": "Клиент выключил камеру",
@@ -316,14 +332,12 @@
       "client_microphone_off": "Клиент выключил микрофон",
       "client_microphone_on": "Клиент включил микрофон",
       "chat_history_deleted_by_client": "История чата удалена клиентом",
-
       "provider_joined": "Консультант присоединился к консультации",
       "provider_left": "Консультант покинул консультацию",
       "provider_camera_off": "Консультант отключил камеру",
       "provider_camera_on": "Консультант включил камеру",
       "provider_microphone_off": "Консультант отключил микрофон",
       "provider_microphone_on": "Консультант включил микрофон",
-
       "canceled": "Отменено"
     },
     "consultations": {
@@ -350,7 +364,9 @@
       "conducted": "Проведен",
       "join": "Присоединиться",
       "free": "Бесплатно",
-      "cancel": "Отмена"
+      "cancel": "Отмена",
+      "past_tab_label": "Прошедшие",
+      "no_upcoming_consultations": "У Вас нет предстоящих консультаций"
     },
     "clients": {
       "clients_heading": "Клиенты",
@@ -377,26 +393,24 @@
       "no_clients_search": "Нет клиентов, соответствующих Вашему запросу",
       "no_clients": "У вас еще нет клиентов",
       "free": "Бесплатно",
-
       "client_joined": "Клиент присоединился к консультации",
       "client_left": "Клиент покинул консультацию",
       "client_camera_off": "Клиент выключил камеру",
       "client_camera_on": "Клиент включил камеру",
       "client_microphone_off": "Клиент выключил микрофон",
       "client_microphone_on": "Клиент включил микрофон",
-
       "provider_joined": "Консультант присоединился к консультации",
       "provider_left": "Консультант покинул консультацию",
       "provider_camera_off": "Консультант отключил камеру",
       "provider_camera_on": "Консультант включил камеру",
       "provider_microphone_off": "Консультант отключил микрофон",
-      "provider_microphone_on": "Консультант включил микрофон"
+      "provider_microphone_on": "Консультант включил микрофон",
+      "next_consultation_label": "Следующая консультация"
     },
     "scheduler": {
       "calendar": "Календарь",
       "add_template_availability": "Добавить шаблон доступности",
       "today": "Сегодня",
-
       "sunday": "Вс",
       "monday": "Пн",
       "tuesday": "Вт",
@@ -404,7 +418,6 @@
       "thursday": "Чт",
       "friday": "Пт",
       "saturday": "Сб",
-
       "consultation_details": "Посмотреть детали",
       "available": "Вы доступны",
       "not_available": "Вы недоступны",
@@ -420,7 +433,32 @@
       "booked": "Запланировано",
       "more_campaigns": "{{amount}} кампании",
       "provider_inactive": "У вас недостаточно прав для добавления доступности",
-      "coupon": "Купон"
+      "coupon": "Купон",
+      "add_appointment": "Добавить встречу",
+      "appointments_today": "Сегодняшние встречи",
+      "appointments_for_date": "Встречи {{date}}",
+      "no_appointments_day": "В этот день встреч нет.",
+      "consultation": "Консультация",
+      "organization_appointment": "Организация",
+      "view": "Просмотр",
+      "day": "День",
+      "week": "Неделя",
+      "month": "Месяц",
+      "picker_hint_day": "Выберите день",
+      "picker_hint_week": "Выберите неделю",
+      "picker_hint_month": "Выберите месяц",
+      "month_section_appointments": "Встречи",
+      "month_section_availability": "Доступность",
+      "month_availability_helper": "Нажмите на пустой слот и выберите «Сделать доступным», чтобы открыть новое время.",
+      "month_appointments_count_one": "{{count}} встреча",
+      "month_appointments_count_other": "{{count}} встреч",
+      "month_open_slots_count_one": "{{count}} свободный слот",
+      "month_open_slots_count_other": "{{count}} свободных слотов",
+      "month_available_slots_count_one": "{{count}} доступный слот",
+      "month_available_slots_count_other": "{{count}} доступных слотов",
+      "month_unavailable_slots_count_one": "{{count}} недоступный слот",
+      "month_unavailable_slots_count_other": "{{count}} недоступных слотов",
+      "month_no_upcoming_slots": "На этот день нет предстоящих временных слотов."
     },
     "scheduler-template": {
       "start_date": "Дата начала",
@@ -472,7 +510,6 @@
       "consultation": "Консультация",
       "consultations": "Консультации",
       "not_available": "Вы недоступны",
-
       "month_1": "Янв",
       "month_2": "Фев",
       "month_3": "Мар",
@@ -602,7 +639,6 @@
       "success": "Рейтинг отправлено"
     }
   },
-
   "pages": {
     "not-found-page": {
       "heading": "Ой! Мы не можем найти страницу, которую Вы ищете...",
@@ -635,7 +671,8 @@
       "heading": "Сбросить пароль"
     },
     "edit-profile-details-page": {
-      "heading": "Изменить данные профиля"
+      "heading": "Изменить данные профиля",
+      "subheading": "Обновите информацию профиля, фото и настройки консультаций."
     },
     "provider-profile-page": {
       "heading": "Профиль консультанта",
@@ -644,7 +681,8 @@
     },
     "provider-overview-page": {
       "heading": "Детали профиля",
-      "button_label": "История активности"
+      "button_label": "История активности",
+      "subheading": "Просматривайте и управляйте личной и профессиональной информацией профиля."
     },
     "scheduler-template-page": {
       "heading": "Изменить шаблон доступности",
@@ -674,14 +712,12 @@
       "thursday": "Чт",
       "friday": "Пт",
       "saturday": "Сб",
-
       "client_joined": "Клиент присоединился к консультации",
       "client_left": "Клиент покинул консультацию",
       "client_camera_off": "Клиент выключил камеру",
       "client_camera_on": "Клиент включил камеру",
       "client_microphone_off": "Клиент выключил микрофон",
       "client_microphone_on": "Клиент включил микрофон",
-
       "provider_joined": "Консультант присоединился к консультации",
       "provider_left": "Консультант покинул консультацию",
       "provider_camera_off": "Консультант отключил камеру",
@@ -689,7 +725,6 @@
       "provider_microphone_off": "Консультант отключил микрофон",
       "provider_microphone_on": "Консультант включил микрофон",
       "chat_history_deleted_by_client": "История чата удалена клиентом",
-
       "show_system_messages": "Показать системные сообщения",
       "show_previous_consultations": "Показать предыдущие консультации",
       "hide_options": "Скрыть настройки",
@@ -719,6 +754,7 @@
     },
     "consultations-page": {
       "heading": "Консультации",
+      "subheading": "Просматривайте сегодняшние консультации и управляйте предстоящим расписанием.",
       "input_search_label": "Поиск"
     },
     "notifications-page": {
@@ -731,7 +767,6 @@
       "subheading": "Мы будем считать звезды. Давайте оставаться честными. Расскажите нам, как Вы относитесь к этой платформе. Оцените нас и оставьте свой комментарий."
     }
   },
-
   "modals": {
     "upload-picture": {
       "heading": "Изменить фото профиля",
@@ -875,11 +910,9 @@
       "secondary_cta_label": "Сбросить фильтры"
     }
   },
-
   "routes": {
     "root": {}
   },
-
   "meta": {
     "title": "uSupport Консультант",
     "description": "Панель специалиста для оказания помощи, организации расписаний, управления сессиями и профилями, а также ответов на вопросы и ответы."

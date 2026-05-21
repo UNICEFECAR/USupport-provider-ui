@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCustomNavigate as useNavigate } from "#hooks";
 
 import { Page, Consultations as ConsultationsBlock } from "#blocks";
 import { CancelConsultation, JoinConsultation } from "#backdrops";
-import { InputSearch } from "@USupport-components-library/src";
 
 import "./consultations.scss";
 
 /**
  * Consultations
  *
- * consultations
+ * Consultations page
  *
  * @returns {JSX.Element}
  */
 export const Consultations = () => {
   const { t } = useTranslation("pages", { keyPrefix: "consultations-page" });
-  const navigate = useNavigate();
-
-  const [searchValue, setSearchValue] = useState("");
 
   const [isCancelConsultationOpen, setIsCancelConsultationOpen] =
     useState(false);
@@ -44,21 +39,11 @@ export const Consultations = () => {
       showNavbar={true}
       showFooter={true}
       showGoBackArrow={false}
-      handleGoBack={() => navigate(-1)}
-      heading={t("heading")}
-      headingButton={
-        <InputSearch
-          value={searchValue}
-          onChange={(value) => setSearchValue(value.toLowerCase())}
-          placeholder={t("input_search_label")}
-          classes="consultations__heading-container__search"
-        />
-      }
     >
       <ConsultationsBlock
+        subheading={t("subheading")}
         openJoinConsultation={openJoinConsultation}
         openCancelConsultation={openCancelConsultation}
-        searchValue={searchValue}
       />
       {selectedConsultation && (
         <CancelConsultation

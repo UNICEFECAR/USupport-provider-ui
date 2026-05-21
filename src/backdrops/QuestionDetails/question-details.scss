@@ -4,11 +4,10 @@
   position: relative;
 
   &__date-container {
-    position: absolute;
     display: flex;
     flex-direction: row;
     align-items: center;
-    top: $spacing_2_4;
+    padding-bottom: $spacing_1_6;
 
     &__text {
       margin-left: $spacing_0_4;
@@ -20,8 +19,8 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 
     &__text {
       color: $color_primary_20809e;
@@ -39,24 +38,20 @@
     }
   }
 
-  &__question-text {
-    margin-top: $spacing_0_4;
-    text-align: left;
-  }
-
   &__answer-text {
     margin-top: $spacing_0_8;
-    text-align: left;
     font-family: $font_family;
   }
 
   &__bottom-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 
     @media screen and (min-width: $screen-md) {
-      margin-top: $spacing_1_2;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: $spacing_1_6;
     }
 
     &__archive-button {
@@ -70,8 +65,13 @@
 
   &__answered-by-container {
     display: flex;
-    flex-direction: "row";
-    margin-top: $spacing_0_8;
+    flex-direction: row;
+    margin-top: $spacing_1_0;
+    align-items: center;
+
+    @media screen and (min-width: $screen-md) {
+      margin-top: 0;
+    }
 
     &__avatar {
       margin: 0 $spacing_0_4;

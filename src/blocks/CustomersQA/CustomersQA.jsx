@@ -6,10 +6,11 @@ import {
   Grid,
   GridItem,
   Tabs,
-  Loading,
   Answer,
+  AnswerSkeleton,
   InputSearch,
   Dropdown,
+  NewButton,
 } from "@USupport-components-library/src";
 
 import { useGetQuestions, useGetLanguages } from "#hooks";
@@ -24,9 +25,12 @@ import "./customers-qa.scss";
  * @return {jsx}
  */
 export const CustomersQA = ({
+  subheading,
+  filterButtonLabel,
   handleOpenResposeBackdrop,
   handleOpenArchive,
   handleReadMore,
+  handleFilterTags,
   isFilterShown,
   setIsFilterShown,
   filterTag,
@@ -64,10 +68,12 @@ export const CustomersQA = ({
     ];
   }, [languages, t]);
 
+  const searchNeedle = searchValue?.toLowerCase() ?? "";
+
   const renderQuestions = () => {
-    if (questionsQuery.data.length === 0) {
+    if (!questionsQuery.data?.length) {
       return (
-        <GridItem md={8} lg={12}>
+        <GridItem md={8} lg={12} classes="customers-qa__no-data-item">
           <p className="text customers-qa__no-data">
             {t("no_questions_found")}
           </p>
@@ -81,13 +87,12 @@ export const CustomersQA = ({
           return null;
         }
       }
-      const value = searchValue.toLowerCase();
 
-      if (value) {
+      if (searchNeedle) {
         if (
-          !question.answerTitle?.toLowerCase().includes(value) &&
-          !question.answerText?.toLowerCase().includes(value) &&
-          !question.tags?.find((x) => x?.toLowerCase().includes(value))
+          !question.answerTitle?.toLowerCase().includes(searchNeedle) &&
+          !question.answerText?.toLowerCase().includes(searchNeedle) &&
+          !question.tags?.find((x) => x?.toLowerCase().includes(searchNeedle))
         )
           return null;
       }
@@ -96,7 +101,7 @@ export const CustomersQA = ({
 
     if (!filteredQuestions.length) {
       return (
-        <GridItem md={8} lg={12}>
+        <GridItem md={8} lg={12} classes="customers-qa__no-data-item">
           <p className="text customers-qa__no-data">
             {t("no_questions_found")}
           </p>
@@ -106,12 +111,11 @@ export const CustomersQA = ({
 
     return filteredQuestions.map((question, index) => {
       return (
-        <GridItem md={8} lg={12} key={index}>
+        <GridItem md={8} lg={6} key={index}>
           <Answer
             question={question}
             classes="customers-qa__answer"
             handleReadMore={handleReadMore}
-            // handleScheduleConsultationClick={handleScheduleConsultationClick}
             handleRespond={handleOpenResposeBackdrop}
             handleArchive={handleOpenArchive}
             t={t}
@@ -140,59 +144,69 @@ export const CustomersQA = ({
   };
 
   return (
-    <Block classes="customers-qa">
-      <Grid>
-        <GridItem md={8} lg={12}>
-          <Grid classes="customers-qa__tabs-grid">
-            {isFilterShown && (
-              <GridItem
-                md={8}
-                lg={12}
-                classes="customers-qa__tabs-grid__search-container"
-              >
-                <InputSearch
-                  placeholder={t("search_placeholder")}
-                  value={searchValue}
-                  onChange={(value) => setSearchValue(value.toLowerCase())}
-                  classes="customers-qa__tabs-grid__search-container__input"
-                />
+    <Block classes="customers-qa customers-qa--v1">
+      <div className="customers-qa__surface">
+        {subheading ? (
+          <header className="customers-qa__header">
+            <p className="customers-qa__header-intro">{subheading}</p>
+          </header>
+        ) : null}
+        <div className="customers-qa__tabs">
+          <Tabs
+            options={tabs.map((tab) => {
+              return {
+                label: t(tab.value),
+                value: tab.value,
+                isSelected: tab.isSelected,
+              };
+            })}
+            handleSelect={handleSelectTab}
+          />
+        </div>
+        {isFilterShown ? (
+          <div className="customers-qa__filters">
+            <InputSearch
+              placeholder={t("search_placeholder")}
+              value={searchValue}
+              onChange={(value) => setSearchValue(value)}
+              classes="customers-qa__filters__search"
+            />
+            <div className="customers-qa__filters__controls">
+              <div className="customers-qa__filters__language-dropdown">
                 <Dropdown
                   options={languageOptions}
                   selected={selectedLanuage}
                   setSelected={(lang) => setSelectedLanguage(lang)}
-                  placeholder={t("placeholder")}
-                  classes="customers-qa__categories-item__language-dropdown"
-                />
-              </GridItem>
-            )}
-            <GridItem
-              md={8}
-              lg={12}
-              classes="customers-qa__tabs-grid__filter-button-item"
-            >
-              <div className="customers-qa__tabs-container">
-                <Tabs
-                  options={tabs.map((tab) => {
-                    return {
-                      label: t(tab.value),
-                      value: tab.value,
-                      isSelected: tab.isSelected,
-                    };
-                  })}
-                  handleSelect={handleSelectTab}
+                  placeholder={t("language")}
                 />
               </div>
-            </GridItem>
-          </Grid>
-        </GridItem>
-        <GridItem md={8} lg={12}>
+              <NewButton
+                type="gradient"
+                size="md"
+                iconName="filter"
+                label={filterButtonLabel}
+                onClick={handleFilterTags}
+                classes="customers-qa__filters__filter-btn"
+              />
+            </div>
+          </div>
+        ) : null}
+        <div className="customers-qa__questions">
           {questionsQuery.isLoading ? (
-            <Loading />
+            <Grid classes="customers-qa__questions-grid">
+              {[0, 1, 2, 3].map((index) => (
+                <GridItem key={`customers-qa-skeleton-${index}`} md={8} lg={6}>
+                  <AnswerSkeleton />
+                </GridItem>
+              ))}
+            </Grid>
           ) : (
-            <Grid>{renderQuestions()}</Grid>
+            <Grid classes="customers-qa__questions-grid">
+              {renderQuestions()}
+            </Grid>
           )}
-        </GridItem>
-      </Grid>
+        </div>
+      </div>
     </Block>
   );
 };

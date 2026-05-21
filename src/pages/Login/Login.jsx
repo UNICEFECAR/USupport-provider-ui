@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { Navigate, useSearchParams, useNavigate as useRawNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Page, Login as LoginBlock } from "#blocks";
@@ -10,7 +9,6 @@ import {
   useError,
   useCustomNavigate as useNavigate,
 } from "#hooks";
-import { useWindowDimensions } from "@USupport-components-library/utils";
 import { RadialCircle, Loading } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
 
@@ -28,8 +26,6 @@ import "./login.scss";
 export const Login = () => {
   const navigate = useNavigate();
   const rawNavigate = useRawNavigate();
-  const { t } = useTranslation("pages", { keyPrefix: "login-page" });
-  const { width } = useWindowDimensions();
   const [searchParams] = useSearchParams();
   const nextPath = searchParams.get("next");
   const queryClient = useQueryClient();
@@ -175,9 +171,11 @@ export const Login = () => {
     <Page
       classes="page__login"
       additionalPadding={false}
-      heading={width >= 768 ? t("heading_1") : t("heading_2")}
+      showEmergencyButton={false}
       handleGoBack={handleGoBack}
     >
+      <RadialCircle color="purple" />
+      <RadialCircle color="blue" />
       <LoginBlock
         setLoginCredentials={(data) => setLoginCredentials(data)}
         data={data}
@@ -185,9 +183,8 @@ export const Login = () => {
         handleLogin={handleLogin}
         errors={errors}
         showTimer={showTimer}
-        isLoading={requestOtpMutation.isLoading}
+        isLoading={loginMutation.isLoading}
       />
-      {width < 768 && <RadialCircle color="purple" />}
       {isCodeVerificationOpen && (
         <CodeVerification
           isOpen={isCodeVerificationOpen}
