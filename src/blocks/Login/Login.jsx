@@ -80,6 +80,7 @@ export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
             <NewButton
               label={t("login_label")}
               size="lg"
+              isFullWidth
               disabled={!data.email || !data.password}
               loading={isLoading}
             />

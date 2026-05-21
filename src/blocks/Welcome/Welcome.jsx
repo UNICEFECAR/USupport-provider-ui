@@ -224,6 +224,7 @@ export const Welcome = () => {
           <NewButton
             label={t("button")}
             size="lg"
+            isFullWidth
             disabled={!selectedCountry || !selectedLanguage}
             onClick={handleContinue}
           />
