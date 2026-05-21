@@ -6,16 +6,19 @@ import {
   Block,
   Grid,
   GridItem,
-  Toggle,
-  Loading,
+  RadioButton,
   CheckBoxSelectorGroup,
+  Loading,
   Error as ErrorComponent,
 } from "@USupport-components-library/src";
 import {
   useGetNotificationPreferences,
   useUpdateNotificationPreferences,
   useError,
+  useGetProviderData,
 } from "#hooks";
+
+import { mascotCalmBlue } from "@USupport-components-library/assets";
 
 import "./notification-preferences.scss";
 
@@ -40,14 +43,22 @@ export const NotificationPreferences = () => {
 
   const [error, setError] = useState();
   const [notificationPreferencesQuery] = useGetNotificationPreferences();
-  const { data } = notificationPreferencesQuery;
+  const data = notificationPreferencesQuery.data;
+
+  const providerDataQuery = useGetProviderData()[0];
+  const isAnon = !providerDataQuery.data?.email;
+  const IS_RO = localStorage.getItem("country") === "RO";
 
   useEffect(() => {
-    if (data) {
-      setMinutes(
-        minutes.map((x) => ({
+    if (data?.consultationReminderMin) {
+      const selectedMinutes = Array.isArray(data.consultationReminderMin)
+        ? data.consultationReminderMin
+        : [data.consultationReminderMin];
+
+      setMinutes((prev) =>
+        prev.map((x) => ({
           ...x,
-          isSelected: data.consultationReminderMin.includes(x.value),
+          isSelected: selectedMinutes.includes(x.value),
         }))
       );
     }
@@ -72,14 +83,10 @@ export const NotificationPreferences = () => {
   };
 
   const handleConsultationReminderChange = (value) => {
-    const minutesCopy = [...minutes];
-    minutesCopy.forEach((x) => {
-      if (value === x.value) {
-        x.isSelected = !x.isSelected;
-      }
-    });
+    const minutesCopy = minutes.map((x) =>
+      x.value === value ? { ...x, isSelected: !x.isSelected } : x
+    );
     setMinutes(minutesCopy);
-    console.log(minutesCopy.filter((x) => x.isSelected).map((x) => x.value));
     handleChange(
       "consultationReminderMin",
       minutesCopy.filter((x) => x.isSelected).map((x) => x.value)
@@ -88,50 +95,67 @@ export const NotificationPreferences = () => {
 
   return (
     <Block classes="notification-preferences">
-      {notificationPreferencesQuery.isLoading &&
-      !notificationPreferencesQuery.data ? (
-        <Loading size="lg" />
-      ) : (
-        <Grid classes="notification-preferences__grid">
-          <GridItem
-            xs={4}
-            md={8}
-            lg={12}
-            classes="notification-preferences__grid__item"
-          >
-            <p className="paragraph">{t("email")}</p>
-            <Toggle
-              isToggled={data?.email}
-              setParentState={(value) => handleChange("email", value)}
-            />
-          </GridItem>
-          <GridItem
-            xs={4}
-            md={8}
-            lg={12}
-            classes="notification-preferences__grid__item"
-          >
-            <p className="paragraph">{t("appointment")}</p>
-            <Toggle
-              isToggled={
-                data?.consultationReminder ? data?.consultationReminder : false
-              }
-              setParentState={(value) =>
-                handleChange("consultationReminder", value)
-              }
-            />
-            {data?.consultationReminder && (
-              <CheckBoxSelectorGroup
-                options={minutes}
-                setOptions={handleConsultationReminderChange}
-                name="consultationReminderMin"
-                classes="notification-preferences__grid__checkbox-group"
-              />
-            )}
-            {error ? <ErrorComponent message={error} /> : null}
-          </GridItem>
-        </Grid>
-      )}
+      <div className="notification-preferences__content-wrapper">
+        <div className="notification-preferences__content-wrapper__left">
+          {notificationPreferencesQuery.isLoading &&
+          providerDataQuery.isLoading &&
+          !notificationPreferencesQuery.data ? (
+            <Loading size="lg" />
+          ) : (
+            <Grid classes="notification-preferences__grid">
+              {isAnon ? null : (
+                <GridItem
+                  xs={4}
+                  md={8}
+                  lg={12}
+                  classes="notification-preferences__grid__item"
+                >
+                  <RadioButton
+                    label={t("email")}
+                    isChecked={data?.email}
+                    setIsChecked={(value) => handleChange("email", value)}
+                  />
+                </GridItem>
+              )}
+              {!IS_RO && (
+                <GridItem
+                  xs={4}
+                  md={8}
+                  lg={12}
+                  classes="notification-preferences__grid__item"
+                >
+                  <RadioButton
+                    label={t("appointment")}
+                    isChecked={data?.consultationReminder}
+                    setIsChecked={(value) =>
+                      handleChange("consultationReminder", value)
+                    }
+                  />
+                  {data?.consultationReminder && (
+                    <GridItem
+                      xs={4}
+                      md={8}
+                      lg={12}
+                      classes="notification-preferences__grid__item"
+                    >
+                      <CheckBoxSelectorGroup
+                        options={minutes}
+                        setOptions={handleConsultationReminderChange}
+                        name="consultationReminderMin"
+                        classes="notification-preferences__grid__item__checkbox-group"
+                      />
+                    </GridItem>
+                  )}
+                  {error ? <ErrorComponent message={error} /> : null}
+                </GridItem>
+              )}
+            </Grid>
+          )}
+        </div>
+        <div className="notification-preferences__content-wrapper__right">
+          <img src={mascotCalmBlue} alt="mascot" />
+        </div>
+      </div>
     </Block>
   );
 };

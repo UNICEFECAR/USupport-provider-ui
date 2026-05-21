@@ -38,7 +38,22 @@
       "password_placeholder": "Password",
       "password": "Please enter your password to access the site",
       "wrong_password": "Wrong password",
-      "submit": "Submit"
+      "submit": "Submit",
+
+      "dark": "Dark",
+      "light": "Light",
+      "high_contrast": "High Contrast",
+      "edit_profile": "Edit profile",
+      "logout": "Logout",
+      "language_label": "Language",
+      "go_back": "Go back",
+      "footer_text": "Your mental health matters — uSupport provides personalized, private, and safe psychological care.",
+      "notifications_heading": "Notifications",
+      "notifications_mark_read": "Mark all as read",
+      "notifications_empty": "No notifications yet",
+      "all": "All",
+      "new": "New",
+      "read": "Read"
     },
     "contact-us-block": {
       "issue": "Issue",
@@ -185,6 +200,11 @@
       "add_more_education": "Add more",
       "add_more_specializations": "Add more specializations",
 
+      "section_personal_information": "Personal information",
+      "section_professional_information": "Professional information",
+      "section_location": "Location",
+      "section_languages_specialties": "Languages and specialties",
+
       "button_text": "Save changes",
       "button_secondary_text": "Discard changes",
 
@@ -238,6 +258,9 @@
       "edit_details": "Edit details",
       "change_password": "Change password",
       "delete_account": "Delete account",
+      "phone_label": "Phone",
+      "email_label": "Email",
+      "consultations": "consultations",
       "no_available_slot": "There is no available slot",
       "video_label": "Video representation",
       "city_label": "City",
@@ -282,7 +305,15 @@
 
       "hour_consultation": "for 1 hour consultation",
       "organizations_label": "Organizations",
-      "free": "free of charge"
+      "free": "free of charge",
+      "coupon": "Coupon",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
     },
     "provider-profile": {
       "your_profile": "Your profile",
@@ -337,6 +368,8 @@
       "heading": "Consultations",
       "today_tab_label": "Today",
       "upcoming_tab_label": "Upcoming",
+      "past_tab_label": "Past",
+      "no_upcoming_consultations": "You have no upcoming consultations",
       "input_search_label": "Search",
       "sunday": "Sun",
       "monday": "Mon",
@@ -377,6 +410,7 @@
       "see_profile": "See profile",
       "past_consultations": "past consultations",
       "no_scheduled": "No consultation scheduled",
+      "next_consultation_label": "Next consultation",
       "suggested": "Suggested",
       "join": "Join",
       "no_consultations": "You have no consultations with this client",
@@ -401,7 +435,14 @@
     },
     "scheduler": {
       "calendar": "Calendar",
-      "add_template_availability": "Add template availability",
+      "add_template_availability": "Add availability template",
+      "add_appointment": "Add appointment",
+      "appointments_today": "Today's appointments",
+      "appointments_for_date": "Appointments on {{date}}",
+      "no_appointments_day": "No appointments on this day.",
+      "consultation": "Consultation",
+      "organization_appointment": "Organization",
+      "view": "View",
       "today": "Today",
 
       "sunday": "Sun",
@@ -427,7 +468,25 @@
       "booked": "Booked",
       "more_campaigns": "{{amount}} campaigns",
       "provider_inactive": "You don't have permissions to add availability",
-      "coupon": "Coupon"
+      "coupon": "Coupon",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "picker_hint_day": "Select a day",
+      "picker_hint_week": "Select a week",
+      "picker_hint_month": "Select a month",
+      "month_section_appointments": "Appointments",
+      "month_section_availability": "Availability",
+      "month_availability_helper": "Tap an empty slot and choose “Set as available” to open a new time.",
+      "month_appointments_count_one": "{{count}} appointment",
+      "month_appointments_count_other": "{{count}} appointments",
+      "month_open_slots_count_one": "{{count}} open slot",
+      "month_open_slots_count_other": "{{count}} open slots",
+      "month_available_slots_count_one": "{{count}} available slot",
+      "month_available_slots_count_other": "{{count}} available slots",
+      "month_unavailable_slots_count_one": "{{count}} unavailable slot",
+      "month_unavailable_slots_count_other": "{{count}} unavailable slots",
+      "month_no_upcoming_slots": "No upcoming time slots for this day."
     },
     "scheduler-template": {
       "start_date": "Start date",
@@ -642,7 +701,8 @@
       "heading": "Reset your password"
     },
     "edit-profile-details-page": {
-      "heading": "Edit profile details"
+      "heading": "Edit profile details",
+      "subheading": "Update your profile information, photo, and consultation settings."
     },
     "provider-profile-page": {
       "heading": "User profile",
@@ -651,6 +711,7 @@
     },
     "provider-overview-page": {
       "heading": "Profile details",
+      "subheading": "View and manage your personal and professional profile information.",
       "button_label": "Activity history"
     },
     "scheduler-template-page": {
@@ -726,6 +787,7 @@
     },
     "consultations-page": {
       "heading": "Consultations",
+      "subheading": "View today's consultations and manage your upcoming schedule.",
       "input_search_label": "Search"
     },
     "notifications-page": {

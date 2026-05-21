@@ -33,7 +33,6 @@ import {
   ResetPassword,
   EditProfileDetails,
   ProviderOverview,
-  ProviderProfile,
   ActivityHistory,
   Consultations,
   Clients,
@@ -160,11 +159,7 @@ const LanguageLayout = () => {
       />
       <Route
         path="profile"
-        element={
-          <ProtectedRoute>
-            <ProviderProfile />
-          </ProtectedRoute>
-        }
+        element={<Navigate to={`/provider/${language}/dashboard`} replace />}
       />
       <Route
         path="profile/details"

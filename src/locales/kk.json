@@ -8,18 +8,15 @@
       "page_5": "Клиенттер",
       "page_6": "Науқан",
       "page_7": "Менің Q&A",
-
       "country_1": "",
       "country_2": "",
       "country_3": "",
-
       "language_1": "",
       "language_2": "",
       "language_3": "",
       "language_4": "",
       "language_5": "",
       "language_6": "",
-
       "footer_1": "Индикаторлар тақтасы",
       "footer_2": "Күнтізбе",
       "footer_3": "Әрекеттер тарихы",
@@ -29,16 +26,28 @@
       "footer_7": "Құпиялық саясаты",
       "footer_8": "Cookie файлдарының баптаулары",
       "footer_9": "Жиі қойылатын сұрақтар",
-
       "emergency_button": "SOS-орталық",
-
       "button_text": "Қосымшаға өту",
       "contact_us": "Бізге хабарласыңыз",
       "your_profile_text": "Профиль",
       "password_placeholder": "Құпия сөз",
       "password": "Сайтқа кіру үшін құпия сөзіңізді енгізіңіз",
       "wrong_password": "Құпия сөз дұрыс емес",
-      "submit": "Жіберу"
+      "submit": "Жіберу",
+      "dark": "Қараңғы",
+      "light": "Жарық",
+      "high_contrast": "Жоғары контраст",
+      "edit_profile": "Профильді өңдеу",
+      "logout": "Шығу",
+      "language_label": "Тіл",
+      "go_back": "Артқа",
+      "footer_text": "Сіздің психикалық денсаулығыңыз маңызды — uSupport жекелендірілген, құпия және қауіпсіз психологиялық көмек ұсынады.",
+      "notifications_heading": "Хабарландырулар",
+      "notifications_mark_read": "Барлығын оқылған деп белгілеу",
+      "notifications_empty": "Әзірге хабарландыру жоқ",
+      "all": "Барлығы",
+      "new": "Жаңа",
+      "read": "Оқылған"
     },
     "contact-us-block": {
       "issue": "Мәселе",
@@ -48,7 +57,6 @@
       "message_placeholder": "Сіздің бізге арналған хабарламаңыз",
       "message_error": "Хабарламаңызды енгізіңіз",
       "button": "Хабарламаны жіберу",
-
       "modal_title": "Хабарлама сәтті жіберілді",
       "modal_text": "Біз Сізге жақын арада хабарласамыз",
       "modal_cta_label": "Бас бетке оралу",
@@ -57,7 +65,14 @@
       "contact_reason_3": "Мен консультантпын және платформаға қосылуға қызығамын",
       "contact_reason_4": "Мен бизнес ұйымын ұсынамын және Біз платформаны қолдауға мүдделіміз",
       "contact_reason_5": "Басқа",
-      "contact_form": "Байланыс формасы"
+      "contact_form": "Байланыс формасы",
+      "contact_reason_1_pl": "uSupport туралы ақпарат",
+      "contact_reason_2_pl": "Техникалық мәселе",
+      "contact_reason_3_pl": "Қызметке байланысты мәселе",
+      "contact_reason_4_pl": "Платформаны пайдалану мәселесі",
+      "contact_reason_5_pl": "Шағым",
+      "contact_reason_6_pl": "Дабыл жағдайы туралы хабарлама",
+      "contact_reason_7_pl": "Басқа"
     },
     "notification-preferences": {
       "email": "Электрондық пошта арқылы хабарландырулар",
@@ -128,7 +143,6 @@
       "change_photo": "Фотосуретті өзгерту",
       "work_with_label": "Мамандықтар",
       "video_link_label": "Бейне-таныстырылым",
-
       "name_placeholder": "Атыңызды енгізіңіз",
       "patronym_placeholder": "Әкеңіздің атын енгізіңіз",
       "surname_placeholder": "Тегіңізді енгізіңіз",
@@ -142,16 +156,13 @@
       "consultation_price_placeholder": "Консультация бағасы",
       "description_placeholder": "Сипаттаманы енгізіңіз",
       "video_link_placeholder": "https://video.link",
-
       "sex_male": "Ер",
       "sex_female": "Әйел",
       "sex_unspecified": "Көрсетілмеген",
       "sex_none": "Айтпауды жөн көремін",
-
       "psychologist": "Психолог",
       "psychiatrist": "Психиатр",
       "psychotherapist": "Психотерапевт",
-
       "name_error": "Атыңызды көрсету қажет",
       "surname_error": "Тегіңізді көрсету қажет",
       "nickname_error": "Лақап атыңызды көрсету қажет",
@@ -163,7 +174,6 @@
       "postcode_error": "Пошта индексін көрсету қажет",
       "min_price_error": "Консультацияның ең аз бағасы  {{minPrice}}{{currencySymbol}}",
       "consultation_price_disabled": "Төленген кеңестер сіздің елде қолжетімді емес",
-
       "specializations_error": "Кемінде бір мамандықты таңдаңыз",
       "work_with_error": "Кемінде бір категорияны таңдаңыз",
       "languages_error": "Кемінде бір тілді таңдаңыз",
@@ -172,15 +182,12 @@
       "sex_error": "Жынысыңызды таңдаңыз",
       "consultation_price_error": "Баға 0 немесе оң сан болуы керек",
       "video_link_error": "Жарамды URL енгізіңіз",
-
       "add_more_languages": "Көбірек тіл қосу",
       "add_more_work_with": "Көбірек категория қосу",
       "add_more_education": "Көбірек қосу",
       "add_more_specializations": "Көбірек мамандану салаларын қосу",
-
       "button_text": "Өзгерістерді сақтау",
       "button_secondary_text": "Өзгерістерді болдырмау",
-
       "addiction": "Тәуелділік пен токсикомания",
       "stress": "Стрессті басқару",
       "burnout": "Эмоционалды жану, академиялық стресс",
@@ -212,13 +219,15 @@
       "love": "Махаббат және романтикалық қатынастар",
       "social_skills": "Әлеуметтік дағдылар және достық",
       "body_image": "Өзін-өзі бағалау және келбет бейнесі",
-
       "edit_succes": "Парақша сәтті жаңартылды",
-
       "search": "Іздеу",
       "no_data_found": "Ақпарат табылмады",
       "select": "Таңдау",
-      "remove": "Жою"
+      "remove": "Жою",
+      "section_personal_information": "Жеке ақпарат",
+      "section_professional_information": "Кәсіби ақпарат",
+      "section_location": "Орналасқан жері",
+      "section_languages_specialties": "Тілдер мен мамандықтар"
     },
     "provider-overview": {
       "earliest_slot_label": "Консультация алу үшін жақын арадағы бос уақыт",
@@ -236,11 +245,9 @@
       "city_label": "Қала",
       "street_label": "Көше",
       "postcode_label": "Пошта индексі",
-
       "psychologist": "Психолог",
       "psychiatrist": "Психиатр",
       "psychotherapist": "Психотерапевт",
-
       "addiction": "Тәуелділік пен токсикомания",
       "stress": "Стрессті басқару",
       "burnout": "Эмоционалды жану, академиялық стресс",
@@ -272,10 +279,20 @@
       "love": "Махаббат және романтикалық қатынастар",
       "social_skills": "Әлеуметтік дағдылар және достық",
       "body_image": "Өзін-өзі бағалау және келбет бейнесі",
-
       "hour_consultation": "1 сағаттық консультация үшін",
       "organizations_label": "Ұйымдар",
-      "free": "тегін"
+      "free": "тегін",
+      "phone_label": "Телефон",
+      "email_label": "Электронды пошта",
+      "consultations": "консультациялар",
+      "coupon": "Купон",
+      "monday": "Дүйсенбі",
+      "tuesday": "Сейсенбі",
+      "wednesday": "Сәрсенбі",
+      "thursday": "Бейсенбі",
+      "friday": "Жұма",
+      "saturday": "Сенбі",
+      "sunday": "Жексенбі"
     },
     "provider-profile": {
       "your_profile": "Сіздің парақшаңыз",
@@ -308,7 +325,6 @@
       "no_messages": "Бұл консультацияда хабарламалар жоқ",
       "no_activity_history": "Әлі әрекет тіркелген жоқ",
       "free": "Тегін",
-
       "client_joined": "Клиент консультацияға қосылды",
       "client_left": "Клиент консультациядан шығып кетті",
       "client_camera_off": "Клиент камераны өшірді",
@@ -316,14 +332,12 @@
       "client_microphone_off": "Клиент микрофонды өшірді",
       "client_microphone_on": "Клиент микрофонды қосты",
       "chat_history_deleted_by_client": "Чат тарихы клиент тарапынан жойылды",
-
       "provider_joined": "Консультант консультацияға қосылды",
       "provider_left": "Консультант консультациядан шықты",
       "provider_camera_off": "Консультант камераны өшірді",
       "provider_camera_on": "Консультант камераны қосты",
       "provider_microphone_off": "Консультант микрофонды өшірді",
       "provider_microphone_on": "Консультант микрофонды қосты",
-
       "canceled": "Болдырмау"
     },
     "consultations": {
@@ -350,7 +364,9 @@
       "conducted": "Өткізілді",
       "join": "Қосылу",
       "free": "Тегін",
-      "cancel": "Болдырмау"
+      "cancel": "Болдырмау",
+      "past_tab_label": "Өткен",
+      "no_upcoming_consultations": "Сізде алдағы консультациялар жоқ"
     },
     "clients": {
       "clients_heading": "Клиенттер",
@@ -377,26 +393,24 @@
       "no_clients_search": "Сұрауыңызға сай келетін клиенттер жоқ",
       "no_clients": "Сізде әлі клиенттер жоқ",
       "free": "Тегін",
-
       "client_joined": "Клиент консультацияға қосылды",
       "client_left": "Клиент консультациядан шығып кетті",
       "client_camera_off": "Клиент камераны өшірді",
       "client_camera_on": "Клиент камераны қосты",
       "client_microphone_off": "Клиент микрофонды өшірді",
       "client_microphone_on": "Клиент микрофонды қосты",
-
       "provider_joined": "Консультант консультацияға қосылды",
       "provider_left": "Консультант консультациядан шықты",
       "provider_camera_off": "Консультант камераны өшірді",
       "provider_camera_on": "Консультант камераны қосты",
       "provider_microphone_off": "Консультант микрофонды өшірді",
-      "provider_microphone_on": "Консультант микрофонды қосты"
+      "provider_microphone_on": "Консультант микрофонды қосты",
+      "next_consultation_label": "Келесі консультация"
     },
     "scheduler": {
       "calendar": "Күнтізбе",
       "add_template_availability": "Қолжетімділік үлгісін қосу",
       "today": "Бүгін",
-
       "sunday": "Жс",
       "monday": "Дс",
       "tuesday": "Сс",
@@ -404,7 +418,6 @@
       "thursday": "Бс",
       "friday": "Жм",
       "saturday": "Сб",
-
       "consultation_details": "Мәліметтерді қарап шығу",
       "available": "Сіз боссыз",
       "not_available": "Сіз бос емессіз",
@@ -420,7 +433,32 @@
       "booked": "Жоспарланған",
       "more_campaigns": "{{amount}} науқан",
       "provider_inactive": "Қолжетімді болу үшін Сіздің құқығыңыз жеткіліксіз",
-      "coupon": "Купон"
+      "coupon": "Купон",
+      "add_appointment": "Кездесу қосу",
+      "appointments_today": "Бүгінгі кездесулер",
+      "appointments_for_date": "{{date}} күнгі кездесулер",
+      "no_appointments_day": "Бұл күні кездесулер жоқ.",
+      "consultation": "Консультация",
+      "organization_appointment": "Ұйым",
+      "view": "Қарау",
+      "day": "Күн",
+      "week": "Апта",
+      "month": "Ай",
+      "picker_hint_day": "Күнді таңдаңыз",
+      "picker_hint_week": "Аптаны таңдаңыз",
+      "picker_hint_month": "Айды таңдаңыз",
+      "month_section_appointments": "Кездесулер",
+      "month_section_availability": "Қолжетімділік",
+      "month_availability_helper": "Бос уақытқа басып, жаңа уақыт ашу үшін «Қолжетімді ету» опциясын таңдаңыз.",
+      "month_appointments_count_one": "{{count}} кездесу",
+      "month_appointments_count_other": "{{count}} кездесу",
+      "month_open_slots_count_one": "{{count}} бос слот",
+      "month_open_slots_count_other": "{{count}} бос слот",
+      "month_available_slots_count_one": "{{count}} қолжетімді слот",
+      "month_available_slots_count_other": "{{count}} қолжетімді слот",
+      "month_unavailable_slots_count_one": "{{count}} қолжетімсіз слот",
+      "month_unavailable_slots_count_other": "{{count}} қолжетімсіз слот",
+      "month_no_upcoming_slots": "Бұл күнге алдағы уақыт слоттары жоқ."
     },
     "scheduler-template": {
       "start_date": "Басталу күні",
@@ -472,7 +510,6 @@
       "consultation": "Консультация",
       "consultations": "Консультация",
       "not_available": "Сіз бос емессіз",
-
       "month_1": "Қаң",
       "month_2": "Ақп",
       "month_3": "Нау",
@@ -602,7 +639,6 @@
       "success": "Бағалау сәтті жіберілді"
     }
   },
-
   "pages": {
     "not-found-page": {
       "heading": "Ой! Сіз іздеген бетті таба алмай жатырмыз...",
@@ -635,7 +671,8 @@
       "heading": "Құпия сөзді өзгерту"
     },
     "edit-profile-details-page": {
-      "heading": "Парақша мәліметтерін өзгерту"
+      "heading": "Парақша мәліметтерін өзгерту",
+      "subheading": "Профиль ақпаратын, фотосуретті және консультация баптауларын жаңартыңыз."
     },
     "provider-profile-page": {
       "heading": "Пайдаланушы парақшасы",
@@ -644,7 +681,8 @@
     },
     "provider-overview-page": {
       "heading": "Парақша мәліметтері",
-      "button_label": "Әрекет тарихы"
+      "button_label": "Әрекет тарихы",
+      "subheading": "Жеке және кәсіби профиль ақпаратыңызды қараңыз және басқарыңыз."
     },
     "scheduler-template-page": {
       "heading": "Қолжетімділік үлгісін өзгерту",
@@ -674,14 +712,12 @@
       "thursday": "Бс",
       "friday": "Жм",
       "saturday": "Сб",
-
       "client_joined": "Клиент консультацияға қосылды",
       "client_left": "Клиент консультациядан шығып кетті",
       "client_camera_off": "Клиент камераны өшірді",
       "client_camera_on": "Клиент камераны қосты",
       "client_microphone_off": "Клиент микрофонды өшірді",
       "client_microphone_on": "Клиент микрофонды қосты",
-
       "provider_joined": "Консультант консультацияға қосылды",
       "provider_left": "Консультант консультациядан шықты",
       "provider_camera_off": "Консультант камераны өшірді",
@@ -689,7 +725,6 @@
       "provider_microphone_off": "Консультант микрофонды өшірді",
       "provider_microphone_on": "Консультант микрофонды қосты",
       "chat_history_deleted_by_client": "Чат тарихы клиент тарапынан жойылды",
-
       "show_system_messages": "Жүйелік хабарламаларды көрсету",
       "show_previous_consultations": "Алдыңғы кеңестерді көрсетіңіз",
       "hide_options": "Баптаулар жасыру",
@@ -719,6 +754,7 @@
     },
     "consultations-page": {
       "heading": "Консультациялар",
+      "subheading": "Бүгінгі консультацияларды қараңыз және алдағы кестеңізді басқарыңыз.",
       "input_search_label": "Іздеу"
     },
     "notifications-page": {
@@ -731,7 +767,6 @@
       "subheading": "Біз жұлдыздарды санаймыз. Шыншыл болайық. Осы платформаға қалай қарайтыныңызды айтыңыз. Бізге баға беріп, пікіріңізді қалдырыңыз."
     }
   },
-
   "modals": {
     "upload-picture": {
       "heading": "Парақша фотосуретін өзгерту",
@@ -875,11 +910,9 @@
       "secondary_cta_label": "Сүзгілерді қалпына келтіру"
     }
   },
-
   "routes": {
     "root": {}
   },
-
   "meta": {
     "title": "uSupport Консультант",
     "description": "Мамандық панелі: күтім көрсету, кестелерді ұйымдастыру, сессиялар мен профильдерді басқару және сұрақ-жауаптарға жауап беру."

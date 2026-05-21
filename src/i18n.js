@@ -23,6 +23,11 @@ i18n.use(initReactI18next).init({
   resources,
   fallbackLng: "en",
   lng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+  returnEmptyString: false,
+  returnNull: false,
 });
 
 export default i18n;

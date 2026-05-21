@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useCustomNavigate as useNavigate } from "#hooks";
 import { Page, ProviderOverview as ProviderOverviewBlock } from "#blocks";
 import { useWindowDimensions } from "@USupport-components-library/src/utils";
-import { RadialCircle } from "@USupport-components-library/src";
 
 import "./provider-overview.scss";
 import { ChangePassword, DeleteAccount } from "../../backdrops";
@@ -20,7 +19,6 @@ export const ProviderOverview = () => {
   const { t } = useTranslation("pages", {
     keyPrefix: "provider-overview-page",
   });
-  const { width } = useWindowDimensions();
 
   const [isChangePasswordBackdropOpen, setIsChangePasswordBackdropOpen] =
     useState(false);
@@ -42,12 +40,12 @@ export const ProviderOverview = () => {
     <Page
       classes="page__provider-overview"
       heading={t("heading")}
+      subheading={t("subheading")}
       handleGoBack={handleGoBack}
     >
       <ProviderOverviewBlock
         {...{ openChangePasswordBackdrop, openDeleteAccountBackdrop }}
       />
-      {width < 768 && <RadialCircle />}
       <ChangePassword
         isOpen={isChangePasswordBackdropOpen}
         onClose={closeChangePasswordBackdrop}

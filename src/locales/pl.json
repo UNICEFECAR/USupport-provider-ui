@@ -33,7 +33,21 @@
       "language_3": "",
       "language_4": "",
       "language_5": "",
-      "language_6": ""
+      "language_6": "",
+      "go_back": "Wróć",
+      "notifications_heading": "Powiadomienia",
+      "notifications_mark_read": "Oznacz wszystkie jako przeczytane",
+      "notifications_empty": "Brak powiadomień",
+      "all": "Wszystkie",
+      "new": "Nowe",
+      "read": "Przeczytane",
+      "dark": "Ciemny",
+      "light": "Jasny",
+      "high_contrast": "Wysoki kontrast",
+      "edit_profile": "Edytuj profil",
+      "logout": "Wyloguj",
+      "language_label": "Język",
+      "footer_text": "Twoje zdrowie psychiczne ma znaczenie — uSupport zapewnia spersonalizowaną, prywatną i bezpieczną opiekę psychologiczną."
     },
     "contact-us-block": {
       "issue": "Zagadnienie",
@@ -171,6 +185,10 @@
       "add_more_work_with": "Dodaj więcej kategorii",
       "add_more_education": "Dodaj więcej",
       "add_more_specializations": "Dodaj więcej specjalizacji",
+      "section_personal_information": "Informacje osobiste",
+      "section_professional_information": "Informacje zawodowe",
+      "section_location": "Lokalizacja",
+      "section_languages_specialties": "Języki i specjalizacje",
       "button_text": "Zapisz zmiany",
       "button_secondary_text": "Odrzuć zmiany",
       "addiction": "Uzależnienie",
@@ -222,6 +240,9 @@
       "edit_details": "Edytuj szczegóły",
       "change_password": "Zmień hasło",
       "delete_account": "Usuń konto",
+      "phone_label": "Telefon",
+      "email_label": "Email",
+      "consultations": "konsultacje",
       "no_available_slot": "Brak dostępnych terminów",
       "video_label": "Prezentacja wideo",
       "city_label": "Miejscowość",
@@ -263,7 +284,15 @@
       "body_image": "Obraz ciała i poczucie własnej wartości",
       "hour_consultation": "za 1 godzinę konsultacji",
       "free": "Bezpłatne",
-      "organizations_label": "Organizacje"
+      "organizations_label": "Organizacje",
+      "coupon": "Kupon",
+      "monday": "Poniedziałek",
+      "tuesday": "Wtorek",
+      "wednesday": "Środa",
+      "thursday": "Czwartek",
+      "friday": "Piątek",
+      "saturday": "Sobota",
+      "sunday": "Niedziela"
     },
     "provider-profile": {
       "your_profile": "Twój profil",
@@ -315,6 +344,8 @@
       "heading": "Konsultacje",
       "today_tab_label": "Dzisiaj",
       "upcoming_tab_label": "Nadchodzące",
+      "past_tab_label": "Wcześniejsze",
+      "no_upcoming_consultations": "Nie masz żadnych nadchodzących konsultacji",
       "input_search_label": "Wyszukiwanie",
       "sunday": "Niedz.",
       "monday": "Pon.",
@@ -355,6 +386,7 @@
       "see_profile": "Zobacz profil",
       "past_consultations": "wcześniejsze konsultacje",
       "no_scheduled": "Brak zaplanowanych konsultacji",
+      "next_consultation_label": "Następna konsultacja",
       "suggested": "Sugerowane",
       "join": "Dołącz",
       "no_consultations": "Nie masz żadnych konsultacji z tym/ą klientem/ką",
@@ -378,6 +410,13 @@
     "scheduler": {
       "calendar": "Kalendarz",
       "add_template_availability": "Dodaj szablon dostępności",
+      "add_appointment": "Dodaj wizytę",
+      "appointments_today": "Dzisiejsze wizyty",
+      "appointments_for_date": "Wizyty: {{date}}",
+      "no_appointments_day": "Brak wizyt tego dnia.",
+      "consultation": "Konsultacja",
+      "organization_appointment": "Organizacja",
+      "view": "Zobacz",
       "today": "Dzisiaj",
       "sunday": "Niedz.",
       "monday": "Pon.",
@@ -401,7 +440,25 @@
       "booked": "Zarezerwowany",
       "more_campaigns": "{{amount}} kampanie",
       "provider_inactive": "Nie masz uprawnień do dodawania dostępności",
-      "coupon": "Kupon"
+      "coupon": "Kupon",
+      "day": "Dzień",
+      "week": "Tydzień",
+      "month": "Miesiąc",
+      "picker_hint_day": "Wybierz dzień",
+      "picker_hint_week": "Wybierz tydzień",
+      "picker_hint_month": "Wybierz miesiąc",
+      "month_section_appointments": "Wizyty",
+      "month_section_availability": "Dostępność",
+      "month_availability_helper": "Dotknij pustego slotu i wybierz „Ustaw jako dostępny/a”, aby otworzyć nowy termin.",
+      "month_appointments_count_one": "{{count}} wizyta",
+      "month_appointments_count_other": "{{count}} wizyt",
+      "month_open_slots_count_one": "{{count}} wolny slot",
+      "month_open_slots_count_other": "{{count}} wolnych slotów",
+      "month_available_slots_count_one": "{{count}} dostępny slot",
+      "month_available_slots_count_other": "{{count}} dostępnych slotów",
+      "month_unavailable_slots_count_one": "{{count}} niedostępny slot",
+      "month_unavailable_slots_count_other": "{{count}} niedostępnych slotów",
+      "month_no_upcoming_slots": "Brak nadchodzących terminów na ten dzień."
     },
     "scheduler-template": {
       "start_date": "Data rozpoczęcia",
@@ -614,7 +671,8 @@
       "heading": "Zresetuj hasło"
     },
     "edit-profile-details-page": {
-      "heading": "Edycja szczegółów profilu"
+      "heading": "Edycja szczegółów profilu",
+      "subheading": "Zaktualizuj informacje profilu, zdjęcie i ustawienia konsultacji."
     },
     "provider-profile-page": {
       "heading": "Profil użytkownika",
@@ -623,6 +681,7 @@
     },
     "provider-overview-page": {
       "heading": "Szczegóły profilu",
+      "subheading": "Przeglądaj i zarządzaj osobistymi i zawodowymi informacjami profilu.",
       "button_label": "Historia aktywności"
     },
     "scheduler-template-page": {
@@ -695,6 +754,7 @@
     },
     "consultations-page": {
       "heading": "Konsultacje",
+      "subheading": "Przeglądaj dzisiejsze konsultacje i zarządzaj nadchodzącym harmonogramem.",
       "input_search_label": "Wyszukiwanie"
     },
     "notifications-page": {

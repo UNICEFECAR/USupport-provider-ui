@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useCustomNavigate as useNavigate } from "#hooks";
+import { useTranslation } from "react-i18next";
 import { Page, EditProfileDetails as EditProfileDetailsBlock } from "#blocks";
+import { RadialCircle } from "@USupport-components-library/src";
+import { useWindowDimensions } from "@USupport-components-library/src/utils";
 import { UploadPicture, DeleteProfilePicture } from "#backdrops";
 
 import "./edit-profile-details.scss";
-import { useTranslation } from "react-i18next";
 
 /**
  * EditProfileDetails
@@ -18,6 +20,7 @@ export const EditProfileDetails = () => {
     keyPrefix: "edit-profile-details-page",
   });
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
 
   const [isUploadPictureBackdropOpen, setIsUploadPictureBackdropOpen] =
     useState(false);
@@ -40,6 +43,7 @@ export const EditProfileDetails = () => {
     <Page
       classes="page__edit-profile-details"
       heading={t("heading")}
+      subheading={t("subheading")}
       handleGoBack={handleGoBack}
     >
       <EditProfileDetailsBlock
@@ -49,6 +53,12 @@ export const EditProfileDetails = () => {
           providerImageUrl,
         }}
       />
+      {width < 768 && (
+        <RadialCircle
+          color="purple"
+          classes="page__edit-profile-details__radial-circle"
+        />
+      )}
       <UploadPicture
         isOpen={isUploadPictureBackdropOpen}
         onClose={closeUploadPictureBackdrop}
