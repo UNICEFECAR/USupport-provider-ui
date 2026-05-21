@@ -5,6 +5,10 @@
   min-height: 100vh;
 
   @media screen and (max-width: $screen-md) {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     background-image: url(../assets/background-spiral.png);
     background-repeat: no-repeat;
     background-position: right bottom;
