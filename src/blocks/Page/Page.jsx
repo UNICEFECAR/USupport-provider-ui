@@ -9,6 +9,7 @@ import {
   Footer,
   Icon,
   PasswordModal,
+  Block,
 } from "@USupport-components-library/src";
 import {
   countrySvc,
@@ -21,8 +22,15 @@ import {
   getLanguageFromUrl,
   redirectToLocalStorageCountry,
 } from "@USupport-components-library/utils";
-import { useIsLoggedIn, useEventListener, useError } from "#hooks";
+import {
+  useIsLoggedIn,
+  useEventListener,
+  useError,
+  useCheckHasUnreadNotifications,
+} from "#hooks";
 import classNames from "classnames";
+
+import { NotificationMenu } from "./NotificationMenu";
 
 import "./page.scss";
 
@@ -52,6 +60,7 @@ export const Page = ({
   headingImage,
   classes,
   children,
+  darkBackground = false,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,9 +69,14 @@ export const Page = ({
   const navigateTo = useNavigate();
   const queryClient = useQueryClient();
   const { t, i18n } = useTranslation("blocks", { keyPrefix: "page" });
+  const { t: tNav } = useTranslation("blocks", {
+    keyPrefix: "provider-profile",
+  });
   const IS_DEV = process.env.NODE_ENV === "development";
   const IS_KZ = localStorage.getItem("country") === "KZ";
   const isLoggedIn = useIsLoggedIn();
+  const token = localStorage.getItem("token");
+  const unreadNotificationsQuery = useCheckHasUnreadNotifications(!!token);
   const isNavbarShown = showNavbar !== null ? showNavbar : isLoggedIn;
   const isFooterShown = showFooter !== null ? showFooter : isLoggedIn;
 
@@ -203,12 +217,12 @@ export const Page = ({
     if (countries) {
       handleCountrySelection(countries);
     }
-
-    const hasUnreadNotificationsData = queryClient.getQueryData([
-      "has-unread-notifications",
-    ]);
-    setHasUnreadNotifications(hasUnreadNotificationsData);
   }, []);
+
+  useEffect(() => {
+    const hasUnreadNotificationsData = unreadNotificationsQuery.data;
+    setHasUnreadNotifications(hasUnreadNotificationsData);
+  }, [unreadNotificationsQuery.data]);
 
   const newNotificationHandler = useCallback(() => {
     setHasUnreadNotifications(true);
@@ -220,7 +234,17 @@ export const Page = ({
   });
   useEventListener("all-notifications-read", allNotificationsReadHandler);
 
-  const image = queryClient.getQueryData(["provider-data"])?.image;
+  const renderNotificationsContent = (closePanel) => (
+    <NotificationMenu closePanel={closePanel} />
+  );
+
+  const providerData = queryClient.getQueryData(["provider-data"]);
+  const image = providerData?.image;
+  const clientName = providerData
+    ? providerData.name && providerData.surname
+      ? `${providerData.name} ${providerData.surname}`
+      : providerData.nickname || providerData.name || ""
+    : "";
 
   const pages = [
     { name: t("page_1"), url: "/dashboard", exact: true, icon: "home" },
@@ -239,6 +263,97 @@ export const Page = ({
     });
   }
   pages.push({ name: t("page_7"), url: "/my-qa", icon: "info" });
+
+  const gitBookBase = import.meta.env.VITE_GIT_BOOK_URL;
+  const providerUserGuideHref = gitBookBase
+    ? `${gitBookBase}/ui-usage-manuals/provider`
+    : null;
+
+  const handleGoBackArrowClick = () => {
+    if (handleGoBack) {
+      handleGoBack();
+    } else {
+      navigateTo(-1);
+    }
+  };
+
+  const otherMenuPages = [
+    {
+      name: tNav("reports_button_label"),
+      url: "/reports",
+      icon: "activities",
+    },
+    {
+      name: tNav("contact_us_button_label"),
+      url: "/contact-us",
+      icon: "comment",
+    },
+    {
+      name: tNav("privacy_policy_button_label"),
+      url: "/privacy-policy",
+      icon: "document",
+    },
+    {
+      name: tNav("terms_of_use"),
+      url: "/terms-of-use",
+      icon: "document",
+    },
+    {
+      name: tNav("cookie_policy"),
+      url: "/cookie-policy",
+      icon: "document",
+    },
+    ...(providerUserGuideHref
+      ? [
+          {
+            name: tNav("user_guide"),
+            url: "/user-guide-manual",
+            icon: "document",
+            externalHref: providerUserGuideHref,
+          },
+        ]
+      : []),
+    {
+      name: tNav("FAQ_button_label"),
+      url: "/faq",
+      icon: "info",
+    },
+  ];
+
+  const menuPages = [
+    {
+      name: null,
+      pages: pages.map((p) => ({ ...p })),
+    },
+    {
+      name: tNav("application_settings"),
+      pages: [
+        {
+          name: tNav("your_profile"),
+          url: "/profile/details",
+          icon: "three-people",
+        },
+        {
+          name: tNav("notifications_settings_button_label"),
+          url: "/notification-preferences",
+          icon: "notifications",
+        },
+      ],
+      hasLanguageSelector: true,
+      hasDarkModeSeletor: true,
+      hasAccessibilityController: true,
+    },
+    {
+      name: tNav("other"),
+      pages: otherMenuPages,
+    },
+  ];
+
+  const handleLogout = useCallback(() => {
+    userSvc.logout();
+    const lang = localStorage.getItem("language") || "en";
+    window.location.href = `/provider/${lang}/login`;
+  }, []);
 
   const footerLists = {
     list1: [
@@ -302,6 +417,8 @@ export const Page = ({
       {isNavbarShown === true && (
         <Navbar
           pages={pages}
+          menuPages={menuPages}
+          languageLabel={t("language_label")}
           showProfile
           yourProfileText={t("your_profile_text")}
           i18n={i18n}
@@ -313,49 +430,62 @@ export const Page = ({
           initialCountry={selectedCountry}
           initialLanguage={selectedLanguage}
           hasUnreadNotifications={hasUnreadNotifications}
+          renderNotificationsContent={renderNotificationsContent}
           renderIn="provider"
+          hasThemeButton
+          t={t}
+          clientName={clientName}
+          handleLogout={handleLogout}
         />
       )}
       <div
         className={[
           "page",
           `${additionalPadding ? "" : "page--no-additional-top-padding"}`,
+          `${darkBackground ? "page--dark-background" : ""}`,
           `${classNames(classes)}`,
         ].join(" ")}
       >
         {(heading || showGoBackArrow || headingButton || headingImage) && (
-          <div className="page__header">
-            {showGoBackArrow && (
-              <Icon
-                classes="page__header-icon"
-                name="arrow-chevron-back"
-                size="md"
-                color="#20809E"
-                onClick={handleGoBack}
-              />
+          <Block classes="page__header">
+            <div className="page__header__text-container">
+              {showGoBackArrow && (
+                <div
+                  className="page__header__text-container__go-back"
+                  onClick={handleGoBackArrowClick}
+                >
+                  <Icon name="arrow-chevron-back" size="md" color="#20809E" />
+                  <p>{t("go_back")}</p>
+                </div>
+              )}
+              {(headingImage || heading) &&
+                (headingImage ? (
+                  <div className="page__header__title-row">
+                    <img
+                      className="page__header__image"
+                      src={headingImage}
+                      alt=""
+                    />
+                    {heading ? (
+                      <h1 className="page__header-heading">{heading}</h1>
+                    ) : null}
+                  </div>
+                ) : (
+                  heading && (
+                    <h1 className="page__header-heading">{heading}</h1>
+                  )
+                ))}
+            </div>
+            {headingButton && (
+              <div className="page__header-button-container">{headingButton}</div>
             )}
-            {headingImage && (
-              <img className="page__header__image" src={headingImage} />
-            )}
-            {heading && (
-              <h3
-                className={`page__header-heading ${
-                  !showGoBackArrow && "page__header-heading__no-go-back-arrow"
-                }`}
-              >
-                {heading}
-              </h3>
-            )}
-            {headingButton && headingButton}
-          </div>
+          </Block>
         )}
-        <p
-          className={`page__subheading-text text ${
-            !showGoBackArrow && "page__subheading-text__no-go-back-arrow"
-          }`}
-        >
-          {subheading}
-        </p>
+        {subheading && (
+          <Block classes="page__subheading">
+            <p className="page__subheading-text text">{subheading}</p>
+          </Block>
+        )}
         {children}
       </div>
       {showEmergencyButton && (
@@ -372,10 +502,12 @@ export const Page = ({
       )}
       {isFooterShown && (
         <Footer
+          t={t}
           renderIn="provider"
           lists={footerLists}
           navigate={navigateTo}
           Link={Link}
+          showSocials={false}
         />
       )}
     </>
@@ -409,9 +541,19 @@ Page.propTypes = {
   showEmergencyButton: PropTypes.bool,
 
   /**
+   * Use darker hero artwork at large breakpoints (see client-ui Page)
+   */
+  darkBackground: PropTypes.bool,
+
+  /**
    * Heading text
    */
   heading: PropTypes.string,
+
+  /**
+   * Optional image shown beside the heading (e.g. campaign sponsor)
+   */
+  headingImage: PropTypes.string,
 
   /**
    * Subheading text
@@ -422,6 +564,11 @@ Page.propTypes = {
    * Heading button
    */
   headingButton: PropTypes.node,
+
+  /**
+   * Custom handler for the go-back control (defaults to history back)
+   */
+  handleGoBack: PropTypes.func,
 
   /**
    * Additional classes
@@ -436,4 +583,5 @@ Page.defaultProps = {
   additionalPadding: true,
   showGoBackArrow: true,
   showEmergencyButton: false,
+  darkBackground: false,
 };
