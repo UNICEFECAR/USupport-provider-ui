@@ -1,54 +1,72 @@
 @import "@USupport-components-library/styles";
 
 .login {
-  height: 100%;
+  @include full-height-page-navbar();
 
-  & .container {
-    height: 100%;
+  @media screen and (max-width: $screen-md) {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+
+    > .container {
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__grid {
+      width: 100%;
+    }
+
+    &__grid__logo-item__logo {
+      max-width: 100%;
+      height: auto;
+    }
+
+    &__grid__content-item {
+      width: 100%;
+
+      form {
+        width: 100%;
+      }
+
+      .button--lg {
+        width: 100%;
+      }
+    }
   }
 
   &__grid {
     place-items: center;
-    text-align: left;
-    margin-top: $spacing_5_0;
 
     &__logo-item {
-      text-align: center;
-      margin-bottom: $spacing_2_0;
-    }
-
-    &__inputs-item {
-      &__input--password {
-        margin-top: $spacing_2_4;
+      &__heading {
+        color: $color_gray_66768d;
       }
 
-      & .login-button {
-        margin-top: $spacing_4_8;
+      &__logo {
+        margin-top: $spacing_1_6;
+        width: 22rem;
+      }
+    }
+
+    &__content-item {
+      align-self: start;
+      text-align: left;
+
+      &__input--password {
+        margin-top: $spacing_2_5;
+      }
+
+      & > form > .button--lg {
+        margin-top: $spacing_3_2;
       }
     }
 
     &__forgot-password {
       padding-top: $spacing_1_2;
     }
-
-    &__content-item {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 100%;
-      justify-content: space-between;
-
-      &__buttons-container {
-        display: flex;
-        flex-direction: row;
-        margin-top: $spacing_1_6;
-      }
-    }
-  }
-
-  &__try-again {
-    padding-top: $spacing_1_2;
-    text-align: center;
   }
 }

@@ -3,6 +3,37 @@
 .welcome {
   @include full-height-page-navbar();
 
+  @media screen and (max-width: $screen-md) {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+
+    > .container {
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__grid {
+      width: 100%;
+    }
+
+    &__grid__logo-item__logo {
+      max-width: 100%;
+      height: auto;
+    }
+
+    &__grid__content-item {
+      width: 100%;
+
+      .button--lg {
+        width: 100%;
+      }
+    }
+  }
+
   &__grid {
     min-height: 110vh;
     place-items: center;

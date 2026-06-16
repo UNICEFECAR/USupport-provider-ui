@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
   BaseTable,
   Block,
-  Button,
+  NewButton,
   DropdownWithLabel,
   Modal,
   DateInput,
@@ -259,15 +259,15 @@ const Filters = ({
           </div>
         </div>
         <div>
-          <Button
+          <NewButton
             label={t("apply_filter")}
             size="lg"
             onClick={handleSubmit}
             classes="reports__filter-modal__submit-button"
           />
-          <Button
+          <NewButton
             label={t("reset_filter")}
-            type="secondary"
+            type="outline"
             size="lg"
             onClick={handleResetFilters}
             classes="reports__filter-modal__reset-button"

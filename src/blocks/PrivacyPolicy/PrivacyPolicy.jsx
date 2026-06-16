@@ -2,8 +2,6 @@ import React, { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Block,
-  Grid,
-  GridItem,
   Loading,
   Markdown,
 } from "@USupport-components-library/src";
@@ -50,19 +48,19 @@ export const PrivacyPolicy = () => {
     data: policiesData,
     isLoading: policiesLoading,
     isFetched: isPoliciesFetched,
-  } = useQuery(["policies", currentCountry, i18n.language], getPolicies);
+  } = useQuery(["policies", currentCountry, i18n.language], getPolicies, {
+    enabled: !!currentCountry,
+  });
 
   return (
-    <Block classes="privacy-policy">
-      <Grid>
-        <GridItem md={8} lg={12}>
-          {policiesData && <Markdown markDownText={policiesData}></Markdown>}
-          {!policiesData && policiesLoading && <Loading />}
-          {!policiesData && !policiesLoading && isPoliciesFetched && (
-            <h3 className="privacy-policy__no-results">{t("no_results")}</h3>
-          )}
-        </GridItem>
-      </Grid>
+    <Block classes="privacy-policy privacy-policy--v1">
+      <div className="privacy-policy__surface">
+        {policiesData && <Markdown markDownText={policiesData}></Markdown>}
+        {!policiesData && policiesLoading && <Loading />}
+        {!policiesData && !policiesLoading && isPoliciesFetched && (
+          <h3 className="privacy-policy__no-results">{t("no_results")}</h3>
+        )}
+      </div>
     </Block>
   );
 };

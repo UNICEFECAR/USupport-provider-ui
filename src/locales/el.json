@@ -33,7 +33,21 @@
       "language_3": "",
       "language_4": "",
       "language_5": "",
-      "language_6": ""
+      "language_6": "",
+      "go_back": "Πίσω",
+      "notifications_heading": "Ειδοποιήσεις",
+      "notifications_mark_read": "Σήμανση όλων ως αναγνωσμένων",
+      "notifications_empty": "Δεν υπάρχουν ειδοποιήσεις ακόμη",
+      "all": "Όλες",
+      "new": "Νέες",
+      "read": "Διαβασμένες",
+      "dark": "Σκοτεινή λειτουργία",
+      "light": "Φωτεινή λειτουργία",
+      "high_contrast": "Υψηλή αντίθεση",
+      "edit_profile": "Επεξεργασία προφίλ",
+      "logout": "Αποσύνδεση",
+      "language_label": "Γλώσσα",
+      "footer_text": "Η ψυχική σας υγεία έχει σημασία — το uSupport προσφέρει εξατομικευμένη, ιδιωτική και ασφαλή ψυχολογική φροντίδα."
     },
     "contact-us-block": {
       "issue": "Θέμα",
@@ -171,6 +185,10 @@
       "add_more_work_with": "Προσθέστε περισσότερες κατηγορίες",
       "add_more_education": "Προσθέστε περισσότερα",
       "add_more_specializations": "Προσθέστε περισσότερες ειδικότητες",
+      "section_personal_information": "Προσωπικές πληροφορίες",
+      "section_professional_information": "Επαγγελματικές πληροφορίες",
+      "section_location": "Τοποθεσία",
+      "section_languages_specialties": "Γλώσσες και ειδικότητες",
       "button_text": "Αποθήκευση αλλαγών",
       "button_secondary_text": "Απόρριψη αλλαγών",
       "addiction": "Εξαρτήσεις και κατάχρηση ουσιών",
@@ -222,6 +240,9 @@
       "edit_details": "Επεξεργασία στοιχείων",
       "change_password": "Αλλαγή κωδικού",
       "delete_account": "Διαγραφή λογαριασμού",
+      "phone_label": "Τηλέφωνο",
+      "email_label": "Email",
+      "consultations": "συνεδρίες",
       "no_available_slot": "Δεν υπάρχει διαθέσιμο ραντεβού",
       "video_label": "Βίντεο παρουσίασης",
       "city_label": "Πόλη",
@@ -263,7 +284,15 @@
       "body_image": "Εικόνα σώματος και αυτοεκτίμηση",
       "hour_consultation": "για συνεδρία 1 ώρας",
       "free": "δωρεάν",
-      "organizations_label": "Οργανισμοί"
+      "organizations_label": "Οργανισμοί",
+      "coupon": "Κουπόνι",
+      "monday": "Δευτέρα",
+      "tuesday": "Τρίτη",
+      "wednesday": "Τετάρτη",
+      "thursday": "Πέμπτη",
+      "friday": "Παρασκευή",
+      "saturday": "Σάββατο",
+      "sunday": "Κυριακή"
     },
     "provider-profile": {
       "your_profile": "Το προφίλ σας",
@@ -315,6 +344,8 @@
       "heading": "Συνεδρίες",
       "today_tab_label": "Σήμερα",
       "upcoming_tab_label": "Επερχόμενες",
+      "past_tab_label": "Προηγούμενες",
+      "no_upcoming_consultations": "Δεν έχετε προγραμματισμένες συνεδρίες",
       "input_search_label": "Αναζήτηση",
       "sunday": "Κυρ",
       "monday": "Δευ",
@@ -355,6 +386,7 @@
       "see_profile": "Δείτε το προφίλ",
       "past_consultations": "προηγούμενες συνεδρίες",
       "no_scheduled": "Δεν υπάρχει προγραμματισμένη συνεδρία",
+      "next_consultation_label": "Επόμενη συνεδρία",
       "suggested": "Προτάθηκε",
       "join": "Είσδοδος",
       "no_consultations": "Δεν έχετε συνεδρίες με αυτόν τον πελάτη",
@@ -378,6 +410,13 @@
     "scheduler": {
       "calendar": "Ημερολόγιο",
       "add_template_availability": "Προσθήκη προτύπου διαθεσιμότητας",
+      "add_appointment": "Προσθήκη ραντεβού",
+      "appointments_today": "Σημερινά ραντεβού",
+      "appointments_for_date": "Ραντεβού στις {{date}}",
+      "no_appointments_day": "Δεν υπάρχουν ραντεβού αυτή την ημέρα.",
+      "consultation": "Συνεδρία",
+      "organization_appointment": "Οργανισμός",
+      "view": "Προβολή",
       "today": "Σήμερα",
       "sunday": "Κυρ",
       "monday": "Δευ",
@@ -401,7 +440,25 @@
       "booked": "Δεσμευμένο",
       "more_campaigns": "{{amount}} εκστρατειών",
       "provider_inactive": "Δεν έχετε άδεια να προσθέσετε διαθεσιμότητα",
-      "coupon": "Κουπόνι"
+      "coupon": "Κουπόνι",
+      "day": "Ημέρα",
+      "week": "Εβδομάδα",
+      "month": "Μήνας",
+      "picker_hint_day": "Επιλέξτε μια ημέρα",
+      "picker_hint_week": "Επιλέξτε μια εβδομάδα",
+      "picker_hint_month": "Επιλέξτε έναν μήνα",
+      "month_section_appointments": "Ραντεβού",
+      "month_section_availability": "Διαθεσιμότητα",
+      "month_availability_helper": "Πατήστε ένα κενό χρονικό διάστημα και επιλέξτε «Διαθέσιμος/η» για να ανοίξετε νέα ώρα.",
+      "month_appointments_count_one": "{{count}} ραντεβού",
+      "month_appointments_count_other": "{{count}} ραντεβού",
+      "month_open_slots_count_one": "{{count}} ανοιχτό χρονικό διάστημα",
+      "month_open_slots_count_other": "{{count}} ανοιχτά χρονικά διαστήματα",
+      "month_available_slots_count_one": "{{count}} διαθέσιμο χρονικό διάστημα",
+      "month_available_slots_count_other": "{{count}} διαθέσιμα χρονικά διαστήματα",
+      "month_unavailable_slots_count_one": "{{count}} μη διαθέσιμο χρονικό διάστημα",
+      "month_unavailable_slots_count_other": "{{count}} μη διαθέσιμα χρονικά διαστήματα",
+      "month_no_upcoming_slots": "Δεν υπάρχουν επερχόμενα χρονικά διαστήματα για αυτή την ημέρα."
     },
     "scheduler-template": {
       "start_date": "Ημερομηνία έναρξης",
@@ -614,7 +671,8 @@
       "heading": "Επαναφορά κωδικού πρόσβασης"
     },
     "edit-profile-details-page": {
-      "heading": "Επεξεργασία στοιχείων προφίλ"
+      "heading": "Επεξεργασία στοιχείων προφίλ",
+      "subheading": "Ενημερώστε τα στοιχεία του προφίλ σας, τη φωτογραφία και τις ρυθμίσεις συνεδριών."
     },
     "provider-profile-page": {
       "heading": "Προφίλ χρήστη",
@@ -623,6 +681,7 @@
     },
     "provider-overview-page": {
       "heading": "Λεπτομέρειες προφίλ",
+      "subheading": "Δείτε και διαχειριστείτε τις προσωπικές και επαγγελματικές πληροφορίες του προφίλ σας.",
       "button_label": "Ιστορικό δραστηριοτήτων"
     },
     "scheduler-template-page": {
@@ -695,6 +754,7 @@
     },
     "consultations-page": {
       "heading": "Συνεδρίες",
+      "subheading": "Δείτε τις σημερινές συνεδρίες και διαχειριστείτε το επερχόμενο πρόγραμμά σας.",
       "input_search_label": "Αναζήτηση"
     },
     "notifications-page": {
@@ -760,10 +820,20 @@
     },
     "join-consultation": {
       "heading": "Επιλέξτε τον τρόπο επικοινωνίας που προτιμάτε",
-      "modal_paragraph": "Επιλέξτε τον τρόπο επικοινωνίας που σας ταιριάζει καλύτερα.",
+      "subheading": "Επιλέξτε τον τρόπο επικοινωνίας που σας ταιριάζει καλύτερα.",
       "button_label_1": "Συνεδρία μέσω βίντεο/ήχου",
       "button_label_2": "Συνεδρία μέσω κειμένου",
+      "preview_heading": "Ελέγξτε την κάμερα και το μικρόφωνο",
+      "preview_subheading": "Βεβαιωθείτε ότι σας βλέπουν και σας ακούν πριν συνδεθείτε.",
+      "join_video": "Σύνδεση στη συνεδρία",
+      "configuring_devices": "Ρύθμιση συσκευών...",
+      "camera_off_label": "Η κάμερα είναι απενεργοποιημένη",
+      "mic_level_label": "Μικρόφωνο",
+      "toggle_camera": "Εναλλαγή κάμερας",
+      "toggle_microphone": "Εναλλαγή μικροφώνου",
+      "retry_permissions": "Δοκιμάστε ξανά",
       "provider_joined": "Ο πάροχος συνδέθηκε στη συνεδρία",
+      "error": "Παρουσιάστηκε σφάλμα. Παρακαλώ δοκιμάστε ξανά.",
       "permissions_error": "Επιτρέψτε την πρόσβαση στην κάμερα και στο μικρόφωνο",
       "allow_permissions": "Για να επικοινωνήσετε με τον πελάτη, επιτρέψτε πρόσβαση από τις ρυθμίσεις του προγράμματος περιήγησής σας ή μέσω του εικονιδίου πληροφοριών στη γραμμή διευθύνσεων."
     },
@@ -856,5 +926,9 @@
       "text": "",
       "cta": ""
     }
+  },
+  "meta": {
+    "title": "uSupport Πάροχος",
+    "description": "Πίνακας ελέγχου ειδικού για παροχή φροντίδας, οργάνωση προγράμματος, διαχείριση συνεδριών και προφίλ, και απάντηση σε ερωτήσεις."
   }
 }

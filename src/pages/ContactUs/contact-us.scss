@@ -2,9 +2,11 @@
 @import "@USupport-components-library/styles";
 
 .page__contact-us {
+  @include full-height-page-navbar;
+
   &__radial-circle.purple {
     top: 3.5rem;
-    left: -15rem;
+    left: -7%;
     height: 50rem;
   }
 }

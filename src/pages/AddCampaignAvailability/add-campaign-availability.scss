@@ -1,6 +1,6 @@
 /* AddCampaignAvailability styles */
-@import '@USupport-components-library/styles';
+@import "@USupport-components-library/styles";
 
-.page__add-campaign-availability{
+.page__add-campaign-availability {
+  @include full-height-page-navbar;
 }
-

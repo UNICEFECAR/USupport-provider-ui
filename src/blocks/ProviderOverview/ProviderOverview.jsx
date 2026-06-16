@@ -2,10 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useCustomNavigate as useNavigate } from "#hooks";
 import {
+  ActionRow,
   Block,
-  Button,
-  ButtonWithIcon,
-  GridItem,
   Loading,
   ProviderDetails,
 } from "@USupport-components-library/src";
@@ -39,47 +37,41 @@ export const ProviderOverview = ({
   };
 
   return (
-    <Block classes="provider-profile">
+    <Block classes="provider-overview">
       {providerDataQuery.isLoading || !provider ? (
         <Loading size="lg" />
       ) : (
-        <ProviderDetails
-          provider={provider}
-          t={t}
-          image={image}
-          hasCookies={false}
-          buttonComponent={
-            <GridItem md={8} lg={12} classes="provider-profile__buttons-item">
-              <div className="provider-profile__controls">
-                <Button
+        <div className="provider-overview__content">
+          <ProviderDetails
+            provider={provider}
+            t={t}
+            image={image}
+            hasCookies={false}
+            buttonComponent={
+              <div className="provider-overview__secondary-actions">
+                <ActionRow
+                  iconName="edit"
+                  iconSize="sm"
                   label={t("edit_details")}
-                  type="primary"
-                  size="lg"
-                  classes="provider-profile__edit-button"
                   onClick={handleEditRedirect}
                 />
-                <Button
-                  size="lg"
-                  type="ghost"
+                <ActionRow
+                  iconName="fingerprint"
+                  iconSize="sm"
                   label={t("change_password")}
-                  classes="provider-profile__change-password-button"
                   onClick={openChangePasswordBackdrop}
                 />
-                <ButtonWithIcon
-                  iconName={"circle-close"}
-                  iconSize={"md"}
-                  size="lg"
-                  iconColor={"#eb5757"}
-                  color={"red"}
+                <ActionRow
+                  iconName="circle-actions-close"
+                  iconSize="sm"
                   label={t("delete_account")}
-                  type={"ghost"}
-                  classes="provider-profile__delete-account-button"
                   onClick={openDeleteAccountBackdrop}
+                  isDanger
                 />
               </div>
-            </GridItem>
-          }
-        />
+            }
+          />
+        </div>
       )}
     </Block>
   );

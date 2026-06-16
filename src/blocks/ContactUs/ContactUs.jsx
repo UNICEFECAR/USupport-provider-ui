@@ -7,11 +7,15 @@ import {
   Textarea,
   Grid,
   GridItem,
-  Button,
+  NewButton,
   Modal,
+  Loading,
 } from "@USupport-components-library/src";
 import { validate } from "@USupport-components-library/utils";
 import { useSendIssueEmail, useGetProviderData } from "#hooks";
+
+import { mascotHappyBlue } from "@USupport-components-library/assets";
+
 import Joi from "joi";
 
 import "./contact-us.scss";
@@ -131,51 +135,68 @@ export const ContactUs = () => {
     }
   };
 
+  const isLoadingProfile =
+    providerDataQuery.isLoading && !providerDataQuery.data;
+
   return (
     <Block classes="contact-us">
-      <Grid classes="contact-us__grid" xs={4} md={8} lg={12}>
-        <GridItem xs={4} md={8} lg={12}>
-          <DropdownWithLabel
-            label={t("issue")}
-            errorMessage={errors.issue}
-            classes="contact-us__issue-input"
-            options={issues.map((x) => ({
-              ...x,
-              label: t(x.label),
-            }))}
-            selected={data.issue}
-            setSelected={handleIssueChange}
-          />
-        </GridItem>
-        <GridItem
-          classes="contact-us__grid__textarea-item"
-          xs={4}
-          md={8}
-          lg={12}
-        >
-          <Textarea
-            label={t("message")}
-            placeholder={t("message_placeholder")}
-            onChange={(value) => handleChange("message", value)}
-            errorMessage={errors.message}
-            classes="contact-us__message-input"
-            value={data.message}
-          />
-        </GridItem>
+      <div className="contact-us__content-wrapper">
+        <div className="contact-us__content-wrapper__left">
+          {isLoadingProfile ? (
+            <Loading size="lg" />
+          ) : (
+            <Grid classes="contact-us__grid" xs={4} md={8} lg={12}>
+              <GridItem xs={4} md={8} lg={12}>
+                <DropdownWithLabel
+                  label={t("issue")}
+                  errorMessage={errors.issue}
+                  classes="contact-us__issue-input"
+                  placeholder={t("issue_placeholder")}
+                  options={issues.map((x) => ({
+                    ...x,
+                    label: t(x.label),
+                  }))}
+                  selected={data.issue}
+                  setSelected={handleIssueChange}
+                />
+              </GridItem>
+              <GridItem
+                classes="contact-us__grid__textarea-item"
+                xs={4}
+                md={8}
+                lg={12}
+              >
+                <Textarea
+                  label={t("message")}
+                  placeholder={t("message_placeholder")}
+                  onChange={(value) => handleChange("message", value)}
+                  errorMessage={errors.message}
+                  classes="contact-us__message-input"
+                  value={data.message}
+                />
+              </GridItem>
 
-        <GridItem xs={4} md={8} lg={12}>
-          <Button
-            classes="contact-us__grid__button"
-            size="lg"
-            label={t("button")}
-            type="primary"
-            color="green"
-            onClick={handleSubmit}
-            disabled={!canSubmit}
-            loading={sendIssueEmailMutation.isLoading}
-          />
-        </GridItem>
-      </Grid>
+              <GridItem
+                xs={4}
+                md={8}
+                lg={12}
+                classes="contact-us__grid__button-item"
+              >
+                <NewButton
+                  size="lg"
+                  label={t("button")}
+                  onClick={handleSubmit}
+                  disabled={!canSubmit}
+                  isLoading={sendIssueEmailMutation.isLoading}
+                />
+              </GridItem>
+            </Grid>
+          )}
+        </div>
+        <div className="contact-us__content-wrapper__right">
+          <img src={mascotHappyBlue} alt="mascot" />
+        </div>
+      </div>
       <Modal
         isOpen={isSuccessModalOpen}
         closeModal={closeSuccessModal}
