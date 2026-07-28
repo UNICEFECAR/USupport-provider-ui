@@ -87,6 +87,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
   );
   const [selectedOrganizationId, setSelectedOrganizationId] = useState("");
   const [showSelectionError, setShowSelectionError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const hoursOptions = hours.map((hour) => ({ label: hour, value: hour }));
 
   const campaignSelectOptions = useMemo(() => {
@@ -233,6 +234,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
       );
       return;
     }
+    setIsSubmitting(true);
     const start = templateStartDate;
     // Gett all mondays between start and end
     const lastMonday = templateEndDate - getXDaysInSeconds(6);
@@ -251,7 +253,10 @@ export const SchedulerTemplate = ({ campaignId }) => {
      */
 
     const timestamps = [];
+    // Store factories so requests are not all fired at once (that caused 503s).
     const removalJobs = [];
+    const CLEAR_SLOT_BATCH_SIZE = 5;
+
     mondays.forEach((monday) => {
       const currentTimeZoneOffset =
         new Date(monday * 1000).getTimezoneOffset() * 60;
@@ -293,7 +298,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
             } else if (currentTimestamp > endDate) {
               targetMondayStart = startDate + getXDaysInSeconds(7);
             }
-            removalJobs.push(
+            removalJobs.push(() =>
               providerSvc.removeMultipleAvailableSlots(
                 targetMondayStart,
                 currentTimestamp,
@@ -363,24 +368,31 @@ export const SchedulerTemplate = ({ campaignId }) => {
       if (startDateIndex === -1) {
         timestamps.push(mondayTimestamps);
       } else {
-        timestamps[startDateIndex].slots.push(mondayTimestamps.slots);
+        timestamps[startDateIndex].slots.push(...mondayTimestamps.slots);
       }
     });
 
     try {
       if (removalJobs.length > 0) {
-        await Promise.all(removalJobs);
+        for (let i = 0; i < removalJobs.length; i += CLEAR_SLOT_BATCH_SIZE) {
+          const batch = removalJobs.slice(i, i + CLEAR_SLOT_BATCH_SIZE);
+          await Promise.all(batch.map((job) => job()));
+        }
       }
     } catch (error) {
       const { message: errorMessage } = useError(error);
       toast(errorMessage, { type: "error" });
+      setIsSubmitting(false);
       return;
     }
 
     if (timestamps.length > 0) {
-      addTemplateAvailabilityMutation.mutate(timestamps);
+      addTemplateAvailabilityMutation.mutate(timestamps, {
+        onSettled: () => setIsSubmitting(false),
+      });
     } else {
       toast(t("successfully_saved", { defaultValue: "Changes saved" }));
+      setIsSubmitting(false);
       navigate("/calendar");
     }
   };
@@ -548,9 +560,12 @@ export const SchedulerTemplate = ({ campaignId }) => {
               !templateStartDate ||
               !templateEndDate ||
               (isSelectionRequired && !hasSelection) ||
-              !hasAnyDayConfigured
+              !hasAnyDayConfigured ||
+              isSubmitting
             }
-            loading={addTemplateAvailabilityMutation.isLoading}
+            loading={
+              isSubmitting || addTemplateAvailabilityMutation.isLoading
+            }
           />
         </div>
       </div>
