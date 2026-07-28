@@ -49,10 +49,11 @@ $split-panel-left-width: 42rem;
   }
 
   &__main-container {
-    padding-bottom: $spacing_10_0;
+    padding: $spacing_2_4 $spacing_2_4 $spacing_10_0;
     overflow: auto;
     min-width: 0;
     min-height: 0;
+    box-sizing: border-box;
     @include scrollbar-secondary;
 
     @media screen and (min-width: $screen-lg) {
@@ -104,7 +105,7 @@ $split-panel-left-width: 42rem;
     min-height: 0;
     min-width: 0;
     overflow: hidden;
-    padding-bottom: $spacing_2_2;
+    padding: $spacing_2_4;
     box-sizing: border-box;
 
     @media screen and (min-width: $screen-lg) {
