@@ -94,6 +94,25 @@ $split-panel-left-width: 42rem;
         max-width: 100%;
         box-sizing: border-box;
       }
+
+      & .consultation--selected,
+      & .activity-history__consultation--selected {
+        border: 0.15rem solid $color_purple_6a4ffb;
+        box-shadow: 0 0 0 0.1rem rgba(106, 79, 251, 0.18);
+        background: rgba(106, 79, 251, 0.06);
+
+        .theme-dark & {
+          border-color: #8c90eb;
+          box-shadow: 0 0 0 0.1rem rgba(140, 144, 235, 0.28);
+          background: rgba(140, 144, 235, 0.12);
+        }
+
+        .theme-highContrast & {
+          border-color: #ffff00;
+          box-shadow: 0 0 0 0.1rem rgba(255, 255, 0, 0.35);
+          background: rgba(255, 255, 0, 0.12);
+        }
+      }
     }
   }
 
@@ -210,6 +229,12 @@ $split-panel-left-width: 42rem;
         padding-top: $spacing_3_2;
         padding-bottom: $spacing_2_4;
         @include scrollbar-secondary;
+
+        &__loading-older {
+          display: flex;
+          justify-content: center;
+          padding-bottom: $spacing_1_6;
+        }
 
         .system-message {
           align-self: center;
