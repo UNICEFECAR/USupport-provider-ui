@@ -1,51 +1,25 @@
 @import "@USupport-components-library/styles";
 
 .create-response {
-  max-width: 80rem;
+  &__content {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_2_4;
+    margin-bottom: $spacing_2_4;
+    width: 100%;
 
-  @media screen and (min-width: $screen-md) {
-    min-height: 80vh;
-  }
-
-  &__question-text {
-    text-align: left;
-    padding-left: $spacing_1_2;
-    @media screen and (min-width: $screen_md) {
-      padding-left: 0;
+    .input-with-dropdown-wrapper,
+    .input-with-dropdown {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
     }
   }
 
-  &__inputs-item {
-    margin-top: $spacing_1_0;
-
-    @media screen and (min-width: $screen_lg) {
-      margin-top: 0;
-    }
-
-    &__grid {
-      padding: $spacing_1_2;
-      place-items: center;
-
-      @media screen and (min-width: $screen_md) {
-        place-items: start;
-      }
-    }
-  }
-
-  &__tags {
-    margin-bottom: $spacing_1_2;
-  }
-
-  &__textarea {
-    margin-top: $spacing_1_2;
-  }
-
-  & .backdrop__children {
-    flex: 0.9;
-    overflow-y: auto;
-  }
-
-  & .backdrop__buttons-container {
-    flex: 0.1;
+  &__field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 }

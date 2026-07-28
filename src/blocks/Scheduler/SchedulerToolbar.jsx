@@ -1,5 +1,12 @@
-import React from "react";
-import { Grid, GridItem, Icon, NewButton, Tabs } from "@USupport-components-library/src";
+import React, { useContext } from "react";
+import {
+  Grid,
+  GridItem,
+  Icon,
+  NewButton,
+  Tabs,
+} from "@USupport-components-library/src";
+import { ThemeContext } from "@USupport-components-library/utils";
 
 import { SchedulerDatePicker } from "./SchedulerDatePicker.jsx";
 
@@ -24,6 +31,14 @@ export const SchedulerToolbar = ({
   t,
   language,
 }) => {
+  const { theme } = useContext(ThemeContext);
+  const iconColor =
+    theme === "highContrast"
+      ? "#ffff00"
+      : theme === "dark"
+        ? "#c1d7e0"
+        : "#6989A4";
+
   const handleSelectTab = (index) => {
     const newOptions = periodTypes.map((option, i) => ({
       ...option,
@@ -53,7 +68,7 @@ export const SchedulerToolbar = ({
         >
           <div className="scheduler-toolbar__date-nav">
             <Icon
-              color="#6989A4"
+              color={iconColor}
               name="arrow-chevron-back"
               size={iconSize}
               onClick={onPrev}
@@ -70,7 +85,7 @@ export const SchedulerToolbar = ({
               language={language}
             />
             <Icon
-              color="#6989A4"
+              color={iconColor}
               name="arrow-chevron-forward"
               size={iconSize}
               onClick={onNext}

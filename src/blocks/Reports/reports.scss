@@ -39,6 +39,7 @@
     &__name {
       color: $color_blue_3d527b;
       font-weight: $font_bold;
+      @include themify($themes, "color", "color_text_main");
     }
 
     &__status {
