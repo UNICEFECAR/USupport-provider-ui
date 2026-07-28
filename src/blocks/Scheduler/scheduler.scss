@@ -235,8 +235,30 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     background-color: $color_green_c1eaea;
   }
 
-  .theme-dark &,
-  .theme-highContrast & {
+  .scheduler__days-grid
+    .provider-availability--booked:not(.provider-availability--live),
+  .scheduler__days-grid
+    .provider-availability--booked.provider-availability--coupon:not(
+      .provider-availability--live
+    ) {
+    background-color: $scheduler-booked-bg !important;
+    border-color: $scheduler-booked-border !important;
+    border-radius: $border_radius_0_8;
+    box-shadow: 0 1px 4px rgba(32, 128, 158, 0.1);
+  }
+
+  .scheduler__days-grid
+    .provider-availability--booked:not(.provider-availability--live) {
+    .provider-availability__content__price {
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .provider-availability__name {
+      color: #0e202f;
+    }
+  }
+
+  .theme-dark & {
     .daily-availability-slot--booked:not(.scheduler__daily-slot--primary),
     .daily-availability-slot--booked.daily-availability-slot--coupon:not(
         .scheduler__daily-slot--primary
@@ -282,29 +304,71 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
         color: #ededed;
       }
     }
+
+    .scheduler__days-grid .provider-availability--available,
+    .scheduler__days-grid .provider-availability--campaign {
+      background-color: #152a35 !important;
+      border-color: rgba(32, 128, 158, 0.55) !important;
+    }
   }
 
-  /* Week grid */
-  .scheduler__days-grid
-    .provider-availability--booked:not(.provider-availability--live),
-  .scheduler__days-grid
-    .provider-availability--booked.provider-availability--coupon:not(
-      .provider-availability--live
-    ) {
-    background-color: $scheduler-booked-bg !important;
-    border-color: $scheduler-booked-border !important;
-    border-radius: $border_radius_0_8;
-    box-shadow: 0 1px 4px rgba(32, 128, 158, 0.1);
-  }
-
-  .scheduler__days-grid
-    .provider-availability--booked:not(.provider-availability--live) {
-    .provider-availability__content__price {
-      background: rgba(255, 255, 255, 0.65);
+  .theme-highContrast & {
+    .scheduler__daily-slot--primary.daily-availability-slot--booked,
+    .daily-availability-slot--booked,
+    .daily-availability-slot--coupon,
+    .daily-availability-slot--available,
+    .daily-availability-slot--campaign {
+      background-color: #000000 !important;
+      border-color: #ffff00 !important;
+      box-shadow: none;
     }
 
-    .provider-availability__name {
-      color: #0e202f;
+    .daily-availability-slot--booked
+      .daily-availability-slot__content__campaign-name,
+    .daily-availability-slot--booked
+      .daily-availability-slot__content__price__text,
+    .daily-availability-slot--available > p,
+    .daily-availability-slot--campaign > p {
+      color: #ffff00 !important;
+    }
+
+    .daily-availability-slot--booked .daily-availability-slot__content__price {
+      background: rgba(255, 255, 0, 0.15) !important;
+    }
+
+    .scheduler__days-grid .provider-availability--booked,
+    .scheduler__days-grid .provider-availability--coupon,
+    .scheduler__days-grid .provider-availability--available,
+    .scheduler__days-grid .provider-availability--campaign {
+      background-color: #000000 !important;
+      border-color: #ffff00 !important;
+      box-shadow: none;
+    }
+
+    .scheduler__days-grid .provider-availability--booked {
+      .provider-availability__content__price {
+        background: rgba(255, 255, 0, 0.15);
+      }
+
+      .provider-availability__name,
+      .provider-availability__content__campaign-name {
+        color: #ffff00 !important;
+      }
+    }
+
+    .scheduler__days-grid .provider-availability--available,
+    .scheduler__days-grid .provider-availability--campaign {
+      .provider-availability__name,
+      .provider-availability__content__campaign-name,
+      .provider-availability__available-text,
+      & > p {
+        color: #ffff00 !important;
+      }
+    }
+
+    .scheduler__days-grid .provider-availability--unavailable {
+      background-color: #000000 !important;
+      border-color: rgba(255, 255, 0, 0.25) !important;
     }
   }
 }
@@ -779,6 +843,31 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
       box-shadow: 0 0 0 1px #6a4ffb;
       background: rgba(106, 79, 251, 0.08);
     }
+
+    .theme-highContrast & {
+      &:hover {
+        border-color: #ffff00;
+      }
+
+      &--has-appt {
+        background: rgba(255, 255, 0, 0.18);
+        border-color: rgba(255, 255, 0, 0.45);
+      }
+
+      &--has-slots:not(.scheduler-month__day--has-appt) {
+        background: rgba(255, 255, 0, 0.08);
+      }
+
+      &--selected {
+        border-color: #ffff00;
+        box-shadow: 0 0 0 1px #ffff00;
+        background: rgba(255, 255, 0, 0.18);
+      }
+
+      &--today .scheduler-month__day-num {
+        color: #ffff00;
+      }
+    }
   }
 
   &__day-num {
@@ -1074,6 +1163,21 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
       .daily-availability-slot--coupon {
         background-color: #0f1c26 !important;
         border-color: rgba(32, 128, 158, 0.35) !important;
+      }
+    }
+
+    .theme-highContrast & {
+      .daily-availability-slot--available,
+      .daily-availability-slot--campaign,
+      .daily-availability-slot--booked,
+      .daily-availability-slot--coupon,
+      .daily-availability-slot--unavailable {
+        background-color: #000000 !important;
+        border-color: #ffff00 !important;
+      }
+
+      .daily-availability-slot--unavailable {
+        border-color: rgba(255, 255, 0, 0.25) !important;
       }
     }
   }
