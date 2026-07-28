@@ -55,13 +55,13 @@
       align-self: start;
       text-align: left;
 
-      &__countries-dropdwon {
+      &__countries-dropdown {
         z-index: 2;
       }
 
       &__languages-dropdown {
         margin-top: $spacing_2_5;
-        z-index: -1;
+        z-index: 1;
       }
 
       & > button {
