@@ -113,7 +113,7 @@
     }
 
     &--today {
-      color: $color_primary_20809e;
+      @include themify($themes, "color", "color_primary_20809e");
     }
 
     &__day {
@@ -407,6 +407,11 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
       background: rgba(106, 79, 251, 0.08);
       outline: none;
     }
+
+    .theme-highContrast &:hover,
+    .theme-highContrast &:focus-visible {
+      background: rgba(255, 255, 0, 0.12);
+    }
   }
 
   &__label {
@@ -485,6 +490,10 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     &:hover {
       background: rgba(106, 79, 251, 0.08);
     }
+
+    .theme-highContrast &:hover {
+      background: rgba(255, 255, 0, 0.12);
+    }
   }
 
   &__weekdays {
@@ -536,6 +545,7 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     &--today {
       color: #6a4ffb;
       font-weight: $font_semi_bold;
+      @include themify($themes, "color", "color_purple_6a4ffb");
     }
 
     &--in-week {
@@ -548,6 +558,36 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
       background: rgba(106, 79, 251, 0.12);
       color: #6a4ffb;
       font-weight: $font_semi_bold;
+    }
+
+    .theme-highContrast & {
+      &:hover {
+        border-color: #ffff00;
+      }
+
+      &--in-week {
+        background: rgba(255, 255, 0, 0.12);
+      }
+
+      &--selected {
+        border-color: #ffff00;
+        box-shadow: 0 0 0 1px #ffff00;
+        background: rgba(255, 255, 0, 0.18);
+        color: #ffff00;
+      }
+    }
+
+    .theme-dark & {
+      &--selected {
+        border-color: #8c90eb;
+        box-shadow: 0 0 0 1px #8c90eb;
+        background: rgba(140, 144, 235, 0.18);
+        color: #c1d7e0;
+      }
+
+      &--in-week {
+        background: rgba(140, 144, 235, 0.12);
+      }
     }
   }
 
@@ -563,9 +603,14 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     font-weight: $font_semi_bold;
     color: #6a4ffb;
     cursor: pointer;
+    @include themify($themes, "color", "color_purple_6a4ffb");
 
     &:hover {
       background: rgba(106, 79, 251, 0.08);
+    }
+
+    .theme-highContrast &:hover {
+      background: rgba(255, 255, 0, 0.12);
     }
   }
 
@@ -601,6 +646,7 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     &--current {
       color: #6a4ffb;
       font-weight: $font_semi_bold;
+      @include themify($themes, "color", "color_purple_6a4ffb");
     }
 
     &--selected {
@@ -609,6 +655,28 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
       background: rgba(106, 79, 251, 0.12);
       color: #6a4ffb;
       font-weight: $font_semi_bold;
+    }
+
+    .theme-highContrast & {
+      &:hover {
+        border-color: #ffff00;
+      }
+
+      &--selected {
+        border-color: #ffff00;
+        box-shadow: 0 0 0 1px #ffff00;
+        background: rgba(255, 255, 0, 0.18);
+        color: #ffff00;
+      }
+    }
+
+    .theme-dark & {
+      &--selected {
+        border-color: #8c90eb;
+        box-shadow: 0 0 0 1px #8c90eb;
+        background: rgba(140, 144, 235, 0.18);
+        color: #c1d7e0;
+      }
     }
   }
 }
