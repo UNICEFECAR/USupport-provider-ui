@@ -58,6 +58,7 @@ export default function useUpdateProviderData(onSuccess, onError) {
     onSuccess: (data) => {
       onSuccess(data);
       queryClient.invalidateQueries({ queryKey: ["provider-data"] });
+      queryClient.invalidateQueries({ queryKey: ["provider-translations"] });
     },
     onError: (error) => {
       const { message: errorMessage } = useError(error);
