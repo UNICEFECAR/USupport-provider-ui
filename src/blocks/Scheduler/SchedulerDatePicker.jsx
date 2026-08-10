@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Icon } from "@USupport-components-library/src";
 import { isDateToday } from "@USupport-components-library/src/utils/date";
+import { ThemeContext } from "@USupport-components-library/utils";
 
 import { calendarMonthGrid } from "./schedulerUtils.js";
 
@@ -148,6 +149,7 @@ export const SchedulerDatePicker = ({
   t,
   language,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const containerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [viewMonth, setViewMonth] = useState(
@@ -159,6 +161,13 @@ export const SchedulerDatePicker = ({
 
   const isMonthView = selectedPeriod === "month";
   const isWeekView = selectedPeriod === "week";
+  const accentIconColor = theme === "highContrast" ? "#ffff00" : "#6a4ffb";
+  const navIconColor =
+    theme === "highContrast"
+      ? "#ffff00"
+      : theme === "dark"
+        ? "#c1d7e0"
+        : "#6989A4";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -259,7 +268,7 @@ export const SchedulerDatePicker = ({
         <Icon
           name="calendar"
           size="sm"
-          color="#6a4ffb"
+          color={accentIconColor}
           classes="scheduler-date-picker__icon"
         />
       </button>
@@ -283,7 +292,11 @@ export const SchedulerDatePicker = ({
               onClick={() => handleNavigate(-1)}
               aria-label={isMonthView ? "Previous year" : "Previous month"}
             >
-              <Icon color="#6989A4" name="arrow-chevron-back" size="sm" />
+              <Icon
+                color={navIconColor}
+                name="arrow-chevron-back"
+                size="sm"
+              />
             </button>
             <p className="scheduler-date-picker__month">{headerLabel}</p>
             <button
@@ -292,7 +305,11 @@ export const SchedulerDatePicker = ({
               onClick={() => handleNavigate(1)}
               aria-label={isMonthView ? "Next year" : "Next month"}
             >
-              <Icon color="#6989A4" name="arrow-chevron-forward" size="sm" />
+              <Icon
+                color={navIconColor}
+                name="arrow-chevron-forward"
+                size="sm"
+              />
             </button>
           </div>
 
