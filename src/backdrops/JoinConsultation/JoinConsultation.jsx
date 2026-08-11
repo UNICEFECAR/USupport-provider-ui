@@ -185,9 +185,9 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
       chatId: consultation.chatId,
     });
 
-    const getConsultationTokenPromise = videoSvc.getTwilioToken(
-      consultation.consultationId
-    );
+    // const getConsultationTokenPromise = videoSvc.getTwilioToken(
+    //   consultation.consultationId
+    // );
 
     const joinConsultationPromise = providerSvc.joinConsultation({
       consultationId: consultation.consultationId,
@@ -198,7 +198,7 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
       setIsJoining(true);
       const result = await Promise.all([
         systemMessagePromise,
-        getConsultationTokenPromise,
+        // getConsultationTokenPromise,
         joinConsultationPromise,
       ]);
       const token = result[1].data.token;
@@ -255,7 +255,9 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
       handleGoBack={handleGoBack}
       ctaLabel={isPreviewStep ? t("join_video") : undefined}
       ctaHandleClick={isPreviewStep ? handleJoinWithVideo : undefined}
-      isCtaDisabled={isPreviewStep ? !preview.hasStream || isJoining : undefined}
+      isCtaDisabled={
+        isPreviewStep ? !preview.hasStream || isJoining : undefined
+      }
       isCtaLoading={isPreviewStep ? isJoining : undefined}
     >
       {isPreviewStep ? (
