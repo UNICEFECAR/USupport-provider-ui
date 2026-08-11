@@ -10,11 +10,7 @@ import {
   Icon,
   Loading,
 } from "@USupport-components-library/src";
-import {
-  messageSvc,
-  videoSvc,
-  providerSvc,
-} from "@USupport-components-library/services";
+import { messageSvc, providerSvc } from "@USupport-components-library/services";
 
 import "./join-consultation.scss";
 
