@@ -58,6 +58,26 @@ function App() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isInWelcome]);
+
+  useEffect(() => {
+    // Changing the language only does a history.replaceState, so the react-query
+    // cache survives it. Every request sends the language as a header, so the
+    // cached entries hold data for the previous language and have to be refetched.
+    const handleLanguageChanged = () => {
+      queryClient.invalidateQueries({
+        // The country and language lists are the same in every language and
+        // refetching them here would race with the URL update in the navbar
+        predicate: ({ queryKey }) =>
+          queryKey[0] !== "countries" && queryKey[0] !== "languages",
+      });
+    };
+
+    window.addEventListener("languageChanged", handleLanguageChanged);
+
+    return () => {
+      window.removeEventListener("languageChanged", handleLanguageChanged);
+    };
+  }, []);
   const [theme, setTheme] = useState("light");
 
   return (
