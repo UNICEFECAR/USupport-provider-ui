@@ -883,6 +883,7 @@
     },
     "create-response": {
       "heading": "Жауабын жазыңыз",
+      "question_label": "Анонимді сұрақ",
       "title_label": "Тақырыбы",
       "title_placeholder": "Осы жерге тақырыпты жазыңыз",
       "answer_label": "Жауап",

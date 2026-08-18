@@ -6,7 +6,7 @@ import Joi from "joi";
 
 import {
   Backdrop,
-  Input,
+  Icon,
   Textarea,
   InputWithDropdown,
   DropdownWithLabel,
@@ -29,8 +29,18 @@ import "./create-response.scss";
  * @return {jsx}
  */
 export const CreateResponse = ({ isOpen, onClose, question }) => {
-  const { t } = useTranslation("modals", { keyPrefix: "create-response" });
+  const { t, i18n } = useTranslation("modals", {
+    keyPrefix: "create-response",
+  });
   const queryClient = useQueryClient();
+
+  const questionDate = question?.questionCreatedAt
+    ? new Date(question.questionCreatedAt).toLocaleDateString(i18n.language, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
 
   const onSuccess = (data) => {
     setInitialTagsOptions(data);
@@ -119,29 +129,51 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
       isOpen={isOpen}
       onClose={onClose}
       heading={t("heading")}
-      text={question?.question}
       ctaLabel={t("cta_label")}
       ctaHandleClick={handleSendAnswer}
       isCtaLoading={addAnswerMutation.isLoading}
       errorMessage={errors.submit}
     >
       <div className="create-response__content">
-        <Input
-          label={t("title_label") + " *"}
-          placeholder={t("title_placeholder")}
-          value={data.title}
-          onChange={(e) => hanldeChange("title", e.currentTarget.value)}
-          onBlur={() => handleBlur("title")}
-          errorMessage={errors.title}
-        />
-        <Textarea
-          label={t("answer_label") + " *"}
-          placeholder={t("answer_placeholder")}
-          value={data.answer}
-          onChange={(value) => hanldeChange("answer", value)}
-          onBlur={() => handleBlur("answer")}
-          errorMessage={errors.answer}
-        />
+        <div className="create-response__question">
+          <div className="create-response__question__icon">
+            <Icon name="comment" size="md" color="#9749fa" />
+          </div>
+          <div className="create-response__question__info">
+            <p className="small-text create-response__question__label">
+              {t("question_label")}
+            </p>
+            <p className="text create-response__question__text">
+              {question.question}
+            </p>
+          </div>
+          {questionDate ? (
+            <div className="create-response__question__date">
+              <Icon name="calendar" size="sm" color="#66768d" />
+              <p className="small-text">{questionDate}</p>
+            </div>
+          ) : null}
+        </div>
+        <div className="create-response__row">
+          <Textarea
+            classes="create-response__textarea"
+            label={t("title_label") + " *"}
+            placeholder={t("title_placeholder")}
+            value={data.title}
+            onChange={(value) => hanldeChange("title", value)}
+            onBlur={() => handleBlur("title")}
+            errorMessage={errors.title}
+          />
+          <Textarea
+            classes="create-response__textarea"
+            label={t("answer_label") + " *"}
+            placeholder={t("answer_placeholder")}
+            value={data.answer}
+            onChange={(value) => hanldeChange("answer", value)}
+            onBlur={() => handleBlur("answer")}
+            errorMessage={errors.answer}
+          />
+        </div>
         <div className="create-response__field">
           <InputWithDropdown
             label={t("tags_label") + " *"}

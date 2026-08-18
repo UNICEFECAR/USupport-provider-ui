@@ -883,6 +883,7 @@
     },
     "create-response": {
       "heading": "Γράψτε μια απάντηση",
+      "question_label": "Ανώνυμη ερώτηση",
       "title_label": "Τίτλος",
       "title_placeholder": "Γράψτε έναν τίτλο εδώ",
       "answer_label": "Απάντηση",

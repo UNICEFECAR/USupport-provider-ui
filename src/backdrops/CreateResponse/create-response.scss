@@ -1,6 +1,10 @@
 @import "@USupport-components-library/styles";
 
 .create-response {
+  @media screen and (min-width: $screen_md) {
+    max-width: min(96rem, 90vw);
+  }
+
   &__content {
     align-items: stretch;
     display: flex;
@@ -17,9 +21,82 @@
     }
   }
 
+  &__question {
+    align-items: center;
+    background: linear-gradient(
+      100deg,
+      rgba($color_secondary_9749fa, 0.1) 0%,
+      rgba($color_secondary_9749fa, 0.03) 100%
+    );
+    border: 0.1rem solid rgba($color_secondary_9749fa, 0.18);
+    border-radius: $border_radius_1_6;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing_1_6;
+    padding: $spacing_1_6;
+    width: 100%;
+
+    &__icon {
+      align-items: center;
+      background-color: rgba($color_secondary_9749fa, 0.14);
+      border-radius: $border_radius_1_2;
+      display: flex;
+      flex-shrink: 0;
+      height: 4.8rem;
+      justify-content: center;
+      width: 4.8rem;
+    }
+
+    &__info {
+      flex: 1;
+      min-width: 20rem;
+      text-align: left;
+    }
+
+    &__label {
+      color: $color_secondary_9749fa;
+      font-weight: $font_bold;
+      letter-spacing: 0.08rem;
+      text-transform: uppercase;
+    }
+
+    &__text {
+      font-weight: $font_bold;
+      word-break: break-word;
+    }
+
+    &__date {
+      align-items: center;
+      color: $color_gray_66768d;
+      display: flex;
+      gap: $spacing_0_8;
+      margin-left: auto;
+    }
+  }
+
   &__field {
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+
+  &__row {
+    display: grid;
+    gap: $spacing_2_4;
+    grid-template-columns: 1fr;
+    width: 100%;
+
+    @media screen and (min-width: $screen_md) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__textarea {
+    width: 100%;
+
+    textarea {
+      min-height: 20rem;
+    }
   }
 }

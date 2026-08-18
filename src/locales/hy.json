@@ -883,6 +883,7 @@
     },
     "create-response": {
       "heading": "Գրել պատասխան",
+      "question_label": "Անանուն հարց",
       "title_label": "Վերնագիր",
       "title_placeholder": "Այստեղ գրի առեք վերնագիրը",
       "answer_label": "Պատասխան",

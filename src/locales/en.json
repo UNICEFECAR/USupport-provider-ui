@@ -917,6 +917,7 @@
     },
     "create-response": {
       "heading": "Write a response",
+      "question_label": "Anonymous question",
       "title_label": "Title",
       "title_placeholder": "Write a title here",
       "answer_label": "Answer",
