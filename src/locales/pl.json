@@ -883,6 +883,7 @@
     },
     "create-response": {
       "heading": "Napisz odpowiedź",
+      "question_label": "Anonimowe pytanie",
       "title_label": "Tytuł",
       "title_placeholder": "Wpisz tutaj tytuł",
       "answer_label": "Odpowiedz",

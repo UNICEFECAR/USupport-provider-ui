@@ -883,6 +883,7 @@
     },
     "create-response": {
       "heading": "Напишите ответ",
+      "question_label": "Анонимный вопрос",
       "title_label": "Заголовок",
       "title_placeholder": "Напишите заголовок здесь",
       "answer_label": "Ответ",
