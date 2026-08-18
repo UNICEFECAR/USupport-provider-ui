@@ -330,6 +330,7 @@ export const JitsiRoom = () => {
               handleSendMessage={handleSendMessage}
               leaveConsultation={leaveConsultation}
               hasUnreadMessages={interfaces.hasUnreadMessages}
+              isRoomConnecting={isLoading}
               toggleCamera={() => {
                 if (isLoading) return;
                 api.current.executeCommand("toggleVideo");
@@ -391,7 +392,7 @@ export const JitsiRoom = () => {
 
             const roomInfo = rooms[0] || rooms?.rooms[0];
             const participants = roomInfo?.participants?.filter(
-              (x) => !!x && x.id !== userInfo.id && x.id !== "local",
+              (x) => !!x && x.id !== userInfo.id && x.id !== "local"
             );
             if (roomInfo) {
               setInterfaceData({
@@ -404,7 +405,7 @@ export const JitsiRoom = () => {
             externalApi.executeCommand("grantModerator", false);
             externalApi.executeCommand(
               "avatarUrl",
-              `${AMAZON_S3_BUCKET}/${providerData?.image}`,
+              `${AMAZON_S3_BUCKET}/${providerData?.image}`
             );
 
             externalApi.addListener("cameraError", (error) => {
@@ -439,7 +440,7 @@ export const JitsiRoom = () => {
                     isClientInSession: true,
                   }));
                 }
-              },
+              }
             );
             externalApi.addListener("videoConferenceLeft", () => {
               leaveConsultation();
