@@ -330,6 +330,7 @@ export const JitsiRoom = () => {
               handleSendMessage={handleSendMessage}
               leaveConsultation={leaveConsultation}
               hasUnreadMessages={interfaces.hasUnreadMessages}
+              isRoomConnecting={isLoading}
               toggleCamera={() => {
                 api.current.executeCommand("toggleVideo");
                 setInterfaceData({
