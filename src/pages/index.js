@@ -18,6 +18,7 @@ export * from "./SchedulerTemplate";
 export * from "./CookiePolicy";
 export * from "./TermsOfUse";
 export * from "./Dashboard";
+export * from "./ScheduleDashboard";
 export * from "./Consultation";
 export * from "./Notifications";
 export * from "./Reports";

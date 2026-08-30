@@ -310,7 +310,7 @@ export const Notifications = ({
             icon="calendar"
             text={t(notification.type)}
             handleClick={() =>
-              handleNotificationClick(notification.notificationId, "/calendar")
+              handleNotificationClick(notification.notificationId, "/dashboard")
             }
           />
         );
