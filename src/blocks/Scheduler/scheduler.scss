@@ -390,7 +390,7 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     justify-content: center;
     text-align: center;
 
-    &--tabs {
+    &--leading {
       justify-content: flex-start;
       text-align: left;
     }
@@ -405,12 +405,36 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     }
   }
 
+  &__leading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing_1_6;
+    width: 100%;
+    min-width: 0;
+
+    @media screen and (min-width: $screen-lg) {
+      flex-direction: row;
+      align-items: center;
+      gap: $spacing_2_0;
+      width: auto;
+    }
+  }
+
   &__date-nav {
     display: inline-flex;
     align-items: center;
-    gap: $spacing_1_6;
+    gap: $spacing_0_8;
     justify-content: center;
     position: relative;
+    min-width: 0;
+    max-width: 100%;
+    flex-shrink: 0;
+
+    @media screen and (min-width: $screen-lg) {
+      justify-content: flex-start;
+      gap: $spacing_1_0;
+    }
 
     @media screen and (max-width: #{$screen-lg - 1px}) {
       width: 100%;
@@ -418,6 +442,7 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
 
     & .icon {
       cursor: pointer;
+      flex-shrink: 0;
     }
   }
 
@@ -431,11 +456,6 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
 
     @media screen and (min-width: $screen-md) {
       font-size: 1.8rem;
-      min-width: 18rem;
-    }
-
-    @media screen and (min-width: $screen-lg) {
-      min-width: 22rem;
     }
   }
 
@@ -453,6 +473,8 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
 
 .scheduler-date-picker {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
 
   &__trigger {
     display: inline-flex;
@@ -460,6 +482,8 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     gap: $spacing_0_8;
     margin: 0;
     padding: $spacing_0_4 $spacing_0_8;
+    min-width: 0;
+    max-width: 100%;
     border: none;
     border-radius: $border_radius_0_8;
     background: transparent;
@@ -481,18 +505,17 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
   &__label {
     margin: 0;
     min-width: 0;
-    text-align: center;
-    font-size: 1.6rem;
+    max-width: 100%;
+    text-align: left;
+    font-size: 1.4rem;
     font-weight: $font_semi_bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     @include themify($themes, "color", "color_purple_6a4ffb");
 
     @media screen and (min-width: $screen-md) {
       font-size: 1.8rem;
-      min-width: 18rem;
-    }
-
-    @media screen and (min-width: $screen-lg) {
-      min-width: 22rem;
     }
   }
 
@@ -562,12 +585,14 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
 
   &__weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: $spacing_0_4;
     margin-bottom: $spacing_0_8;
   }
 
   &__weekday {
+    min-width: 0;
+    overflow: hidden;
     text-align: center;
     font-size: 1.1rem;
     font-weight: $font_semi_bold;
@@ -576,7 +601,7 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: $spacing_0_4;
   }
 
@@ -1238,5 +1263,674 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     font-size: 1.4rem;
     @include content-inset-surface;
     @include content-muted-text;
+  }
+}
+
+.scheduler--overview {
+  padding: 0;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+
+  .scheduler__overview-header {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_1_6;
+    margin-bottom: $spacing_2_4;
+    min-width: 0;
+
+    @media screen and (min-width: $screen-lg) {
+      gap: $spacing_2_0;
+    }
+  }
+
+  .scheduler__overview-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: $font_bold;
+    @include themify($themes, "color", "color_text_main");
+
+    @media screen and (min-width: $screen-md) {
+      font-size: 2rem;
+    }
+  }
+
+  .scheduler__overview-body {
+    min-width: 0;
+  }
+
+  .scheduler__weekday-strip {
+    margin-bottom: $spacing_1_6;
+  }
+}
+
+.schedule-overview-month {
+  min-width: 0;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 1px 2px 2px 1px;
+
+  &__weekdays,
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: $spacing_0_4;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__weekdays {
+    margin-bottom: $spacing_0_8;
+  }
+
+  &__weekday {
+    min-width: 0;
+    overflow: hidden;
+    text-align: center;
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: $font_semi_bold;
+    @include themify($themes, "color", "color_text_main");
+
+    &-full {
+      display: none;
+    }
+
+    &-letter {
+      display: inline;
+    }
+  }
+
+  &__day {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: $spacing_0_4;
+    min-width: 0;
+    min-height: 5.6rem;
+    padding: $spacing_0_6 $spacing_0_4 $spacing_0_8;
+    overflow: visible;
+    border: 1px solid $color_gray_ea;
+    border-radius: $border_radius_1_2;
+    @include themify($themes, "border-color", "color_gray_ea");
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    @include themify($themes, "background-color", "color_white_ff");
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &:hover:not(:disabled) {
+      border-color: rgba(106, 79, 251, 0.28);
+    }
+
+    &:disabled,
+    &--disabled {
+      cursor: default;
+      opacity: 0.55;
+    }
+
+    &--today .schedule-overview-month__day-num {
+      color: #6a4ffb;
+      font-weight: $font_bold;
+    }
+
+    &--has-appt {
+      background: #daf3f3;
+      box-shadow: inset 0 -0.3rem 0 #3db8b8;
+    }
+
+    &--unavailable .schedule-overview-month__day-status,
+    &--outside .schedule-overview-month__day-status,
+    &--outside .schedule-overview-month__day-num {
+      color: #9aa3ad;
+    }
+
+    &--outside {
+      background: transparent;
+    }
+
+    &--selected:not(&--has-appt) {
+      border-color: #6a4ffb;
+    }
+
+    &--selected#{&}--has-appt {
+      border-color: #3db8b8;
+      box-shadow: inset 0 -0.3rem 0 #3db8b8;
+    }
+
+    .theme-highContrast & {
+      &:hover,
+      &--selected {
+        border-color: #ffff00;
+      }
+
+      &--has-appt {
+        background: rgba(255, 255, 0, 0.18);
+        box-shadow: inset 0 -0.3rem 0 #ffff00;
+      }
+
+      &--today .schedule-overview-month__day-num {
+        color: #ffff00;
+      }
+    }
+  }
+
+  &__day-num {
+    font-size: 1.3rem;
+    font-weight: $font_semi_bold;
+    @include themify($themes, "color", "color_text_main");
+  }
+
+  &__day-status {
+    font-size: 1rem;
+    line-height: 1.25;
+    max-width: 100%;
+    overflow: hidden;
+    @include content-muted-text;
+
+    &-full {
+      display: none;
+    }
+
+    &-short {
+      display: inline;
+    }
+  }
+
+  @media screen and (min-width: $screen-md) {
+    &__weekdays,
+    &__grid {
+      gap: $spacing_0_8;
+    }
+
+    &__weekdays {
+      margin-bottom: $spacing_1_2;
+    }
+
+    &__weekday {
+      text-align: left;
+      padding-left: $spacing_0_4;
+      font-size: 1.3rem;
+
+      &-full {
+        display: inline;
+      }
+
+      &-letter {
+        display: none;
+      }
+    }
+
+    &__day {
+      gap: $spacing_0_8;
+      min-height: 8.8rem;
+      padding: $spacing_1_2 $spacing_1_2 $spacing_1_6;
+    }
+
+    &__day-num {
+      font-size: 1.5rem;
+    }
+
+    &__day-status {
+      font-size: 1.2rem;
+      line-height: 1.3;
+
+      &-full {
+        display: inline;
+        overflow-wrap: anywhere;
+      }
+
+      &-short {
+        display: none;
+      }
+    }
+  }
+
+  &--week {
+    .schedule-overview-month__grid--week {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .schedule-overview-month__day {
+      min-height: 6.4rem;
+
+      @media screen and (min-width: $screen-md) {
+        min-height: 8rem;
+      }
+    }
+  }
+}
+
+.schedule-overview-day-slots {
+  margin-top: $spacing_2_0;
+  min-width: 0;
+
+  .schedule-day-slots__list {
+    max-height: none;
+  }
+}
+
+.schedule-overview-week-grid {
+  min-width: 0;
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  padding: 1px 2px 3px 1px;
+  @include scrollbar-secondary;
+
+  &__header,
+  &__row {
+    display: grid;
+    grid-template-columns: 4.4rem repeat(7, minmax(8.8rem, 1fr));
+    gap: $spacing_0_4;
+    min-width: min(100%, 72rem);
+
+    @media screen and (min-width: $screen-md) {
+      grid-template-columns: 5.6rem repeat(7, minmax(10rem, 1fr));
+      gap: $spacing_0_8;
+    }
+  }
+
+  &__header {
+    margin-bottom: $spacing_1_2;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding-bottom: $spacing_0_4;
+    @include themify($themes, "background-color", "color_white_ff");
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: transparent;
+    }
+  }
+
+  &__hour-spacer {
+    min-height: 1px;
+  }
+
+  &__day-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing_0_2;
+    min-width: 0;
+    padding: $spacing_0_4;
+    text-align: center;
+  }
+
+  &__day-name {
+    font-size: 1.1rem;
+    font-weight: $font_semi_bold;
+    @include content-muted-text;
+
+    &-full {
+      display: none;
+    }
+
+    &-letter {
+      display: inline;
+    }
+  }
+
+  &__day-num {
+    font-size: 1.4rem;
+    font-weight: $font_bold;
+    @include themify($themes, "color", "color_text_main");
+  }
+
+  &__day-header--today &__day-num {
+    color: #6a4ffb;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_0_8;
+    min-width: min(100%, 72rem);
+    padding-bottom: 1px;
+  }
+
+  &__hour-label {
+    font-size: 1.2rem;
+    padding-top: $spacing_1_0;
+    @include content-muted-text;
+  }
+
+  &__cell {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_0_4;
+    min-width: 0;
+  }
+
+  @media screen and (min-width: $screen-md) {
+    &__day-name {
+      font-size: 1.2rem;
+
+      &-full {
+        display: inline;
+      }
+
+      &-letter {
+        display: none;
+      }
+    }
+
+    &__day-num {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.schedule-day-slots__row--compact {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: $spacing_0_4;
+  min-height: 4.8rem;
+  padding: $spacing_0_6 $spacing_0_6;
+
+  .schedule-day-slots__time--compact {
+    display: none;
+    font-size: 1.1rem;
+    font-weight: $font_medium;
+    text-align: center;
+    @include content-muted-text;
+
+    @media screen and (min-width: $screen-lg) {
+      display: block;
+    }
+  }
+
+  .schedule-day-slots__badge {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    padding: $spacing_0_6 $spacing_0_4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.schedule-day-slots-modal.base-modal {
+  overflow: auto;
+  max-width: 44rem;
+  width: min(44rem, calc(100vw - 2.4rem));
+  padding: $spacing_1_6 $spacing_1_6 $spacing_2_0;
+  border-radius: $border_radius_2_4;
+  box-shadow: $shadow_1;
+
+  @media screen and (min-width: $screen-md) {
+    width: min(44rem, calc(100vw - 4rem));
+    padding: $spacing_2_4 $spacing_2_4 $spacing_2_8;
+  }
+
+  .base-modal__header {
+    display: block;
+    width: calc(100% - 3.2rem);
+
+    &__left-container,
+    &__right-spacer {
+      display: none;
+    }
+
+    &__text {
+      margin: 0;
+      text-align: left;
+      justify-self: start;
+      font-size: 1.6rem;
+      font-weight: $font_bold;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+      @include themify($themes, "color", "color_text_main");
+
+      @media screen and (min-width: $screen-md) {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .base-modal__close-icon {
+    top: $spacing_1_6;
+    right: $spacing_1_6;
+
+    .icon {
+      color: #6a4ffb;
+    }
+  }
+
+  .base-modal__body,
+  .backdrop__children--full-height {
+    flex: none;
+    width: 100%;
+    padding: $spacing_2_0 0 0;
+    overflow: visible;
+  }
+}
+
+.schedule-day-slots {
+  position: relative;
+  width: 100%;
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_1_2;
+    max-height: 56rem;
+    overflow-y: auto;
+    @include scrollbar-secondary;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing_1_6;
+    width: 100%;
+    min-height: 6rem;
+    padding: $spacing_1_4 $spacing_1_6;
+    border: 0.1rem solid $color_gray_ea;
+    border-radius: $border_radius_0_8;
+    background: $color_white_ff;
+    cursor: pointer;
+    text-align: left;
+    box-sizing: border-box;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:hover:not(:disabled):not(.schedule-day-slots__row--selected) {
+      border-color: rgba(106, 79, 251, 0.28);
+    }
+
+    &--organization,
+    &--campaign,
+    &--booked {
+      background: mix($color_white_ff, $color_green_c1eaea, 72%);
+      border-color: rgba(32, 128, 158, 0.12);
+    }
+
+    &--selected {
+      background: rgba(106, 79, 251, 0.08);
+      border-color: #6a4ffb;
+    }
+
+    &--disabled {
+      cursor: default;
+    }
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .theme-highContrast &--selected {
+      border-color: #ffff00;
+      background: rgba(255, 255, 0, 0.12);
+    }
+  }
+
+  &__time {
+    font-size: 1.5rem;
+    font-weight: $font_medium;
+    letter-spacing: -0.01em;
+    @include themify($themes, "color", "color_text_main");
+
+    .schedule-day-slots__row--selected & {
+      color: #6a4ffb;
+      font-weight: $font_bold;
+    }
+
+    .theme-highContrast .schedule-day-slots__row--selected & {
+      color: #ffff00;
+    }
+  }
+
+  &__badge {
+    flex-shrink: 0;
+    max-width: 58%;
+    padding: $spacing_0_8 $spacing_1_6;
+    border-radius: $border_radius_3_2;
+    font-size: 1.3rem;
+    font-weight: $font_medium;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+
+    &--unavailable {
+      background: #f1f3f5;
+      color: #7d8894;
+    }
+
+    &--organization,
+    &--campaign,
+    &--booked {
+      background: $color_green_c1eaea;
+      color: $color_primary_20809e;
+    }
+
+    &--available {
+      background: rgba(106, 79, 251, 0.12);
+      color: #6a4ffb;
+    }
+
+    .schedule-day-slots__row--selected & {
+      background: rgba(106, 79, 251, 0.16);
+      color: #6a4ffb;
+    }
+
+    .theme-highContrast & {
+      background: rgba(255, 255, 0, 0.12);
+      color: #ffff00;
+    }
+  }
+
+  &__picker-wrap {
+    list-style: none;
+  }
+
+  &__picker {
+    width: 100%;
+    padding: $spacing_1_6;
+    border-radius: $border_radius_1_6;
+    border: 0.1rem solid $color_gray_ea;
+    box-shadow: 0 0.8rem 2.4rem rgba(15, 23, 40, 0.08);
+    @include content-surface;
+
+    &--floating {
+      position: fixed;
+      z-index: calc(#{$z_index_modal} + 10);
+      width: auto;
+      min-width: 24rem;
+      max-width: min(30rem, calc(100vw - 3.2rem));
+      margin: 0;
+      box-shadow: 0 0.8rem 2.4rem rgba(15, 23, 40, 0.14);
+    }
+  }
+
+  &__picker-title {
+    margin: 0 0 $spacing_1_2;
+    font-size: 1.4rem;
+    font-weight: $font_medium;
+    @include themify($themes, "color", "color_text_main");
+
+    &:not(:first-child) {
+      margin-top: $spacing_1_6;
+    }
+  }
+
+  &__picker-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_0_8;
+  }
+
+  &__picker-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing_1_2;
+    width: 100%;
+    min-height: 4.4rem;
+    padding: $spacing_1_2 $spacing_1_4;
+    border: 0.1rem solid $color_gray_ea;
+    border-radius: $border_radius_1_2;
+    background: $color_white_ff;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1.4rem;
+    @include themify($themes, "color", "color_text_main");
+
+    &:hover {
+      border-color: rgba(106, 79, 251, 0.35);
+    }
+
+    &--selected {
+      border-color: transparent;
+      background: rgba(106, 79, 251, 0.12);
+      color: #6a4ffb;
+      font-weight: $font_semi_bold;
+    }
+
+    .theme-highContrast &--selected {
+      background: rgba(255, 255, 0, 0.16);
+      color: #ffff00;
+    }
+  }
+
+  &__picker-list + &__picker-item,
+  &__picker-title + &__picker-item {
+    margin-top: $spacing_0_8;
+  }
+
+  &__picker-check {
+    color: #6a4ffb;
+    font-size: 1.5rem;
+    font-weight: $font_bold;
+    line-height: 1;
   }
 }

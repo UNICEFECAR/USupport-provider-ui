@@ -34,6 +34,11 @@ import { useError, useGetProviderData } from "#hooks";
 
 import { SchedulerToolbar } from "./SchedulerToolbar.jsx";
 import { SchedulerMonthView } from "./SchedulerMonthView.jsx";
+import { ScheduleOverviewMonthCalendar } from "./ScheduleOverviewMonthCalendar.jsx";
+import { ScheduleOverviewWeekCalendar } from "./ScheduleOverviewWeekCalendar.jsx";
+import { ScheduleOverviewWeekGrid } from "./ScheduleOverviewWeekGrid.jsx";
+import { ScheduleDaySlotsModal } from "./ScheduleDaySlotsModal.jsx";
+import { ScheduleDaySlotsPanel } from "./ScheduleDaySlotsPanel.jsx";
 import {
   getUniqueWeekStartsInMonth,
   mergeConsultationResponses,
@@ -60,7 +65,12 @@ const namesOfDays = [
  *
  * @return {jsx}
  */
-export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
+export const Scheduler = ({
+  openJoinConsultation,
+  openCancelConsultation,
+  variant = "default",
+  defaultPeriod = "day",
+}) => {
   const { t, i18n } = useTranslation("blocks", { keyPrefix: "scheduler" });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -89,6 +99,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     campaignSlots: [],
     organizationSlots: [],
   });
+  const pendingSlotWrites = useRef(0);
   const [validCampaigns, setValidCampaigns] = useState();
 
   const [monthViewDate, setMonthViewDate] = useState(
@@ -103,23 +114,40 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     {
       label: t("day"),
       value: "day",
-      isSelected: true,
+      isSelected: defaultPeriod === "day",
     },
     {
       label: t("week"),
       value: "week",
-      isSelected: false,
+      isSelected: defaultPeriod === "week",
     },
     {
       label: t("month"),
       value: "month",
-      isSelected: false,
+      isSelected: defaultPeriod === "month",
     },
   ]);
 
   const [selectedDay, setSelectedDay] = useState(today);
+  const [slotsModalDay, setSlotsModalDay] = useState(null);
 
   const selectedPeriod = periodTypes.find((p) => p.isSelected)?.value || "day";
+  const overviewDayUsesWeekData =
+    variant === "overview" && selectedPeriod === "day";
+  const usesWeekAvailability =
+    selectedPeriod === "week" || overviewDayUsesWeekData;
+  const usesWeekConsultations =
+    selectedPeriod === "week" || overviewDayUsesWeekData;
+
+  useEffect(() => {
+    if (!overviewDayUsesWeekData) return;
+    const { first, last } = getStartAndEndOfWeek(selectedDay);
+    setWeekData({
+      startDate: first,
+      endDate: last,
+      days: getDatesInRange(first, last),
+    });
+  }, [overviewDayUsesWeekData, selectedDay]);
 
   const handlePeriodTypesChange = (newOptions) => {
     const next = newOptions.find((x) => x.isSelected)?.value;
@@ -172,22 +200,38 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
         .getAvailabilityForPeriod(getTimestampFromUTC(selectedDay), "day")
         .then((r) => r.data),
     {
-      enabled: selectedPeriod === "day",
+      enabled: selectedPeriod === "day" && !overviewDayUsesWeekData,
       staleTime: availabilityStaleTime,
     },
   );
 
+  const weekQueryStartDate = useMemo(() => {
+    if (overviewDayUsesWeekData) {
+      return getStartAndEndOfWeek(selectedDay).first;
+    }
+    return weekData.startDate;
+  }, [overviewDayUsesWeekData, selectedDay, weekData.startDate]);
+
+  const overviewWeekDays = useMemo(() => {
+    if (variant !== "overview") {
+      return weekData.days;
+    }
+    const anchor = selectedPeriod === "day" ? selectedDay : weekData.startDate;
+    const { first, last } = getStartAndEndOfWeek(anchor);
+    return getDatesInRange(first, last);
+  }, [variant, selectedPeriod, selectedDay, weekData.startDate, weekData.days]);
+
   const availabilityWeekQuery = useQuery(
-    ["available-slots", "week", weekData.startDate.getTime()],
+    ["available-slots", "week", weekQueryStartDate.getTime()],
     () =>
       providerSvc
         .getAvailabilityForPeriod(
-          getTimestampFromUTC(weekData.startDate),
+          getTimestampFromUTC(weekQueryStartDate),
           "week",
         )
         .then((r) => r.data),
     {
-      enabled: selectedPeriod === "week",
+      enabled: usesWeekAvailability,
       staleTime: availabilityStaleTime,
     },
   );
@@ -214,29 +258,30 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
 
   useEffect(() => {
     const raw =
-      selectedPeriod === "day"
-        ? availabilityDayQuery.data
-        : selectedPeriod === "week"
-          ? availabilityWeekQuery.data
+      usesWeekAvailability
+        ? availabilityWeekQuery.data
+        : selectedPeriod === "day"
+          ? availabilityDayQuery.data
           : availabilityMonthQuery.data;
     if (raw == null) return;
+    if (pendingSlotWrites.current > 0) return;
     const { validCampaigns: vc, slotsState } =
       normalizeAvailabilityResponse(raw);
     setValidCampaigns(vc);
     setSlots(slotsState);
   }, [
+    usesWeekAvailability,
     selectedPeriod,
     availabilityDayQuery.data,
     availabilityWeekQuery.data,
     availabilityMonthQuery.data,
   ]);
 
-  const slotsLoading =
-    selectedPeriod === "day"
+  const slotsLoading = usesWeekAvailability
+    ? availabilityWeekQuery.isLoading
+    : selectedPeriod === "day"
       ? availabilityDayQuery.isLoading
-      : selectedPeriod === "week"
-        ? availabilityWeekQuery.isLoading
-        : availabilityMonthQuery.isLoading;
+      : availabilityMonthQuery.isLoading;
 
   const invalidateAvailabilityQueries = () => {
     queryClient.invalidateQueries({ queryKey: ["available-slots"] });
@@ -254,13 +299,13 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   );
 
   const weekConsultationsQuery = useQuery(
-    ["consultations", "week", weekData.startDate.getTime()],
+    ["consultations", "week", weekQueryStartDate.getTime()],
     () =>
       providerSvc
-        .getConsultationsForWeek(getTimestampFromUTC(weekData.startDate))
+        .getConsultationsForWeek(getTimestampFromUTC(weekQueryStartDate))
         .then((r) => r.data),
     {
-      enabled: selectedPeriod === "week",
+      enabled: usesWeekConsultations,
     },
   );
 
@@ -285,19 +330,17 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     monthConsultationQueries.map((q) => q.data),
   );
 
-  const consultations =
-    selectedPeriod === "day"
+  const consultations = usesWeekConsultations
+    ? weekConsultationsQuery.data
+    : selectedPeriod === "day"
       ? dayConsultationsQuery.data
-      : selectedPeriod === "week"
-        ? weekConsultationsQuery.data
-        : mergedMonthConsultations;
+      : mergedMonthConsultations;
 
-  const consultationsLoading =
-    selectedPeriod === "day"
+  const consultationsLoading = usesWeekConsultations
+    ? weekConsultationsQuery.isLoading
+    : selectedPeriod === "day"
       ? dayConsultationsQuery.isLoading
-      : selectedPeriod === "week"
-        ? weekConsultationsQuery.isLoading
-        : monthConsultationQueries.some((q) => q.isLoading);
+      : monthConsultationQueries.some((q) => q.isLoading);
 
   const invalidateConsultationQueries = () => {
     queryClient.invalidateQueries({ queryKey: ["consultations"] });
@@ -321,39 +364,40 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   };
   const addAvailableSlotMutation = useMutation(addAvailableSlot, {
     onMutate: ({ timestampSlot, campaignId, organizationId }) => {
-      const newSlot = new Date(timestampSlot * 1000).toISOString();
-      if (campaignId) {
-        setSlots({
-          slots: [...slotsData.slots],
-          campaignSlots: [
-            ...slotsData.campaignSlots,
-            { campaignId, time: newSlot },
-          ],
-          organizationSlots: [...slotsData.organizationSlots],
-        });
-      } else if (organizationId) {
-        setSlots({
-          slots: [...slotsData.slots],
-          campaignSlots: [...slotsData.campaignSlots],
-          organizationSlots: [
-            ...slotsData.organizationSlots,
-            { organizationId, time: newSlot },
-          ],
-        });
-      } else {
-        setSlots({
-          slots: [...slotsData.slots, newSlot],
-          campaignSlots: [...slotsData.campaignSlots],
-          organizationSlots: [...slotsData.organizationSlots],
-        });
-      }
+      const newSlotDate = new Date(timestampSlot * 1000);
+      const newSlot = newSlotDate.toISOString();
+      const previous = slotsData;
+      pendingSlotWrites.current += 1;
+      setSlots((prev) => {
+        if (campaignId) {
+          return {
+            ...prev,
+            campaignSlots: [
+              ...prev.campaignSlots,
+              { campaignId, time: newSlotDate },
+            ],
+          };
+        }
+        if (organizationId) {
+          const slotMs = newSlotDate.getTime();
+          return {
+            ...prev,
+            organizationSlots: [
+              ...prev.organizationSlots.filter(
+                (slot) => new Date(slot.time).getTime() !== slotMs,
+              ),
+              { organizationId, time: newSlotDate },
+            ],
+          };
+        }
+        return {
+          ...prev,
+          slots: [...prev.slots, newSlot],
+        };
+      });
 
       return () => {
-        setSlots({
-          slots: slotsData.slots.filter((slot) => slot !== newSlot),
-          campaignSlots: [...slotsData.campaignSlots],
-          organizationSlots: [...slotsData.organizationSlots],
-        });
+        setSlots(previous);
       };
     },
     onSuccess: () => {
@@ -365,6 +409,9 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       rollback();
       const { message: errorMessage } = useError(error);
       toast(errorMessage, { type: "error" });
+    },
+    onSettled: () => {
+      pendingSlotWrites.current = Math.max(0, pendingSlotWrites.current - 1);
     },
   });
 
@@ -385,30 +432,43 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
   };
   const removeAvailableSlotMutation = useMutation(removeAvailableSlot, {
     onMutate: ({ timestampSlot, campaignId, organizationId }) => {
-      const newSlot = new Date(timestampSlot * 1000).toISOString();
-      if (campaignId) {
-        setSlots({
-          slots: [...slotsData.slots],
-          campaignSlots: slotsData.campaignSlots.filter(
-            (slot) => slot.time.toISOString() !== newSlot,
-          ),
-          organizationSlots: [...slotsData.organizationSlots],
-        });
-      } else if (organizationId) {
-        setSlots({
-          slots: [...slotsData.slots],
-          campaignSlots: [...slotsData.campaignSlots],
-          organizationSlots: slotsData.organizationSlots.filter(
-            (x) => x.time.toISOString() !== newSlot,
-          ),
-        });
-      } else {
-        setSlots({
-          slots: slotsData.slots.filter((slot) => slot !== newSlot),
-          campaignSlots: [...slotsData.campaignSlots],
-          organizationSlots: [...slotsData.organizationSlots],
-        });
-      }
+      const newSlotDate = new Date(timestampSlot * 1000);
+      const newSlot = newSlotDate.toISOString();
+      const slotMs = newSlotDate.getTime();
+      pendingSlotWrites.current += 1;
+      setSlots((prev) => {
+        if (campaignId) {
+          return {
+            ...prev,
+            campaignSlots: prev.campaignSlots.filter(
+              (slot) =>
+                !(
+                  new Date(slot.time).getTime() === slotMs &&
+                  slot.campaignId === campaignId
+                ),
+            ),
+          };
+        }
+        if (organizationId) {
+          return {
+            ...prev,
+            organizationSlots: prev.organizationSlots.filter(
+              (slot) =>
+                !(
+                  new Date(slot.time).getTime() === slotMs &&
+                  slot.organizationId === organizationId
+                ),
+            ),
+          };
+        }
+        return {
+          ...prev,
+          slots: prev.slots.filter((slot) => {
+            const value = slot instanceof Date ? slot.toISOString() : slot;
+            return value !== newSlot && new Date(slot).getTime() !== slotMs;
+          }),
+        };
+      });
     },
     onSuccess: () => {
       invalidateAvailabilityQueries();
@@ -417,6 +477,9 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     onError: (error) => {
       const { message: errorMessage } = useError(error);
       toast(errorMessage, { type: "error" });
+    },
+    onSettled: () => {
+      pendingSlotWrites.current = Math.max(0, pendingSlotWrites.current - 1);
     },
   });
 
@@ -505,7 +568,7 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       const slotDate = new Date(slot.time);
       return slotDate.getTime() === targetTime;
     });
-    const organizationSlot = organizationSlots[0];
+    const organizationSlot = organizationSlots[0] || null;
     const hasNormalSlot = !!slot;
 
     if (campaignSlot && organizationSlot) {
@@ -683,6 +746,21 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
     }
   };
 
+  const handleOverviewMonthDaySelect = (date) => {
+    const picked = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+    );
+    if (
+      picked.getMonth() !== monthViewDate.getMonth() ||
+      picked.getFullYear() !== monthViewDate.getFullYear()
+    ) {
+      setMonthViewDate(new Date(picked.getFullYear(), picked.getMonth(), 1));
+    }
+    setMonthSelectedDay(picked);
+  };
+
   const toolbarSelectedDate =
     selectedPeriod === "day"
       ? selectedDay
@@ -772,6 +850,10 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
       slotsData?.campaignSlots?.filter((x) => {
         return new Date(x.time).getTime() === targetTime;
       }) || [];
+    const organizationSlotsForHour =
+      slotsData?.organizationSlots?.filter((x) => {
+        return new Date(x.time).getTime() === targetTime;
+      }) || [];
 
     const slots = [];
 
@@ -803,9 +885,9 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
         availabilityStatus: "available",
         isAvailable: !!isAvailable.slot,
         hasNormalSlot: isAvailable.hasNormalSlot,
-        campaignId,
-        organizationId,
-        organizationForSlot,
+        campaignId: null,
+        organizationId: null,
+        organizationForSlot: null,
         campaignSlots: campaignSlotsForHour.map((campaignSlot) => ({
           campaignId: campaignSlot.campaignId,
           campaignData: validCampaigns?.find(
@@ -824,31 +906,31 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
         isAvailable: false,
         hasNormalSlot: isAvailable.hasNormalSlot,
         campaignId: campaignSlot.campaignId,
-        organizationId,
-        organizationForSlot,
+        organizationId: null,
+        organizationForSlot: null,
         campaignSlots: [],
         consultation: null,
         isPastDay,
       });
     });
 
-    if (
-      organizationId &&
-      !slots.find((s) => s.organizationId === organizationId)
-    ) {
+    organizationSlotsForHour.forEach((orgSlot) => {
       slots.push({
         slotDate,
         availabilityStatus: "organization",
         isAvailable: false,
         hasNormalSlot: isAvailable.hasNormalSlot,
-        campaignId,
-        organizationId,
-        organizationForSlot,
+        campaignId: null,
+        organizationId: orgSlot.organizationId,
+        organizationForSlot:
+          organizations?.find(
+            (x) => x.organizationId === orgSlot.organizationId,
+          ) || null,
         campaignSlots: [],
         consultation: null,
         isPastDay,
       });
-    }
+    });
 
     // If no slots, return unavailable slot
     if (slots.length === 0) {
@@ -899,28 +981,143 @@ export const Scheduler = ({ openJoinConsultation, openCancelConsultation }) => {
 
   const dataLoading = slotsLoading || consultationsLoading;
 
+  const toolbar = (
+    <SchedulerToolbar
+      periodTypes={periodTypes}
+      onPeriodChange={handlePeriodTypesChange}
+      dateLabel={toolbarDateLabel}
+      selectedPeriod={selectedPeriod}
+      selectedDate={toolbarSelectedDate}
+      monthViewDate={monthViewDate}
+      weekDays={
+        selectedPeriod === "week" || overviewDayUsesWeekData
+          ? overviewWeekDays
+          : []
+      }
+      onDateSelect={handleDateSelect}
+      onMonthSelect={handleMonthSelect}
+      onPrev={() => handleDateChange("previous")}
+      onNext={() => handleDateChange("next")}
+      onAddAvailabilityTemplate={handleEditClick}
+      width={width}
+      addAvailabilityTemplateLabel={t("add_template_availability")}
+      t={t}
+      language={i18n.language}
+    />
+  );
+
+  if (variant === "overview") {
+    const overviewConsultationsRaw = Array.isArray(consultations)
+      ? consultations
+      : [];
+    const overviewWeekCalendarProps = {
+      days: overviewWeekDays,
+      consultationsRaw: overviewConsultationsRaw,
+      hours,
+      getSlotDataForHour,
+      t,
+    };
+    const overviewSlotsPanelProps = {
+      hours,
+      getSlotDataForHour,
+      handleSetAvailable,
+      handleSetUnavailable,
+      slotsData,
+      organizations,
+      validCampaigns,
+      countryHasNormalSlots,
+      isLoading: dataLoading,
+      t,
+    };
+
+    return (
+      <div className="scheduler scheduler--overview">
+        <div className="scheduler__overview-header">
+          <h3 className="scheduler__overview-title">
+            {t("schedule_and_availability")}
+          </h3>
+          {toolbar}
+        </div>
+        <div className="scheduler__overview-body">
+          {selectedPeriod === "day" ? (
+            <>
+              <ScheduleOverviewWeekCalendar
+                {...overviewWeekCalendarProps}
+                selectedDay={selectedDay}
+                onSelectDay={(date) => {
+                  setSelectedDay(
+                    new Date(
+                      date.getFullYear(),
+                      date.getMonth(),
+                      date.getDate(),
+                    ),
+                  );
+                }}
+              />
+              {dataLoading ? (
+                <Loading size="md" />
+              ) : (
+                <div className="schedule-overview-day-slots">
+                  <ScheduleDaySlotsPanel
+                    {...overviewSlotsPanelProps}
+                    day={selectedDay}
+                  />
+                </div>
+              )}
+            </>
+          ) : dataLoading ? (
+            <Loading />
+          ) : selectedPeriod === "week" ? (
+            <ScheduleOverviewWeekGrid
+              days={overviewWeekDays}
+              hours={hours}
+              getSlotDataForHour={getSlotDataForHour}
+              handleSetAvailable={handleSetAvailable}
+              handleSetUnavailable={handleSetUnavailable}
+              slotsData={slotsData}
+              organizations={organizations}
+              validCampaigns={validCampaigns}
+              countryHasNormalSlots={countryHasNormalSlots}
+              t={t}
+            />
+          ) : (
+            <ScheduleOverviewMonthCalendar
+              monthViewDate={monthViewDate}
+              monthSelectedDay={monthSelectedDay}
+              onSelectDay={handleOverviewMonthDaySelect}
+              onOpenDaySlots={setSlotsModalDay}
+              consultationsRaw={overviewConsultationsRaw}
+              hours={hours}
+              getSlotDataForHour={getSlotDataForHour}
+              t={t}
+            />
+          )}
+        </div>
+        <ScheduleDaySlotsModal
+          isOpen={!!slotsModalDay}
+          day={slotsModalDay}
+          onClose={() => setSlotsModalDay(null)}
+          hours={hours}
+          getSlotDataForHour={getSlotDataForHour}
+          handleSetAvailable={handleSetAvailable}
+          handleSetUnavailable={handleSetUnavailable}
+          slotsData={slotsData}
+          organizations={organizations}
+          validCampaigns={validCampaigns}
+          countryHasNormalSlots={countryHasNormalSlots}
+          language={i18n.language}
+          isLoading={dataLoading}
+          t={t}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <Block classes="scheduler__heading" animation={null}>
         <div className="scheduler__heading-inner">
-          <SchedulerToolbar
-            periodTypes={periodTypes}
-            onPeriodChange={handlePeriodTypesChange}
-            dateLabel={toolbarDateLabel}
-            selectedPeriod={selectedPeriod}
-            selectedDate={toolbarSelectedDate}
-            monthViewDate={monthViewDate}
-            weekDays={selectedPeriod === "week" ? weekData.days : []}
-            onDateSelect={handleDateSelect}
-            onMonthSelect={handleMonthSelect}
-            onPrev={() => handleDateChange("previous")}
-            onNext={() => handleDateChange("next")}
-            onAddAvailabilityTemplate={handleEditClick}
-            width={width}
-            addAvailabilityTemplateLabel={t("add_template_availability")}
-            t={t}
-            language={i18n.language}
-          />
+          {toolbar}
           {selectedPeriod === "week" && (
             <div className="scheduler__weekday-strip">
               <Grid classes="scheduler__weekday-strip__grid">

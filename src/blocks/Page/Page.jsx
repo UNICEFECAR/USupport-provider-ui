@@ -248,7 +248,6 @@ export const Page = ({
 
   const pages = [
     { name: t("page_1"), url: "/dashboard", exact: true, icon: "home" },
-    { name: t("page_2"), url: "/calendar", icon: "calendar" },
     { name: t("page_3"), url: "/activity-history", icon: "document" },
     { name: t("page_4"), url: "/consultations", icon: "two-people" },
     { name: t("page_5"), url: "/clients", icon: "three-people" },
@@ -363,7 +362,6 @@ export const Page = ({
       { name: t("footer_9"), url: "/faq" },
     ],
     list2: [
-      { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
       { name: t("footer_5"), url: "/clients", exact: true },

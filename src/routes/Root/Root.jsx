@@ -36,11 +36,10 @@ import {
   ActivityHistory,
   Consultations,
   Clients,
-  Scheduler,
   SchedulerTemplate,
   CookiePolicy,
   TermsOfUse,
-  Dashboard,
+  ScheduleDashboard,
   // Consultation,
   Notifications,
   Reports,
@@ -120,23 +119,19 @@ const LanguageLayout = () => {
         path="dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <ScheduleDashboard />
           </ProtectedRoute>
         }
+      />
+      <Route
+        path="schedule"
+        element={<Navigate to={`/provider/${language}/dashboard`} replace />}
       />
       <Route
         path="notifications"
         element={
           <ProtectedRoute>
             <Notifications />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
           </ProtectedRoute>
         }
       />
@@ -178,20 +173,16 @@ const LanguageLayout = () => {
         }
       />
       <Route
-        path="calendar"
-        element={
-          <ProtectedRoute>
-            <Scheduler />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path="calendar/template"
         element={
           <ProtectedRoute>
             <SchedulerTemplate />
           </ProtectedRoute>
         }
+      />
+      <Route
+        path="calendar"
+        element={<Navigate to={`/provider/${language}/dashboard`} replace />}
       />
       <Route
         path="privacy-policy"
