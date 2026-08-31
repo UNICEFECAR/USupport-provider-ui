@@ -228,7 +228,8 @@
       "section_personal_information": "Жеке ақпарат",
       "section_professional_information": "Кәсіби ақпарат",
       "section_location": "Орналасқан жері",
-      "section_languages_specialties": "Тілдер мен мамандықтар"
+      "section_languages_specialties": "Тілдер мен мамандықтар",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Консультация алу үшін жақын арадағы бос уақыт",
@@ -293,7 +294,8 @@
       "thursday": "Бейсенбі",
       "friday": "Жұма",
       "saturday": "Сенбі",
-      "sunday": "Жексенбі"
+      "sunday": "Жексенбі",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Сіздің парақшаңыз",

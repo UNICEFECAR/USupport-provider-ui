@@ -228,7 +228,8 @@
       "no_data_found": "Δεν βρέθηκαν δεδομένα",
       "select": "Επιλογή",
       "remove": "Κατάργηση",
-      "video_link_error": "Παρακαλούμε εισάγετε μια έγκυρη διεύθυνση URL"
+      "video_link_error": "Παρακαλούμε εισάγετε μια έγκυρη διεύθυνση URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Συντομότερο διαθέσιμο ραντεβού για συνεδρία",
@@ -293,7 +294,8 @@
       "thursday": "Πέμπτη",
       "friday": "Παρασκευή",
       "saturday": "Σάββατο",
-      "sunday": "Κυριακή"
+      "sunday": "Κυριακή",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Το προφίλ σας",

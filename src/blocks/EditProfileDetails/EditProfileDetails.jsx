@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -26,6 +26,11 @@ import {
   useUpdateProviderData,
 } from "#hooks";
 import Joi from "joi";
+
+import {
+  buildSpecializationOptions,
+  getNextSpecializations,
+} from "#utils/specializations";
 
 import "./edit-profile-details.scss";
 
@@ -136,11 +141,10 @@ export const EditProfileDetails = ({
 
   const isPriceDisabled = !hasPayments;
 
-  const specializationOptions = [
-    { value: "psychologist", label: t("psychologist"), selected: false },
-    { value: "psychiatrist", label: t("psychiatrist"), selected: false },
-    { value: "psychotherapist", label: t("psychotherapist"), selected: false },
-  ];
+  const specializationOptions = useMemo(
+    () => buildSpecializationOptions(selectedCountry, t),
+    [selectedCountry, t]
+  );
 
   useEffect(() => {
     if (providerData && providersQuery.data) {
@@ -205,7 +209,7 @@ export const EditProfileDetails = ({
       });
     }
     return specializationOptions;
-  }, [providerData]);
+  }, [providerData, specializationOptions]);
 
   const getLanguageOptions = useCallback(() => {
     const languageOptions = [];
@@ -317,6 +321,15 @@ export const EditProfileDetails = ({
       .filter((option) => option.selected)
       .map((x) => x.value);
     handleChange(field, selected);
+  };
+
+  const handleSpecializationSelect = (options) => {
+    setErrors({ specializations: null });
+    const nextSpecializations = getNextSpecializations(
+      providerData.specializations || [],
+      options
+    );
+    handleChange("specializations", nextSpecializations);
   };
 
   const handleEducationChange = (options) => {
@@ -663,9 +676,7 @@ export const EditProfileDetails = ({
               <PillMultiSelect
                 label={t("specialization_label") + " *"}
                 options={getSpecializationsOptions()}
-                onChange={(options) =>
-                  handleWorkWithAndLanguageSelect("specializations", options)
-                }
+                onChange={(options) => handleSpecializationSelect(options)}
                 errorMessage={errors.specializations}
                 emptyMessage={t("no_data_found")}
               />

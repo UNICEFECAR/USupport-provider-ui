@@ -228,7 +228,8 @@
       "no_data_found": "Nie znaleziono danych",
       "select": "Wybierz",
       "remove": "Usuń",
-      "video_link_error": "Proszę wprowadzić prawidłowy adres URL"
+      "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Najwcześniejszy termin konsultacji",
@@ -293,7 +294,8 @@
       "thursday": "Czwartek",
       "friday": "Piątek",
       "saturday": "Sobota",
-      "sunday": "Niedziela"
+      "sunday": "Niedziela",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Twój profil",

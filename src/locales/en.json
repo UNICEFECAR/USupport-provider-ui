@@ -9,18 +9,15 @@
       "page_6": "Campaigns",
       "page_7": "My Q&A",
       "page_8": "Schedule",
-
       "country_1": "",
       "country_2": "",
       "country_3": "",
-
       "language_1": "",
       "language_2": "",
       "language_3": "",
       "language_4": "",
       "language_5": "",
       "language_6": "",
-
       "footer_1": "Dashboard",
       "footer_2": "Calendar",
       "footer_3": "Activity history",
@@ -30,9 +27,7 @@
       "footer_7": "Privacy Policy",
       "footer_8": "Cookie Settings",
       "footer_9": "FAQ",
-
       "emergency_button": "SOS Center",
-
       "button_text": "Go to app",
       "contact_us": "Contact us",
       "your_profile_text": "Your profile",
@@ -40,7 +35,6 @@
       "password": "Please enter your password to access the site",
       "wrong_password": "Wrong password",
       "submit": "Submit",
-
       "dark": "Dark",
       "light": "Light",
       "high_contrast": "High Contrast",
@@ -64,7 +58,6 @@
       "message_placeholder": "Your message to us",
       "message_error": "Please enter your message",
       "button": "Send Message",
-
       "modal_title": "Your message was successfully sent",
       "modal_text": "We will get back to you as soon as possible",
       "modal_cta_label": "Go back to Home",
@@ -151,7 +144,6 @@
       "change_photo": "Change photo",
       "work_with_label": "Specialties",
       "video_link_label": "Video representation",
-
       "name_placeholder": "Enter your name",
       "patronym_placeholder": "Enter you patronym",
       "surname_placeholder": "Enter your surname",
@@ -165,16 +157,13 @@
       "consultation_price_placeholder": "Consultation price",
       "description_placeholder": "Enter description",
       "video_link_placeholder": "https://video.link",
-
       "sex_male": "Male",
       "sex_female": "Female",
       "sex_unspecified": "Unspecified",
       "sex_none": "Prefer not to say",
-
       "psychologist": "Psychologist",
       "psychiatrist": "Psychiatrist",
       "psychotherapist": "Psychotherapist",
-
       "name_error": "Name is required",
       "surname_error": "Surname is required",
       "nickname_error": "Nickname is required",
@@ -186,7 +175,6 @@
       "postcode_error": "Postcode is required",
       "min_price_error": "The minimum consultation price is {{minPrice}}{{currencySymbol}}",
       "consultation_price_disabled": "Paid consultations are not available in your country",
-
       "specializations_error": "Select at least one specialization",
       "work_with_error": "Select at least one category",
       "languages_error": "Select at least one language",
@@ -195,20 +183,16 @@
       "sex_error": "Select your sex",
       "consultation_price_error": "The price must be 0 or a positive number",
       "video_link_error": "Please enter a valid URL",
-
       "add_more_languages": "Add more languages",
       "add_more_work_with": "Add more categories",
       "add_more_education": "Add more",
       "add_more_specializations": "Add more specializations",
-
       "section_personal_information": "Personal information",
       "section_professional_information": "Professional information",
       "section_location": "Location",
       "section_languages_specialties": "Languages and specialties",
-
       "button_text": "Save changes",
       "button_secondary_text": "Discard changes",
-
       "addiction": "Addiction and Substance Abuse ",
       "stress": "Stress Management",
       "burnout": "Burnout and Academic Stress",
@@ -240,13 +224,12 @@
       "love": "Love and Romantic Relationships",
       "social_skills": "Social Skills and Friendship",
       "body_image": "Body Image and Self-Esteem",
-
       "edit_succes": "Profile updated successfully",
-
       "search": "Search",
       "no_data_found": "No data found",
       "select": "Select",
-      "remove": "Remove"
+      "remove": "Remove",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Earliest available slot for consultation",
@@ -267,11 +250,9 @@
       "city_label": "City",
       "street_label": "Street",
       "postcode_label": "Postcode",
-
       "psychologist": "Psychologist",
       "psychiatrist": "Psychiatrist",
       "psychotherapist": "Psychotherapist",
-
       "addiction": "Addiction and Substance Abuse ",
       "stress": "Stress Management",
       "burnout": "Burnout and Academic Stress",
@@ -303,7 +284,6 @@
       "love": "Love and Romantic Relationships",
       "social_skills": "Social Skills and Friendship",
       "body_image": "Body Image and Self-Esteem",
-
       "hour_consultation": "for 1 hour consultation",
       "organizations_label": "Organizations",
       "free": "free of charge",
@@ -314,7 +294,8 @@
       "thursday": "Thursday",
       "friday": "Friday",
       "saturday": "Saturday",
-      "sunday": "Sunday"
+      "sunday": "Sunday",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Your profile",
@@ -347,7 +328,6 @@
       "no_messages": "There are no messages in this consultation",
       "no_activity_history": "No activity has been recorded so far",
       "free": "Free",
-
       "client_joined": "Client joined the consultation",
       "client_left": "Client left the consultation",
       "client_camera_off": "The client has turned off the camera",
@@ -355,14 +335,12 @@
       "client_microphone_off": "The client has turned off the microphone",
       "client_microphone_on": "The client has turned on the microphone",
       "chat_history_deleted_by_client": "Chat history deleted by the client",
-
       "provider_joined": "Provider joined the consultation",
       "provider_left": "The provider has left the consultation",
       "provider_camera_off": "The provider has turned off the camera",
       "provider_camera_on": "The provider has turned on the camera",
       "provider_microphone_off": "The provider has turned off the microphone",
       "provider_microphone_on": "The provider has turned on the microphone",
-
       "canceled": "Cancelled"
     },
     "consultations": {
@@ -419,14 +397,12 @@
       "no_clients_search": "There are no clients matching your search",
       "no_clients": "You don't have any clients yet",
       "free": "Free",
-
       "client_joined": "Client joined the consultation",
       "client_left": "Client left the consultation",
       "client_camera_off": "The client has turned off the camera",
       "client_camera_on": "The client has turned on the camera",
       "client_microphone_off": "The client has turned off the microphone",
       "client_microphone_on": "The client has turned on the microphone",
-
       "provider_joined": "Provider joined the consultation",
       "provider_left": "The provider has left the consultation",
       "provider_camera_off": "The provider has turned off the camera",
@@ -447,7 +423,6 @@
       "organization_appointment": "Organization",
       "view": "View",
       "today": "Today",
-
       "sunday": "Sun",
       "monday": "Mon",
       "tuesday": "Tue",
@@ -455,7 +430,6 @@
       "thursday": "Thu",
       "friday": "Fri",
       "saturday": "Sat",
-
       "consultation_details": "View details",
       "available": "You are available",
       "unavailable": "Unavailable",
@@ -545,7 +519,6 @@
       "consultation": "Consultation",
       "consultations": "Consultations",
       "not_available": "You are unavailable",
-
       "month_1": "Jan",
       "month_2": "Feb",
       "month_3": "Mar",
@@ -697,7 +670,6 @@
       "success": "Rating sent successfully"
     }
   },
-
   "pages": {
     "not-found-page": {
       "heading": "Oops! We can't find the page you are looking for...",
@@ -771,14 +743,12 @@
       "thursday": "Thu",
       "friday": "Fri",
       "saturday": "Sat",
-
       "client_joined": "Client joined the consultation",
       "client_left": "Client left the consultation",
       "client_camera_off": "The client has turned off the camera",
       "client_camera_on": "The client has turned on the camera",
       "client_microphone_off": "The client has turned off the microphone",
       "client_microphone_on": "The client has turned on the microphone",
-
       "provider_joined": "Provider joined the consultation",
       "provider_left": "The provider has left the consultation",
       "provider_camera_off": "The provider has turned off the camera",
@@ -786,7 +756,6 @@
       "provider_microphone_off": "The provider has turned off the microphone",
       "provider_microphone_on": "The provider has turned on the microphone",
       "chat_history_deleted_by_client": "Chat history deleted by the client",
-
       "show_system_messages": "Show system messages",
       "show_previous_consultations": "Show previous consultations",
       "hide_options": "Hide settings",
@@ -829,7 +798,6 @@
       "subheading": "We’ll be counting stars. Let’s stay honest. Tell us how you feel about this platform. Rate us and leave us your comment."
     }
   },
-
   "modals": {
     "upload-picture": {
       "heading": "Change profile picture",
@@ -984,11 +952,9 @@
       "secondary_cta_label": "Reset filters"
     }
   },
-
   "routes": {
     "root": {}
   },
-
   "meta": {
     "title": "uSupport Provider",
     "description": "Specialist dashboard for providing care, organizing schedules, managing sessions and profiles, and responding to Q&A."
