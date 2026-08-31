@@ -16,10 +16,27 @@ export const getSpecializationOptionValues = (country) => {
   return [...BASE_SPECIALIZATION_OPTIONS];
 };
 
+export const translateSpecialization = (t, value) => {
+  const key = String(value ?? "").trim();
+  if (!key) return "";
+
+  if (
+    key === PEER_SUPPORT ||
+    key === "providers.peer_support" ||
+    key === "provider-overview.peer_support" ||
+    key === "edit-profile-details.peer_support" ||
+    key.endsWith(".peer_support")
+  ) {
+    return "U-FRIEND";
+  }
+
+  return t(key);
+};
+
 export const buildSpecializationOptions = (country, t) =>
   getSpecializationOptionValues(country).map((value) => ({
     value,
-    label: t(value),
+    label: translateSpecialization(t, value),
     selected: false,
   }));
 
