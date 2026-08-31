@@ -25,7 +25,19 @@ export const ProviderOverview = ({
   openChangePasswordBackdrop,
   openDeleteAccountBackdrop,
 }) => {
-  const { t } = useTranslation("blocks", { keyPrefix: "provider-overview" });
+  const { t: translate } = useTranslation("blocks", {
+    keyPrefix: "provider-overview",
+  });
+  const t = (key, options) => {
+    const normalizedKey = String(key ?? "").trim();
+    if (
+      normalizedKey === "peer_support" ||
+      normalizedKey.endsWith(".peer_support")
+    ) {
+      return "U-FRIEND";
+    }
+    return translate(key, options);
+  };
   const navigate = useNavigate();
 
   const [providerDataQuery] = useGetProviderData();
