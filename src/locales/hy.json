@@ -228,7 +228,8 @@
       "no_data_found": "Տվյալ չի գտնվել",
       "select": "Ընտրել",
       "remove": "Հեռացնել",
-      "video_link_error": "Խնդրում ենք մուտքագրել ճիշտ URL"
+      "video_link_error": "Խնդրում ենք մուտքագրել ճիշտ URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Խորհրդատվության համար ամենամոտ հասանելի ժամանակահատվածը",
@@ -293,7 +294,8 @@
       "thursday": "Հինգշաբթի",
       "friday": "Ուրբաթ",
       "saturday": "Շաբաթ",
-      "sunday": "Կիրակի"
+      "sunday": "Կիրակի",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Ձեր պրոֆիլը",

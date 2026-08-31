@@ -228,7 +228,8 @@
       "section_personal_information": "Личная информация",
       "section_professional_information": "Профессиональная информация",
       "section_location": "Местоположение",
-      "section_languages_specialties": "Языки и специальности"
+      "section_languages_specialties": "Языки и специальности",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Самый ранний доступный слот свободного времени для консультации",
@@ -293,7 +294,8 @@
       "thursday": "Четверг",
       "friday": "Пятница",
       "saturday": "Суббота",
-      "sunday": "Воскресенье"
+      "sunday": "Воскресенье",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Ваш профиль",

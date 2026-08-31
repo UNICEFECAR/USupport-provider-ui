@@ -228,7 +228,8 @@
       "no_data_found": "Дані не знайдено",
       "select": "Виберіть",
       "remove": "Видалити",
-      "video_link_error": "Будь ласка, введіть коректний URL"
+      "video_link_error": "Будь ласка, введіть коректний URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Найперший доступний час для консультації",
@@ -293,7 +294,8 @@
       "thursday": "Четвер",
       "friday": "Пʼятниця",
       "saturday": "Субота",
-      "sunday": "Неділя"
+      "sunday": "Неділя",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Ваш профіль",
