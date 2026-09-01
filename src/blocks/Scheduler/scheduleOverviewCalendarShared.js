@@ -1,13 +1,3 @@
-export const WEEKDAY_ORDER_KEYS = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-];
-
 export function isSameCalendarDay(a, b) {
   if (!a || !b) return false;
   return (
@@ -47,42 +37,6 @@ export function getDayAvailabilityState({
   const isAvailable = hasAppt || hasOpenSlotOnDay(hours, getSlotDataForHour, date);
 
   return { count, hasAppt, isAvailable };
-}
-
-export function getDayStatusLabels({
-  hasAppt,
-  isAvailable,
-  count,
-  t,
-  showUnavailableStatus,
-}) {
-  if (hasAppt) {
-    return {
-      statusLabel: `${count} ${
-        count === 1 ? t("consultation") : t("consultations")
-      }`,
-      statusShort: String(count),
-    };
-  }
-
-  if (isAvailable) {
-    return {
-      statusLabel: `0 ${t("consultations")}`,
-      statusShort: "0",
-    };
-  }
-
-  if (showUnavailableStatus) {
-    return {
-      statusLabel: t("not_available"),
-      statusShort: "–",
-    };
-  }
-
-  return {
-    statusLabel: "",
-    statusShort: "",
-  };
 }
 
 export function isPastDateWithoutAppointment(date, consultationsRaw) {
