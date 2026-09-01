@@ -4,8 +4,9 @@ import { computeFloatingPickerPosition } from "./scheduleDaySlotsShared.js";
 
 /**
  * Fixed-position slot picker anchored to a clicked element; repositions on scroll/resize.
+ * When closeOnScroll is true, scroll closes the picker instead of repositioning it.
  */
-export function useFloatingSlotPicker() {
+export function useFloatingSlotPicker({ closeOnScroll = false } = {}) {
   const anchorRef = useRef(null);
   const [activeKey, setActiveKey] = useState(null);
   const [meta, setMeta] = useState(null);
@@ -49,14 +50,15 @@ export function useFloatingSlotPicker() {
     if (!activeKey) return undefined;
 
     updatePosition();
-    window.addEventListener("scroll", updatePosition, true);
+    const handleScroll = closeOnScroll ? close : updatePosition;
+    window.addEventListener("scroll", handleScroll, true);
     window.addEventListener("resize", updatePosition);
 
     return () => {
-      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("scroll", handleScroll, true);
       window.removeEventListener("resize", updatePosition);
     };
-  }, [activeKey, updatePosition]);
+  }, [activeKey, close, closeOnScroll, updatePosition]);
 
   return {
     activeKey,

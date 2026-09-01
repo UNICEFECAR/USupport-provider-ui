@@ -47,6 +47,7 @@ export const ScheduleDaySlotsModal = ({
         validCampaigns={validCampaigns}
         countryHasNormalSlots={countryHasNormalSlots}
         isLoading={isLoading}
+        closePickerOnScroll
         t={t}
       />
     </Modal>
