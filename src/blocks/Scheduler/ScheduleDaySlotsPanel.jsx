@@ -29,10 +29,11 @@ export const ScheduleDaySlotsPanel = ({
   countryHasNormalSlots,
   isLoading,
   hideUnavailableSlots = false,
+  closePickerOnScroll = false,
   t,
 }) => {
   const { activeKey: activeHour, position, isOpen, open, close } =
-    useFloatingSlotPicker();
+    useFloatingSlotPicker({ closeOnScroll: closePickerOnScroll });
 
   const orgList = organizations || [];
   const campaignList = getCampaignList(validCampaigns);
