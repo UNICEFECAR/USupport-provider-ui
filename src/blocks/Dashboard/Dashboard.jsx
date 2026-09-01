@@ -18,6 +18,7 @@ import {
   getDateView,
 } from "@USupport-components-library/utils";
 import { useGetCalendarData, useGetConsultationsForSingleDay } from "#hooks";
+import { useDeviceTest } from "#backdrops";
 
 import "./dashboard.scss";
 
@@ -42,6 +43,8 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "dashboard" });
   const navigate = useNavigate();
   const today = new Date();
+
+  const { openDeviceTest } = useDeviceTest();
 
   const weekDays = [];
   let startDay = today;
@@ -147,6 +150,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
             handleJoinClick={openJoinConsultation}
             handleCancelConsultation={handleCancelConsultation}
             handleViewProfile={handleViewProfile}
+            handleTestDevices={openDeviceTest}
             couponPrice={consultation.couponPrice}
             sponsorImage={consultation.sponsorImage}
             withOrganization={!!consultation.organizationId}

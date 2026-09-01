@@ -18,6 +18,7 @@ import {
   useGetConsultationsForSingleDay,
   useGetAllUpcomingConsultations,
 } from "#hooks";
+import { useDeviceTest } from "#backdrops";
 
 import "./consultations.scss";
 
@@ -41,6 +42,7 @@ export const Consultations = ({
     { value: "upcoming", isSelected: false },
   ]);
   const [searchValue, setSearchValue] = useState("");
+  const { openDeviceTest } = useDeviceTest();
 
   const filter = tabs.find((tab) => tab.isSelected)?.value ?? "today";
   const searchNeedle = searchValue?.toLowerCase() ?? "";
@@ -77,6 +79,7 @@ export const Consultations = ({
         handleCancelConsultation={handleCancelConsultation}
         handleJoinClick={openJoinConsultation}
         handleViewProfile={handleViewProfile}
+        handleTestDevices={openDeviceTest}
         hasMenu={true}
         overview={false}
         renderIn="provider"

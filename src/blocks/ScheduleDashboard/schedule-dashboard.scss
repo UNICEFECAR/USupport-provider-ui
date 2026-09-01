@@ -10,6 +10,10 @@
     padding-top: $spacing_3_2;
   }
 
+  &.block {
+    overflow: visible;
+  }
+
   &__layout {
     display: flex;
     flex-direction: column;
@@ -18,15 +22,9 @@
     margin: 0 auto;
 
     @media screen and (min-width: $screen-lg) {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 34rem;
-      align-items: stretch;
-      gap: $spacing_2_4;
-    }
-
-    @media screen and (min-width: $screen-xl) {
-      grid-template-columns: minmax(0, 1fr) 38rem;
-      gap: $spacing_3_2;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing_4_0;
     }
   }
 
@@ -34,6 +32,7 @@
     display: flex;
     flex-direction: column;
     gap: $spacing_2_4;
+    flex: 1;
     min-width: 0;
   }
 
@@ -73,6 +72,7 @@
 
   &__stat-copy {
     min-width: 0;
+    text-align: left;
   }
 
   &__stat-label {
@@ -111,19 +111,28 @@
     @include content-surface;
     padding: $spacing_2_0 $spacing_1_6 $spacing_2_4;
     min-width: 0;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
 
     @media screen and (min-width: $screen-md) {
       padding: $spacing_2_4;
     }
 
     @media screen and (min-width: $screen-lg) {
-      align-self: stretch;
-      height: 100%;
-      max-height: none;
+      position: sticky;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      width: 34rem;
+      min-width: 34rem;
+      height: 100dvh;
+      min-height: 100dvh;
+      overflow: hidden;
+      align-self: flex-start;
+      box-sizing: border-box;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      width: 38rem;
+      min-width: 38rem;
     }
   }
 
@@ -147,10 +156,6 @@
     @include scrollbar-secondary;
     padding-right: $spacing_0_4;
     -webkit-overflow-scrolling: touch;
-
-    @media screen and (min-width: $screen-lg) {
-      flex: 1 1 0;
-    }
 
     .consultation {
       width: 100%;

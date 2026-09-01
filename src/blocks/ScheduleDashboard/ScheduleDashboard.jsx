@@ -14,6 +14,7 @@ import {
   useGetConsultationsForSingleDay,
   useGetAllUpcomingConsultations,
 } from "#hooks";
+import { useDeviceTest } from "#backdrops";
 import { Scheduler } from "../Scheduler";
 
 import "./schedule-dashboard.scss";
@@ -38,6 +39,7 @@ export const ScheduleDashboard = ({
   const { t } = useTranslation("blocks", { keyPrefix: "schedule-dashboard" });
   const { t: tDashboard } = useTranslation("blocks", { keyPrefix: "dashboard" });
   const navigate = useNavigate();
+  const { openDeviceTest } = useDeviceTest();
   const today = useMemo(() => startOfDay(new Date()), []);
 
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -198,6 +200,7 @@ export const ScheduleDashboard = ({
                     handleJoinClick={openJoinConsultation}
                     handleCancelConsultation={openCancelConsultation}
                     handleViewProfile={handleViewProfile}
+                    handleTestDevices={openDeviceTest}
                     couponPrice={consultation.couponPrice}
                     sponsorImage={consultation.sponsorImage}
                     withOrganization={!!consultation.organizationId}

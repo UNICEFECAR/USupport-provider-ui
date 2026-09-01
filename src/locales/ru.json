@@ -369,7 +369,9 @@
       "free": "Бесплатно",
       "cancel": "Отмена",
       "past_tab_label": "Прошедшие",
-      "no_upcoming_consultations": "У Вас нет предстоящих консультаций"
+      "no_upcoming_consultations": "У Вас нет предстоящих консультаций",
+      "test_audio_camera": "Проверить аудио и камеру",
+      "test_audio_camera_description": "Проверьте устройства перед консультацией"
     },
     "clients": {
       "clients_heading": "Клиенты",
@@ -536,7 +538,9 @@
       "ordinal_rd": "",
       "ordinal_th": "",
       "free": "Бесплатно",
-      "cancel": "Отмена"
+      "cancel": "Отмена",
+      "test_audio_camera": "Проверить аудио и камеру",
+      "test_audio_camera_description": "Проверьте устройства перед консультацией"
     },
     "schedule-dashboard": {
       "available_days": "Доступные дни",
@@ -871,6 +875,18 @@
       "error": "Произошла ошибка. Пожалуйста, попробуйте еще раз",
       "permissions_error": "Предоставьте разрешения для камеры и микрофона",
       "allow_permissions": "Если вы хотите поговорить с клиентом, разрешите это в настройках браузера или через значок информации в адресной строке."
+    },
+    "device-test": {
+      "heading": "Проверить аудио и камеру",
+      "subheading": "Проверьте устройства перед консультацией, чтобы убедиться, что всё работает.",
+      "done": "Готово",
+      "configuring_devices": "Настройка устройств...",
+      "camera_off_label": "Камера выключена",
+      "mic_level_label": "Микрофон",
+      "toggle_camera": "Включить/выключить камеру",
+      "toggle_microphone": "Включить/выключить микрофон",
+      "retry_permissions": "Попробовать снова",
+      "permissions_error": "Предоставьте разрешения для камеры и микрофона"
     },
     "select-consultation": {
       "heading_edit": "Предложить изменение",
