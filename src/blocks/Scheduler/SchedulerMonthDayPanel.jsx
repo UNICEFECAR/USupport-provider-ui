@@ -7,8 +7,6 @@ import {
 } from "@USupport-components-library/src";
 import { isDateToday } from "@USupport-components-library/src/utils/date";
 
-import { useDeviceTest } from "#backdrops";
-
 import { mapSlotDataForDailyComponent } from "./schedulerUtils.js";
 
 function rawConsultationToCard(c) {
@@ -131,7 +129,6 @@ export const SchedulerMonthAppointmentsBox = ({
   const { t: tConsultation } = useTranslation("blocks", {
     keyPrefix: "consultations",
   });
-  const { openDeviceTest } = useDeviceTest();
 
   const { dayConsultations, openSlotsCount } = useDayPanelData({
     selectedDay,
@@ -194,7 +191,6 @@ export const SchedulerMonthAppointmentsBox = ({
                   handleJoinClick={handleJoinConsultation}
                   handleCancelConsultation={handleCancelConsultation}
                   handleViewProfile={handleViewProfile}
-                  handleTestDevices={openDeviceTest}
                   couponPrice={consultation.couponPrice}
                   sponsorImage={consultation.sponsorImage}
                   withOrganization={!!consultation.organizationId}

@@ -1048,6 +1048,7 @@ export const Scheduler = ({
               <ScheduleOverviewWeekCalendar
                 {...overviewWeekCalendarProps}
                 selectedDay={selectedDay}
+                language={i18n.language}
                 onSelectDay={(date) => {
                   setSelectedDay(
                     new Date(
@@ -1083,6 +1084,7 @@ export const Scheduler = ({
               validCampaigns={validCampaigns}
               countryHasNormalSlots={countryHasNormalSlots}
               consultationsRaw={overviewConsultationsRaw}
+              language={i18n.language}
               t={t}
             />
           ) : (
@@ -1094,6 +1096,7 @@ export const Scheduler = ({
               consultationsRaw={overviewConsultationsRaw}
               hours={hours}
               getSlotDataForHour={getSlotDataForHour}
+              language={i18n.language}
               t={t}
             />
           )}

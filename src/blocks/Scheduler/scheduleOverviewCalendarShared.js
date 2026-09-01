@@ -84,3 +84,14 @@ export function getDayStatusLabels({
     statusShort: "",
   };
 }
+
+export function isPastDateWithoutAppointment(date, consultationsRaw) {
+  const today = new Date();
+  const startOfToday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+  );
+  const hasAppt = consultationCountOnDay(consultationsRaw, date) > 0;
+  return date < startOfToday && !hasAppt;
+}

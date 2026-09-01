@@ -1,0 +1,209 @@
+@import "@USupport-components-library/styles";
+
+// Self-contained date card used identically by the day / week / month
+// overview grids. Every text node gets an explicit line-height (never
+// inherited) so the card's natural height is deterministic regardless of
+// which ancestor markup renders it — that's what keeps it the same size
+// in all three views.
+.schedule-date-card {
+  $card-teal: #3db8b8;
+  $card-teal-text: #1f8f8f;
+  $card-purple: #6a4ffb;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing_0_4;
+  width: 100%;
+  min-height: 8rem;
+  box-sizing: border-box;
+  padding: $spacing_1_2 $spacing_0_6;
+  border: 0.1rem solid $color_gray_ea;
+  border-radius: $border_radius_1_6;
+  background: transparent;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 0.2rem 0.8rem rgba(15, 23, 42, 0.08);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+  @include themify($themes, "background-color", "color_white_ff");
+  @include themify($themes, "border-color", "color_gray_ea");
+
+  @media screen and (min-width: $screen-md) {
+    min-height: 9.6rem;
+    gap: $spacing_0_6;
+    padding: $spacing_1_6 $spacing_1_2;
+  }
+
+  .theme-dark &,
+  .theme-highContrast & {
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: rgba(106, 79, 251, 0.28);
+  }
+
+  &:disabled,
+  &--disabled {
+    cursor: default;
+    opacity: 0.55;
+  }
+
+  &--display-only {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &__weekday {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    font-weight: $font_semi_bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    @include content-muted-text;
+
+    @media screen and (min-width: $screen-md) {
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+    }
+  }
+
+  &__date {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    font-weight: $font_bold;
+    @include themify($themes, "color", "color_text_main");
+
+    @media screen and (min-width: $screen-md) {
+      font-size: 1.9rem;
+      line-height: 2.2rem;
+    }
+  }
+
+  &__status {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    @include content-muted-text;
+
+    @media screen and (min-width: $screen-md) {
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  // 1. Has open slots (available, no consultations) — actionable, purple accent
+  &--has-slots {
+    border-color: rgba(106, 79, 251, 0.28);
+    box-shadow:
+      inset 0 -0.3rem 0 rgba(106, 79, 251, 0.45),
+      0 0.2rem 0.8rem rgba(15, 23, 42, 0.08);
+
+    .schedule-date-card__weekday {
+      color: $card-purple;
+    }
+
+    .theme-dark &,
+    .theme-highContrast & {
+      box-shadow: inset 0 -0.3rem 0 rgba(106, 79, 251, 0.6);
+    }
+  }
+
+  // 2. Has consultations — teal fill + teal underline
+  &--has-appt {
+    background: #daf3f3;
+    border-color: rgba(61, 184, 184, 0.45);
+    box-shadow:
+      inset 0 -0.3rem 0 $card-teal,
+      0 0.2rem 0.8rem rgba(15, 23, 42, 0.08);
+
+    .schedule-date-card__weekday {
+      color: $card-teal-text;
+    }
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(61, 184, 184, 0.16);
+      box-shadow: inset 0 -0.3rem 0 $card-teal;
+    }
+  }
+
+  // 3. No slots at all — muted, no elevation
+  &--unavailable {
+    background: #f6f7f9;
+    border-color: #e7eaef;
+    box-shadow: none;
+
+    .schedule-date-card__weekday,
+    .schedule-date-card__date,
+    .schedule-date-card__status {
+      color: #9aa3ad;
+    }
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  // Outside days (previous/next month, month view only) — dimmed, no accents
+  &--outside {
+    background: transparent;
+    box-shadow: none;
+
+    .schedule-date-card__date,
+    .schedule-date-card__status {
+      color: #9aa3ad;
+    }
+  }
+
+  // 4. Today — filled weekday pill (works on top of any availability state)
+  &--today {
+    border-color: $card-purple;
+
+    .schedule-date-card__weekday {
+      color: #ffffff;
+      background: $card-purple;
+      border-radius: 999px;
+      padding: 0.1rem 0.8rem;
+    }
+  }
+
+  // Selected — strong purple ring + tint
+  &--selected {
+    border-color: $card-purple;
+    box-shadow:
+      inset 0 0 0 0.1rem $card-purple,
+      0 0.2rem 0.8rem rgba(15, 23, 42, 0.08);
+
+    &:not(.schedule-date-card--has-appt) {
+      background: rgba(106, 79, 251, 0.08);
+    }
+
+    &.schedule-date-card--has-appt {
+      box-shadow:
+        inset 0 0 0 0.1rem $card-purple,
+        inset 0 -0.3rem 0 $card-teal;
+    }
+  }
+}
+
+// Shared 7-column layout for the date-card rows in all three views.
+.schedule-date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: $spacing_0_8;
+
+  @media screen and (min-width: $screen-md) {
+    gap: $spacing_1_2;
+  }
+}

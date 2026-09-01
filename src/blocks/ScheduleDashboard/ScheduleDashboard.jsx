@@ -180,6 +180,24 @@ export const ScheduleDashboard = ({
             <h3 className="schedule-dashboard__sidebar-title">
               {t("upcoming_consultations")}
             </h3>
+            <button
+              type="button"
+              className="schedule-dashboard__test-devices"
+              onClick={openDeviceTest}
+            >
+              <span className="schedule-dashboard__test-devices-left">
+                <Icon name="microphone" size="sm" color="#9749FA" />
+                <span className="schedule-dashboard__test-devices-copy">
+                  <span className="schedule-dashboard__test-devices-title">
+                    {tDashboard("test_audio_camera")}
+                  </span>
+                  <span className="schedule-dashboard__test-devices-description">
+                    {tDashboard("test_audio_camera_description")}
+                  </span>
+                </span>
+              </span>
+              <Icon name="arrow-chevron-forward" size="sm" color="#66768D" />
+            </button>
             <div className="schedule-dashboard__sidebar-list">
               {sidebarLoading && upcomingConsultations.length === 0 ? (
                 <Loading size="md" />
@@ -200,7 +218,6 @@ export const ScheduleDashboard = ({
                     handleJoinClick={openJoinConsultation}
                     handleCancelConsultation={openCancelConsultation}
                     handleViewProfile={handleViewProfile}
-                    handleTestDevices={openDeviceTest}
                     couponPrice={consultation.couponPrice}
                     sponsorImage={consultation.sponsorImage}
                     withOrganization={!!consultation.organizationId}
