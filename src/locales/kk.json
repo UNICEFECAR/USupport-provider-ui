@@ -369,7 +369,9 @@
       "free": "Тегін",
       "cancel": "Болдырмау",
       "past_tab_label": "Өткен",
-      "no_upcoming_consultations": "Сізде алдағы консультациялар жоқ"
+      "no_upcoming_consultations": "Сізде алдағы консультациялар жоқ",
+      "test_audio_camera": "Аудио мен камераны тексеру",
+      "test_audio_camera_description": "Консультациядан бұрын құрылғыларды тексеріңіз"
     },
     "clients": {
       "clients_heading": "Клиенттер",
@@ -536,7 +538,9 @@
       "ordinal_rd": "-ші",
       "ordinal_th": "-ші/-шы",
       "free": "Тегін",
-      "cancel": "Болдырмау"
+      "cancel": "Болдырмау",
+      "test_audio_camera": "Аудио мен камераны тексеру",
+      "test_audio_camera_description": "Консультациядан бұрын құрылғыларды тексеріңіз"
     },
     "schedule-dashboard": {
       "available_days": "Қолжетімді күндер",
@@ -867,6 +871,18 @@
       "error": "Қате шықты. Өтінеміз, тағы бір көріңіз",
       "permissions_error": "Камера мен микрофонға рұқсат беріңіз",
       "allow_permissions": "Клиентпен сөйлесу үшін браузер баптауларынан немесе мекенжай жолағындағы ақпарат белгішесі арқылы осы рұқсаттарды беріңіз."
+    },
+    "device-test": {
+      "heading": "Аудио мен камераны тексеру",
+      "subheading": "Консультациядан бұрын құрылғыларды тексеріп, бәрі дұрыс жұмыс істейтініне көз жеткізіңіз.",
+      "done": "Дайын",
+      "configuring_devices": "Қurылғыларды баптау...",
+      "camera_off_label": "Камера өшірілген",
+      "mic_level_label": "Микрофон",
+      "toggle_camera": "Кamerаны ауыстыру",
+      "toggle_microphone": "Микрофонды ауыстыру",
+      "retry_permissions": "Қайтадан көру",
+      "permissions_error": "Камера мен микрофонға рұқсат беріңіз"
     },
     "select-consultation": {
       "heading_edit": "Өзгертуді ұсыну",

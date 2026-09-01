@@ -221,6 +221,11 @@ export const Scheduler = ({
     return getDatesInRange(first, last);
   }, [variant, selectedPeriod, selectedDay, weekData.startDate, weekData.days]);
 
+  const dayViewWeekDays = useMemo(() => {
+    const { first, last } = getStartAndEndOfWeek(selectedDay);
+    return getDatesInRange(first, last);
+  }, [selectedDay]);
+
   const availabilityWeekQuery = useQuery(
     ["available-slots", "week", weekQueryStartDate.getTime()],
     () =>
@@ -257,12 +262,11 @@ export const Scheduler = ({
   );
 
   useEffect(() => {
-    const raw =
-      usesWeekAvailability
-        ? availabilityWeekQuery.data
-        : selectedPeriod === "day"
-          ? availabilityDayQuery.data
-          : availabilityMonthQuery.data;
+    const raw = usesWeekAvailability
+      ? availabilityWeekQuery.data
+      : selectedPeriod === "day"
+        ? availabilityDayQuery.data
+        : availabilityMonthQuery.data;
     if (raw == null) return;
     if (pendingSlotWrites.current > 0) return;
     const { validCampaigns: vc, slotsState } =
@@ -1078,6 +1082,7 @@ export const Scheduler = ({
               organizations={organizations}
               validCampaigns={validCampaigns}
               countryHasNormalSlots={countryHasNormalSlots}
+              consultationsRaw={overviewConsultationsRaw}
               t={t}
             />
           ) : (
@@ -1118,6 +1123,56 @@ export const Scheduler = ({
       <Block classes="scheduler__heading" animation={null}>
         <div className="scheduler__heading-inner">
           {toolbar}
+          {selectedPeriod === "day" && (
+            <div className="scheduler__weekday-strip scheduler__weekday-strip--day">
+              <Grid classes="scheduler__weekday-strip__grid">
+                <GridItem xs={1} classes="scheduler__weekday-strip__spacer" />
+                {dayViewWeekDays.map((day, index) => {
+                  const isToday = isDateToday(day);
+                  const isActive =
+                    day.toDateString() === selectedDay.toDateString();
+                  const date = getDateView(day);
+                  const displayDate = width < 1366 ? date.slice(0, -3) : date;
+                  return (
+                    <GridItem xs={1} key={`day-strip-${index}`}>
+                      <button
+                        type="button"
+                        className={[
+                          "scheduler__day-of-week",
+                          "scheduler__day-of-week--clickable",
+                          isToday ? "scheduler__day-of-week--today" : "",
+                          isActive ? "scheduler__day-of-week--active" : "",
+                        ].join(" ")}
+                        onClick={() =>
+                          setSelectedDay(
+                            new Date(
+                              day.getFullYear(),
+                              day.getMonth(),
+                              day.getDate(),
+                            ),
+                          )
+                        }
+                      >
+                        <p className="scheduler__day-of-week__day">
+                          {t(namesOfDays[day.getDay()])}
+                        </p>
+                        <p
+                          className={[
+                            "scheduler__day-of-week__date-text",
+                            isToday
+                              ? "scheduler__day-of-week__date-text--today"
+                              : "",
+                          ].join(" ")}
+                        >
+                          {displayDate}
+                        </p>
+                      </button>
+                    </GridItem>
+                  );
+                })}
+              </Grid>
+            </div>
+          )}
           {selectedPeriod === "week" && (
             <div className="scheduler__weekday-strip">
               <Grid classes="scheduler__weekday-strip__grid">

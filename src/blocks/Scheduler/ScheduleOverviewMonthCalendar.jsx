@@ -1,14 +1,10 @@
 import React from "react";
 
-const WEEKDAY_ORDER_KEYS = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-];
+import {
+  ScheduleOverviewDayCell,
+  ScheduleOverviewWeekdayStrip,
+  isPastDateWithoutAppointment,
+} from "./ScheduleOverviewDayCells.jsx";
 
 function overviewMonthGrid(monthAnchor) {
   const y = monthAnchor.getFullYear();
@@ -66,122 +62,46 @@ export const ScheduleOverviewMonthCalendar = ({
   consultationsRaw,
   hours,
   getSlotDataForHour,
+  showUnavailableStatus = true,
   t,
 }) => {
   const cells = overviewMonthGrid(monthViewDate);
 
-  const consultationCountOnDay = (date) =>
-    consultationsRaw.filter((c) => {
-      const d = new Date(c.time);
-      return (
-        d.getFullYear() === date.getFullYear() &&
-        d.getMonth() === date.getMonth() &&
-        d.getDate() === date.getDate()
-      );
-    }).length;
-
-  const hasOpenSlotOnDay = (date) =>
-    hours.some((hour) => {
-      const rows = getSlotDataForHour(hour, date);
-      return rows.some(
-        (row) =>
-          !row.consultation &&
-          row.availabilityStatus !== "unavailable" &&
-          !row.isPastDay,
-      );
-    });
-
-  const today = new Date();
-  const startOfToday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-  );
-  const isTodayDate = (date) =>
-    date.getFullYear() === today.getFullYear() &&
-    date.getMonth() === today.getMonth() &&
-    date.getDate() === today.getDate();
-  const isPastDate = (date) => date < startOfToday;
-
   return (
     <div className="schedule-overview-month">
-      <div className="schedule-overview-month__weekdays">
-        {WEEKDAY_ORDER_KEYS.map((key) => (
-          <span
-            key={key}
-            className="schedule-overview-month__weekday"
-            title={t(key)}
-          >
-            <span className="schedule-overview-month__weekday-full">
-              {t(key)}
-            </span>
-            <span
-              className="schedule-overview-month__weekday-letter"
-              aria-hidden="true"
-            >
-              {t(key).charAt(0)}
-            </span>
-          </span>
-        ))}
-      </div>
+      <ScheduleOverviewWeekdayStrip t={t} />
       <div className="schedule-overview-month__grid">
         {cells.map((cell) => {
           const { date } = cell;
-          const count = consultationCountOnDay(date);
-          const isAvailable = count > 0 || hasOpenSlotOnDay(date);
+          const outside = cell.type === "outside";
           const selected =
             date.getFullYear() === monthSelectedDay.getFullYear() &&
             date.getMonth() === monthSelectedDay.getMonth() &&
             date.getDate() === monthSelectedDay.getDate();
-          const outside = cell.type === "outside";
-          const hasAppt = count > 0;
-          const isDisabled = isPastDate(date) && !hasAppt;
-
-          const statusLabel = hasAppt
-            ? `${count} ${count === 1 ? t("consultation") : t("consultations")}`
-            : isAvailable
-              ? `0 ${t("consultations")}`
-              : t("not_available");
-          const statusShort = hasAppt ? String(count) : isAvailable ? "0" : "–";
+          const isDisabled = isPastDateWithoutAppointment(
+            date,
+            consultationsRaw,
+          );
 
           return (
-            <button
+            <ScheduleOverviewDayCell
               key={cell.key}
-              type="button"
+              date={date}
+              dayNumber={cell.dayNumber}
+              selected={selected}
               disabled={isDisabled}
-              className={[
-                "schedule-overview-month__day",
-                outside ? "schedule-overview-month__day--outside" : "",
-                selected && !isDisabled
-                  ? "schedule-overview-month__day--selected"
-                  : "",
-                hasAppt ? "schedule-overview-month__day--has-appt" : "",
-                !isAvailable && !outside
-                  ? "schedule-overview-month__day--unavailable"
-                  : "",
-                isDisabled ? "schedule-overview-month__day--disabled" : "",
-                isTodayDate(date) ? "schedule-overview-month__day--today" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+              outside={outside}
+              consultationsRaw={consultationsRaw}
+              hours={hours}
+              getSlotDataForHour={getSlotDataForHour}
+              showUnavailableStatus={showUnavailableStatus}
               onClick={() => {
                 if (isDisabled) return;
                 onSelectDay(date);
                 onOpenDaySlots?.(date);
               }}
-            >
-              <span className="schedule-overview-month__day-num">
-                {cell.dayNumber}
-              </span>
-              <span className="schedule-overview-month__day-status">
-                <span className="schedule-overview-month__day-status-full">
-                  {statusLabel}
-                </span>
-                <span className="schedule-overview-month__day-status-short">
-                  {statusShort}
-                </span>
-              </span>
-            </button>
+              t={t}
+            />
           );
         })}
       </div>

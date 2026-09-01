@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { Root } from "./routes";
+import { DeviceTestProvider } from "#backdrops";
 import "react-toastify/dist/ReactToastify.css";
 import { FIVE_MINUTES } from "@USupport-components-library/utils";
 import { userSvc } from "@USupport-components-library/services";
@@ -66,7 +67,9 @@ function App() {
     >
       <div className={`theme-${theme}`}>
         <QueryClientProvider client={queryClient}>
-          <Root />
+          <DeviceTestProvider>
+            <Root />
+          </DeviceTestProvider>
           <ToastContainer />
         </QueryClientProvider>
       </div>

@@ -10,6 +10,7 @@ import {
   hourEnrollment,
   hourRange,
   slotRowKey,
+  isVisibleOverviewSlot,
 } from "./scheduleDaySlotsShared.js";
 import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
 
@@ -27,6 +28,7 @@ export const ScheduleDaySlotsPanel = ({
   validCampaigns,
   countryHasNormalSlots,
   isLoading,
+  hideUnavailableSlots = false,
   t,
 }) => {
   const { activeKey: activeHour, position, isOpen, open, close } =
@@ -68,8 +70,9 @@ export const ScheduleDaySlotsPanel = ({
     <div className="schedule-day-slots">
       <ul className="schedule-day-slots__list">
         {hours.flatMap((hour) => {
-          const slots = slotsForHour(hour);
-          if (!slots?.length) return [];
+          const slots = slotsForHour(hour)
+            .filter((slot) => isVisibleOverviewSlot(slot, hideUnavailableSlots));
+          if (!slots.length) return [];
 
           return slots.map((slot, index) => {
             const rowKey = slotRowKey(hour, slot, index);

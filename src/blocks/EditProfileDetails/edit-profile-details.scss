@@ -35,6 +35,7 @@
   &__section {
     padding: $spacing_2_4;
     border-radius: $border_radius_2_4;
+    overflow: visible;
 
     @media screen and (min-width: $screen-md) {
       padding: $spacing_3_0;
@@ -64,6 +65,7 @@
       display: flex;
       flex-direction: column;
       gap: $spacing_1_2;
+      overflow: visible;
     }
   }
 

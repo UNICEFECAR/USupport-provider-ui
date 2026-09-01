@@ -369,7 +369,9 @@
       "conducted": "Conducted",
       "join": "Join",
       "free": "Free",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "test_audio_camera": "Test audio & camera",
+      "test_audio_camera_description": "Check your devices before the consultation"
     },
     "clients": {
       "clients_heading": "Clients",
@@ -536,7 +538,9 @@
       "ordinal_rd": "rd",
       "ordinal_th": "th",
       "free": "Free",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "test_audio_camera": "Test audio & camera",
+      "test_audio_camera_description": "Check your devices before the consultation"
     },
     "schedule-dashboard": {
       "available_days": "Available days",
@@ -867,6 +871,18 @@
       "error": "An error occured. Please try again",
       "permissions_error": "Allow camera and microphone permissions",
       "allow_permissions": "If you want to talk to the client, please allow the permissions in your browser settings or from the information icon in the address bar."
+    },
+    "device-test": {
+      "heading": "Test audio & camera",
+      "subheading": "Check your devices before the consultation to make sure everything works.",
+      "done": "Done",
+      "configuring_devices": "Configuring devices...",
+      "camera_off_label": "Camera is off",
+      "mic_level_label": "Microphone",
+      "toggle_camera": "Toggle camera",
+      "toggle_microphone": "Toggle microphone",
+      "retry_permissions": "Try again",
+      "permissions_error": "Allow camera and microphone permissions"
     },
     "select-consultation": {
       "heading_edit": "Propose a change",

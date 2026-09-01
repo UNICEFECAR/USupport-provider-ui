@@ -1,8 +1,10 @@
-import React, { useMemo } from "react";
-
-import { isDateToday } from "@USupport-components-library/src/utils/date";
+import React from "react";
 
 import { ScheduleDaySlotFloatingPicker } from "./ScheduleDaySlotFloatingPicker.jsx";
+import {
+  ScheduleOverviewDayCell,
+  ScheduleOverviewWeekdayStrip,
+} from "./ScheduleOverviewDayCells.jsx";
 import {
   badgeForSlot,
   canPickForSlot,
@@ -14,16 +16,6 @@ import {
   slotRowKey,
 } from "./scheduleDaySlotsShared.js";
 import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
-
-const WEEKDAY_ORDER_KEYS = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-];
 
 /**
  * Week grid: Mon–Sun columns × hour rows, each slot as overview card row.
@@ -38,20 +30,13 @@ export const ScheduleOverviewWeekGrid = ({
   organizations,
   validCampaigns,
   countryHasNormalSlots,
+  consultationsRaw = [],
   t,
 }) => {
   const { activeKey, meta, position, isOpen, open, close } =
     useFloatingSlotPicker();
   const orgList = organizations || [];
   const campaignList = getCampaignList(validCampaigns);
-
-  const weekdayLabels = useMemo(() => {
-    const map = {};
-    days.forEach((day, index) => {
-      map[day.getTime()] = WEEKDAY_ORDER_KEYS[index] || WEEKDAY_ORDER_KEYS[0];
-    });
-    return map;
-  }, [days]);
 
   const openCellPicker = (
     event,
@@ -85,44 +70,28 @@ export const ScheduleOverviewWeekGrid = ({
 
   return (
     <div className="schedule-overview-week-grid">
-      <div className="schedule-overview-week-grid__header">
+      <div className="schedule-overview-week-grid__date-header">
         <div
           className="schedule-overview-week-grid__hour-spacer"
           aria-hidden="true"
         />
-        {days.map((day) => {
-          const weekdayKey = weekdayLabels[day.getTime()];
-          const isToday = isDateToday(day);
-          return (
-            <div
-              key={`header-${day.getTime()}`}
-              className={[
-                "schedule-overview-week-grid__day-header",
-                isToday ? "schedule-overview-week-grid__day-header--today" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            >
-              <span
-                className="schedule-overview-week-grid__day-name"
-                title={t(weekdayKey)}
-              >
-                <span className="schedule-overview-week-grid__day-name-full">
-                  {t(weekdayKey)}
-                </span>
-                <span
-                  className="schedule-overview-week-grid__day-name-letter"
-                  aria-hidden="true"
-                >
-                  {t(weekdayKey).charAt(0)}
-                </span>
-              </span>
-              <span className="schedule-overview-week-grid__day-num">
-                {day.getDate()}
-              </span>
-            </div>
-          );
-        })}
+        <div className="schedule-overview-month schedule-overview-month--week schedule-overview-month--week-grid">
+          <ScheduleOverviewWeekdayStrip t={t} />
+          <div className="schedule-overview-month__grid schedule-overview-month__grid--week">
+            {days.map((date) => (
+              <ScheduleOverviewDayCell
+                key={`header-${date.getTime()}`}
+                date={date}
+                interactive={false}
+                consultationsRaw={consultationsRaw}
+                hours={hours}
+                getSlotDataForHour={getSlotDataForHour}
+                showUnavailableStatus={false}
+                t={t}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="schedule-overview-week-grid__body">
@@ -176,7 +145,9 @@ export const ScheduleOverviewWeekGrid = ({
                           "schedule-day-slots__row--compact",
                           `schedule-day-slots__row--${badge.kind}`,
                           selected ? "schedule-day-slots__row--selected" : "",
-                          !interactive ? "schedule-day-slots__row--disabled" : "",
+                          !interactive
+                            ? "schedule-day-slots__row--disabled"
+                            : "",
                         ]
                           .filter(Boolean)
                           .join(" ")}

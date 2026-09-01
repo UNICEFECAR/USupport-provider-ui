@@ -134,6 +134,12 @@ export function badgeForSlot(slot, campaignList, t) {
   return { label: t("unavailable"), kind: "unavailable" };
 }
 
+export function isVisibleOverviewSlot(slot, hideUnavailableSlots) {
+  if (!hideUnavailableSlots) return true;
+  if (slot?.consultation) return true;
+  return slot?.availabilityStatus !== "unavailable";
+}
+
 export function createSlotActions({
   day,
   slotsData,

@@ -106,7 +106,11 @@
     height: auto;
     min-height: 4rem;
     margin-bottom: 0;
+    padding: $spacing_0_4 $spacing_0_2;
+    border: 1px solid transparent;
+    border-radius: $border_radius_0_8;
     text-align: center;
+    box-sizing: border-box;
 
     @media screen and (min-width: 1150px) {
       width: auto;
@@ -114,6 +118,48 @@
 
     &--today {
       @include themify($themes, "color", "color_primary_20809e");
+    }
+
+    &--clickable {
+      display: block;
+      width: 100%;
+      background: transparent;
+      cursor: pointer;
+      transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease;
+
+      &:hover {
+        border-color: rgba(106, 79, 251, 0.35);
+      }
+
+      .theme-highContrast &:hover {
+        border-color: #ffff00;
+      }
+    }
+
+    &--active {
+      border-color: #6a4ffb;
+      box-shadow: 0 0 0 1px #6a4ffb;
+      background: rgba(106, 79, 251, 0.12);
+
+      .theme-dark & {
+        border-color: #8c90eb;
+        box-shadow: 0 0 0 1px #8c90eb;
+        background: rgba(140, 144, 235, 0.18);
+      }
+
+      .theme-highContrast & {
+        border-color: #ffff00;
+        box-shadow: 0 0 0 1px #ffff00;
+        background: rgba(255, 255, 0, 0.18);
+      }
+
+      .scheduler__day-of-week__day,
+      .scheduler__day-of-week__date-text {
+        @include themify($themes, "color", "color_purple_6a4ffb");
+        font-weight: $font_semi_bold;
+      }
     }
 
     &__day {
@@ -1284,6 +1330,23 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     }
   }
 
+  .scheduler-toolbar {
+    position: relative;
+
+    @media screen and (min-width: $screen-lg) {
+      &__date-nav {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        justify-content: center;
+        /* Above the sticky week-grid date header (z-index: 2) so the
+           date-picker popover is not covered by it. */
+        z-index: 20;
+      }
+    }
+  }
+
   .scheduler__overview-title {
     margin: 0;
     font-size: 1.8rem;
@@ -1310,6 +1373,11 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
   overflow-x: hidden;
   box-sizing: border-box;
   padding: 1px 2px 2px 1px;
+
+  &__day--display-only {
+    cursor: default;
+    pointer-events: none;
+  }
 
   &__weekdays,
   &__grid {
@@ -1352,6 +1420,7 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     min-height: 5.6rem;
     padding: $spacing_0_6 $spacing_0_4 $spacing_0_8;
     overflow: visible;
+    box-sizing: border-box;
     border: 1px solid $color_gray_ea;
     border-radius: $border_radius_1_2;
     @include themify($themes, "border-color", "color_gray_ea");
@@ -1501,14 +1570,12 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     .schedule-overview-month__grid--week {
       grid-template-columns: repeat(7, minmax(0, 1fr));
     }
+  }
 
-    .schedule-overview-month__day {
-      min-height: 6.4rem;
-
-      @media screen and (min-width: $screen-md) {
-        min-height: 8rem;
-      }
-    }
+  &--week-grid {
+    min-width: 0;
+    width: 100%;
+    padding: 0;
   }
 }
 
@@ -1529,7 +1596,29 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
   padding: 1px 2px 3px 1px;
   @include scrollbar-secondary;
 
-  &__header,
+  &__date-header {
+    display: grid;
+    grid-template-columns: 4.4rem minmax(0, 1fr);
+    gap: $spacing_0_4;
+    margin-bottom: $spacing_1_2;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding-bottom: $spacing_0_4;
+    min-width: min(100%, 72rem);
+    @include themify($themes, "background-color", "color_white_ff");
+
+    @media screen and (min-width: $screen-md) {
+      grid-template-columns: 5.6rem minmax(0, 1fr);
+      gap: $spacing_0_8;
+    }
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: transparent;
+    }
+  }
+
   &__row {
     display: grid;
     grid-template-columns: 4.4rem repeat(7, minmax(8.8rem, 1fr));
@@ -1542,57 +1631,8 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     }
   }
 
-  &__header {
-    margin-bottom: $spacing_1_2;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    padding-bottom: $spacing_0_4;
-    @include themify($themes, "background-color", "color_white_ff");
-
-    .theme-dark &,
-    .theme-highContrast & {
-      background: transparent;
-    }
-  }
-
   &__hour-spacer {
     min-height: 1px;
-  }
-
-  &__day-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: $spacing_0_2;
-    min-width: 0;
-    padding: $spacing_0_4;
-    text-align: center;
-  }
-
-  &__day-name {
-    font-size: 1.1rem;
-    font-weight: $font_semi_bold;
-    @include content-muted-text;
-
-    &-full {
-      display: none;
-    }
-
-    &-letter {
-      display: inline;
-    }
-  }
-
-  &__day-num {
-    font-size: 1.4rem;
-    font-weight: $font_bold;
-    @include themify($themes, "color", "color_text_main");
-  }
-
-  &__day-header--today &__day-num {
-    color: #6a4ffb;
   }
 
   &__body {
@@ -1614,24 +1654,6 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     flex-direction: column;
     gap: $spacing_0_4;
     min-width: 0;
-  }
-
-  @media screen and (min-width: $screen-md) {
-    &__day-name {
-      font-size: 1.2rem;
-
-      &-full {
-        display: inline;
-      }
-
-      &-letter {
-        display: none;
-      }
-    }
-
-    &__day-num {
-      font-size: 1.5rem;
-    }
   }
 }
 
