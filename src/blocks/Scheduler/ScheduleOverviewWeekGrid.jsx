@@ -1,10 +1,7 @@
 import React from "react";
 
 import { ScheduleDaySlotFloatingPicker } from "./ScheduleDaySlotFloatingPicker.jsx";
-import {
-  ScheduleOverviewDayCell,
-  ScheduleOverviewWeekdayStrip,
-} from "./ScheduleOverviewDayCells.jsx";
+import { ScheduleDateCard } from "./ScheduleDateCard.jsx";
 import {
   badgeForSlot,
   canPickForSlot,
@@ -31,6 +28,7 @@ export const ScheduleOverviewWeekGrid = ({
   validCampaigns,
   countryHasNormalSlots,
   consultationsRaw = [],
+  language,
   t,
 }) => {
   const { activeKey, meta, position, isOpen, open, close } =
@@ -75,22 +73,19 @@ export const ScheduleOverviewWeekGrid = ({
           className="schedule-overview-week-grid__hour-spacer"
           aria-hidden="true"
         />
-        <div className="schedule-overview-month schedule-overview-month--week schedule-overview-month--week-grid">
-          <ScheduleOverviewWeekdayStrip t={t} />
-          <div className="schedule-overview-month__grid schedule-overview-month__grid--week">
-            {days.map((date) => (
-              <ScheduleOverviewDayCell
-                key={`header-${date.getTime()}`}
-                date={date}
-                interactive={false}
-                consultationsRaw={consultationsRaw}
-                hours={hours}
-                getSlotDataForHour={getSlotDataForHour}
-                showUnavailableStatus={false}
-                t={t}
-              />
-            ))}
-          </div>
+        <div className="schedule-date-grid">
+          {days.map((date) => (
+            <ScheduleDateCard
+              key={`header-${date.getTime()}`}
+              date={date}
+              interactive={false}
+              consultationsRaw={consultationsRaw}
+              hours={hours}
+              getSlotDataForHour={getSlotDataForHour}
+              language={language}
+              t={t}
+            />
+          ))}
         </div>
       </div>
 

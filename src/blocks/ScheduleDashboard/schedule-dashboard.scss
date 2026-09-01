@@ -144,6 +144,52 @@
     @include themify($themes, "color", "color_text_main");
   }
 
+  &__test-devices {
+    flex: 0 0 auto;
+    width: 100%;
+    margin: 0 0 $spacing_1_6;
+    padding: $spacing_1_2 $spacing_1_6;
+    border: 0.1rem solid #e5e5e5;
+    border-radius: $border_radius_1_6;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing_1_2;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(151, 73, 250, 0.04);
+      border-color: rgba(151, 73, 250, 0.3);
+    }
+  }
+
+  &__test-devices-left {
+    display: flex;
+    align-items: center;
+    gap: $spacing_1_2;
+    min-width: 0;
+  }
+
+  &__test-devices-copy {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_0_2;
+    min-width: 0;
+  }
+
+  &__test-devices-title {
+    font-weight: $font_semi_bold;
+    color: $color_secondary_9749fa;
+  }
+
+  &__test-devices-description {
+    font-size: 1.2rem;
+    color: $color_gray_66768d;
+  }
+
   &__sidebar-list {
     display: flex;
     flex-direction: column;
