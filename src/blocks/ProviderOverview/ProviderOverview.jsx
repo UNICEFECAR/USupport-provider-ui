@@ -9,6 +9,7 @@ import {
 } from "@USupport-components-library/src";
 
 import { useGetProviderData } from "#hooks";
+import { PEER_SUPPORT_DISPLAY_LABEL } from "#utils/specializations";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
 
@@ -30,11 +31,8 @@ export const ProviderOverview = ({
   });
   const t = (key, options) => {
     const normalizedKey = String(key ?? "").trim();
-    if (
-      normalizedKey === "peer_support" ||
-      normalizedKey.endsWith(".peer_support")
-    ) {
-      return "U-FRIEND";
+    if (normalizedKey === "peer_support") {
+      return PEER_SUPPORT_DISPLAY_LABEL;
     }
     return translate(key, options);
   };
