@@ -1,5 +1,4 @@
 import React from "react";
-import { useCustomNavigate as useNavigate } from "#hooks";
 import { useTranslation } from "react-i18next";
 import {
   Block,
@@ -22,9 +21,15 @@ import "./login.scss";
  *
  * @return {jsx}
  */
-export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
+export const Login = ({
+  data,
+  setData,
+  handleLogin,
+  handleForgotPassword,
+  errors,
+  isLoading,
+}) => {
   const { t } = useTranslation("blocks", { keyPrefix: "login" });
-  const navigate = useNavigate();
 
   const handleChange = (field, value) => {
     const newData = { ...data };
@@ -32,10 +37,6 @@ export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
     newData[field] = value;
 
     setData(newData);
-  };
-
-  const handleForgotPassword = () => {
-    navigate("/forgot-password");
   };
 
   return (
