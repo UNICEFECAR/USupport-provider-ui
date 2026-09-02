@@ -102,7 +102,8 @@ export const Welcome = () => {
     const languages = res.data.map((x) => {
       const languageObject = {
         value: x.alpha2,
-        label: x.name === "English" ? x.name : `${x.name} (${x.local_name})`,
+        label: x.name,
+        localName: x.local_name,
         id: x["language_id"],
       };
       if (localStorageLanguage === x.alpha2 && !hasUpdatedUrl) {
@@ -207,7 +208,15 @@ export const Welcome = () => {
                 placeholder={t("placeholder")}
               />
               <DropdownWithLabel
-                options={languagesQuery.data || []}
+                options={
+                  languagesQuery.data?.map((x) => ({
+                    ...x,
+                    label:
+                      x.label === "English"
+                        ? x.label
+                        : `${x.label} (${x.localName})`,
+                  })) || []
+                }
                 disabled={!selectedCountry}
                 selected={selectedLanguage}
                 setSelected={handleSelectLanguage}
