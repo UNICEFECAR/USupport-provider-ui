@@ -220,7 +220,7 @@ export const EditProfileDetails = ({
         // Construct the new object
         newLanguageOption.value = language.id;
         newLanguageOption.label =
-          language.label === "English"
+          language.label === "English" || !language.localName
             ? language.label
             : `${language.label} (${language.localName})`;
         newLanguageOption.selected = providerLanguages.includes(language.id);
