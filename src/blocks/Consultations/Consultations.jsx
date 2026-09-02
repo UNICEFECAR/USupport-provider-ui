@@ -7,8 +7,9 @@ import {
   Block,
   Grid,
   GridItem,
-  TabsUnderlined,
+  Tabs,
   Consultation,
+  InputSearch,
   Loading,
 } from "@USupport-components-library/src";
 import { getTimestampFromUTC } from "@USupport-components-library/utils";
@@ -28,19 +29,21 @@ import "./consultations.scss";
  * @return {jsx}
  */
 export const Consultations = ({
+  subheading,
   openJoinConsultation,
   openCancelConsultation,
-  searchValue,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation("blocks", { keyPrefix: "consultations" });
 
-  const [filter, setFilter] = useState("today");
-
-  const [tabsOptions, setTabsOptions] = useState([
-    { label: t("today_tab_label"), value: "today", isSelected: true },
-    { label: t("upcoming_tab_label"), value: "upcoming", isSelected: false },
+  const [tabs, setTabs] = useState([
+    { value: "today", isSelected: true },
+    { value: "upcoming", isSelected: false },
   ]);
+  const [searchValue, setSearchValue] = useState("");
+
+  const filter = tabs.find((tab) => tab.isSelected)?.value ?? "today";
+  const searchNeedle = searchValue?.toLowerCase() ?? "";
 
   const handleCancelConsultation = (consultation) => {
     openCancelConsultation(consultation);
@@ -51,26 +54,53 @@ export const Consultations = ({
   };
 
   const handleTabClick = (index) => {
-    const optionsCopy = [...tabsOptions];
+    const tabsCopy = [...tabs];
 
-    for (let i = 0; i < optionsCopy.length; i++) {
-      if (i === index) {
-        optionsCopy[i].isSelected = true;
-      } else {
-        optionsCopy[i].isSelected = false;
-      }
+    for (let i = 0; i < tabsCopy.length; i++) {
+      tabsCopy[i].isSelected = i === index;
     }
 
-    setTabsOptions(optionsCopy);
-    setFilter(optionsCopy[index].value);
+    setTabs(tabsCopy);
   };
 
   const consultationsQuery = useGetConsultationsForSingleDay(
-    getTimestampFromUTC(new Date())
+    getTimestampFromUTC(new Date()),
   );
 
   const [upcomingConsultationsQuery, currentPage, totalCount] =
     useGetAllUpcomingConsultations();
+
+  const renderConsultationCard = (consultation, index) => (
+    <GridItem key={consultation.consultationId ?? index} md={8} lg={6}>
+      <Consultation
+        consultation={consultation}
+        handleCancelConsultation={handleCancelConsultation}
+        handleJoinClick={openJoinConsultation}
+        handleViewProfile={handleViewProfile}
+        hasMenu={true}
+        overview={false}
+        renderIn="provider"
+        suggested={consultation.status === "suggested"}
+        couponPrice={consultation.couponPrice}
+        sponsorImage={consultation.sponsorImage}
+        withOrganization={!!consultation.organizationId}
+        liquidGlass
+        t={t}
+        classes="consultations__card"
+      />
+    </GridItem>
+  );
+
+  const filterConsultations = useCallback(
+    (consultations) => {
+      if (!searchNeedle) return consultations;
+
+      return consultations.filter((consultation) =>
+        consultation.clientName?.toLowerCase().includes(searchNeedle),
+      );
+    },
+    [searchNeedle],
+  );
 
   const renderUpcomingConsultations = useCallback(() => {
     if (
@@ -78,137 +108,88 @@ export const Consultations = ({
       upcomingConsultationsQuery.data.pages.flat().length === 0
     ) {
       return (
-        <GridItem
-          md={8}
-          lg={12}
-          classes="consultations__grid__consultations-item__grid__consultation"
-        >
-          <p>{t(`no_upcoming_consultations_${filter}`)}</p>
+        <GridItem md={8} lg={12} classes="consultations__no-data-item">
+          <p className="text consultations__no-data">
+            {t(`no_upcoming_consultations_${filter}`)}
+          </p>
         </GridItem>
       );
     }
-    let consultations = upcomingConsultationsQuery.data.pages.flat();
 
-    const sortedConsultations = consultations.sort(
-      (a, b) => a.timestamp - b.timestamp
+    const sortedConsultations = upcomingConsultationsQuery.data.pages
+      .flat()
+      .sort((a, b) => a.timestamp - b.timestamp);
+
+    const consultations = filterConsultations(sortedConsultations);
+
+    if (searchNeedle && consultations.length === 0) {
+      return (
+        <GridItem md={8} lg={12} classes="consultations__no-data-item">
+          <p className="text consultations__no-data">
+            {t("no_upcoming_consultations_search")}
+          </p>
+        </GridItem>
+      );
+    }
+
+    return consultations.map((consultation, index) =>
+      renderConsultationCard(consultation, index),
     );
-
-    if (searchValue) {
-      consultations = sortedConsultations.filter((consultation) =>
-        consultation.clientName.toLowerCase().includes(searchValue)
-      );
-    }
-    if (searchValue && consultations.length === 0)
-      return (
-        <GridItem
-          md={8}
-          lg={12}
-          classes="consultations__grid__consultations-item__grid__consultation"
-        >
-          <p>{t("no_upcoming_consultations_search")}</p>
-        </GridItem>
-      );
-
-    return consultations.map((consultation, index) => {
-      return (
-        <GridItem
-          key={index}
-          md={4}
-          lg={6}
-          classes="consultations__grid__consultations-item__grid__consultation"
-        >
-          <Consultation
-            consultation={consultation}
-            handleCancelConsultation={handleCancelConsultation}
-            handleJoinClick={openJoinConsultation}
-            handleViewProfile={handleViewProfile}
-            hasMenu={true}
-            overview={false}
-            renderIn="provider"
-            suggested={consultation.status === "suggested"}
-            couponPrice={consultation.couponPrice}
-            sponsorImage={consultation.sponsorImage}
-            withOrganization={!!consultation.organizationId}
-            t={t}
-          />
-        </GridItem>
-      );
-    });
   }, [
     t,
     upcomingConsultationsQuery.data,
-    searchValue,
+    searchNeedle,
     filter,
+    filterConsultations,
     openJoinConsultation,
-    handleCancelConsultation,
-    handleViewProfile,
   ]);
 
-  const renderAllConsultations = useMemo(() => {
-    if (consultationsQuery.isLoading)
+  const renderTodayConsultations = useMemo(() => {
+    if (consultationsQuery.isLoading) {
       return (
-        <GridItem md={8} lg={12}>
-          <Loading />;
+        <GridItem md={8} lg={12} classes="consultations__no-data-item">
+          <Loading />
         </GridItem>
-      );
-    if (!consultationsQuery.data || consultationsQuery.data?.length === 0)
-      return (
-        <GridItem
-          md={8}
-          lg={12}
-          classes="consultations__grid__consultations-item__grid__consultation"
-        >
-          <p>{t(`no_upcoming_consultations_${filter}`)}</p>
-        </GridItem>
-      );
-
-    const sortedConsultations = consultationsQuery.data.sort((a, b) => {
-      return a.timestamp - b.timestamp;
-    });
-
-    let consultations = sortedConsultations;
-    if (searchValue) {
-      consultations = sortedConsultations.filter((consultation) =>
-        consultation.clientName.toLowerCase().includes(searchValue)
       );
     }
 
-    if (searchValue && consultations.length === 0)
+    if (!consultationsQuery.data || consultationsQuery.data.length === 0) {
       return (
-        <GridItem
-          md={8}
-          lg={12}
-          classes="consultations__grid__consultations-item__grid__consultation"
-        >
-          <p>{t("no_upcoming_consultations_search")}</p>
+        <GridItem md={8} lg={12} classes="consultations__no-data-item">
+          <p className="text consultations__no-data">
+            {t(`no_upcoming_consultations_${filter}`)}
+          </p>
         </GridItem>
       );
+    }
 
-    return consultations.map((consultation, index) => {
+    const sortedConsultations = [...consultationsQuery.data].sort(
+      (a, b) => a.timestamp - b.timestamp,
+    );
+
+    const consultations = filterConsultations(sortedConsultations);
+
+    if (searchNeedle && consultations.length === 0) {
       return (
-        <GridItem
-          key={index}
-          md={4}
-          lg={6}
-          classes="consultations__grid__consultations-item__grid__consultation"
-        >
-          <Consultation
-            consultation={consultation}
-            handleCancelConsultation={handleCancelConsultation}
-            handleJoinClick={openJoinConsultation}
-            handleViewProfile={handleViewProfile}
-            hasMenu={true}
-            overview={false}
-            renderIn="provider"
-            suggested={consultation.status === "suggested"}
-            couponPrice={consultation.couponPrice}
-            sponsorImage={consultation.sponsorImage}
-            t={t}
-          />
+        <GridItem md={8} lg={12} classes="consultations__no-data-item">
+          <p className="text consultations__no-data">
+            {t("no_upcoming_consultations_search")}
+          </p>
         </GridItem>
       );
-    });
-  }, [consultationsQuery.data, searchValue, filter, t]);
+    }
+
+    return consultations.map((consultation, index) =>
+      renderConsultationCard(consultation, index),
+    );
+  }, [
+    consultationsQuery.data,
+    consultationsQuery.isLoading,
+    searchNeedle,
+    filter,
+    filterConsultations,
+    t,
+  ]);
 
   let hasMore;
   const hasLessThanSixConsultations =
@@ -221,47 +202,63 @@ export const Consultations = ({
     hasMore = totalPages > currentPage;
   }
 
-  return (
-    <Block classes="consultations">
-      <Grid classes="consultations__grid">
-        <GridItem
-          md={8}
-          lg={12}
-          classes="consultations__grid__heading-item"
-        ></GridItem>
-        <GridItem md={8} lg={12} classes="consultations__grid__tabs-item">
-          <TabsUnderlined
-            options={tabsOptions}
-            handleSelect={handleTabClick}
-            t={t}
-          />
-        </GridItem>
-        <GridItem
-          md={8}
-          lg={12}
-          classes="consultations__grid__consultations-item"
+  const renderConsultationsGrid = () => {
+    if (filter === "upcoming") {
+      return (
+        <InfiniteScroll
+          dataLength={upcomingConsultationsQuery.data?.pages?.length || 0}
+          hasMore={hasMore}
+          next={() => upcomingConsultationsQuery.fetchNextPage()}
+          loader={
+            <GridItem md={8} lg={12} classes="consultations__no-data-item">
+              <Loading />
+            </GridItem>
+          }
+          initialScrollY={200}
+          scrollThreshold={0}
         >
-          {filter === "upcoming" ? (
-            <InfiniteScroll
-              dataLength={upcomingConsultationsQuery.data?.pages?.length || 0}
-              hasMore={hasMore}
-              next={() => upcomingConsultationsQuery.fetchNextPage()}
-              loader={<Loading />}
-              initialScrollY={200}
-              scrollThreshold={0}
-              style={{ paddingBottom: "18px" }}
-            >
-              <Grid classes="consultations__grid__consultations-item__grid">
-                {renderUpcomingConsultations()}
-              </Grid>
-            </InfiniteScroll>
-          ) : (
-            <Grid classes="consultations__grid__consultations-item__grid">
-              {renderAllConsultations}
-            </Grid>
-          )}
-        </GridItem>
-      </Grid>
+          <Grid classes="consultations__grid">
+            {renderUpcomingConsultations()}
+          </Grid>
+        </InfiniteScroll>
+      );
+    }
+
+    return (
+      <Grid classes="consultations__grid">{renderTodayConsultations}</Grid>
+    );
+  };
+
+  return (
+    <Block classes="consultations consultations--v1">
+      <div className="consultations__surface">
+        {subheading ? (
+          <header className="consultations__header">
+            <p className="consultations__header-intro">{subheading}</p>
+          </header>
+        ) : null}
+        <div className="consultations__tabs">
+          <Tabs
+            options={tabs.map((tab) => ({
+              label: t(`${tab.value}_tab_label`),
+              value: tab.value,
+              isSelected: tab.isSelected,
+            }))}
+            handleSelect={handleTabClick}
+          />
+        </div>
+        <div className="consultations__filters">
+          <InputSearch
+            placeholder={t("input_search_label")}
+            value={searchValue}
+            onChange={(value) => setSearchValue(value)}
+            classes="consultations__filters__search"
+          />
+        </div>
+        <div className="consultations__list">
+          {renderConsultationsGrid()}
+        </div>
+      </div>
     </Block>
   );
 };

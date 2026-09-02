@@ -6,9 +6,7 @@ import Joi from "joi";
 
 import {
   Backdrop,
-  Grid,
-  GridItem,
-  Input,
+  Icon,
   Textarea,
   InputWithDropdown,
   DropdownWithLabel,
@@ -31,8 +29,18 @@ import "./create-response.scss";
  * @return {jsx}
  */
 export const CreateResponse = ({ isOpen, onClose, question }) => {
-  const { t } = useTranslation("modals", { keyPrefix: "create-response" });
+  const { t, i18n } = useTranslation("modals", {
+    keyPrefix: "create-response",
+  });
   const queryClient = useQueryClient();
+
+  const questionDate = question?.questionCreatedAt
+    ? new Date(question.questionCreatedAt).toLocaleDateString(i18n.language, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
 
   const onSuccess = (data) => {
     setInitialTagsOptions(data);
@@ -117,6 +125,7 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
   return (
     <Backdrop
       classes="create-response"
+      title="CreateResponse"
       isOpen={isOpen}
       onClose={onClose}
       heading={t("heading")}
@@ -125,64 +134,75 @@ export const CreateResponse = ({ isOpen, onClose, question }) => {
       isCtaLoading={addAnswerMutation.isLoading}
       errorMessage={errors.submit}
     >
-      <Grid>
-        <GridItem md={8} lg={12}>
-          <p className="text create-response__question-text">
-            {question.question}
-          </p>
-        </GridItem>
-        <GridItem md={8} lg={12} classes="create-response__inputs-item">
-          <Grid classes="create-response__inputs-item__grid">
-            <GridItem md={4} lg={6}>
-              <Input
-                label={t("title_label") + " *"}
-                placeholder={t("title_placeholder")}
-                value={data.title}
-                onChange={(e) => hanldeChange("title", e.currentTarget.value)}
-                onBlur={() => handleBlur("title")}
-                errorMessage={errors.title}
-              />
-              <Textarea
-                classes="create-response__textarea"
-                label={t("answer_label") + " *"}
-                placeholder={t("answer_placeholder")}
-                value={data.answer}
-                onChange={(value) => hanldeChange("answer", value)}
-                onBlur={() => handleBlur("answer")}
-                errorMessage={errors.answer}
-              />
-            </GridItem>
-            <GridItem md={4} lg={6}>
-              <InputWithDropdown
-                label={t("tags_label") + " *"}
-                options={tags}
-                setOptions={setTags}
-                selectedOptions={selectedTags}
-                setSelectedOptions={setSelectedTags}
-                initialOptions={initialTagsOptions}
-                classes="create-response__tags"
-                t={t}
-              />
-              <Error message={errors.tags} />
-
-              <DropdownWithLabel
-                options={
-                  languages?.map((x) => ({
-                    value: x.language_id,
-                    label: x.local_name,
-                  })) || []
-                }
-                selected={data.languageId}
-                setSelected={(lang) => {
-                  hanldeChange("languageId", lang);
-                }}
-                label={t("language")}
-              />
-              <Error message={errors.languageId} />
-            </GridItem>
-          </Grid>
-        </GridItem>
-      </Grid>
+      <div className="create-response__content">
+        <div className="create-response__question">
+          <div className="create-response__question__icon">
+            <Icon name="comment" size="md" color="#9749fa" />
+          </div>
+          <div className="create-response__question__info">
+            <p className="small-text create-response__question__label">
+              {t("question_label")}
+            </p>
+            <p className="text create-response__question__text">
+              {question.question}
+            </p>
+          </div>
+          {questionDate ? (
+            <div className="create-response__question__date">
+              <Icon name="calendar" size="sm" color="#66768d" />
+              <p className="small-text">{questionDate}</p>
+            </div>
+          ) : null}
+        </div>
+        <div className="create-response__row">
+          <Textarea
+            classes="create-response__textarea"
+            label={t("title_label") + " *"}
+            placeholder={t("title_placeholder")}
+            value={data.title}
+            onChange={(value) => hanldeChange("title", value)}
+            onBlur={() => handleBlur("title")}
+            errorMessage={errors.title}
+          />
+          <Textarea
+            classes="create-response__textarea"
+            label={t("answer_label") + " *"}
+            placeholder={t("answer_placeholder")}
+            value={data.answer}
+            onChange={(value) => hanldeChange("answer", value)}
+            onBlur={() => handleBlur("answer")}
+            errorMessage={errors.answer}
+          />
+        </div>
+        <div className="create-response__field">
+          <InputWithDropdown
+            label={t("tags_label") + " *"}
+            options={tags}
+            setOptions={setTags}
+            selectedOptions={selectedTags}
+            setSelectedOptions={setSelectedTags}
+            initialOptions={initialTagsOptions}
+            t={t}
+          />
+          {errors.tags ? <Error message={errors.tags} /> : null}
+        </div>
+        <div className="create-response__field">
+          <DropdownWithLabel
+            options={
+              languages?.map((x) => ({
+                value: x.language_id,
+                label: x.local_name,
+              })) || []
+            }
+            selected={data.languageId}
+            setSelected={(lang) => {
+              hanldeChange("languageId", lang);
+            }}
+            label={t("language")}
+          />
+          {errors.languageId ? <Error message={errors.languageId} /> : null}
+        </div>
+      </div>
     </Backdrop>
   );
 };

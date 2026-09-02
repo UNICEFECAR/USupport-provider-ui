@@ -1,146 +1,172 @@
 @import "@USupport-components-library/styles";
 
 .scheduler-template {
-  &__grid {
-    place-items: center;
+  @include full-height-page-navbar;
+  padding-bottom: $spacing_4_0;
 
-    &__week-selector {
-      display: flex;
-      padding-top: $spacing_3_2;
-      text-align: center;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_2_4;
+    padding-top: $spacing_3_0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 120rem;
 
-      & .dropdown {
-        width: 15rem;
-        &:first-of-type {
-          margin-right: $spacing_1_2;
-        }
-      }
+    @media screen and (min-width: $screen-md) {
+      padding-top: $spacing_4_0;
+    }
+  }
 
-      & .dropdown-content {
-        width: 13.4rem;
-      }
+  &__section {
+    padding: $spacing_2_4;
+    border-radius: $border_radius_2_4;
 
-      & .scheduler-template__grid__multi-select {
-        &:first-of-type {
-          margin-right: $spacing_1_2;
-        }
+    @media screen and (min-width: $screen-md) {
+      padding: $spacing_3_0;
+    }
+  }
 
-        .select-container {
-          width: 25rem;
-          position: relative;
-          z-index: 200;
-        }
+  &__section-title {
+    margin-bottom: $spacing_2_0;
+    font-weight: $font_extra_bold !important;
+    font-size: $font_size_3_2 !important;
+    line-height: $line_height_3_8 !important;
+    text-align: left;
+    @include themify($themes, "color", "color_3d527b_white");
+  }
 
-        .dropdown {
-          width: 25rem;
-          position: relative;
-          z-index: 150;
-        }
+  &__section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing_2_4;
 
-        .dropdown-content {
-          width: 23rem;
-          position: absolute;
-        }
-
-        .select__menu,
-        .select__menu--dark {
-          width: 25rem;
-          z-index: 300;
-        }
-
-        & .dropdown-with-label {
-          &__label {
-            text-align: left;
-          }
-        }
-      }
-
-      &__campaign-organization-selector {
-        > .grid-item:only-child {
-          grid-column: 1 / -1;
-          justify-self: center;
-        }
-      }
+    @media screen and (min-width: $screen-lg) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    &__item {
-      @media screen and (min-width: $screen_lg) {
-        justify-self: end;
+    > :only-child {
+      @media screen and (min-width: $screen-lg) {
+        grid-column: 1 / -1;
       }
     }
+  }
 
-    &__day {
+  &__section-grid--dates {
+    @media screen and (min-width: $screen-md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__field {
+    width: 100%;
+    margin-top: 0;
+    text-align: left;
+
+    & .dropdown-with-label__label,
+    & .select-container__label {
+      text-align: left;
+    }
+
+    & .select-container {
+      width: 100%;
+      position: relative;
+      z-index: 200;
+    }
+
+    & .select__menu,
+    & .select__menu--dark {
+      width: 100%;
+      z-index: 300;
+    }
+  }
+
+  &__days-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing_2_0;
+
+    @media screen and (min-width: $screen-md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__day {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_1_2;
+    padding: $spacing_1_6;
+    border-radius: $border_radius_1_6;
+    @include themify($themes, "border-color", "color_gray_ea");
+    border: 0.1rem solid $color_gray_d2dcde;
+    @include themify($themes, "background-color", "color_white_ff");
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(193, 215, 224, 0.2);
+    }
+
+    &--full-width {
+      @media screen and (min-width: $screen-lg) {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  &__day-heading {
+    text-align: left;
+    @include themify($themes, "color", "color_3d527b_white");
+  }
+
+  &__day__checkbox {
+    align-self: flex-start;
+  }
+
+  &__day-times {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: end;
+    gap: $spacing_1_0;
+    width: 100%;
+
+    @media screen and (min-width: $screen-md) {
+      gap: $spacing_1_4;
+    }
+
+    &--disabled {
+      opacity: 0.55;
+    }
+
+    &__field {
       display: flex;
-      justify-content: center;
       flex-direction: column;
-      padding-top: $spacing_2_4;
-
-      @media screen and (min-width: $screen-md) {
-        justify-content: flex-start;
-        padding-top: $spacing_3_2;
-      }
-
-      &-heading {
-        text-align: left;
-      }
-
-      &-time-selector {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        padding-top: $spacing_1_6;
-        width: 100%;
-
-        @media screen and (min-width: $screen-md) {
-          flex-direction: row;
-          justify-content: flex-start;
-        }
-
-        &__single {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: $spacing_1_6;
-          text-align: left;
-          width: 70%;
-          max-width: 25rem;
-          padding: 0 $spacing_5_6;
-
-          @media screen and (min-width: $screen-md) {
-            padding: 0;
-            justify-content: flex-start;
-            &:nth-of-type(2) {
-              margin-left: $spacing_2_4;
-            }
-          }
-
-          & .dropdown {
-            width: 15rem;
-            @media screen and (min-width: $screen-md) {
-              margin-left: $spacing_1_2;
-            }
-          }
-
-          & .dropdown-content {
-            width: 13.5rem;
-          }
-        }
-      }
-
-      &__checkbox {
-        align-self: center;
-        padding-top: $spacing_1_6;
-
-        @media screen and (min-width: $screen-md) {
-          align-self: flex-start;
-        }
-      }
+      gap: $spacing_0_6;
+      min-width: 0;
     }
 
-    &__save-button {
-      margin-top: $spacing_3_2;
-      margin-bottom: $spacing_5_6;
+    &__label {
+      margin: 0;
+      text-align: left;
     }
+
+    &__divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: end;
+      min-width: 1.2rem;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: $spacing_0_8;
+  }
+
+  &__save-button {
+    margin-top: $spacing_1_6;
   }
 }

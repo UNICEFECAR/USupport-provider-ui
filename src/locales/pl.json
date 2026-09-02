@@ -8,6 +8,7 @@
       "page_5": "Klienci",
       "page_6": "Kampanie",
       "page_7": "Zapytaj psychologa",
+      "page_8": "Harmonogram",
       "footer_1": "Pulpit nawigacyjny",
       "footer_2": "Kalendarz",
       "footer_3": "Historia aktywności",
@@ -33,7 +34,21 @@
       "language_3": "",
       "language_4": "",
       "language_5": "",
-      "language_6": ""
+      "language_6": "",
+      "go_back": "Wróć",
+      "notifications_heading": "Powiadomienia",
+      "notifications_mark_read": "Oznacz wszystkie jako przeczytane",
+      "notifications_empty": "Brak powiadomień",
+      "all": "Wszystkie",
+      "new": "Nowe",
+      "read": "Przeczytane",
+      "dark": "Ciemny",
+      "light": "Jasny",
+      "high_contrast": "Wysoki kontrast",
+      "edit_profile": "Edytuj profil",
+      "logout": "Wyloguj",
+      "language_label": "Język",
+      "footer_text": "Twoje zdrowie psychiczne ma znaczenie — uSupport zapewnia spersonalizowaną, prywatną i bezpieczną opiekę psychologiczną."
     },
     "contact-us-block": {
       "issue": "Zagadnienie",
@@ -171,6 +186,10 @@
       "add_more_work_with": "Dodaj więcej kategorii",
       "add_more_education": "Dodaj więcej",
       "add_more_specializations": "Dodaj więcej specjalizacji",
+      "section_personal_information": "Informacje osobiste",
+      "section_professional_information": "Informacje zawodowe",
+      "section_location": "Lokalizacja",
+      "section_languages_specialties": "Języki i specjalizacje",
       "button_text": "Zapisz zmiany",
       "button_secondary_text": "Odrzuć zmiany",
       "addiction": "Uzależnienie",
@@ -209,7 +228,8 @@
       "no_data_found": "Nie znaleziono danych",
       "select": "Wybierz",
       "remove": "Usuń",
-      "video_link_error": "Proszę wprowadzić prawidłowy adres URL"
+      "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Najwcześniejszy termin konsultacji",
@@ -222,6 +242,9 @@
       "edit_details": "Edytuj szczegóły",
       "change_password": "Zmień hasło",
       "delete_account": "Usuń konto",
+      "phone_label": "Telefon",
+      "email_label": "Email",
+      "consultations": "konsultacje",
       "no_available_slot": "Brak dostępnych terminów",
       "video_label": "Prezentacja wideo",
       "city_label": "Miejscowość",
@@ -263,7 +286,16 @@
       "body_image": "Obraz ciała i poczucie własnej wartości",
       "hour_consultation": "za 1 godzinę konsultacji",
       "free": "Bezpłatne",
-      "organizations_label": "Organizacje"
+      "organizations_label": "Organizacje",
+      "coupon": "Kupon",
+      "monday": "Poniedziałek",
+      "tuesday": "Wtorek",
+      "wednesday": "Środa",
+      "thursday": "Czwartek",
+      "friday": "Piątek",
+      "saturday": "Sobota",
+      "sunday": "Niedziela",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Twój profil",
@@ -315,6 +347,8 @@
       "heading": "Konsultacje",
       "today_tab_label": "Dzisiaj",
       "upcoming_tab_label": "Nadchodzące",
+      "past_tab_label": "Wcześniejsze",
+      "no_upcoming_consultations": "Nie masz żadnych nadchodzących konsultacji",
       "input_search_label": "Wyszukiwanie",
       "sunday": "Niedz.",
       "monday": "Pon.",
@@ -335,7 +369,9 @@
       "conducted": "Przeprowadzono",
       "join": "Dołącz",
       "free": "Bezpłatne",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "test_audio_camera": "Przetestuj audio i kamerę",
+      "test_audio_camera_description": "Sprawdź urządzenia przed konsultacją"
     },
     "clients": {
       "clients_heading": "Klienci",
@@ -355,6 +391,7 @@
       "see_profile": "Zobacz profil",
       "past_consultations": "wcześniejsze konsultacje",
       "no_scheduled": "Brak zaplanowanych konsultacji",
+      "next_consultation_label": "Następna konsultacja",
       "suggested": "Sugerowane",
       "join": "Dołącz",
       "no_consultations": "Nie masz żadnych konsultacji z tym/ą klientem/ką",
@@ -377,7 +414,16 @@
     },
     "scheduler": {
       "calendar": "Kalendarz",
+      "schedule_and_availability": "Harmonogram i dostępność",
       "add_template_availability": "Dodaj szablon dostępności",
+      "add_appointment": "Dodaj wizytę",
+      "appointments_today": "Dzisiejsze wizyty",
+      "appointments_for_date": "Wizyty: {{date}}",
+      "no_appointments_day": "Brak wizyt tego dnia.",
+      "consultation": "Konsultacja",
+      "consultations": "Konsultacje",
+      "organization_appointment": "Organizacja",
+      "view": "Zobacz",
       "today": "Dzisiaj",
       "sunday": "Niedz.",
       "monday": "Pon.",
@@ -388,6 +434,10 @@
       "saturday": "Sob.",
       "consultation_details": "Wyświetl szczegóły",
       "available": "Jesteś dostępny/a",
+      "unavailable": "Niedostępny",
+      "slot_available": "Dostępny",
+      "available_organizations": "Dostępne organizacje",
+      "available_campaigns": "Dostępne kampanie",
       "not_available": "Jesteś niedostępny/a",
       "set_available": "Ustaw jako dostępny/a",
       "set_not_available": "Ustaw jako niedostępny/a",
@@ -401,7 +451,25 @@
       "booked": "Zarezerwowany",
       "more_campaigns": "{{amount}} kampanie",
       "provider_inactive": "Nie masz uprawnień do dodawania dostępności",
-      "coupon": "Kupon"
+      "coupon": "Kupon",
+      "day": "Dzień",
+      "week": "Tydzień",
+      "month": "Miesiąc",
+      "picker_hint_day": "Wybierz dzień",
+      "picker_hint_week": "Wybierz tydzień",
+      "picker_hint_month": "Wybierz miesiąc",
+      "month_section_appointments": "Wizyty",
+      "month_section_availability": "Dostępność",
+      "month_availability_helper": "Dotknij pustego slotu i wybierz „Ustaw jako dostępny/a”, aby otworzyć nowy termin.",
+      "month_appointments_count_one": "{{count}} wizyta",
+      "month_appointments_count_other": "{{count}} wizyt",
+      "month_open_slots_count_one": "{{count}} wolny slot",
+      "month_open_slots_count_other": "{{count}} wolnych slotów",
+      "month_available_slots_count_one": "{{count}} dostępny slot",
+      "month_available_slots_count_other": "{{count}} dostępnych slotów",
+      "month_unavailable_slots_count_one": "{{count}} niedostępny slot",
+      "month_unavailable_slots_count_other": "{{count}} niedostępnych slotów",
+      "month_no_upcoming_slots": "Brak nadchodzących terminów na ten dzień."
     },
     "scheduler-template": {
       "start_date": "Data rozpoczęcia",
@@ -470,7 +538,35 @@
       "ordinal_rd": ".",
       "ordinal_th": ".",
       "free": "Bezpłatne",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "test_audio_camera": "Przetestuj audio i kamerę",
+      "test_audio_camera_description": "Sprawdź urządzenia przed konsultacją"
+    },
+    "schedule-dashboard": {
+      "available_days": "Dni dostępności",
+      "this_month": "w tym miesiącu",
+      "upcoming_consultations": "Nadchodzące konsultacje",
+      "next_7_days": "Najbliższe 7 dni",
+      "no_upcoming_consultations": "Nie masz nadchodzących konsultacji",
+      "view_profile": "Zobacz profil",
+      "join": "Dołącz",
+      "cancel_consultation": "Anuluj konsultację",
+      "today": "Dzisiaj",
+      "in_days_one": "Za {{count}} dzień",
+      "in_days_few": "Za {{count}} dni",
+      "in_days_many": "Za {{count}} dni",
+      "in_days_other": "Za {{count}} dnia",
+      "in_hours_one": "Za {{count}} godzinę",
+      "in_hours_few": "Za {{count}} godziny",
+      "in_hours_many": "Za {{count}} godzin",
+      "in_hours_other": "Za {{count}} godziny",
+      "sunday": "Niedz.",
+      "monday": "Pon.",
+      "tuesday": "Wt.",
+      "wednesday": "Śr.",
+      "thursday": "Czw.",
+      "friday": "Pt.",
+      "saturday": "Sob."
     },
     "notifications": {
       "consultation_booking": "Twoja konsultacja z {{clientName}} została zaplanowana na {{date}} od {{startHour}} do {{endHour}}",
@@ -614,7 +710,8 @@
       "heading": "Zresetuj hasło"
     },
     "edit-profile-details-page": {
-      "heading": "Edycja szczegółów profilu"
+      "heading": "Edycja szczegółów profilu",
+      "subheading": "Zaktualizuj informacje profilu, zdjęcie i ustawienia konsultacji."
     },
     "provider-profile-page": {
       "heading": "Profil użytkownika",
@@ -623,6 +720,7 @@
     },
     "provider-overview-page": {
       "heading": "Szczegóły profilu",
+      "subheading": "Przeglądaj i zarządzaj osobistymi i zawodowymi informacjami profilu.",
       "button_label": "Historia aktywności"
     },
     "scheduler-template-page": {
@@ -695,6 +793,7 @@
     },
     "consultations-page": {
       "heading": "Konsultacje",
+      "subheading": "Przeglądaj dzisiejsze konsultacje i zarządzaj nadchodzącym harmonogramem.",
       "input_search_label": "Wyszukiwanie"
     },
     "notifications-page": {
@@ -760,12 +859,34 @@
     },
     "join-consultation": {
       "heading": "Wybierz sposób komunikacji",
-      "modal_paragraph": "Wybierz typ komunikacji, który najbardziej Ci odpowiada.",
+      "subheading": "Wybierz typ komunikacji, który najbardziej Ci odpowiada.",
       "button_label_1": "Konsultacja wideo/audio",
       "button_label_2": "Konsultacja tekstowa",
+      "preview_heading": "Sprawdź kamerę i mikrofon",
+      "preview_subheading": "Upewnij się, że inni mogą cię zobaczyć i usłyszeć przed dołączeniem.",
+      "join_video": "Dołącz do konsultacji",
+      "configuring_devices": "Konfigurowanie urządzeń...",
+      "camera_off_label": "Kamera wyłączona",
+      "mic_level_label": "Mikrofon",
+      "toggle_camera": "Przełącz kamerę",
+      "toggle_microphone": "Przełącz mikrofon",
+      "retry_permissions": "Spróbuj ponownie",
       "provider_joined": "Konsultant/ka dołączył/a do konsultacji",
+      "error": "Wystąpił błąd. Spróbuj ponownie",
       "permissions_error": "Zezwól na dostęp do kamery i mikrofonu",
       "allow_permissions": "Jeśli chcesz porozmawiać z klientem, włącz te uprawnienia w ustawieniach przeglądarki lub z ikony informacji na pasku adresu."
+    },
+    "device-test": {
+      "heading": "Przetestuj audio i kamerę",
+      "subheading": "Sprawdź urządzenia przed konsultacją, aby upewnić się, że wszystko działa.",
+      "done": "Gotowe",
+      "configuring_devices": "Konfigurowanie urządzeń...",
+      "camera_off_label": "Kamera wyłączona",
+      "mic_level_label": "Mikrofon",
+      "toggle_camera": "Przełącz kamerę",
+      "toggle_microphone": "Przełącz mikrofon",
+      "retry_permissions": "Spróbuj ponownie",
+      "permissions_error": "Zezwól na dostęp do kamery i mikrofonu"
     },
     "select-consultation": {
       "heading_edit": "Zaproponuj zmianę",
@@ -813,6 +934,7 @@
     },
     "create-response": {
       "heading": "Napisz odpowiedź",
+      "question_label": "Anonimowe pytanie",
       "title_label": "Tytuł",
       "title_placeholder": "Wpisz tutaj tytuł",
       "answer_label": "Odpowiedz",

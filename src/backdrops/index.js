@@ -4,6 +4,7 @@ export * from "./ChangePassword";
 export * from "./DeleteAccount";
 export * from "./CancelConsultation";
 export * from "./JoinConsultation";
+export * from "./DeviceTest";
 export * from "./SelectConsultation";
 export * from "./CodeVerification";
 export * from "./CancelPaidConsultation";

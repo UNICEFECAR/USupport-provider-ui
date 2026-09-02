@@ -3,11 +3,6 @@
 .notifications {
   @include full-height-page-navbar;
 
-  &__subheading {
-    padding-top: $spacing_1_6;
-    text-align: left;
-  }
-
   &__grid {
     padding-top: $spacing_3_6;
     padding-bottom: $spacing_4_8;

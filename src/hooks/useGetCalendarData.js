@@ -47,7 +47,7 @@ export default function useGetCalendarData(startDate) {
     return formattedData;
   };
 
-  const getCalendarDataQuery = useQuery(["calendar-data"], getCalendarData, {
+  const getCalendarDataQuery = useQuery(["calendar-data", startDate], getCalendarData, {
     onError: (error) => console.log(error),
   });
 

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { InputSearch } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 
@@ -98,7 +97,7 @@ export const Clients = () => {
   };
   const suggestConsultationMutation = useSuggestConsultation(
     onSuggestConsultationSuccess,
-    onSuggestConsultationError
+    onSuggestConsultationError,
   );
 
   const onBlockSlotSuccess = (consultationId) => {
@@ -123,7 +122,9 @@ export const Clients = () => {
       classes="page__clients"
       showNavbar
       showFooter
-      showGoBackArrow={selectedClient}
+      showGoBackArrow={
+        selectedClient && !(width < 1366 && displayedConsultation)
+      }
       handleGoBack={() => {
         if (width < 1366 && displayedConsultation) {
           setDisplayedConsultation(null);
@@ -131,22 +132,13 @@ export const Clients = () => {
           setSelectedClient(null);
         }
       }}
-      heading={t("heading")}
-      headingButton={
-        !selectedClient ? (
-          <InputSearch
-            placeholder={t("input_search_placeholder")}
-            onChange={(value) => setSearchValue(value)}
-            value={searchValue}
-          />
-        ) : null
-      }
     >
       <ClientsBlock
         openCancelConsultation={openCancelConsultation}
         openSelectConsultation={openSelectConsultation}
         openJoinConsultation={openJoinConsultation}
         searchValue={searchValue}
+        setSearchValue={setSearchValue}
         selectedClient={selectedClient}
         setSelectedClient={setSelectedClient}
         initiallySelectedConsultation={initiallySelectedConsultation}

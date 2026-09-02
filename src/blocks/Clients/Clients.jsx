@@ -3,15 +3,18 @@ import { useTranslation } from "react-i18next";
 import OutsideClickHandler from "react-outside-click-handler";
 
 import {
+  Avatar,
   Block,
-  Button,
+  Box,
   ClientHistory,
   Consultation,
   Grid,
   GridItem,
   Icon,
+  InputSearch,
   Loading,
   Message,
+  NewButton,
   SystemMessage,
 } from "@USupport-components-library/src";
 
@@ -31,6 +34,8 @@ import {
 
 import "./clients.scss";
 
+const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
+
 /**
  * Clients
  *
@@ -43,6 +48,7 @@ export const Clients = ({
   openSelectConsultation,
   openJoinConsultation,
   searchValue,
+  setSearchValue,
   selectedClient,
   setSelectedClient,
   selectedConsultation,
@@ -123,43 +129,52 @@ export const Clients = ({
   };
 
   return (
-    <Block classes="clients">
+    <Block classes="clients clients--v1">
       {!selectedClient ? (
         <div className="clients__clients-container">
-          <Grid classes="clients__clients-container__grid">
-            {renderAllClients()}
-          </Grid>
+          <Box classes="clients__list-panel">
+              <div className="clients__list-panel__search">
+                <InputSearch
+                  placeholder={t("input_search_placeholder")}
+                  onChange={(value) => setSearchValue(value)}
+                  value={searchValue}
+                />
+              </div>
+              <Grid classes="clients__list-panel__grid">
+                {renderAllClients()}
+              </Grid>
+          </Box>
         </div>
       ) : null}
       {selectedClient ? (
-        <Grid classes="clients__content">
+        <div className="clients__content">
           {((width < 1366 && !selectedConsultation) || width >= 1366) && (
-            <ConsultationsHistory
-              clientName={selectedClient.name}
-              handleConsultationClick={handleConsultationClick}
-              handleSuggestConsultation={handleSuggestConsultation}
-              image={selectedClient.image}
-              proposeConsultationLabel={t("propose_consultation_label")}
-              selectedClient={selectedClient}
-              setSelectedConsultation={setSelectedConsultation}
-              screenWidth={width}
-              t={t}
-            />
+            <Box classes="clients__main-container">
+              <ConsultationsHistory
+                handleConsultationClick={handleConsultationClick}
+                selectedClient={selectedClient}
+                setSelectedConsultation={setSelectedConsultation}
+                screenWidth={width}
+                t={t}
+              />
+            </Box>
           )}
           {((width < 1366 && selectedConsultation) || width >= 1366) && (
-            <ConsultationDetails
-              consultation={selectedConsultation}
-              handleGoBack={() => setSelectedConsultation("")}
-              handleSuggestConsultation={handleSuggestConsultation}
-              noConsultationHeading={t("no_consultation_selected")}
-              proposeConsultationLabel={t("propose_consultation_label")}
-              selectedClient={selectedClient}
-              providerStatus={providerStatus}
-              setSelectedConsultation={setSelectedConsultation}
-              t={t}
-            />
+            <Box classes="clients__consultation-container">
+              <ConsultationDetails
+                consultation={selectedConsultation}
+                handleGoBack={() => setSelectedConsultation("")}
+                handleSuggestConsultation={handleSuggestConsultation}
+                noConsultationHeading={t("no_consultation_selected")}
+                proposeConsultationLabel={t("propose_consultation_label")}
+                selectedClient={selectedClient}
+                providerStatus={providerStatus}
+                screenWidth={width}
+                t={t}
+              />
+            </Box>
           )}
-        </Grid>
+        </div>
       ) : null}
     </Block>
   );
@@ -168,19 +183,55 @@ export const Clients = ({
 const ConsultationDetails = ({
   consultation,
   proposeConsultationLabel,
+  handleGoBack,
   handleSuggestConsultation,
   noConsultationHeading,
   selectedClient,
   providerStatus,
+  screenWidth,
   t,
 }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const chatQuery = useGetChatData(consultation?.chatId);
 
-  // useEffect(() => {
-  //   return () => setSelectedConsultation(null);
-  // }, []);
+  const selectedClientImage =
+    AMAZON_S3_BUCKET + "/" + (selectedClient?.image || "default");
+
+  const handleProposeConsultation = () => {
+    setIsMenuOpen(false);
+    handleSuggestConsultation(selectedClient.clientDetailId);
+  };
+
+  const renderMenuOptions = () => {
+    const menuOptions = [
+      {
+        iconName: "share-front",
+        text: proposeConsultationLabel,
+        onClick: handleProposeConsultation,
+      },
+    ];
+
+    return menuOptions.map((option, index) => {
+      return (
+        <div
+          className="menu-option"
+          onClick={option.onClick}
+          key={index}
+        >
+          <Icon
+            name={option.iconName}
+            color={"#373737"}
+            classes="menu-option__icon"
+          />
+          <p className="small-text">{option.text}</p>
+        </div>
+      );
+    });
+  };
 
   const renderAllMessages = () => {
+    if (!consultation?.chatId) return <p>{t("no_messages")}</p>;
+    if (!chatQuery.data) return <Loading size="lg" />;
     if (chatQuery.data.messages.length === 0) return <p>{t("no_messages")}</p>;
     return chatQuery.data.messages.map((message, index) => {
       if (message.type === "system") {
@@ -220,7 +271,7 @@ const ConsultationDetails = ({
   };
 
   return (
-    <GridItem md={8} lg={8} classes="clients__consultation-container">
+    <>
       {!consultation ? (
         <div className="clients__consultation-container__no-selected">
           <img src={mascot} alt="Mascot" className="mascot" />
@@ -230,46 +281,67 @@ const ConsultationDetails = ({
         </div>
       ) : (
         <div className="clients__consultation-container__consultation">
-          {/* {screenWidth < 1366 && (
-            <div className="clients__consultation-container__consultation__header">
+          <div className="clients__consultation-container__consultation__header">
+            <Box
+              liquidGlass
+              classes="clients__consultation-container__consultation__header__client-container"
+            >
+              <div className="clients__consultation-container__consultation__header__client-container__identity">
+                {screenWidth < 1366 && (
+                  <Icon
+                    name="arrow-chevron-back"
+                    color="#20809E"
+                    onClick={handleGoBack}
+                  />
+                )}
+                <Avatar size="sm" image={selectedClientImage} />
+                <h4 className="client-name">{selectedClient.name}</h4>
+              </div>
               <Icon
-                name="arrow-chevron-back"
-                onClick={handleGoBack}
+                name="three-dots-vertical"
                 color="#20809E"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
               />
-            </div>
-          )} */}
+            </Box>
+          </div>
           <div className="clients__consultation-container__consultation__messages">
-            {chatQuery.isLoading ? <Loading size="lg" /> : renderAllMessages()}
+            {!consultation?.chatId || !chatQuery.isLoading ? (
+              renderAllMessages()
+            ) : (
+              <Loading size="lg" />
+            )}
           </div>
 
           {providerStatus === "active" ? (
-            <Button
+            <NewButton
+              type="gradient"
               size="lg"
+              iconName="share-front"
               label={proposeConsultationLabel}
-              onClick={() =>
-                handleSuggestConsultation(selectedClient.clientDetailId)
-              }
+              onClick={handleProposeConsultation}
               classes="clients__consultation-container__consultation__button"
             />
           ) : null}
+          {isMenuOpen && (
+            <OutsideClickHandler onOutsideClick={() => setIsMenuOpen(false)}>
+              <div className="clients__consultation-container__consultation__menu">
+                {renderMenuOptions()}
+              </div>
+            </OutsideClickHandler>
+          )}
         </div>
       )}
-    </GridItem>
+    </>
   );
 };
 
 const ConsultationsHistory = ({
   handleConsultationClick,
-  proposeConsultationLabel,
   selectedClient,
-  handleSuggestConsultation,
   setSelectedConsultation,
   screenWidth,
   t,
 }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   useEffect(() => {
     return () => {
       if (screenWidth >= 1366) setSelectedConsultation(null);
@@ -309,45 +381,9 @@ const ConsultationsHistory = ({
     });
   };
 
-  const renderMenuOptions = () => {
-    const menuOptions = [
-      {
-        iconName: "share-front",
-        text: proposeConsultationLabel,
-        onClick: () => handleSuggestConsultation(selectedClient.clientDetailId),
-      },
-    ];
-
-    return menuOptions.map((option, index) => {
-      return (
-        <div
-          className="client-history__menu__option"
-          onClick={option.onClick}
-          key={index}
-        >
-          <Icon
-            name={option.iconName}
-            color={"#373737"}
-            classes="client-history__menu__option__icon"
-          />
-          <p className="small-text">{option.text}</p>
-        </div>
-      );
-    });
-  };
-
   return (
-    <GridItem md={8} lg={4} classes="clients__main-container">
-      <Grid classes="clients__main-container__grid">
-        {renderAllConsultations()}
-      </Grid>
-      {isMenuOpen && (
-        <OutsideClickHandler onOutsideClick={() => setIsMenuOpen(false)}>
-          <div className="clients__main-container__menu">
-            {renderMenuOptions()}
-          </div>
-        </OutsideClickHandler>
-      )}
-    </GridItem>
+    <Grid classes="clients__main-container__grid">
+      {renderAllConsultations()}
+    </Grid>
   );
 };

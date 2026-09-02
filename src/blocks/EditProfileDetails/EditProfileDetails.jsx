@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import {
   Block,
   Box,
-  Button,
   DropdownWithLabel,
+  NewButton,
   Error,
   Input,
   InputGroup,
@@ -26,6 +26,11 @@ import {
   useUpdateProviderData,
 } from "#hooks";
 import Joi from "joi";
+
+import {
+  buildSpecializationOptions,
+  getNextSpecializations,
+} from "#utils/specializations";
 
 import "./edit-profile-details.scss";
 
@@ -66,7 +71,7 @@ const PillMultiSelect = ({
 
   return (
     <div className="edit-profile-details__pill-group">
-      <p className="edit-profile-details__pill-group-label">{label}</p>
+      <p className="text edit-profile-details__pill-group-label">{label}</p>
       {options.length ? (
         <div className="edit-profile-details__pill-container">
           {options.map((option) => (
@@ -74,6 +79,7 @@ const PillMultiSelect = ({
               key={option.value}
               type="button"
               className={[
+                "text",
                 "edit-profile-details__pill",
                 option.selected ? "edit-profile-details__pill--selected" : "",
               ].join(" ")}
@@ -84,7 +90,7 @@ const PillMultiSelect = ({
           ))}
         </div>
       ) : (
-        <p className="edit-profile-details__pill-empty">{emptyMessage}</p>
+        <p className="text edit-profile-details__pill-empty">{emptyMessage}</p>
       )}
       {errorMessage ? <Error message={errorMessage} /> : null}
     </div>
@@ -135,11 +141,10 @@ export const EditProfileDetails = ({
 
   const isPriceDisabled = !hasPayments;
 
-  const specializationOptions = [
-    { value: "psychologist", label: t("psychologist"), selected: false },
-    { value: "psychiatrist", label: t("psychiatrist"), selected: false },
-    { value: "psychotherapist", label: t("psychotherapist"), selected: false },
-  ];
+  const specializationOptions = useMemo(
+    () => buildSpecializationOptions(selectedCountry, t),
+    [selectedCountry, t]
+  );
 
   useEffect(() => {
     if (providerData && providersQuery.data) {
@@ -204,7 +209,7 @@ export const EditProfileDetails = ({
       });
     }
     return specializationOptions;
-  }, [providerData]);
+  }, [providerData, specializationOptions]);
 
   const getLanguageOptions = useCallback(() => {
     const languageOptions = [];
@@ -316,6 +321,15 @@ export const EditProfileDetails = ({
       .filter((option) => option.selected)
       .map((x) => x.value);
     handleChange(field, selected);
+  };
+
+  const handleSpecializationSelect = (options) => {
+    setErrors({ specializations: null });
+    const nextSpecializations = getNextSpecializations(
+      providerData.specializations || [],
+      options
+    );
+    handleChange("specializations", nextSpecializations);
   };
 
   const handleEducationChange = (options) => {
@@ -488,11 +502,9 @@ export const EditProfileDetails = ({
 
           <Box classes="edit-profile-details__section" boxShadow={3}>
             <h3 className="edit-profile-details__section-title">
-              {t("section_personal_information", {
-                defaultValue: "Personal information",
-              })}
+              {t("section_personal_information")}
             </h3>
-            <div className="edit-profile-details__section-grid edit-profile-details__section-grid--profile">
+            <div className="edit-profile-details__section-grid">
               <div className="edit-profile-details__profile-preview-row">
                 <ProfilePicturePreview
                   image={providerData.image}
@@ -553,7 +565,7 @@ export const EditProfileDetails = ({
                   options={sexOptions}
                   selected={providerData.sex}
                   setSelected={(value) => handleChange("sex", value)}
-                  classes="edit-profile-details__grid__sex-dropdown"
+                  classes="edit-profile-details__field"
                   errorMessage={errors.sex}
                 />
               </div>
@@ -562,9 +574,7 @@ export const EditProfileDetails = ({
 
           <Box classes="edit-profile-details__section" boxShadow={3}>
             <h3 className="edit-profile-details__section-title">
-              {t("section_professional_information", {
-                defaultValue: "Professional information",
-              })}
+              {t("section_professional_information")}
             </h3>
             <div className="edit-profile-details__section-grid">
               <Textarea
@@ -617,7 +627,7 @@ export const EditProfileDetails = ({
 
           <Box classes="edit-profile-details__section" boxShadow={3}>
             <h3 className="edit-profile-details__section-title">
-              {t("section_location", { defaultValue: "Location" })}
+              {t("section_location")}
             </h3>
             <div className="edit-profile-details__section-grid">
               <Input
@@ -651,9 +661,7 @@ export const EditProfileDetails = ({
 
           <Box classes="edit-profile-details__section" boxShadow={3}>
             <h3 className="edit-profile-details__section-title">
-              {t("section_languages_specialties", {
-                defaultValue: "Languages and specialties",
-              })}
+              {t("section_languages_specialties")}
             </h3>
             <div className="edit-profile-details__section-grid">
               <PillMultiSelect
@@ -668,9 +676,7 @@ export const EditProfileDetails = ({
               <PillMultiSelect
                 label={t("specialization_label") + " *"}
                 options={getSpecializationsOptions()}
-                onChange={(options) =>
-                  handleWorkWithAndLanguageSelect("specializations", options)
-                }
+                onChange={(options) => handleSpecializationSelect(options)}
                 errorMessage={errors.specializations}
                 emptyMessage={t("no_data_found")}
               />
@@ -687,18 +693,18 @@ export const EditProfileDetails = ({
           </Box>
 
           <div className="edit-profile-details__buttons">
-            <Button
-              classes="edit-profile-details__grid__save-button"
-              type="primary"
+            <NewButton
+              classes="edit-profile-details__save-button"
+              type="gradient"
               label={t("button_text")}
               size="lg"
               onClick={handleSave}
               disabled={!canSaveChanges}
               loading={updateProviderMutation.isLoading}
             />
-            <Button
-              type="secondary"
-              classes="edit-profile-details__grid__discard-button"
+            <NewButton
+              type="outline"
+              classes="edit-profile-details__discard-button"
               label={t("button_secondary_text")}
               size="lg"
               disabled={!canSaveChanges}

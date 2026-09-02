@@ -2,8 +2,6 @@ import React, { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Block,
-  Grid,
-  GridItem,
   Loading,
   Markdown,
 } from "@USupport-components-library/src";
@@ -52,18 +50,16 @@ export const TermsOfUse = () => {
     isFetched: isTermsOfUseFetched,
   } = useQuery(["terms-of-use", currentCountry, i18n.language], getTermsOfUse);
   return (
-    <Block classes="terms-of-use">
-      <Grid>
-        <GridItem md={8} lg={12}>
-          {termsOfUseData && (
-            <Markdown markDownText={termsOfUseData}></Markdown>
-          )}
-          {!termsOfUseData && termsOfUseLoading && <Loading />}
-          {!termsOfUseData && !termsOfUseLoading && isTermsOfUseFetched && (
-            <h3 className="terms-of-use__no-results">{t("no_results")}</h3>
-          )}
-        </GridItem>
-      </Grid>
+    <Block classes="terms-of-use terms-of-use--v1">
+      <div className="terms-of-use__surface">
+        {termsOfUseData && (
+          <Markdown markDownText={termsOfUseData}></Markdown>
+        )}
+        {!termsOfUseData && termsOfUseLoading && <Loading />}
+        {!termsOfUseData && !termsOfUseLoading && isTermsOfUseFetched && (
+          <h3 className="terms-of-use__no-results">{t("no_results")}</h3>
+        )}
+      </div>
     </Block>
   );
 };

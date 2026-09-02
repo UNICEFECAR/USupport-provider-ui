@@ -9,6 +9,7 @@ import {
   GridItem,
   InputPassword,
   Button,
+  NewButton,
 } from "@USupport-components-library/src";
 import { logoVerticalSvg } from "@USupport-components-library/assets";
 
@@ -40,22 +41,16 @@ export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
   return (
     <Block classes="login">
       <Grid md={8} lg={12} classes="login__grid">
-        <GridItem md={8} lg={12} classes="login__grid__inputs-item">
-          <div className="login__grid__logo-item">
-            <h2 className="welcome__grid__logo-item__heading">
-              {t("heading")}
-            </h2>
-            <img
-              src={logoVerticalSvg}
-              alt="Logo"
-              className="welcome__grid__logo-item__logo"
-            />
-            <h2 className="welcome__grid__logo-item__heading">
-              {t("provider")}
-            </h2>
-          </div>
+        <GridItem md={8} lg={12} classes="login__grid__logo-item">
+          <h2 className="login__grid__logo-item__heading">{t("heading")}</h2>
+          <img
+            src={logoVerticalSvg}
+            alt="Logo"
+            className="login__grid__logo-item__logo"
+          />
+          <h2 className="login__grid__logo-item__heading">{t("provider")}</h2>
         </GridItem>
-        <GridItem md={8} lg={12} classes="login__grid__inputs-item">
+        <GridItem md={8} lg={12} classes="login__grid__content-item">
           <form onSubmit={handleLogin}>
             <Input
               label={t("email_label")}
@@ -66,7 +61,7 @@ export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
               value={data.email}
             />
             <InputPassword
-              classes="login__grid__inputs-item__input--password"
+              classes="login__grid__content-item__input--password"
               label={t("password_label")}
               onChange={(value) =>
                 handleChange("password", value.currentTarget.value)
@@ -82,12 +77,11 @@ export const Login = ({ data, setData, handleLogin, errors, isLoading }) => {
               onClick={() => handleForgotPassword()}
             />
             {errors.submit ? <Error message={errors.submit} /> : null}
-            <Button
+            <NewButton
               label={t("login_label")}
               size="lg"
-              classes="login-button"
+              isFullWidth
               disabled={!data.email || !data.password}
-              isSubmit
               loading={isLoading}
             />
           </form>

@@ -6,7 +6,7 @@ import { useCustomNavigate as useNavigate } from "#hooks";
 
 import {
   Block,
-  Button,
+  NewButton,
   Grid,
   GridItem,
   DropdownWithLabel,
@@ -230,9 +230,10 @@ export const Welcome = () => {
               <Loading size="lg" />
             </div>
           )}
-          <Button
+          <NewButton
             label={t("button")}
             size="lg"
+            isFullWidth
             disabled={!selectedCountry || !selectedLanguage}
             onClick={handleContinue}
           />

@@ -39,6 +39,7 @@
     &__name {
       color: $color_blue_3d527b;
       font-weight: $font_bold;
+      @include themify($themes, "color", "color_text_main");
     }
 
     &__status {
@@ -58,13 +59,18 @@
     }
 
     &-icon {
-      background-color: $color_white_ff;
       border-bottom: unset;
       cursor: pointer;
       margin-top: $spacing_1_0;
       padding: $spacing_1_2;
       position: fixed;
       right: -$spacing_1_6;
+      @include themify($themes, "background-color", "color_white_ff");
+
+      .theme-dark &,
+      .theme-highContrast & {
+        background: rgba(255, 255, 255, 0.06);
+      }
 
       &__content {
         position: relative;

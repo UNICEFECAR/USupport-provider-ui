@@ -2,5 +2,17 @@
 @import "@USupport-components-library/styles";
 
 .page__edit-profile-details {
-  @include full-height-page-navbar;
+  padding-bottom: $spacing_12_0;
+
+  &__radial-circle.purple {
+    top: 5%;
+    left: -20%;
+  }
+
+  @media screen and (max-width: $screen-md) {
+    background-image: url(../assets/background-spiral.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    margin-bottom: 50px;
+  }
 }

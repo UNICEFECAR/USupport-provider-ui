@@ -1,7 +1,17 @@
 @import "@USupport-components-library/styles";
 
 .edit-profile-details {
+  @include full-height-page-navbar;
   padding-bottom: $spacing_4_0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  & > .container {
+    min-width: 0;
+    width: 100%;
+  }
 
   &__content {
     display: flex;
@@ -11,6 +21,7 @@
     margin: 0 auto;
     width: 100%;
     max-width: 120rem;
+    min-width: 0;
 
     @media screen and (min-width: $screen-md) {
       padding-top: $spacing_4_0;
@@ -24,6 +35,7 @@
   &__section {
     padding: $spacing_2_4;
     border-radius: $border_radius_2_4;
+    overflow: visible;
 
     @media screen and (min-width: $screen-md) {
       padding: $spacing_3_0;
@@ -37,6 +49,7 @@
     font-size: $font_size_3_2 !important;
     line-height: $line_height_3_8 !important;
     text-align: left;
+    @include themify($themes, "color", "color_3d527b_white");
   }
 
   &__section-grid {
@@ -47,18 +60,13 @@
     @media screen and (min-width: $screen-lg) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
 
-  &__section-grid--profile {
-    @media screen and (min-width: $screen-lg) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing_1_2;
+      overflow: visible;
     }
-  }
-
-  &__section-grid > div {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing_1_2;
   }
 
   &__profile-preview-row {
@@ -66,6 +74,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &__field {
+    width: 100%;
+    margin-top: 0;
+    text-align: left;
+
+    & .input-container__label,
+    & .dropdown-with-label__label,
+    & .input-group__label,
+    & .error-message,
+    & .text,
+    & p {
+      text-align: left;
+    }
+
+    & .textarea--container .textarea,
+    & .textarea--container textarea {
+      min-height: 16rem;
+    }
   }
 
   & .input-container,
@@ -82,20 +110,6 @@
     align-items: flex-start;
   }
 
-  & .input-container__label,
-  & .dropdown-with-label__label,
-  & .input-group__label,
-  & .error-message,
-  & .text,
-  & p {
-    text-align: left;
-  }
-
-  & .textarea--container .textarea,
-  & .textarea--container textarea {
-    min-height: 16rem;
-  }
-
   &__consultation-price-group {
     width: 100%;
   }
@@ -109,6 +123,7 @@
     color: $color_blue_3d527b;
     font-weight: $font_semi_bold;
     text-align: left;
+    @include themify($themes, "color", "color_3d527b_white");
   }
 
   &__pill-container {
@@ -121,37 +136,63 @@
     border-radius: $border_radius_1_6;
     border: 0.1rem solid $color_gray_d2dcde;
     @include scrollbar-secondary;
+    @include themify($themes, "border-color", "color_gray_ea");
   }
 
   &__pill {
+    font-size: $font_size_1_6;
+    line-height: $line_height_2_4;
+    font-weight: $font_medium;
     border: 0.1rem solid $color_blue_c1d7e0;
     background: $color_white_ff;
-    border-radius: $border_radius_2_4;
+    border-radius: $border_radius_1_6;
     padding: $spacing_0_6 $spacing_1_2;
     color: $color_blue_3d527b;
     cursor: pointer;
-    transition: all 0.2s ease;
-  }
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
+    @include themify($themes, "background-color", "color_white_ff");
+    @include themify($themes, "color", "color_3d527b_white");
+    @include themify($themes, "border-color", "color_gray_ea");
 
-  &__pill:hover {
-    border-color: $color_primary_20809e;
-  }
+    &:hover:not(#{&}--selected) {
+      border-color: $color_secondary_9749fa;
+    }
 
-  &__pill--selected {
-    border-color: $color_primary_20809e;
-    background: $color_green_f4f7fe;
-    color: $color_primary_20809e;
-    font-weight: $font_semi_bold;
+    &--selected {
+      border: 0.2rem solid $color_secondary_9749fa !important;
+      background-color: rgba($color_secondary_9749fa, 0.14) !important;
+      color: $color_purple_6a4ffb !important;
+      font-weight: $font_semi_bold;
+      box-shadow: 0 0.2rem 0.6rem rgba($color_secondary_9749fa, 0.28);
+      padding: calc(#{$spacing_0_6} - 0.1rem) calc(#{$spacing_1_2} - 0.1rem);
+
+      .theme-dark & {
+        background-color: rgba($color_secondary_9749fa, 0.35) !important;
+        border-color: $color_purple_c39af9 !important;
+        color: $color_purple_dac3f6 !important;
+        box-shadow: 0 0.2rem 0.8rem rgba($color_secondary_9749fa, 0.4);
+      }
+
+      .theme-highContrast & {
+        border-color: $color_purple_c39af9 !important;
+        background-color: rgba($color_secondary_9749fa, 0.4) !important;
+        color: #ffff00 !important;
+        box-shadow: 0 0 0 0.2rem rgba($color_purple_c39af9, 0.6);
+      }
+    }
   }
 
   &__pill-empty {
+    font-size: $font_size_1_6;
+    line-height: $line_height_2_4;
     color: $color_gray_66768d;
     margin: 0;
     text-align: left;
-  }
-
-  &__grid__submit-error {
-    align-self: center;
+    @include themify($themes, "color", "color_gray_66768d");
   }
 
   &__buttons {
@@ -161,11 +202,11 @@
     padding-top: $spacing_0_8;
   }
 
-  &__grid__save-button {
+  &__save-button {
     margin-top: $spacing_1_6;
   }
 
-  &__grid__discard-button {
+  &__discard-button {
     margin-top: $spacing_1_2;
   }
 }

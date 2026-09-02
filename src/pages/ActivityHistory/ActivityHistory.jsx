@@ -53,7 +53,7 @@ export const ActivityHistory = () => {
   };
   const suggestConsultationMutation = useSuggestConsultation(
     onSuggestConsultationSuccess,
-    onSuggestConsultationError
+    onSuggestConsultationError,
   );
 
   const onBlockSlotSuccess = (consultationId) => {
@@ -79,7 +79,6 @@ export const ActivityHistory = () => {
       showNavbar
       showFooter
       showGoBackArrow={false}
-      heading={t("heading")}
     >
       <ActivityHistoryBlock
         openSelectConsultation={openSelectConsultation}

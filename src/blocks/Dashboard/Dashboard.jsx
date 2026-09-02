@@ -173,7 +173,7 @@ export const Dashboard = ({ openJoinConsultation, openCancelConsultation }) => {
               ) : (
                 <p
                   className="small-text "
-                  onClick={() => navigate("/calendar")}
+                  onClick={() => navigate("/dashboard")}
                 >
                   {t("calendar")}
                 </p>

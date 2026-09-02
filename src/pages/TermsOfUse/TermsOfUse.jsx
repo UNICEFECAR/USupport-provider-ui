@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useCustomNavigate as useNavigate } from "#hooks";
 
 import { Page, TermsOfUse as TermsOfUseBlock } from "#blocks";
 
@@ -13,14 +12,9 @@ import { Page, TermsOfUse as TermsOfUseBlock } from "#blocks";
  */
 export const TermsOfUse = () => {
   const { t } = useTranslation("pages", { keyPrefix: "terms-of-use-page" });
-  const navigate = useNavigate();
 
   return (
-    <Page
-      classes="page__terms-of-use"
-      handleGoBack={() => navigate(-1)}
-      heading={t("heading")}
-    >
+    <Page classes="page__terms-of-use" heading={t("heading")}>
       <TermsOfUseBlock />
     </Page>
   );

@@ -8,6 +8,7 @@
       "page_5": "Հաճախորդներ",
       "page_6": "Արշավներ",
       "page_7": "Իմ հարցուպատասխանները",
+      "page_8": "Ժամանակացույց",
       "footer_1": "Վերլուծական տվյալներ",
       "footer_2": "Օրացույց",
       "footer_3": "Գործողության պատմություն",
@@ -33,7 +34,21 @@
       "language_3": "",
       "language_4": "",
       "language_5": "",
-      "language_6": ""
+      "language_6": "",
+      "go_back": "Վերադառնալ",
+      "notifications_heading": "Ծանուցումներ",
+      "notifications_mark_read": "Նշել բոլորը որպես կարդացված",
+      "notifications_empty": "Դեռևս ծանուցումներ չկան",
+      "all": "Բոլորը",
+      "new": "Նոր",
+      "read": "Կարդացված",
+      "dark": "Մուգ",
+      "light": "Լուսավոր",
+      "high_contrast": "Բարձր հակադրություն",
+      "edit_profile": "Խմբագրել պրոֆիլը",
+      "logout": "Դուրս գալ",
+      "language_label": "Լեզու",
+      "footer_text": "Ձեր հոգեկան առողջությունը կարևոր է. uSupport-ը տրամադրում է անհատական, անձնական և անվտանգ հոգեբանական աջակցություն։"
     },
     "contact-us-block": {
       "issue": "Խնդիրը",
@@ -171,6 +186,10 @@
       "add_more_work_with": "Ավելացնել այլ կատեգորիաներ",
       "add_more_education": "Ավելացնել այլ",
       "add_more_specializations": "Ավելացնել լրացուցիչ մասնագիտացումներ",
+      "section_personal_information": "Անձնական տեղեկություն",
+      "section_professional_information": "Մասնագիտական տեղեկություն",
+      "section_location": "Տեղադրություն",
+      "section_languages_specialties": "Լեզուներ և մասնագիտություններ",
       "button_text": "Պահպանել փոփոխությունները",
       "button_secondary_text": "Չեղարկել փոփոխությունները",
       "addiction": "Կախվածություն և նյութերի չարաշահում",
@@ -209,7 +228,8 @@
       "no_data_found": "Տվյալ չի գտնվել",
       "select": "Ընտրել",
       "remove": "Հեռացնել",
-      "video_link_error": "Խնդրում ենք մուտքագրել ճիշտ URL"
+      "video_link_error": "Խնդրում ենք մուտքագրել ճիշտ URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Խորհրդատվության համար ամենամոտ հասանելի ժամանակահատվածը",
@@ -222,6 +242,9 @@
       "edit_details": "Փոփոխել մանրամասները",
       "change_password": "Փոխել գաղտնաբառը",
       "delete_account": "Ջնջել օգտահաշիվը",
+      "phone_label": "Հեռախոսահամարը",
+      "email_label": "Էլեկտրոնային փոստի հասցեն",
+      "consultations": "խորհրդատվություններ",
       "no_available_slot": "Հասանելի ժամանակահատված առկա չէ",
       "video_label": "Տեսաներկայացում",
       "city_label": "Քաղաքը",
@@ -263,7 +286,16 @@
       "body_image": "Մարմնակազմություն և ինքնագնահատական",
       "hour_consultation": "1 ժամանոց խորհրդատվության համար",
       "free": "Անվճար",
-      "organizations_label": "Կազմակերպություններ"
+      "organizations_label": "Կազմակերպություններ",
+      "coupon": "Կտրոն",
+      "monday": "Երկուշաբթի",
+      "tuesday": "Երեքշաբթի",
+      "wednesday": "Չորեքշաբթի",
+      "thursday": "Հինգշաբթի",
+      "friday": "Ուրբաթ",
+      "saturday": "Շաբաթ",
+      "sunday": "Կիրակի",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Ձեր պրոֆիլը",
@@ -315,6 +347,8 @@
       "heading": "Խորհրդատվություններ",
       "today_tab_label": "Այսօր",
       "upcoming_tab_label": "Առաջիկայում",
+      "past_tab_label": "Նախկին",
+      "no_upcoming_consultations": "Դուք առաջիկայում խորհրդատվություններ չունեք",
       "input_search_label": "Որոնում",
       "sunday": "Կիր․",
       "monday": "Երկշ․",
@@ -335,7 +369,9 @@
       "conducted": "Իրականացվել է",
       "join": "Միանալ",
       "free": "Անվճար",
-      "cancel": "Չեղարկել"
+      "cancel": "Չեղարկել",
+      "test_audio_camera": "Ստուգել աուդիոն և տեսախցիկը",
+      "test_audio_camera_description": "Ստուգիր սարքերը խորհրդատվությունից առաջ"
     },
     "clients": {
       "clients_heading": "Հաճախորդներ",
@@ -355,6 +391,7 @@
       "see_profile": "Տեսնել պրոֆիլը",
       "past_consultations": "Նախկին խորհրդատվությունները",
       "no_scheduled": "Խորհրդատվություն պլանավորված չէ",
+      "next_consultation_label": "Հաջորդ խորհրդատվությունը",
       "suggested": "Առաջարկված",
       "join": "Միանալ",
       "no_consultations": "Այս հաճախորդի հետ խորրհրդատվություններ չունեք",
@@ -377,7 +414,16 @@
     },
     "scheduler": {
       "calendar": "Օրացույց",
+      "schedule_and_availability": "Ժամանակացույց և հասանելիություն",
       "add_template_availability": "Ավելացնել ձևաթղթի հասանելիություն",
+      "add_appointment": "Ավելացնել հանդիպում",
+      "appointments_today": "Այսօրվա հանդիպումներ",
+      "appointments_for_date": "Հանդիպումներ {{date}}",
+      "no_appointments_day": "Այս օրը հանդիպումներ չկան։",
+      "consultation": "Խորհրդատվություն",
+      "consultations": "Խորհրդատվություններ",
+      "organization_appointment": "Կազմակերպություն",
+      "view": "Դիտել",
       "today": "Այսօր",
       "sunday": "Կիր․",
       "monday": "Երկշ․",
@@ -388,6 +434,10 @@
       "saturday": "Շաբ․",
       "consultation_details": "Դիտել մանրամասները",
       "available": "Դուք հասանելի եք",
+      "unavailable": "Անհասանելի",
+      "slot_available": "Հասանելի",
+      "available_organizations": "Հասանելի կազմակերպություններ",
+      "available_campaigns": "Հասանելի արշավներ",
       "not_available": "Դուք անհասանելի եք",
       "set_available": "Ցույց տալ որպես հասանելի",
       "set_not_available": "Ցույց տալ որպես անհասանելի",
@@ -401,7 +451,25 @@
       "booked": "Ամրագրված է",
       "more_campaigns": "{{amount}} արշավ",
       "provider_inactive": "Դուք չունեք հասանելիություն ավելացնելու թույլտվություններ",
-      "coupon": "Կտրոն"
+      "coupon": "Կտրոն",
+      "day": "Օր",
+      "week": "Շաբաթ",
+      "month": "Ամիս",
+      "picker_hint_day": "Ընտրեք օր",
+      "picker_hint_week": "Ընտրեք շաբաթ",
+      "picker_hint_month": "Ընտրեք ամիս",
+      "month_section_appointments": "Հանդիպումներ",
+      "month_section_availability": "Հասանելիություն",
+      "month_availability_helper": "Հպեք դատարկ ժամանակահատվածին և ընտրեք «Ցույց տալ որպես հասանելի»՝ նոր ժամ բացելու համար։",
+      "month_appointments_count_one": "{{count}} հանդիպում",
+      "month_appointments_count_other": "{{count}} հանդիպում",
+      "month_open_slots_count_one": "{{count}} բաց ժամանակահատված",
+      "month_open_slots_count_other": "{{count}} բաց ժամանակահատված",
+      "month_available_slots_count_one": "{{count}} հասանելի ժամանակահատված",
+      "month_available_slots_count_other": "{{count}} հասանելի ժամանակահատված",
+      "month_unavailable_slots_count_one": "{{count}} անհասանելի ժամանակահատված",
+      "month_unavailable_slots_count_other": "{{count}} անհասանելի ժամանակահատված",
+      "month_no_upcoming_slots": "Այս օրվա համար առաջիկա ժամանակահատվածներ չկան։"
     },
     "scheduler-template": {
       "start_date": "Մեկնարկի ամսաթիվը",
@@ -470,7 +538,31 @@
       "ordinal_rd": "րդ",
       "ordinal_th": "րդ",
       "free": "Անվճար",
-      "cancel": "Չեղարկել"
+      "cancel": "Չեղարկել",
+      "test_audio_camera": "Ստուգել աուդիոն և տեսախցիկը",
+      "test_audio_camera_description": "Ստուգիր սարքերը խորհրդատվությունից առաջ"
+    },
+    "schedule-dashboard": {
+      "available_days": "Հասանելի օրեր",
+      "this_month": "այս ամիս",
+      "upcoming_consultations": "Առաջիկա խորհրդատվություններ",
+      "next_7_days": "Հաջորդ 7 օրը",
+      "no_upcoming_consultations": "Առաջիկա խորհրդատվություններ չկան",
+      "view_profile": "Դիտել պրոֆիլը",
+      "join": "Միանալ",
+      "cancel_consultation": "Չեղարկել խորհրդատվությունը",
+      "today": "Այսօր",
+      "in_days_one": "{{count}} օրից",
+      "in_days_other": "{{count}} օրից",
+      "in_hours_one": "{{count}} ժամից",
+      "in_hours_other": "{{count}} ժամից",
+      "sunday": "Կիր",
+      "monday": "Երկ",
+      "tuesday": "Երք",
+      "wednesday": "Չրք",
+      "thursday": "Հնգ",
+      "friday": "Ուր",
+      "saturday": "Շբթ"
     },
     "notifications": {
       "consultation_booking": "ի<0>{{clientName}} ձեր խորհրդատվությունը</0> պլանավորված<0>էր ամսի</0>{{date}}</0> -ից <0>{{startHour}}</0> մինչև <0>{{endHour}}</0>",
@@ -614,7 +706,8 @@
       "heading": "Վերագործարկեք ձեր գաղտնաբառը"
     },
     "edit-profile-details-page": {
-      "heading": "Փոփոխել պրոֆիլի մանրամասները"
+      "heading": "Փոփոխել պրոֆիլի մանրամասները",
+      "subheading": "Թարմացրեք ձեր պրոֆիլի տեղեկությունները, լուսանկարը և խորհրդատվության կարգավորումները։"
     },
     "provider-profile-page": {
       "heading": "Օգտվողի պրոֆիլը",
@@ -623,6 +716,7 @@
     },
     "provider-overview-page": {
       "heading": "Պրոֆիլի մանրամասները",
+      "subheading": "Դիտեք և կառավարեք ձեր անձնական և մասնագիտական պրոֆիլի տեղեկությունները։",
       "button_label": "Գործողությունների պատմությունը"
     },
     "scheduler-template-page": {
@@ -695,6 +789,7 @@
     },
     "consultations-page": {
       "heading": "Խորհրդատվություններ",
+      "subheading": "Դիտեք այսօրվա խորհրդատվությունները և կառավարեք ձեր առաջիկա ժամանակացույցը։",
       "input_search_label": "Որոնում"
     },
     "notifications-page": {
@@ -760,12 +855,34 @@
     },
     "join-consultation": {
       "heading": "Ընտրեք, թե ինչպես եք ուզում շփվել",
-      "modal_paragraph": "Ընտրեք շփվելու այն ձևը, որը առավելագույնս հարմար է ձեզ",
+      "subheading": "Ընտրեք շփվելու այն ձևը, որը առավելագույնս հարմար է ձեզ",
       "button_label_1": "Տեսա/ձայնային խորհրդատվություն ",
       "button_label_2": "Տեքստային խորհրդատվություն",
+      "preview_heading": "Ստուգիր տեսախցիկը և խոսափողը",
+      "preview_subheading": "Միանալուց առաջ համոզվիր, որ քեզ տեսնում և լսում են։",
+      "join_video": "Միանալ խորհրդատվությանը",
+      "configuring_devices": "Սարքերի կարգավորում...",
+      "camera_off_label": "Տեսախցիկն անջատված է",
+      "mic_level_label": "Խոսափող",
+      "toggle_camera": "Միացնել/անջատել տեսախցիկը",
+      "toggle_microphone": "Միացնել/անջատել խոսափողը",
+      "retry_permissions": "Կրկին փորձել",
       "provider_joined": "Խորհրդատվություն տրամադրողը միացել է խորհրդատվությանը",
+      "error": "Տեղի է ունեցել սխալ։ Խնդրում ենք կրկին փորձել",
       "permissions_error": "Թույլատրեք տեսախցիկի և խոսափողի օգտագործումը",
       "allow_permissions": "Եթե ցանկանում եք խոսել հաճախորդի հետ, տվեք թույլատվությունները ձեր դիտարկչի կարգավորումներում կամ հասցեի տողի տեղեկատվության նշանից։"
+    },
+    "device-test": {
+      "heading": "Ստուգել աուդիոն և տեսախցիկը",
+      "subheading": "Ստուգիր սարքերը խորհրդատվությունից առաջ՝ համոզվելու համար, որ ամեն ինչ աշխատում է։",
+      "done": "Պատրաստ է",
+      "configuring_devices": "Սարքերի կարգավորում...",
+      "camera_off_label": "Տեսախցիկն անջատված է",
+      "mic_level_label": "Խոսափող",
+      "toggle_camera": "Միացնել/անջատել տեսախցիկը",
+      "toggle_microphone": "Միացնել/անջատել խոսափողը",
+      "retry_permissions": "Կրկին փորձել",
+      "permissions_error": "Թույլատրիր տեսախցիկի և խոսափողի օգտագործումը"
     },
     "select-consultation": {
       "heading_edit": "Առաջարկել փոփոխություն",
@@ -813,6 +930,7 @@
     },
     "create-response": {
       "heading": "Գրել պատասխան",
+      "question_label": "Անանուն հարց",
       "title_label": "Վերնագիր",
       "title_placeholder": "Այստեղ գրի առեք վերնագիրը",
       "answer_label": "Պատասխան",

@@ -1,33 +1,102 @@
 @import "@USupport-components-library/styles";
 
-.provider-profile {
-  &__buttons-item {
-    justify-self: center;
-  }
+.provider-overview {
+  @include full-height-page-navbar;
+  padding-bottom: $spacing_4_0;
 
-  &__controls {
+  &__content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 34.3rem;
+    gap: $spacing_2_4;
+    padding-top: $spacing_3_0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 120rem;
+
+    @media screen and (min-width: $screen-md) {
+      padding-top: $spacing_4_0;
+    }
   }
 
-  &__change-password-button,
-  &__delete-account-button {
-    padding: 0;
-    min-width: unset;
+  .provider-details__header {
+    margin-bottom: $spacing_1_6;
   }
 
-  &__edit-button {
-    margin-top: $spacing_4_0;
+  .provider-details__header__actions {
+    align-items: stretch;
+    width: 100%;
+
+    @media screen and (min-width: $screen-md) {
+      width: auto;
+      min-width: 22rem;
+    }
   }
 
-  &__change-password-button {
-    margin-top: $spacing_3_6;
+  .provider-details__info-grid {
+    border-top: 0.1rem solid $color_gray_ea;
+
+    @include themifyCustom(
+      $themes,
+      "border-top-color",
+      "color_gray_ea",
+      "color_gray_344054"
+    );
   }
 
-  &__delete-account-button {
-    margin-top: $spacing_2_2;
+  &__secondary-actions {
+    width: 100%;
+    border-radius: $border_radius_1_6;
+    overflow: hidden;
+    background: $color_white_ff;
+    border: 0.1rem solid rgba($color_blue_c1d7e0, 0.72);
+    box-shadow: 0 0.6rem 1rem rgba($color_blue_3d527b, 0.08);
+
+    @include themify($themes, "background-color", "color_white_ff");
+    @include themify($themes, "border-color", "color_gray_ea");
+
+    .theme-dark &,
+    .theme-highContrast & {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(193, 215, 224, 0.2);
+      box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.2);
+    }
+
+    .action-row {
+      padding: $spacing_0_8 $spacing_1_2;
+      gap: $spacing_0_6;
+      align-items: center;
+
+      &__left {
+        gap: $spacing_0_8;
+        align-items: center;
+      }
+
+      &__icon,
+      &__chevron {
+        padding-top: 0;
+      }
+    }
+
+    .action-row:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: $spacing_1_2;
+      right: $spacing_1_2;
+      bottom: 0;
+      height: 0.1rem;
+      background: $color_gray_ea;
+
+      .theme-dark &,
+      .theme-highContrast & {
+        background: rgba(193, 215, 224, 0.15);
+      }
+    }
+
+    .action-row:hover {
+      .theme-dark &,
+      .theme-highContrast & {
+        background: rgba(255, 255, 255, 0.04);
+      }
+    }
   }
 }

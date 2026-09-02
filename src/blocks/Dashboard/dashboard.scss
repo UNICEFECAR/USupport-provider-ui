@@ -10,6 +10,10 @@
 
     &__next-weeks {
       justify-self: start;
+
+      & > h4 {
+        @include themify($themes, "color", "color_text_main");
+      }
     }
 
     &__calendar-text {
@@ -25,22 +29,30 @@
     &__consultations-grid {
       &__item {
         justify-self: center;
+
+        & > p {
+          @include themify($themes, "color", "color_text_main");
+        }
       }
     }
 
     &__calendar-item,
     &__day-item {
-      border: 0.1rem solid $color_primary_20809e;
-      border-radius: $border_radius_1_2;
+      @include content-surface;
       padding: $spacing_1_6;
       max-height: 65rem;
       overflow-y: auto;
+      @include scrollbar-secondary;
 
       &__heading {
         display: flex;
         justify-content: center;
         padding-bottom: $spacing_2_4;
         padding-top: $spacing_0_8;
+
+        & > h4 {
+          @include themify($themes, "color", "color_text_main");
+        }
       }
     }
 
@@ -53,11 +65,14 @@
 
       &__weekdays-grid {
         padding-top: $spacing_0_8;
+
         &__days {
           justify-self: start;
+
           & p {
             text-align: left;
             padding-left: $spacing_0_4;
+            @include themify($themes, "color", "color_text_main");
           }
         }
       }

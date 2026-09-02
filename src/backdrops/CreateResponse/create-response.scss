@@ -1,51 +1,102 @@
 @import "@USupport-components-library/styles";
 
 .create-response {
-  max-width: 80rem;
-
-  @media screen and (min-width: $screen-md) {
-    min-height: 80vh;
+  @media screen and (min-width: $screen_md) {
+    max-width: min(96rem, 90vw);
   }
 
-  &__question-text {
-    text-align: left;
-    padding-left: $spacing_1_2;
+  &__content {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_2_4;
+    margin-bottom: $spacing_2_4;
+    width: 100%;
+
+    .input-with-dropdown-wrapper,
+    .input-with-dropdown {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  &__question {
+    align-items: center;
+    background: linear-gradient(
+      100deg,
+      rgba($color_secondary_9749fa, 0.1) 0%,
+      rgba($color_secondary_9749fa, 0.03) 100%
+    );
+    border: 0.1rem solid rgba($color_secondary_9749fa, 0.18);
+    border-radius: $border_radius_1_6;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing_1_6;
+    padding: $spacing_1_6;
+    width: 100%;
+
+    &__icon {
+      align-items: center;
+      background-color: rgba($color_secondary_9749fa, 0.14);
+      border-radius: $border_radius_1_2;
+      display: flex;
+      flex-shrink: 0;
+      height: 4.8rem;
+      justify-content: center;
+      width: 4.8rem;
+    }
+
+    &__info {
+      flex: 1;
+      min-width: 20rem;
+      text-align: left;
+    }
+
+    &__label {
+      color: $color_secondary_9749fa;
+      font-weight: $font_bold;
+      letter-spacing: 0.08rem;
+      text-transform: uppercase;
+    }
+
+    &__text {
+      font-weight: $font_bold;
+      word-break: break-word;
+    }
+
+    &__date {
+      align-items: center;
+      color: $color_gray_66768d;
+      display: flex;
+      gap: $spacing_0_8;
+      margin-left: auto;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__row {
+    display: grid;
+    gap: $spacing_2_4;
+    grid-template-columns: 1fr;
+    width: 100%;
+
     @media screen and (min-width: $screen_md) {
-      padding-left: 0;
+      grid-template-columns: 1fr 1fr;
     }
-  }
-
-  &__inputs-item {
-    margin-top: $spacing_1_0;
-
-    @media screen and (min-width: $screen_lg) {
-      margin-top: 0;
-    }
-
-    &__grid {
-      padding: $spacing_1_2;
-      place-items: center;
-
-      @media screen and (min-width: $screen_md) {
-        place-items: start;
-      }
-    }
-  }
-
-  &__tags {
-    margin-bottom: $spacing_1_2;
   }
 
   &__textarea {
-    margin-top: $spacing_1_2;
-  }
+    width: 100%;
 
-  & .backdrop__children {
-    flex: 0.9;
-    overflow-y: auto;
-  }
-
-  & .backdrop__buttons-container {
-    flex: 0.1;
+    textarea {
+      min-height: 20rem;
+    }
   }
 }

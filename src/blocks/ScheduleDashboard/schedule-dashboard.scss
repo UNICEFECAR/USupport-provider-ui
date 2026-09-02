@@ -1,0 +1,229 @@
+@import "@USupport-components-library/styles";
+
+.schedule-dashboard {
+  padding-top: $spacing_2_4;
+  padding-bottom: $spacing_3_2;
+  overflow-x: hidden;
+  min-width: 0;
+
+  @media screen and (min-width: $screen-md) {
+    padding-top: $spacing_3_2;
+  }
+
+  &.block {
+    overflow: visible;
+  }
+
+  &__layout {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_2_4;
+    max-width: 144rem;
+    margin: 0 auto;
+
+    @media screen and (min-width: $screen-lg) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing_4_0;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_2_4;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing_1_6;
+
+    @media screen and (min-width: $screen-sm) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: $spacing_1_6;
+    padding: $spacing_1_6 $spacing_2_0;
+    border-radius: $border_radius_1_6;
+    @include content-surface;
+  }
+
+  &__stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 1.2rem;
+    background: rgba(106, 79, 251, 0.12);
+    flex-shrink: 0;
+
+    .theme-highContrast & {
+      background: rgba(255, 255, 0, 0.12);
+    }
+  }
+
+  &__stat-copy {
+    min-width: 0;
+    text-align: left;
+  }
+
+  &__stat-label {
+    margin: 0 0 $spacing_0_4;
+    font-size: 1.3rem;
+    @include content-muted-text;
+  }
+
+  &__stat-value {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: $font_bold;
+    line-height: 1.2;
+    @include themify($themes, "color", "color_text_main");
+
+    span {
+      font-size: 1.4rem;
+      font-weight: $font_medium;
+      @include content-muted-text;
+    }
+  }
+
+  &__calendar {
+    @include content-surface;
+    padding: $spacing_2_0 $spacing_1_4 $spacing_2_6;
+    min-width: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    @media screen and (min-width: $screen-md) {
+      padding: $spacing_2_4 $spacing_2_6 $spacing_3_4;
+    }
+  }
+
+  &__sidebar {
+    @include content-surface;
+    padding: $spacing_2_0 $spacing_1_6 $spacing_2_4;
+    min-width: 0;
+
+    @media screen and (min-width: $screen-md) {
+      padding: $spacing_2_4;
+    }
+
+    @media screen and (min-width: $screen-lg) {
+      position: sticky;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      width: 34rem;
+      min-width: 34rem;
+      height: 100dvh;
+      min-height: 100dvh;
+      overflow: hidden;
+      align-self: flex-start;
+      box-sizing: border-box;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      width: 38rem;
+      min-width: 38rem;
+    }
+  }
+
+  &__sidebar-title {
+    margin: 0 0 $spacing_2_0;
+    flex: 0 0 auto;
+    font-size: 1.8rem;
+    font-weight: $font_bold;
+    @include themify($themes, "color", "color_text_main");
+  }
+
+  &__test-devices {
+    flex: 0 0 auto;
+    width: 100%;
+    margin: 0 0 $spacing_1_6;
+    padding: $spacing_1_2 $spacing_1_6;
+    border: 0.1rem solid #e5e5e5;
+    border-radius: $border_radius_1_6;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing_1_2;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(151, 73, 250, 0.04);
+      border-color: rgba(151, 73, 250, 0.3);
+    }
+  }
+
+  &__test-devices-left {
+    display: flex;
+    align-items: center;
+    gap: $spacing_1_2;
+    min-width: 0;
+  }
+
+  &__test-devices-copy {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_0_2;
+    min-width: 0;
+  }
+
+  &__test-devices-title {
+    font-weight: $font_semi_bold;
+    color: $color_secondary_9749fa;
+  }
+
+  &__test-devices-description {
+    font-size: 1.2rem;
+    color: $color_gray_66768d;
+  }
+
+  &__sidebar-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing_1_6;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include scrollbar-secondary;
+    padding-right: $spacing_0_4;
+    -webkit-overflow-scrolling: touch;
+
+    .consultation {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-height: 0;
+      flex: 0 0 auto;
+      box-sizing: border-box;
+
+      &__content,
+      &__bottom,
+      &__actions {
+        flex: 0 0 auto;
+        min-width: 0;
+        max-width: 100%;
+      }
+    }
+  }
+
+  &__empty {
+    margin: $spacing_2_4 0 0;
+    text-align: center;
+    @include content-muted-text;
+  }
+}

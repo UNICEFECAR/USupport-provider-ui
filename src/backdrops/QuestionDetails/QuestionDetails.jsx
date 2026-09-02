@@ -32,9 +32,12 @@ export const QuestionDetails = ({
   const { t } = useTranslation("modals", { keyPrefix: "question-details" });
 
   const providerInfo = question.providerData;
+  const hasAnswer = Boolean(question.answerText);
 
   const getDateText = () => {
-    const date = new Date(question.questionCreatedAt);
+    const date = new Date(
+      question.answerCreatedAt || question.questionCreatedAt,
+    );
 
     if (isDateToday(date)) {
       return t("today");
@@ -55,11 +58,10 @@ export const QuestionDetails = ({
   return (
     <Modal
       classes="question-details"
-      title="QuestionDetails"
       isOpen={isOpen}
       closeModal={onClose}
-      ctaLabel={t("write_response")}
-      ctaHandleClick={handleCtaClick}
+      ctaLabel={!hasAnswer ? t("write_response") : undefined}
+      ctaHandleClick={!hasAnswer ? handleCtaClick : undefined}
     >
       <div className="question-details__date-container">
         <Icon name="calendar" color="#92989B" />
@@ -67,24 +69,29 @@ export const QuestionDetails = ({
           {getDateText()}
         </p>
       </div>
-      <p className="text question-details__question-text">
-        {question.question}
-      </p>
-      {question.answerText && (
+      {hasAnswer && <p className="text">{question.question}</p>}
+      <div className="question-details__heading">
+        {!hasAnswer ? (
+          <p className="question-details__heading__text">{question.question}</p>
+        ) : (
+          <h4 className="question-details__heading__text">
+            {question.answerTitle}
+          </h4>
+        )}
+        {question.answerId ? (
+          <Like
+            handleClick={handleLike}
+            likes={question.likes || 0}
+            dislikes={question.dislikes || 0}
+            answerId={question.answerId}
+            isLiked={question.isLiked}
+            isDisliked={question.isDisliked}
+            renderInClient
+          />
+        ) : null}
+      </div>
+      {hasAnswer ? (
         <>
-          <div className="question-details__heading">
-            <h4 className="question-details__heading__text">
-              {question.answerTitle}
-            </h4>
-            <Like
-              handleClick={handleLike}
-              likes={question.likes}
-              dislikes={question.dislikes}
-              answerId={question.answerId}
-              isLiked={question.isLiked}
-              isDisliked={question.isDisliked}
-            />
-          </div>
           {question.tags ? (
             <div className="question-details__labels-container">
               {question.tags.map((label, index) => {
@@ -101,22 +108,24 @@ export const QuestionDetails = ({
           <pre className="text question-details__answer-text">
             {question.answerText}
           </pre>
-          <div className="question-details__bottom-container">
-            <div className="question-details__answered-by-container">
-              <p className="text">{t("answered_by")}</p>
-              <Avatar
-                image={AMAZON_S3_BUCKET + "/" + providerInfo.image}
-                alt="Specialist avatar"
-                size="xs"
-                classes="question-details__answered-by-container__avatar"
-              />
-              <p className="text">
-                {providerInfo.name} {providerInfo.surname}
-              </p>
+          {question.answerId && providerInfo ? (
+            <div className="question-details__bottom-container">
+              <div className="question-details__answered-by-container">
+                <p className="text">{t("answered_by")}</p>
+                <Avatar
+                  image={AMAZON_S3_BUCKET + "/" + providerInfo.image}
+                  alt="Specialist avatar"
+                  size="xs"
+                  classes="question-details__answered-by-container__avatar"
+                />
+                <p className="text">
+                  {providerInfo.name} {providerInfo.surname}
+                </p>
+              </div>
             </div>
-          </div>
+          ) : null}
         </>
-      )}
+      ) : null}
     </Modal>
   );
 };

@@ -1,32 +1,67 @@
 @import "@USupport-components-library/styles";
 
+$split-panel-left-width: 42rem;
+
 .activity-history {
   @include full-height-page-navbar;
 
-  @media screen and (min-width: $screen-lg) {
-    padding-top: $spacing_4_8;
-    padding-bottom: $spacing_4_8;
-  }
-  &__content {
-    padding-top: $spacing_3_2;
+  position: relative;
+  overflow: visible;
 
-    @media screen and (min-width: $screen-lg) {
-      padding: 0;
-      display: flex;
-      flex-direction: row;
-      height: 75vh;
+  &--v1 {
+    padding-top: 0;
+    padding-bottom: 10rem;
+  }
+
+  .theme-light & {
+    .box--liquid-glass,
+    .card--liquid-glass {
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.44),
+        rgba(235, 243, 255, 0.3)
+      );
+      border: 1px solid rgba(224, 233, 255, 0.72);
+      box-shadow: 0 0.6rem 1rem rgba(95, 108, 145, 0.14);
     }
   }
 
+  &__content {
+    padding-top: $spacing_3_2;
+    width: 100%;
+    max-width: 144rem;
+    margin: 0 auto;
+
+    @media screen and (min-width: $screen-lg) {
+      padding: $spacing_4_8 0 0;
+      display: grid;
+      grid-template-columns: $split-panel-left-width minmax(0, 1fr);
+      column-gap: $spacing_1_6;
+      height: 75vh;
+      min-height: 0;
+      align-items: stretch;
+    }
+  }
+
+  &__main-container,
+  &__consultation-container {
+    @include content-surface;
+  }
+
   &__main-container {
-    padding-bottom: $spacing_10_0;
+    padding: $spacing_2_4 $spacing_2_4 $spacing_10_0;
     overflow: auto;
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
+    @include scrollbar-secondary;
 
     @media screen and (min-width: $screen-lg) {
       padding: $spacing_2_4;
       padding-top: 0;
-      border: 0.1rem solid $color_primary_20809e;
-      border-radius: $border_radius_1_2;
+      width: $split-panel-left-width;
+      max-width: $split-panel-left-width;
+      height: 100%;
     }
 
     &__header {
@@ -39,33 +74,64 @@
       position: sticky;
       top: 0;
       z-index: 2;
-      background-color: $color_white_ff;
+      @include content-surface-sticky-bg;
     }
 
     &__grid {
       margin-top: $spacing_1_6;
-      place-items: center;
+      justify-items: stretch;
+      align-items: start;
       grid-gap: $spacing_1_5;
 
       & .grid-item {
         cursor: pointer;
+        width: 100%;
+        min-width: 0;
+      }
+
+      & .consultation {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      & .consultation--selected,
+      & .activity-history__consultation--selected {
+        border: 0.15rem solid $color_purple_6a4ffb;
+        box-shadow: 0 0 0 0.1rem rgba(106, 79, 251, 0.18);
+        background: rgba(106, 79, 251, 0.06);
+
+        .theme-dark & {
+          border-color: #8c90eb;
+          box-shadow: 0 0 0 0.1rem rgba(140, 144, 235, 0.28);
+          background: rgba(140, 144, 235, 0.12);
+        }
+
+        .theme-highContrast & {
+          border-color: #ffff00;
+          box-shadow: 0 0 0 0.1rem rgba(255, 255, 0, 0.35);
+          background: rgba(255, 255, 0, 0.12);
+        }
       }
     }
   }
 
   &__consultation-container {
-    border-radius: $border_radius_1_2;
     display: flex;
+    flex-direction: column;
     flex: 1;
     height: 75vh;
-    padding-bottom: $spacing_2_2;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: $spacing_2_4;
+    box-sizing: border-box;
 
     @media screen and (min-width: $screen-lg) {
-      height: unset;
-      margin-left: $spacing_1_6;
+      height: 100%;
+      margin-left: 0;
       padding: $spacing_2_4;
-      padding-bottom: 0;
-      border: 0.1rem solid $color_primary_20809e;
+      padding-bottom: $spacing_2_4;
     }
 
     &__no-selected {
@@ -74,6 +140,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-height: 0;
       padding: 0 $spacing_10_0;
 
       & .mascot {
@@ -86,24 +153,24 @@
         font-size: 2.2rem;
         line-height: 3rem;
         letter-spacing: 0.1rem;
-        color: $color_black_00;
+        @include themify($themes, "color", "color_text_main");
       }
     }
 
     &__consultation {
       width: 100%;
+      height: 100%;
+      min-height: 0;
       position: relative;
-      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
 
       &__header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
+        flex-shrink: 0;
         z-index: 2;
-        background-color: $color_white_ff;
+        padding-bottom: $spacing_1_6;
+        background-color: transparent;
 
         & .icon {
           cursor: pointer;
@@ -113,29 +180,61 @@
           display: flex;
           flex-direction: row;
           align-items: center;
+          justify-content: space-between;
+          gap: $spacing_1_6;
+          min-width: 0;
+          padding: $spacing_1_2 $spacing_1_6;
+          margin-inline: $spacing_0_8;
 
-          & .avatar {
-            margin-left: $spacing_0_8;
+          @media screen and (min-width: $screen-lg) {
+            margin-inline: $spacing_1_2;
           }
 
-          & .client-name {
-            margin-left: $spacing_1_6;
-          }
-        }
+          &__identity {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+            gap: $spacing_0_8;
 
-        & .icon {
-          padding: 0 $spacing_0_4;
+            & .avatar {
+              flex-shrink: 0;
+            }
+
+            & .client-name {
+              margin: 0;
+              min-width: 0;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+
+          & > .icon {
+            flex-shrink: 0;
+            padding: 0 $spacing_0_4;
+          }
         }
       }
 
       &__messages {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 1 1 0;
+        min-height: 0;
         width: 100%;
-        // height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
         padding-top: $spacing_3_2;
-        padding-bottom: $spacing_10_0;
+        padding-bottom: $spacing_2_4;
+        @include scrollbar-secondary;
+
+        &__loading-older {
+          display: flex;
+          justify-content: center;
+          padding-bottom: $spacing_1_6;
+        }
 
         .system-message {
           align-self: center;
@@ -159,8 +258,7 @@
       }
 
       &__menu {
-        background-color: $color_white_ff;
-        border-radius: $border_radius_1_6;
+        @include content-surface;
         border: 0.1rem solid $color_primary_20809e;
         display: flex;
         flex-direction: column;
@@ -192,14 +290,10 @@
       }
 
       &__button {
-        position: sticky;
-        bottom: 0.5%;
-        left: calc(50% - 34.3rem / 2);
+        flex-shrink: 0;
+        align-self: center;
+        margin-top: $spacing_1_6;
         z-index: $z_index_2;
-
-        @media screen and (min-width: $screen_lg) {
-          left: calc(50% - 36.8rem / 2);
-        }
       }
     }
   }
