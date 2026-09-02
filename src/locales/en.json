@@ -118,7 +118,9 @@
       "modal_heading": "Check your email",
       "modal_text": "If you are registered in the platform you will receive a link to reset your password.",
       "heading": "Welcome to",
-      "provider": "Provider"
+      "provider": "Provider",
+      "heading_modal": "Forgot password",
+      "go_back_to_login": "Go back to login"
     },
     "reset-password": {
       "label": "New password",
@@ -224,6 +226,7 @@
       "love": "Love and Romantic Relationships",
       "social_skills": "Social Skills and Friendship",
       "body_image": "Body Image and Self-Esteem",
+      "peer_to_peer_emotional_support": "Peer-to-peer emotional support",
       "edit_succes": "Profile updated successfully",
       "search": "Search",
       "no_data_found": "No data found",
@@ -284,6 +287,7 @@
       "love": "Love and Romantic Relationships",
       "social_skills": "Social Skills and Friendship",
       "body_image": "Body Image and Self-Esteem",
+      "peer_to_peer_emotional_support": "Peer-to-peer emotional support",
       "hour_consultation": "for 1 hour consultation",
       "organizations_label": "Organizations",
       "free": "free of charge",
