@@ -55,41 +55,36 @@ export const SchedulerToolbar = ({
         <GridItem
           xs={4}
           md={8}
-          lg={4}
-          classes="scheduler-toolbar__cell scheduler-toolbar__cell--tabs"
+          lg={8}
+          classes="scheduler-toolbar__cell scheduler-toolbar__cell--leading"
         >
-          <Tabs options={periodTypes} handleSelect={handleSelectTab} />
-        </GridItem>
-        <GridItem
-          xs={4}
-          md={8}
-          lg={4}
-          classes="scheduler-toolbar__cell scheduler-toolbar__cell--nav"
-        >
-          <div className="scheduler-toolbar__date-nav">
-            <Icon
-              color={iconColor}
-              name="arrow-chevron-back"
-              size={iconSize}
-              onClick={onPrev}
-            />
-            <SchedulerDatePicker
-              dateLabel={dateLabel}
-              selectedPeriod={selectedPeriod}
-              selectedDate={selectedDate}
-              monthViewDate={monthViewDate}
-              weekDays={weekDays}
-              onDateSelect={onDateSelect}
-              onMonthSelect={onMonthSelect}
-              t={t}
-              language={language}
-            />
-            <Icon
-              color={iconColor}
-              name="arrow-chevron-forward"
-              size={iconSize}
-              onClick={onNext}
-            />
+          <div className="scheduler-toolbar__leading">
+            <Tabs options={periodTypes} handleSelect={handleSelectTab} />
+            <div className="scheduler-toolbar__date-nav">
+              <Icon
+                color={iconColor}
+                name="arrow-chevron-back"
+                size={iconSize}
+                onClick={onPrev}
+              />
+              <SchedulerDatePicker
+                dateLabel={dateLabel}
+                selectedPeriod={selectedPeriod}
+                selectedDate={selectedDate}
+                monthViewDate={monthViewDate}
+                weekDays={weekDays}
+                onDateSelect={onDateSelect}
+                onMonthSelect={onMonthSelect}
+                t={t}
+                language={language}
+              />
+              <Icon
+                color={iconColor}
+                name="arrow-chevron-forward"
+                size={iconSize}
+                onClick={onNext}
+              />
+            </div>
           </div>
         </GridItem>
         <GridItem

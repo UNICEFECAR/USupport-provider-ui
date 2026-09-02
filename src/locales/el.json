@@ -8,6 +8,7 @@
       "page_5": "Πελάτες",
       "page_6": "Εκστρατείες",
       "page_7": "Οι Ερωτήσεις και Απαντήσεις μου",
+      "page_8": "Πρόγραμμα",
       "footer_1": "Πίνακας ελέγχου",
       "footer_2": "Ημερολόγιο",
       "footer_3": "Ιστορικό δραστηριότητας",
@@ -227,7 +228,8 @@
       "no_data_found": "Δεν βρέθηκαν δεδομένα",
       "select": "Επιλογή",
       "remove": "Κατάργηση",
-      "video_link_error": "Παρακαλούμε εισάγετε μια έγκυρη διεύθυνση URL"
+      "video_link_error": "Παρακαλούμε εισάγετε μια έγκυρη διεύθυνση URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Συντομότερο διαθέσιμο ραντεβού για συνεδρία",
@@ -292,7 +294,8 @@
       "thursday": "Πέμπτη",
       "friday": "Παρασκευή",
       "saturday": "Σάββατο",
-      "sunday": "Κυριακή"
+      "sunday": "Κυριακή",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Το προφίλ σας",
@@ -366,7 +369,9 @@
       "conducted": "Πραγματοποιήθηκε",
       "join": "Είσοδος",
       "free": "Δωρεάν",
-      "cancel": "Ακύρωση"
+      "cancel": "Ακύρωση",
+      "test_audio_camera": "Δοκιμή ήχου και κάμερας",
+      "test_audio_camera_description": "Ελέγξτε τις συσκευές σας πριν από τη συνεδρία"
     },
     "clients": {
       "clients_heading": "Πελάτες",
@@ -409,12 +414,14 @@
     },
     "scheduler": {
       "calendar": "Ημερολόγιο",
+      "schedule_and_availability": "Πρόγραμμα και διαθεσιμότητα",
       "add_template_availability": "Προσθήκη προτύπου διαθεσιμότητας",
       "add_appointment": "Προσθήκη ραντεβού",
       "appointments_today": "Σημερινά ραντεβού",
       "appointments_for_date": "Ραντεβού στις {{date}}",
       "no_appointments_day": "Δεν υπάρχουν ραντεβού αυτή την ημέρα.",
       "consultation": "Συνεδρία",
+      "consultations": "Συνεδρίες",
       "organization_appointment": "Οργανισμός",
       "view": "Προβολή",
       "today": "Σήμερα",
@@ -427,6 +434,10 @@
       "saturday": "Σαβ",
       "consultation_details": "Προβολή λεπτομερειών",
       "available": "Είστε διαθέσιμοι",
+      "unavailable": "Μη διαθέσιμο",
+      "slot_available": "Διαθέσιμο",
+      "available_organizations": "Διαθέσιμοι οργανισμοί",
+      "available_campaigns": "Διαθέσιμες καμπάνιες",
       "not_available": "Δεν είστε διαθέσιμοι",
       "set_available": "Διαθέσιμος/η",
       "set_not_available": "Μη διαθέσιμος/η",
@@ -527,7 +538,31 @@
       "ordinal_rd": "η",
       "ordinal_th": "η",
       "free": "Δωρεάν",
-      "cancel": "Ακύρωση"
+      "cancel": "Ακύρωση",
+      "test_audio_camera": "Δοκιμή ήχου και κάμερας",
+      "test_audio_camera_description": "Ελέγξτε τις συσκευές σας πριν από τη συνεδρία"
+    },
+    "schedule-dashboard": {
+      "available_days": "Διαθέσιμες ημέρες",
+      "this_month": "αυτόν τον μήνα",
+      "upcoming_consultations": "Επερχόμενες συνεδρίες",
+      "next_7_days": "Επόμενες 7 ημέρες",
+      "no_upcoming_consultations": "Δεν έχετε επερχόμενες συνεδρίες",
+      "view_profile": "Προβολή προφίλ",
+      "join": "Συμμετοχή",
+      "cancel_consultation": "Ακύρωση συνεδρίας",
+      "today": "Σήμερα",
+      "in_days_one": "Σε {{count}} ημέρα",
+      "in_days_other": "Σε {{count}} ημέρες",
+      "in_hours_one": "Σε {{count}} ώρα",
+      "in_hours_other": "Σε {{count}} ώρες",
+      "sunday": "Κυρ",
+      "monday": "Δευ",
+      "tuesday": "Τρί",
+      "wednesday": "Τετ",
+      "thursday": "Πέμ",
+      "friday": "Παρ",
+      "saturday": "Σάβ"
     },
     "notifications": {
       "consultation_booking": "Η συνεδρία σας με <0>{{clientName}}</0>έχει <0>προγραμματιστεί</0> για <0>{{date}}</0> από <0>{{startHour}}</0> έως <0>{{endHour}}</0>",
@@ -836,6 +871,18 @@
       "error": "Παρουσιάστηκε σφάλμα. Παρακαλώ δοκιμάστε ξανά.",
       "permissions_error": "Επιτρέψτε την πρόσβαση στην κάμερα και στο μικρόφωνο",
       "allow_permissions": "Για να επικοινωνήσετε με τον πελάτη, επιτρέψτε πρόσβαση από τις ρυθμίσεις του προγράμματος περιήγησής σας ή μέσω του εικονιδίου πληροφοριών στη γραμμή διευθύνσεων."
+    },
+    "device-test": {
+      "heading": "Δοκιμή ήχου και κάμερας",
+      "subheading": "Ελέγξτε τις συσκευές σας πριν από τη συνεδρία για να βεβαιωθείτε ότι όλα λειτουργούν.",
+      "done": "Τέλος",
+      "configuring_devices": "Ρύθμιση συσκευών...",
+      "camera_off_label": "Η κάμερα είναι απενεργοποιημένη",
+      "mic_level_label": "Μικρόφωνο",
+      "toggle_camera": "Εναλλαγή κάμερας",
+      "toggle_microphone": "Εναλλαγή μικροφώνου",
+      "retry_permissions": "Δοκιμάστε ξανά",
+      "permissions_error": "Επιτρέψτε την πρόσβαση στην κάμερα και στο μικρόφωνο"
     },
     "select-consultation": {
       "heading_edit": "Προτείνετε μια αλλαγή",

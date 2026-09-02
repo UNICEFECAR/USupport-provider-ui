@@ -8,6 +8,7 @@
       "page_5": "Klienci",
       "page_6": "Kampanie",
       "page_7": "Zapytaj psychologa",
+      "page_8": "Harmonogram",
       "footer_1": "Pulpit nawigacyjny",
       "footer_2": "Kalendarz",
       "footer_3": "Historia aktywności",
@@ -227,7 +228,8 @@
       "no_data_found": "Nie znaleziono danych",
       "select": "Wybierz",
       "remove": "Usuń",
-      "video_link_error": "Proszę wprowadzić prawidłowy adres URL"
+      "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Najwcześniejszy termin konsultacji",
@@ -292,7 +294,8 @@
       "thursday": "Czwartek",
       "friday": "Piątek",
       "saturday": "Sobota",
-      "sunday": "Niedziela"
+      "sunday": "Niedziela",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Twój profil",
@@ -366,7 +369,9 @@
       "conducted": "Przeprowadzono",
       "join": "Dołącz",
       "free": "Bezpłatne",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "test_audio_camera": "Przetestuj audio i kamerę",
+      "test_audio_camera_description": "Sprawdź urządzenia przed konsultacją"
     },
     "clients": {
       "clients_heading": "Klienci",
@@ -409,12 +414,14 @@
     },
     "scheduler": {
       "calendar": "Kalendarz",
+      "schedule_and_availability": "Harmonogram i dostępność",
       "add_template_availability": "Dodaj szablon dostępności",
       "add_appointment": "Dodaj wizytę",
       "appointments_today": "Dzisiejsze wizyty",
       "appointments_for_date": "Wizyty: {{date}}",
       "no_appointments_day": "Brak wizyt tego dnia.",
       "consultation": "Konsultacja",
+      "consultations": "Konsultacje",
       "organization_appointment": "Organizacja",
       "view": "Zobacz",
       "today": "Dzisiaj",
@@ -427,6 +434,10 @@
       "saturday": "Sob.",
       "consultation_details": "Wyświetl szczegóły",
       "available": "Jesteś dostępny/a",
+      "unavailable": "Niedostępny",
+      "slot_available": "Dostępny",
+      "available_organizations": "Dostępne organizacje",
+      "available_campaigns": "Dostępne kampanie",
       "not_available": "Jesteś niedostępny/a",
       "set_available": "Ustaw jako dostępny/a",
       "set_not_available": "Ustaw jako niedostępny/a",
@@ -527,7 +538,35 @@
       "ordinal_rd": ".",
       "ordinal_th": ".",
       "free": "Bezpłatne",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "test_audio_camera": "Przetestuj audio i kamerę",
+      "test_audio_camera_description": "Sprawdź urządzenia przed konsultacją"
+    },
+    "schedule-dashboard": {
+      "available_days": "Dni dostępności",
+      "this_month": "w tym miesiącu",
+      "upcoming_consultations": "Nadchodzące konsultacje",
+      "next_7_days": "Najbliższe 7 dni",
+      "no_upcoming_consultations": "Nie masz nadchodzących konsultacji",
+      "view_profile": "Zobacz profil",
+      "join": "Dołącz",
+      "cancel_consultation": "Anuluj konsultację",
+      "today": "Dzisiaj",
+      "in_days_one": "Za {{count}} dzień",
+      "in_days_few": "Za {{count}} dni",
+      "in_days_many": "Za {{count}} dni",
+      "in_days_other": "Za {{count}} dnia",
+      "in_hours_one": "Za {{count}} godzinę",
+      "in_hours_few": "Za {{count}} godziny",
+      "in_hours_many": "Za {{count}} godzin",
+      "in_hours_other": "Za {{count}} godziny",
+      "sunday": "Niedz.",
+      "monday": "Pon.",
+      "tuesday": "Wt.",
+      "wednesday": "Śr.",
+      "thursday": "Czw.",
+      "friday": "Pt.",
+      "saturday": "Sob."
     },
     "notifications": {
       "consultation_booking": "Twoja konsultacja z {{clientName}} została zaplanowana na {{date}} od {{startHour}} do {{endHour}}",
@@ -836,6 +875,18 @@
       "error": "Wystąpił błąd. Spróbuj ponownie",
       "permissions_error": "Zezwól na dostęp do kamery i mikrofonu",
       "allow_permissions": "Jeśli chcesz porozmawiać z klientem, włącz te uprawnienia w ustawieniach przeglądarki lub z ikony informacji na pasku adresu."
+    },
+    "device-test": {
+      "heading": "Przetestuj audio i kamerę",
+      "subheading": "Sprawdź urządzenia przed konsultacją, aby upewnić się, że wszystko działa.",
+      "done": "Gotowe",
+      "configuring_devices": "Konfigurowanie urządzeń...",
+      "camera_off_label": "Kamera wyłączona",
+      "mic_level_label": "Mikrofon",
+      "toggle_camera": "Przełącz kamerę",
+      "toggle_microphone": "Przełącz mikrofon",
+      "retry_permissions": "Spróbuj ponownie",
+      "permissions_error": "Zezwól na dostęp do kamery i mikrofonu"
     },
     "select-consultation": {
       "heading_edit": "Zaproponuj zmianę",

@@ -212,7 +212,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const addTemplateAvailabilityMutation = useMutation(addTemplateAvailability, {
     onSuccess: () => {
       toast("Template availability added successfully");
-      navigate("/calendar");
+      navigate("/dashboard");
     },
     onError: (error) => {
       const { message: errorMessage } = useError(error);
@@ -393,7 +393,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
     } else {
       toast(t("successfully_saved", { defaultValue: "Changes saved" }));
       setIsSubmitting(false);
-      navigate("/calendar");
+      navigate("/dashboard");
     }
   };
 

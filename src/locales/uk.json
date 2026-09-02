@@ -8,6 +8,7 @@
       "page_5": "Клієнти",
       "page_6": "Кампанії",
       "page_7": "Запитай психолога",
+      "page_8": "Розклад",
       "footer_1": "Панель керування",
       "footer_2": "Календар",
       "footer_3": "Історія активності",
@@ -227,7 +228,8 @@
       "no_data_found": "Дані не знайдено",
       "select": "Виберіть",
       "remove": "Видалити",
-      "video_link_error": "Будь ласка, введіть коректний URL"
+      "video_link_error": "Будь ласка, введіть коректний URL",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Найближчий часовий слот для консультації",
@@ -292,7 +294,8 @@
       "thursday": "Четвер",
       "friday": "Пʼятниця",
       "saturday": "Субота",
-      "sunday": "Неділя"
+      "sunday": "Неділя",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Профіль користувача/ки",
@@ -366,7 +369,9 @@
       "conducted": "Проведено",
       "join": "Приєднатися",
       "free": "Безкоштовно",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "test_audio_camera": "Перевірити аудіо та камеру",
+      "test_audio_camera_description": "Перевір свої пристрої перед консультацією"
     },
     "clients": {
       "clients_heading": "Клієнти",
@@ -409,12 +414,14 @@
     },
     "scheduler": {
       "calendar": "Календар",
+      "schedule_and_availability": "Розклад і доступність",
       "add_template_availability": "Додати доступність шаблону",
       "add_appointment": "Додати зустріч",
       "appointments_today": "Зустрічі на сьогодні",
       "appointments_for_date": "Зустрічі {{date}}",
       "no_appointments_day": "На цей день зустрічей немає.",
       "consultation": "Консультація",
+      "consultations": "Консультації",
       "organization_appointment": "Організація",
       "view": "Переглянути",
       "today": "Сьогодні",
@@ -427,6 +434,10 @@
       "saturday": "Сб",
       "consultation_details": "Переглянути деталі",
       "available": "Ви доступні",
+      "unavailable": "Недоступно",
+      "slot_available": "Доступно",
+      "available_organizations": "Доступні організації",
+      "available_campaigns": "Доступні кампанії",
       "not_available": "Ви недоступні",
       "set_available": "Встановити як доступний",
       "set_not_available": "Встановити як недоступний",
@@ -527,7 +538,35 @@
       "ordinal_rd": "-ій",
       "ordinal_th": "-ий",
       "free": "Безкоштовно",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "test_audio_camera": "Перевірити аудіо та камеру",
+      "test_audio_camera_description": "Перевір свої пристрої перед консультацією"
+    },
+    "schedule-dashboard": {
+      "available_days": "Доступні дні",
+      "this_month": "цього місяця",
+      "upcoming_consultations": "Найближчі консультації",
+      "next_7_days": "Наступні 7 днів",
+      "no_upcoming_consultations": "У вас немає найближчих консультацій",
+      "view_profile": "Переглянути профіль",
+      "join": "Приєднатися",
+      "cancel_consultation": "Скасувати консультацію",
+      "today": "Сьогодні",
+      "in_days_one": "Через {{count}} день",
+      "in_days_few": "Через {{count}} дні",
+      "in_days_many": "Через {{count}} днів",
+      "in_days_other": "Через {{count}} дня",
+      "in_hours_one": "Через {{count}} годину",
+      "in_hours_few": "Через {{count}} години",
+      "in_hours_many": "Через {{count}} годин",
+      "in_hours_other": "Через {{count}} години",
+      "sunday": "Нд",
+      "monday": "Пн",
+      "tuesday": "Вт",
+      "wednesday": "Ср",
+      "thursday": "Чт",
+      "friday": "Пт",
+      "saturday": "Сб"
     },
     "notifications": {
       "consultation_booking": "Консультацію з {{clientName}} заплановано на {{date}} з {{startHour}} до {{endHour}}",
@@ -836,6 +875,18 @@
       "error": "Виникла помилка. Спробуйте ще раз",
       "permissions_error": "Надайте дозволи на камеру та мікрофон",
       "allow_permissions": "Якщо ви хочете поговорити з клієнтом, надайте ці дозволи в налаштуваннях браузера або через значок інформації на адресному рядку."
+    },
+    "device-test": {
+      "heading": "Перевірити аудіо та камеру",
+      "subheading": "Перевір свої пристрої перед консультацією, щоб переконатися, що все працює.",
+      "done": "Готово",
+      "configuring_devices": "Налаштування пристроїв...",
+      "camera_off_label": "Камера вимкнена",
+      "mic_level_label": "Мікрофон",
+      "toggle_camera": "Увімкнути/вимкнути камеру",
+      "toggle_microphone": "Увімкнути/вимкнути мікрофон",
+      "retry_permissions": "Спробувати ще раз",
+      "permissions_error": "Надайте дозволи на камеру та мікрофон"
     },
     "select-consultation": {
       "heading_edit": "Запропонуй зміни",

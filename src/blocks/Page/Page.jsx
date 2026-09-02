@@ -20,7 +20,6 @@ import {
   getCountryFromTimezone,
   replaceLanguageInUrl,
   getLanguageFromUrl,
-  redirectToLocalStorageCountry,
 } from "@USupport-components-library/utils";
 import {
   useIsLoggedIn,
@@ -33,12 +32,6 @@ import classNames from "classnames";
 import { NotificationMenu } from "./NotificationMenu";
 
 import "./page.scss";
-
-const kazakhstanCountry = {
-  value: "KZ",
-  label: "Kazakhstan",
-  iconName: "KZ",
-};
 
 /**
  * Page
@@ -85,7 +78,7 @@ export const Page = ({
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorageLanguage
       ? { value: localStorageLanguage.toUpperCase() }
-      : { value: "EN" }
+      : { value: "EN" },
   );
   const [selectedCountry, setSelectedCountry] = useState();
 
@@ -185,7 +178,7 @@ export const Page = ({
     });
 
     const foundLanguageFromUrl = languages.find(
-      (x) => x.value === languageFromUrl
+      (x) => x.value === languageFromUrl,
     );
     if (foundLanguageFromUrl) {
       localStorage.setItem("language", languageFromUrl);
@@ -207,7 +200,7 @@ export const Page = ({
       staleTime: Infinity,
       cacheTime: 1000 * 60 * 60 * 24, // Keep cached for 24 hours
       enabled: !!selectedCountry,
-    }
+    },
   );
 
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
@@ -248,9 +241,8 @@ export const Page = ({
 
   const pages = [
     { name: t("page_1"), url: "/dashboard", exact: true, icon: "home" },
-    { name: t("page_2"), url: "/calendar", icon: "calendar" },
     { name: t("page_3"), url: "/activity-history", icon: "document" },
-    { name: t("page_4"), url: "/consultations", icon: "two-people" },
+    // { name: t("page_4"), url: "/consultations", icon: "two-people" },
     { name: t("page_5"), url: "/clients", icon: "three-people" },
     // !IS_KZ ? { name: t("page_6"), url: "/campaigns", icon: "campaign" },
     // { name: t("page_7"), url: "/my-qa" },
@@ -363,7 +355,6 @@ export const Page = ({
       { name: t("footer_9"), url: "/faq" },
     ],
     list2: [
-      { name: t("footer_2"), url: "/calendar" },
       { name: t("footer_3"), url: "/activity-history" },
       { name: t("footer_4"), url: "/consultations" },
       { name: t("footer_5"), url: "/clients", exact: true },
@@ -381,7 +372,7 @@ export const Page = ({
     window.location.hostname === "romania.staging.usupport.online" ||
     window.location.hostname === "armenia.staging.usupport.online";
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(
-    !hasPassedValidation && IS_RO_SUBDOMAIN
+    !hasPassedValidation && IS_RO_SUBDOMAIN,
   );
   const [passwordError, setPasswordError] = useState("");
 
@@ -398,7 +389,7 @@ export const Page = ({
         queryClient.setQueryData(["hasPassedValidation"], true);
         setIsPasswordModalOpen(false);
       },
-    }
+    },
   );
 
   const handlePasswordCheck = (value) => {
@@ -473,13 +464,13 @@ export const Page = ({
                     ) : null}
                   </div>
                 ) : (
-                  heading && (
-                    <h1 className="page__header-heading">{heading}</h1>
-                  )
+                  heading && <h1 className="page__header-heading">{heading}</h1>
                 ))}
             </div>
             {headingButton && (
-              <div className="page__header-button-container">{headingButton}</div>
+              <div className="page__header-button-container">
+                {headingButton}
+              </div>
             )}
           </Block>
         )}

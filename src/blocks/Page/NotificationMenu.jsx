@@ -26,7 +26,7 @@ import {
 } from "#hooks";
 
 const getRedirectForType = (type) => {
-  if (type === "add_more_availability_slots") return "/calendar";
+  if (type === "add_more_availability_slots") return "/dashboard";
   if (type === "weekly_report") return "/reports";
   return "/consultations";
 };

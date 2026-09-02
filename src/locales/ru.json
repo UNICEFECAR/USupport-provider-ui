@@ -8,6 +8,7 @@
       "page_5": "Клиенты",
       "page_6": "Кампании",
       "page_7": "Мой Q&A",
+      "page_8": "Расписание",
       "country_1": "",
       "country_2": "",
       "country_3": "",
@@ -227,7 +228,8 @@
       "section_personal_information": "Личная информация",
       "section_professional_information": "Профессиональная информация",
       "section_location": "Местоположение",
-      "section_languages_specialties": "Языки и специальности"
+      "section_languages_specialties": "Языки и специальности",
+      "peer_support": "U-FRIEND"
     },
     "provider-overview": {
       "earliest_slot_label": "Самый ранний доступный слот свободного времени для консультации",
@@ -292,7 +294,8 @@
       "thursday": "Четверг",
       "friday": "Пятница",
       "saturday": "Суббота",
-      "sunday": "Воскресенье"
+      "sunday": "Воскресенье",
+      "peer_support": "U-FRIEND"
     },
     "provider-profile": {
       "your_profile": "Ваш профиль",
@@ -366,7 +369,9 @@
       "free": "Бесплатно",
       "cancel": "Отмена",
       "past_tab_label": "Прошедшие",
-      "no_upcoming_consultations": "У Вас нет предстоящих консультаций"
+      "no_upcoming_consultations": "У Вас нет предстоящих консультаций",
+      "test_audio_camera": "Проверить аудио и камеру",
+      "test_audio_camera_description": "Проверьте устройства перед консультацией"
     },
     "clients": {
       "clients_heading": "Клиенты",
@@ -409,6 +414,7 @@
     },
     "scheduler": {
       "calendar": "Календарь",
+      "schedule_and_availability": "Расписание и доступность",
       "add_template_availability": "Добавить шаблон доступности",
       "today": "Сегодня",
       "sunday": "Вс",
@@ -420,6 +426,10 @@
       "saturday": "Сб",
       "consultation_details": "Посмотреть детали",
       "available": "Вы доступны",
+      "unavailable": "Недоступно",
+      "slot_available": "Доступно",
+      "available_organizations": "Доступные организации",
+      "available_campaigns": "Доступные кампании",
       "not_available": "Вы недоступны",
       "set_available": "Сделать доступным",
       "set_not_available": "Сделать недоступным",
@@ -439,6 +449,7 @@
       "appointments_for_date": "Встречи {{date}}",
       "no_appointments_day": "В этот день встреч нет.",
       "consultation": "Консультация",
+      "consultations": "Консультации",
       "organization_appointment": "Организация",
       "view": "Просмотр",
       "day": "День",
@@ -527,7 +538,35 @@
       "ordinal_rd": "",
       "ordinal_th": "",
       "free": "Бесплатно",
-      "cancel": "Отмена"
+      "cancel": "Отмена",
+      "test_audio_camera": "Проверить аудио и камеру",
+      "test_audio_camera_description": "Проверьте устройства перед консультацией"
+    },
+    "schedule-dashboard": {
+      "available_days": "Доступные дни",
+      "this_month": "в этом месяце",
+      "upcoming_consultations": "Предстоящие консультации",
+      "next_7_days": "Следующие 7 дней",
+      "no_upcoming_consultations": "У вас нет предстоящих консультаций",
+      "view_profile": "Просмотреть профиль",
+      "join": "Присоединиться",
+      "cancel_consultation": "Отменить консультацию",
+      "today": "Сегодня",
+      "in_days_one": "Через {{count}} день",
+      "in_days_few": "Через {{count}} дня",
+      "in_days_many": "Через {{count}} дней",
+      "in_days_other": "Через {{count}} дня",
+      "in_hours_one": "Через {{count}} час",
+      "in_hours_few": "Через {{count}} часа",
+      "in_hours_many": "Через {{count}} часов",
+      "in_hours_other": "Через {{count}} часа",
+      "sunday": "Вс",
+      "monday": "Пн",
+      "tuesday": "Вт",
+      "wednesday": "Ср",
+      "thursday": "Чт",
+      "friday": "Пт",
+      "saturday": "Сб"
     },
     "notifications": {
       "consultation_booking": "Ваша консультация с <0>{{clientName}} запланирована</0> на <0>{{date}}</0> с <0>{{startHour}}</0> до <0>{{endHour}}</0>.",
@@ -836,6 +875,18 @@
       "error": "Произошла ошибка. Пожалуйста, попробуйте еще раз",
       "permissions_error": "Предоставьте разрешения для камеры и микрофона",
       "allow_permissions": "Если вы хотите поговорить с клиентом, разрешите это в настройках браузера или через значок информации в адресной строке."
+    },
+    "device-test": {
+      "heading": "Проверить аудио и камеру",
+      "subheading": "Проверьте устройства перед консультацией, чтобы убедиться, что всё работает.",
+      "done": "Готово",
+      "configuring_devices": "Настройка устройств...",
+      "camera_off_label": "Камера выключена",
+      "mic_level_label": "Микрофон",
+      "toggle_camera": "Включить/выключить камеру",
+      "toggle_microphone": "Включить/выключить микрофон",
+      "retry_permissions": "Попробовать снова",
+      "permissions_error": "Предоставьте разрешения для камеры и микрофона"
     },
     "select-consultation": {
       "heading_edit": "Предложить изменение",
