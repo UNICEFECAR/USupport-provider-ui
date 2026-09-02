@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, useSearchParams, useNavigate as useRawNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -12,7 +12,7 @@ import {
 import { RadialCircle, Loading } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
 
-import { CodeVerification } from "#backdrops";
+import { CodeVerification, ForgotPassword } from "#backdrops";
 
 import "./login.scss";
 
@@ -26,10 +26,14 @@ import "./login.scss";
 export const Login = () => {
   const navigate = useNavigate();
   const rawNavigate = useRawNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const nextPath = searchParams.get("next");
+  const authView = searchParams.get("auth");
   const queryClient = useQueryClient();
 
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(
+    authView === "forgot-password",
+  );
   const [isCodeVerificationOpen, setIsCodeVerificationOpen] = useState(false);
   const [loginCredentials, setLoginCredentials] = useState();
 
@@ -137,6 +141,12 @@ export const Login = () => {
     },
   });
 
+  useEffect(() => {
+    if (authView === "forgot-password") {
+      setIsForgotPasswordOpen(true);
+    }
+  }, [authView]);
+
   if (isLoggedIn === "loading") return <Loading />;
   if (isLoggedIn === true) {
     const redirectTo =
@@ -149,6 +159,17 @@ export const Login = () => {
   const openCodeVerification = () => setIsCodeVerificationOpen(true);
 
   const handleGoBack = () => navigate("/");
+
+  const openForgotPassword = () => setIsForgotPasswordOpen(true);
+
+  const closeForgotPassword = () => {
+    setIsForgotPasswordOpen(false);
+    if (authView === "forgot-password") {
+      const params = new URLSearchParams(searchParams);
+      params.delete("auth");
+      setSearchParams(params, { replace: true });
+    }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -181,10 +202,17 @@ export const Login = () => {
         data={data}
         setData={setData}
         handleLogin={handleLogin}
+        handleForgotPassword={openForgotPassword}
         errors={errors}
         showTimer={showTimer}
         isLoading={loginMutation.isLoading}
       />
+      {isForgotPasswordOpen && (
+        <ForgotPassword
+          isOpen={isForgotPasswordOpen}
+          handleGoBack={closeForgotPassword}
+        />
+      )}
       {isCodeVerificationOpen && (
         <CodeVerification
           isOpen={isCodeVerificationOpen}

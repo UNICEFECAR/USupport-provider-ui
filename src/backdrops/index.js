@@ -1,3 +1,5 @@
+export * from "./AuthenticationModalsLogo";
+export * from "./ForgotPassword";
 export * from "./UploadPicture";
 export * from "./DeleteProfilePicture";
 export * from "./ChangePassword";
