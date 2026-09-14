@@ -6,9 +6,10 @@ import {
   InputPassword,
   Grid,
   GridItem,
-  Button,
+  NewButton,
   Error,
 } from "@USupport-components-library/src";
+import { logoVerticalSvg } from "@USupport-components-library/assets";
 import { userSvc } from "@USupport-components-library/services";
 import { validate } from "@USupport-components-library/utils";
 import { useError } from "#hooks";
@@ -28,6 +29,7 @@ import "./reset-password.scss";
 export const ResetPassword = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("blocks", { keyPrefix: "reset-password" });
+  const { t: tLogin } = useTranslation("blocks", { keyPrefix: "login" });
 
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -40,7 +42,8 @@ export const ResetPassword = () => {
       .label(t("password_error")),
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
     setIsLoading(true);
     const token = new URLSearchParams(window.location.search).get("rp");
     if ((await validate({ password }, schema, setErrors)) === null) {
@@ -65,32 +68,42 @@ export const ResetPassword = () => {
   return (
     <Block classes="reset-password">
       <Grid md={8} lg={12} classes="reset-password__grid">
-        <GridItem md={8} lg={12} classes="reset-password__grid__item">
-          <InputPassword
-            value={password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-            placeholder={t("placeholder")}
-            label={t("label")}
-            errorMessage={errors.password}
+        <GridItem md={8} lg={12} classes="reset-password__grid__logo-item">
+          <h2 className="reset-password__grid__logo-item__heading">
+            {tLogin("heading")}
+          </h2>
+          <img
+            src={logoVerticalSvg}
+            alt="Logo"
+            className="reset-password__grid__logo-item__logo"
           />
+          <h2 className="reset-password__grid__logo-item__heading">
+            {tLogin("provider")}
+          </h2>
         </GridItem>
-
-        <GridItem md={8} lg={12} classes="reset-password__grid__item">
-          {errors.submit ? <Error message={errors.submit} /> : null}
-          {showLink && (
-            <a className="reset-password__link" href={showLink}>
-              {showLink}
-            </a>
-          )}
-        </GridItem>
-        <GridItem md={8} lg={12} classes="reset-password__grid__item">
-          <Button
-            size="lg"
-            label={t("submit")}
-            type="primary"
-            onClick={handleSubmit}
-            loading={isLoading}
-          />
+        <GridItem md={8} lg={12} classes="reset-password__grid__content-item">
+          <form onSubmit={handleSubmit}>
+            <InputPassword
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
+              placeholder={t("placeholder")}
+              label={t("label")}
+              errorMessage={errors.password}
+            />
+            {errors.submit ? <Error message={errors.submit} /> : null}
+            {showLink && (
+              <a className="reset-password__link" href={showLink}>
+                {showLink}
+              </a>
+            )}
+            <NewButton
+              label={t("submit")}
+              size="lg"
+              isFullWidth
+              disabled={!password}
+              loading={isLoading}
+            />
+          </form>
         </GridItem>
       </Grid>
     </Block>
