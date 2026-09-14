@@ -26,16 +26,14 @@
     }
 
     &__grid__content-item {
-      width: 100%;
-
       .button--lg {
         width: 100%;
+        max-width: 100%;
       }
     }
   }
 
   &__grid {
-    min-height: 110vh;
     place-items: center;
 
     &__logo-item {
@@ -54,6 +52,18 @@
     &__content-item {
       align-self: start;
       text-align: left;
+      width: 100%;
+      max-width: 54rem;
+      margin-inline: auto;
+      box-sizing: border-box;
+
+      @media screen and (min-width: $screen-md) {
+        min-width: 36.8rem;
+      }
+
+      @media screen and (min-width: $screen-lg) {
+        max-width: 36.8rem;
+      }
 
       &__countries-dropdown {
         z-index: 2;
@@ -64,12 +74,13 @@
         z-index: 1;
       }
 
+      .dropdown-wrapper {
+        min-height: 5rem;
+        box-sizing: border-box;
+      }
+
       & > button {
         margin-top: $spacing_3_2;
-        margin-bottom: $spacing_8_0;
-        @media screen and (min-width: $screen_md) {
-          margin-bottom: $spacing_16_0;
-        }
       }
     }
   }

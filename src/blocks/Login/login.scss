@@ -26,14 +26,13 @@
     }
 
     &__grid__content-item {
-      width: 100%;
-
       form {
         width: 100%;
       }
 
       .button--lg {
         width: 100%;
+        max-width: 100%;
       }
     }
   }
@@ -42,6 +41,8 @@
     place-items: center;
 
     &__logo-item {
+      margin-top: $spacing_4_0;
+
       &__heading {
         color: $color_gray_66768d;
       }
@@ -55,9 +56,30 @@
     &__content-item {
       align-self: start;
       text-align: left;
+      width: 100%;
+      max-width: 54rem;
+      margin-inline: auto;
+      box-sizing: border-box;
+
+      @media screen and (min-width: $screen-md) {
+        min-width: 36.8rem;
+
+        .input-container {
+          min-width: 36.8rem;
+        }
+      }
+
+      @media screen and (min-width: $screen-lg) {
+        max-width: 36.8rem;
+      }
 
       &__input--password {
         margin-top: $spacing_2_5;
+      }
+
+      .input-wrapper {
+        min-height: 5rem;
+        box-sizing: border-box;
       }
 
       & > form > .button--lg {
