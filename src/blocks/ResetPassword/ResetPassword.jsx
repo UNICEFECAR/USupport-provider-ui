@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCustomNavigate as useNavigate } from "#hooks";
+import { useCustomNavigate as useNavigate, useError } from "#hooks";
 import {
   Block,
   InputPassword,
@@ -12,7 +12,6 @@ import {
 import { logoVerticalSvg } from "@USupport-components-library/assets";
 import { userSvc } from "@USupport-components-library/services";
 import { validate } from "@USupport-components-library/utils";
-import { useError } from "#hooks";
 import Joi from "joi";
 
 const WEBSITE_URL = `${import.meta.env.VITE_WEBSITE_URL}`;
@@ -33,6 +32,7 @@ export const ResetPassword = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [showLink, setShowLink] = useState(false);
 
@@ -42,9 +42,35 @@ export const ResetPassword = () => {
       .label(t("password_error")),
   });
 
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+    if (confirmPassword.length >= 8) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword:
+          value === confirmPassword ? "" : t("password_match_error"),
+      }));
+    }
+  };
+
+  const handleConfirmPasswordChange = (value) => {
+    setConfirmPassword(value);
+    if (value.length >= 8) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: password === value ? "" : t("password_match_error"),
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e?.preventDefault();
     setIsLoading(true);
+    if (password !== confirmPassword) {
+      setErrors({ confirmPassword: t("password_match_error") });
+      setIsLoading(false);
+      return;
+    }
     const token = new URLSearchParams(window.location.search).get("rp");
     if ((await validate({ password }, schema, setErrors)) === null) {
       try {
@@ -85,10 +111,20 @@ export const ResetPassword = () => {
           <form onSubmit={handleSubmit}>
             <InputPassword
               value={password}
-              onChange={(e) => setPassword(e.currentTarget.value)}
+              onChange={(e) => handlePasswordChange(e.currentTarget.value)}
               placeholder={t("placeholder")}
               label={t("label")}
               errorMessage={errors.password}
+            />
+            <InputPassword
+              classes="reset-password__grid__content-item__input--confirm"
+              value={confirmPassword}
+              onChange={(e) =>
+                handleConfirmPasswordChange(e.currentTarget.value)
+              }
+              placeholder={t("confirm_placeholder")}
+              label={t("confirm_label")}
+              errorMessage={errors.confirmPassword}
             />
             {errors.submit ? <Error message={errors.submit} /> : null}
             {showLink && (
@@ -100,7 +136,7 @@ export const ResetPassword = () => {
               label={t("submit")}
               size="lg"
               isFullWidth
-              disabled={!password}
+              disabled={!password || !confirmPassword}
               loading={isLoading}
             />
           </form>
