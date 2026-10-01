@@ -1,1 +1,1 @@
-export * from './JitsiRoom.jsx';
+export * from "./JitsiRoom.jsx";
