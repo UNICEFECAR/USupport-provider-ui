@@ -778,6 +778,8 @@
       "search": "Wyszukiwanie",
       "sponsored_by": "Ta sesja jest sponsorowana przez: ",
       "consultation_end_reminder": "Konsultacja zakończy się za {{minutes}} minut",
+      "connection_lost": "Utracono połączenie. Próbujemy połączyć ponownie…",
+      "connection_restored": "Połączenie przywrócone",
       "textarea_placeholder": "Wpisz swoją wiadmość tutaj",
       "permissions_error": "Nie wyraziłeś zgody",
       "allow_permissions": "Uprawnienia do korzystania z kamery i/lub mikrofonu zostały odrzucone. Jeśli chcesz porozmawiać z klientem, włącz uprawnienia w ustawieniach przeglądarki lub za pomocą ikony informacji na pasku adresu.",
