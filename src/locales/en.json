@@ -779,6 +779,7 @@
       "connection_poor": "Poor connection. Audio and video may lag",
       "peer_connection_lost": "The client's connection dropped. Waiting for them to reconnect…",
       "peer_connection_restored": "The client is back online",
+      "peer_connection_poor": "The client's connection is poor. Audio and video may lag",
       "textarea_placeholder": "Type your message here...",
       "permissions_error": "You have denied your permissions",
       "allow_permissions": "The camera and/or microphone permissions have been denied. If you want to talk to the client, please allow the permissions in your browser settings or from the information icon in the address bar.",
