@@ -121,7 +121,8 @@ export const JitsiRoom = () => {
     setInterfaceData(interfacesCopy);
   };
 
-  const { socketRef, connectionStatus, callQuality } = useConsultationSocket({
+  const { socketRef, connectionStatus, callQuality, isPeerPresent } =
+    useConsultationSocket({
     chatId: consultation.chatId,
     isClientTyping: interfaces.isClientTyping,
     receiveMessage,
@@ -346,7 +347,9 @@ export const JitsiRoom = () => {
               isCameraOn={interfaces.videoOn}
               isMicrophoneOn={interfaces.microphoneOn}
               renderIn="provider"
-              isInSession={interfaces.isClientInSession}
+              // The gateway knows whether the other participant has the consultation open, unlike the video room,
+              // which also lists this participant's other devices and leftover sessions
+              isInSession={isPeerPresent ?? interfaces.isClientInSession}
               connectionQuality={callQuality}
               isHidden={hideControls}
               toggleControlsVisibility={() => setHideControls(false)}
