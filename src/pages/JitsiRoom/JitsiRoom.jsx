@@ -397,7 +397,6 @@ export const JitsiRoom = () => {
             }
 
             externalApi.executeCommand("joinConference");
-            externalApi.executeCommand("grantModerator", false);
             externalApi.executeCommand(
               "avatarUrl",
               `${AMAZON_S3_BUCKET}/${providerData?.image}`
@@ -432,8 +431,11 @@ export const JitsiRoom = () => {
                 }
               }
             );
+            // Jitsi leaves the conference on its own when it reconnects (e.g. after a connection drop
+            // or the native "Rejoin" button), so this must not end the consultation.
+            // Leaving on purpose only happens through our Controls, which call leaveConsultation directly
             externalApi.addListener("videoConferenceLeft", () => {
-              leaveConsultation();
+              setIsLoading(true);
             });
             externalApi.addListener("videoConferenceJoined", async () => {
               // The requested initial state may not have been applied (e.g. the camera failed to start)
