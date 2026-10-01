@@ -13,7 +13,7 @@ import {
   ONE_HOUR,
 } from "@USupport-components-library/utils";
 
-import { Page } from "#blocks";
+import { ConnectionStatus, Page } from "#blocks";
 import { RootContext } from "#routes";
 import {
   useConsultationSocket,
@@ -121,7 +121,7 @@ export const JitsiRoom = () => {
     setInterfaceData(interfacesCopy);
   };
 
-  const socketRef = useConsultationSocket({
+  const { socketRef, connectionStatus } = useConsultationSocket({
     chatId: consultation.chatId,
     isClientTyping: interfaces.isClientTyping,
     receiveMessage,
@@ -315,6 +315,7 @@ export const JitsiRoom = () => {
       showGoBackArrow={false}
       classes="page__jitsi-room"
     >
+      <ConnectionStatus status={connectionStatus} t={t} />
       <div style={{ display: "flex" }}>
         <div style={{ position: "relative" }}>
           <div
@@ -331,21 +332,15 @@ export const JitsiRoom = () => {
               leaveConsultation={leaveConsultation}
               hasUnreadMessages={interfaces.hasUnreadMessages}
               isRoomConnecting={isLoading}
+              // The icon state is updated from Jitsi's mute status events,
+              // so it always reflects whether the track is actually on
               toggleCamera={() => {
                 if (isLoading) return;
                 api.current.executeCommand("toggleVideo");
-                setInterfaceData({
-                  ...interfaces,
-                  videoOn: !interfaces.videoOn,
-                });
               }}
               toggleMicrophone={() => {
                 if (isLoading) return;
                 api.current.executeCommand("toggleAudio");
-                setInterfaceData({
-                  ...interfaces,
-                  microphoneOn: !interfaces.microphoneOn,
-                });
               }}
               toggleChat={toggleChat}
               isCameraOn={interfaces.videoOn}
@@ -395,10 +390,10 @@ export const JitsiRoom = () => {
               (x) => !!x && x.id !== userInfo.id && x.id !== "local"
             );
             if (roomInfo) {
-              setInterfaceData({
-                ...interfaces,
+              setInterfaceData((prev) => ({
+                ...prev,
                 isClientInSession: participants.length > 0,
-              });
+              }));
             }
 
             externalApi.executeCommand("joinConference");
@@ -408,33 +403,28 @@ export const JitsiRoom = () => {
               `${AMAZON_S3_BUCKET}/${providerData?.image}`
             );
 
-            externalApi.addListener("cameraError", (error) => {
-              if (error.type === "gum.permission_denied") {
-                setInterfaceData({
-                  ...interfaces,
-                  videoOn: false,
-                });
-              }
+            // Any device error (permission denied, device in use, not found...) means the track is off
+            externalApi.addListener("cameraError", () => {
+              setInterfaceData((prev) => ({ ...prev, videoOn: false }));
             });
 
-            externalApi.addListener("micError", (error) => {
-              if (error.type === "gum.permission_denied") {
-                setInterfaceData({
-                  ...interfaces,
-                  microphoneOn: false,
-                });
-              }
+            externalApi.addListener("micError", () => {
+              setInterfaceData((prev) => ({ ...prev, microphoneOn: false }));
+            });
+
+            externalApi.addListener("videoMuteStatusChanged", ({ muted }) => {
+              setInterfaceData((prev) => ({ ...prev, videoOn: !muted }));
+            });
+
+            externalApi.addListener("audioMuteStatusChanged", ({ muted }) => {
+              setInterfaceData((prev) => ({ ...prev, microphoneOn: !muted }));
             });
 
             externalApi.addListener(
               "participantJoined",
               ({ displayName, id }) => {
                 console.log("Participant joined: ", displayName);
-                if (
-                  !interfaces.isClientInSession &&
-                  id !== userInfo.id &&
-                  id !== "local"
-                ) {
+                if (id !== userInfo.id && id !== "local") {
                   setInterfaceData((prev) => ({
                     ...prev,
                     isClientInSession: true,
@@ -445,7 +435,19 @@ export const JitsiRoom = () => {
             externalApi.addListener("videoConferenceLeft", () => {
               leaveConsultation();
             });
-            externalApi.addListener("videoConferenceJoined", () => {
+            externalApi.addListener("videoConferenceJoined", async () => {
+              // The requested initial state may not have been applied (e.g. the camera failed to start)
+              const [isAudioMuted, isVideoMuted] = await Promise.all([
+                externalApi.isAudioMuted(),
+                externalApi.isVideoMuted(),
+              ]).catch(() => [null, null]);
+              if (isAudioMuted !== null && isVideoMuted !== null) {
+                setInterfaceData((prev) => ({
+                  ...prev,
+                  microphoneOn: !isAudioMuted,
+                  videoOn: !isVideoMuted,
+                }));
+              }
               setIsLoading(false);
             });
             externalApi.addListener("toolbarButtonClicked", (event) => {

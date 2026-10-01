@@ -25,3 +25,4 @@ export * from "./Campaigns";
 export * from "./CampaignDetails";
 export * from "./CustomersQA";
 export * from "./PlatformRating";
+export * from './ConnectionStatus';
