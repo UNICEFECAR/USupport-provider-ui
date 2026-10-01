@@ -1,5 +1,11 @@
 {
   "blocks": {
+    "app-update-modal": {
+      "heading": "A new version is available",
+      "text": "Refresh the page to use the latest version of the platform.",
+      "refresh": "Refresh",
+      "later": "Later"
+    },
     "page": {
       "page_1": "Dashboard",
       "page_2": "Calendar",

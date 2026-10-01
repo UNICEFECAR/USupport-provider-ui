@@ -1,5 +1,11 @@
 {
   "blocks": {
+    "app-update-modal": {
+      "heading": "Dostępna jest nowa wersja",
+      "text": "Odśwież stronę, aby korzystać z najnowszej wersji platformy.",
+      "refresh": "Odśwież",
+      "later": "Później"
+    },
     "page": {
       "page_1": "Pulpit",
       "page_2": "Kalendarz",
