@@ -121,7 +121,7 @@ export const JitsiRoom = () => {
     setInterfaceData(interfacesCopy);
   };
 
-  const { socketRef, connectionStatus } = useConsultationSocket({
+  const { socketRef, connectionStatus, callQuality } = useConsultationSocket({
     chatId: consultation.chatId,
     isClientTyping: interfaces.isClientTyping,
     receiveMessage,
@@ -347,6 +347,7 @@ export const JitsiRoom = () => {
               isMicrophoneOn={interfaces.microphoneOn}
               renderIn="provider"
               isInSession={interfaces.isClientInSession}
+              connectionQuality={callQuality}
               isHidden={hideControls}
               toggleControlsVisibility={() => setHideControls(false)}
             />
