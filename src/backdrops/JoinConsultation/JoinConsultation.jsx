@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-import { useCustomNavigate as useNavigate, useMediaPreview } from "#hooks";
+import {
+  useCustomNavigate as useNavigate,
+  useError,
+  useMediaPreview,
+} from "#hooks";
 
 import {
   Backdrop,
@@ -170,52 +174,56 @@ export const JoinConsultation = ({ isOpen, onClose, consultation }) => {
   };
 
   const joinConsultation = async ({ redirectTo, videoOn, microphoneOn }) => {
-    const sytemMessage = {
+    setIsJoining(true);
+
+    // Join first, so the client is told the provider joined only once it actually succeeded
+    let joinResponse;
+    try {
+      joinResponse = await providerSvc.joinConsultation({
+        consultationId: consultation.consultationId,
+        userType: "provider",
+      });
+    } catch (err) {
+      console.error("Failed to join consultation", {
+        consultationId: consultation.consultationId,
+        status: err?.response?.status,
+        error: err?.response?.data?.error || err?.message,
+      });
+      // The backend sends a translated reason, e.g. that the consultation is no longer scheduled
+      const errorMessage = err?.response ? useError(err)?.message : null;
+      toast(errorMessage || t("error"), { type: "error" });
+      setIsJoining(false);
+      return;
+    }
+
+    const systemMessage = {
       type: "system",
       content: "provider_joined",
       time: JSON.stringify(new Date().getTime()),
     };
+    // Joining already succeeded, so a failed system message must not keep the provider out
+    await messageSvc
+      .sendMessage({ message: systemMessage, chatId: consultation.chatId })
+      .catch((err) =>
+        console.error("Failed to send the join message", {
+          chatId: consultation.chatId,
+          status: err?.response?.status,
+          error: err?.response?.data?.error || err?.message,
+        })
+      );
 
-    const systemMessagePromise = messageSvc.sendMessage({
-      message: sytemMessage,
-      chatId: consultation.chatId,
+    preview.stopStream();
+
+    navigate("/consultation", {
+      state: {
+        consultation,
+        videoOn: redirectTo === "video" && videoOn,
+        microphoneOn: redirectTo === "video" && microphoneOn,
+        token: joinResponse?.data?.token,
+      },
     });
 
-    // const getConsultationTokenPromise = videoSvc.getTwilioToken(
-    //   consultation.consultationId
-    // );
-
-    const joinConsultationPromise = providerSvc.joinConsultation({
-      consultationId: consultation.consultationId,
-      userType: "provider",
-    });
-
-    try {
-      setIsJoining(true);
-      const result = await Promise.all([
-        systemMessagePromise,
-        // getConsultationTokenPromise,
-        joinConsultationPromise,
-      ]);
-      const token = result[1].data.token;
-
-      preview.stopStream();
-
-      navigate("/consultation", {
-        state: {
-          consultation,
-          videoOn: redirectTo === "video" && videoOn,
-          microphoneOn: redirectTo === "video" && microphoneOn,
-          token,
-        },
-      });
-
-      handleClose();
-    } catch (err) {
-      console.log(err);
-      toast(t("error"), { type: "error" });
-      setIsJoining(false);
-    }
+    handleClose();
   };
 
   const handleJoinWithVideo = () => {

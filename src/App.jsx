@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { Root } from "./routes";
+import { isAppReloading } from "./utils/reloadApp.js";
 import { DeviceTestProvider } from "#backdrops";
 import "react-toastify/dist/ReactToastify.css";
 import { FIVE_MINUTES } from "@USupport-components-library/utils";
@@ -42,6 +43,9 @@ function App() {
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
+      // The app reloads itself to load a new version, the user is not leaving
+      if (isAppReloading()) return;
+
       const token = localStorage.getItem("token");
       // If the page is being refreshed, do nothing
       if (!(performance.getEntriesByType("navigation")[0].type === "reload")) {
