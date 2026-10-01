@@ -19,7 +19,11 @@ import {
   getLanguageFromUrl,
 } from "@USupport-components-library/utils";
 
-import { useEventListener, useGetProviderData } from "#hooks";
+import {
+  useAppVersionCheck,
+  useEventListener,
+  useGetProviderData,
+} from "#hooks";
 
 import {
   NotFound,
@@ -332,6 +336,8 @@ export default function Root() {
   });
 
   const location = useLocation();
+  // Reload long-open tabs on the next navigation once a newer version is deployed
+  useAppVersionCheck();
   const [hideIdleTimer, setHideIdleTimer] = useState(false);
 
   const previousLocation = useRef();
