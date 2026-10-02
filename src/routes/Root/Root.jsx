@@ -19,7 +19,13 @@ import {
   getLanguageFromUrl,
 } from "@USupport-components-library/utils";
 
-import { useEventListener, useGetProviderData } from "#hooks";
+import { AppUpdateModal } from "#blocks";
+import { reloadApp } from "../../utils/reloadApp.js";
+import {
+  useAppVersionCheck,
+  useEventListener,
+  useGetProviderData,
+} from "#hooks";
 
 import {
   NotFound,
@@ -332,6 +338,8 @@ export default function Root() {
   });
 
   const location = useLocation();
+  // Ask long-open tabs to refresh once a newer version is deployed
+  const { isUpdateModalOpen, remindLater } = useAppVersionCheck();
   const [hideIdleTimer, setHideIdleTimer] = useState(false);
 
   const previousLocation = useRef();
@@ -393,6 +401,11 @@ export default function Root() {
         <Route path="/provider/:language/*" element={<LanguageLayout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <AppUpdateModal
+        isOpen={isUpdateModalOpen}
+        onRefresh={reloadApp}
+        onLater={remindLater}
+      />
     </RootContext.Provider>
   );
 }

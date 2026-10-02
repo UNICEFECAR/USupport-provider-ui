@@ -46,3 +46,4 @@ export * from "./useGetLanguages.js";
 export * from "./useConsultationSocket.js";
 export * from "./useCustomNavigate.js";
 export * from "./useMediaPreview.js";
+export * from "./useAppVersionCheck.js";
