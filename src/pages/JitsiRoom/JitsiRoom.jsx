@@ -407,7 +407,8 @@ export const JitsiRoom = () => {
               isInSession={isPeerPresent ?? interfaces.isClientInSession}
               connectionQuality={callQuality}
               isHidden={hideControls}
-              toggleControlsVisibility={() => setHideControls(false)}
+              getJitsiApi={() => api.current}
+              isSideChatOpen={interfaces.isChatShownOnTablet}
             />
           </div>
         </div>
@@ -426,15 +427,16 @@ export const JitsiRoom = () => {
             startWithAudioMuted: !microphoneOn,
             startWithVideoMuted: !videoOn,
             hideConferenceSubject: true,
+            toolbarButtons: [],
+            // The controls show the time left, and the timer would overlap them on phones
+            hideConferenceTimer: true,
             SETTINGS_SECTIONS: ["language"],
-            buttonsWithNotifyClick: [
-              { key: "settings", preventExecution: false },
-            ],
           }}
           interfaceConfigOverwrite={{
             SHOW_JITSI_WATERMARK: false,
             DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
-            TOOLBAR_BUTTONS: ["raisehand", "settings", "fullscreen"],
+            // Our controls replace the Jitsi toolbar, including the device settings
+            TOOLBAR_BUTTONS: [],
             SHOW_ROOM_NAME: false,
             SETTINGS_SECTIONS: ["devices", "background", "language", "profile"],
           }}
@@ -510,11 +512,6 @@ export const JitsiRoom = () => {
                 }));
               }
               setIsLoading(false);
-            });
-            externalApi.addListener("toolbarButtonClicked", (event) => {
-              if (event.key === "settings") {
-                setHideControls(true);
-              }
             });
           }}
           getIFrameRef={(iframeRef) => {
