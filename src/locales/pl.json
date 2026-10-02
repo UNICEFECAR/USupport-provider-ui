@@ -796,7 +796,19 @@
       "textarea_placeholder": "Wpisz swoją wiadmość tutaj",
       "permissions_error": "Nie wyraziłeś zgody",
       "allow_permissions": "Uprawnienia do korzystania z kamery i/lub mikrofonu zostały odrzucone. Jeśli chcesz porozmawiać z klientem, włącz uprawnienia w ustawieniach przeglądarki lub za pomocą ikony informacji na pasku adresu.",
-      "typing": "Pisze..."
+      "typing": "Pisze...",
+      "minutes_left": "zostało {{minutes}} min",
+      "call_status_waiting": "Oczekiwanie",
+      "call_status_disconnected": "Brak połączenia",
+      "call_status_weak": "Słabe połączenie",
+      "controls_leave": "Wyjdź",
+      "controls_settings": "Ustawienia",
+      "controls_camera": "Kamera",
+      "controls_microphone": "Mikrofon",
+      "controls_speaker": "Głośnik",
+      "controls_background": "Tło",
+      "controls_chat": "Czat",
+      "send_message_button": "Wyślij"
     },
     "reports-page": {
       "heading": "Raporty"
