@@ -15,7 +15,10 @@ import {
 } from "#hooks";
 import { SelectConsultation } from "#backdrops";
 
-import { ONE_HOUR } from "@USupport-components-library/utils";
+import {
+  ONE_HOUR,
+  getConsultationEndDate,
+} from "@USupport-components-library/utils";
 
 import "./cancel-consultation.scss";
 
@@ -60,7 +63,10 @@ export const CancelConsultation = ({
     : consultationPrice;
 
   const startDate = new Date(time || timestamp);
-  const endDate = new Date(new Date(time || timestamp).getTime() + ONE_HOUR);
+  const endDate = getConsultationEndDate(
+    new Date(time || timestamp),
+    consultation?.durationMinutes,
+  );
 
   const isConsultationLessThan24HoursBefore =
     new Date().getTime() + 24 * ONE_HOUR >= startDate.getTime();

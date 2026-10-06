@@ -26,6 +26,7 @@ import {
   getDateAsFullString,
   isDateToday,
   hours,
+  slotTimes,
 } from "@USupport-components-library/src/utils/date";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
@@ -45,8 +46,25 @@ import {
   normalizeAvailabilityResponse,
   mapSlotDataForDailyComponent,
 } from "./schedulerUtils.js";
+import { gridStepMinutes } from "./scheduleDaySlotsShared.js";
 
 import "./scheduler.scss";
+
+/** The grid providers open availability on when 30-minute slots are enabled. */
+const SLOT_STEP_MINUTES = 30;
+/** Length of a slot with no recorded duration - everything written before this feature. */
+const DEFAULT_SLOT_MINUTES = 60;
+
+/** Where the week grid scrolls to on open - the start of a typical working day. */
+const SCROLL_ANCHOR_TIME = "07:00";
+
+/** Read a slot's length out of the shared `slotDurations` map. */
+const durationForSlot = (timestampMs, slotDurations) => {
+  const minutes = Number(
+    slotDurations?.[String(Math.floor(timestampMs / 1000))],
+  );
+  return minutes === 30 || minutes === 60 ? minutes : DEFAULT_SLOT_MINUTES;
+};
 
 const namesOfDays = [
   "sunday",
@@ -77,6 +95,15 @@ export const Scheduler = ({
   const { width } = useWindowDimensions();
   const countryHasNormalSlots =
     localStorage.getItem("has_normal_slots") === "true";
+  const countryHas30MinSlots =
+    localStorage.getItem("has_30_min_slots") === "true";
+
+  // With the flag off this is byte-for-byte the old 24-entry `hours` array, so
+  // every view renders exactly as before.
+  const gridTimes = useMemo(
+    () => (countryHas30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [countryHas30MinSlots],
+  );
 
   const today = new Date();
   const currentHourRef = useRef(null);
@@ -98,6 +125,7 @@ export const Scheduler = ({
     slots: [],
     campaignSlots: [],
     organizationSlots: [],
+    slotDurations: {},
   });
   const pendingSlotWrites = useRef(0);
   const [validCampaigns, setValidCampaigns] = useState();
@@ -357,25 +385,39 @@ export const Scheduler = ({
     timestampSlot,
     campaignId,
     organizationId,
+    durationMinutes,
   }) => {
     await providerSvc.addAvailableSlot(
       startDate,
       timestampSlot,
       campaignId,
       organizationId,
+      durationMinutes,
     );
     return timestampSlot;
   };
   const addAvailableSlotMutation = useMutation(addAvailableSlot, {
-    onMutate: ({ timestampSlot, campaignId, organizationId }) => {
+    onMutate: ({
+      timestampSlot,
+      campaignId,
+      organizationId,
+      durationMinutes,
+    }) => {
       const newSlotDate = new Date(timestampSlot * 1000);
       const newSlot = newSlotDate.toISOString();
       const previous = slotsData;
       pendingSlotWrites.current += 1;
+      // Patch the duration alongside the slot. Without this a new 30-minute slot
+      // draws as 60 until the refetch lands, then snaps - which reads as a bug.
+      const optimisticDurations = (prev) => ({
+        ...(prev.slotDurations || {}),
+        [String(timestampSlot)]: durationMinutes || DEFAULT_SLOT_MINUTES,
+      });
       setSlots((prev) => {
         if (campaignId) {
           return {
             ...prev,
+            slotDurations: optimisticDurations(prev),
             campaignSlots: [
               ...prev.campaignSlots,
               { campaignId, time: newSlotDate },
@@ -386,6 +428,7 @@ export const Scheduler = ({
           const slotMs = newSlotDate.getTime();
           return {
             ...prev,
+            slotDurations: optimisticDurations(prev),
             organizationSlots: [
               ...prev.organizationSlots.filter(
                 (slot) => new Date(slot.time).getTime() !== slotMs,
@@ -396,6 +439,7 @@ export const Scheduler = ({
         }
         return {
           ...prev,
+          slotDurations: optimisticDurations(prev),
           slots: [...prev.slots, newSlot],
         };
       });
@@ -545,6 +589,54 @@ export const Scheduler = ({
     },
   );
 
+  /**
+   * Which grid cells are the *continuation* of something that started earlier?
+   *
+   * A 60-minute slot or consultation starting at 16:00 occupies two cells on a
+   * 30-minute grid. The 16:00 cell is the interactive one; 16:30 is drawn as a
+   * continuation of it - same background, no kebab, not clickable - so the
+   * provider cannot open or book anything inside a block that is already taken.
+   *
+   * Only meaningful on the half-hour grid; on the hourly grid nothing spans.
+   */
+  const continuationCells = useMemo(() => {
+    const map = new Map();
+    if (!countryHas30MinSlots) return map;
+
+    const stepMs = SLOT_STEP_MINUTES * 60 * 1000;
+
+    const cover = (startMs, durationMinutes, origin) => {
+      const cells = Math.round((durationMinutes * 60 * 1000) / stepMs);
+      for (let i = 1; i < cells; i += 1) {
+        map.set(startMs + i * stepMs, { startMs, durationMinutes, origin });
+      }
+    };
+
+    const durations = slotsData?.slotDurations || {};
+
+    [
+      ...(slotsData?.slots || []),
+      ...(slotsData?.campaignSlots || []).map((x) => x.time),
+      ...(slotsData?.organizationSlots || []).map((x) => x.time),
+    ].forEach((slot) => {
+      const startMs = new Date(slot).getTime();
+      if (Number.isNaN(startMs)) return;
+      cover(startMs, durationForSlot(startMs, durations), "slot");
+    });
+
+    (consultations || []).forEach((consultation) => {
+      const startMs = new Date(consultation.time).getTime();
+      if (Number.isNaN(startMs)) return;
+      cover(
+        startMs,
+        Number(consultation.duration_minutes) || DEFAULT_SLOT_MINUTES,
+        "consultation",
+      );
+    });
+
+    return map;
+  }, [countryHas30MinSlots, slotsData, consultations]);
+
   // When rendering every single slot check if
   // it exists in the provider's availability
   const checkIsAvailable = (date) => {
@@ -604,8 +696,52 @@ export const Scheduler = ({
       sponsorName: consultation.sponsor_name,
       campaignId: consultation.campaign_id,
       organizationId: consultation.organization_id,
+      durationMinutes:
+        Number(consultation.duration_minutes) || DEFAULT_SLOT_MINUTES,
     };
   };
+
+  /** The length a newly opened slot gets, unless the provider picks otherwise. */
+  const defaultSlotDuration = countryHas30MinSlots
+    ? SLOT_STEP_MINUTES
+    : DEFAULT_SLOT_MINUTES;
+
+  const updateSlotDurationMutation = useMutation(
+    async ({ startDate, timestampSlot, durationMinutes }) => {
+      await providerSvc.updateSlotDuration(
+        startDate,
+        timestampSlot,
+        durationMinutes,
+      );
+      return timestampSlot;
+    },
+    {
+      onMutate: ({ timestampSlot, durationMinutes }) => {
+        const previous = slotsData;
+        pendingSlotWrites.current += 1;
+        setSlots((prev) => ({
+          ...prev,
+          slotDurations: {
+            ...(prev.slotDurations || {}),
+            [String(timestampSlot)]: durationMinutes,
+          },
+        }));
+        return () => setSlots(previous);
+      },
+      onSuccess: () => {
+        invalidateAvailabilityQueries();
+        toast(t("slot_duration_updated"));
+      },
+      onError: (error, variables, rollback) => {
+        rollback?.();
+        const { message: errorMessage } = useError(error);
+        toast(errorMessage, { type: "error" });
+      },
+      onSettled: () => {
+        pendingSlotWrites.current = Math.max(0, pendingSlotWrites.current - 1);
+      },
+    },
+  );
 
   const handleToggleAvailable = async (
     date,
@@ -613,6 +749,7 @@ export const Scheduler = ({
     newStatus,
     campaignId,
     organizationId,
+    durationMinutes,
   ) => {
     if (providerStatus === "inactive") {
       toast(t("provider_inactive"), { type: "error" });
@@ -651,6 +788,7 @@ export const Scheduler = ({
         timestampSlot,
         campaignId,
         organizationId,
+        durationMinutes: durationMinutes || defaultSlotDuration,
       });
     } else {
       if (Array.isArray(campaignId)) {
@@ -671,8 +809,42 @@ export const Scheduler = ({
     }
   };
 
-  const handleSetAvailable = (date, hour, campaignId, organizationId) => {
-    handleToggleAvailable(date, hour, "available", campaignId, organizationId);
+  const handleSetAvailable = (
+    date,
+    hour,
+    campaignId,
+    organizationId,
+    durationMinutes,
+  ) => {
+    handleToggleAvailable(
+      date,
+      hour,
+      "available",
+      campaignId,
+      organizationId,
+      durationMinutes,
+    );
+  };
+
+  /**
+   * Change the length of a slot that is already open.
+   *
+   * Needed as its own action because the backend refuses overlapping slots: a
+   * provider holding 16:00/60 cannot add 16:30 until 16:00 has been shortened.
+   */
+  const handleChangeSlotDuration = (date, hour, durationMinutes) => {
+    if (providerStatus === "inactive") {
+      toast(t("provider_inactive"), { type: "error" });
+      return;
+    }
+    const timestampSlot = getTimestamp(date, hour);
+    const dateForSlot = selectedPeriod === "day" ? selectedDay : date;
+    const { first: weekStartDate } = getStartAndEndOfWeek(dateForSlot);
+    updateSlotDurationMutation.mutate({
+      startDate: getTimestampFromUTC(weekStartDate),
+      timestampSlot,
+      durationMinutes,
+    });
   };
 
   const handleSetUnavailable = (date, hour, campaignId, organizationId) => {
@@ -845,6 +1017,39 @@ export const Scheduler = ({
     const isPastDay = slotDateTime < now;
     const consultation = getConsultation(day, hour);
 
+    // A cell inside an earlier 60-minute slot or consultation. Rendered as a
+    // silent continuation of it: nothing to toggle, nothing to book.
+    const continuation = continuationCells.get(slotDateTime);
+    if (continuation && !consultation) {
+      return [
+        {
+          slotDate,
+          time: hour,
+          availabilityStatus: "continuation",
+          isContinuation: true,
+          continuationOf: continuation.startMs,
+          continuationOrigin: continuation.origin,
+          durationMinutes: null,
+          rowSpan: 1,
+          isAvailable: false,
+          hasNormalSlot: false,
+          campaignId: null,
+          organizationId: null,
+          organizationForSlot: null,
+          campaignSlots: [],
+          consultation: null,
+          isPastDay,
+        },
+      ];
+    }
+
+    const slotDurationMinutes = consultation
+      ? Number(consultation.durationMinutes) || DEFAULT_SLOT_MINUTES
+      : durationForSlot(slotDateTime, slotsData?.slotDurations);
+    const slotRowSpan = countryHas30MinSlots
+      ? Math.max(1, Math.round(slotDurationMinutes / SLOT_STEP_MINUTES))
+      : 1;
+
     const organizationForSlot =
       organizations?.find((x) => x.organizationId === organizationId) || null;
 
@@ -879,6 +1084,11 @@ export const Scheduler = ({
         })),
         consultation,
         isPastDay,
+        time: hour,
+        durationMinutes: slotDurationMinutes,
+        rowSpan: slotRowSpan,
+        isContinuation: false,
+        continuationOf: null,
       });
       return slots;
     }
@@ -900,6 +1110,11 @@ export const Scheduler = ({
         })),
         consultation: null,
         isPastDay,
+        time: hour,
+        durationMinutes: slotDurationMinutes,
+        rowSpan: slotRowSpan,
+        isContinuation: false,
+        continuationOf: null,
       });
     }
 
@@ -915,6 +1130,11 @@ export const Scheduler = ({
         campaignSlots: [],
         consultation: null,
         isPastDay,
+        time: hour,
+        durationMinutes: slotDurationMinutes,
+        rowSpan: slotRowSpan,
+        isContinuation: false,
+        continuationOf: null,
       });
     });
 
@@ -933,6 +1153,11 @@ export const Scheduler = ({
         campaignSlots: [],
         consultation: null,
         isPastDay,
+        time: hour,
+        durationMinutes: slotDurationMinutes,
+        rowSpan: slotRowSpan,
+        isContinuation: false,
+        continuationOf: null,
       });
     });
 
@@ -949,6 +1174,12 @@ export const Scheduler = ({
         campaignSlots: [],
         consultation: null,
         isPastDay,
+        time: hour,
+        // Nothing is open here, so there is no length to report.
+        durationMinutes: null,
+        rowSpan: 1,
+        isContinuation: false,
+        continuationOf: null,
       });
     }
 
@@ -1017,12 +1248,12 @@ export const Scheduler = ({
     const overviewWeekCalendarProps = {
       days: overviewWeekDays,
       consultationsRaw: overviewConsultationsRaw,
-      hours,
+      gridTimes,
       getSlotDataForHour,
       t,
     };
     const overviewSlotsPanelProps = {
-      hours,
+      gridTimes,
       getSlotDataForHour,
       handleSetAvailable,
       handleSetUnavailable,
@@ -1075,7 +1306,7 @@ export const Scheduler = ({
           ) : selectedPeriod === "week" ? (
             <ScheduleOverviewWeekGrid
               days={overviewWeekDays}
-              hours={hours}
+              gridTimes={gridTimes}
               getSlotDataForHour={getSlotDataForHour}
               handleSetAvailable={handleSetAvailable}
               handleSetUnavailable={handleSetUnavailable}
@@ -1094,7 +1325,7 @@ export const Scheduler = ({
               onSelectDay={handleOverviewMonthDaySelect}
               onOpenDaySlots={setSlotsModalDay}
               consultationsRaw={overviewConsultationsRaw}
-              hours={hours}
+              gridTimes={gridTimes}
               getSlotDataForHour={getSlotDataForHour}
               language={i18n.language}
               t={t}
@@ -1105,7 +1336,7 @@ export const Scheduler = ({
           isOpen={!!slotsModalDay}
           day={slotsModalDay}
           onClose={() => setSlotsModalDay(null)}
-          hours={hours}
+          gridTimes={gridTimes}
           getSlotDataForHour={getSlotDataForHour}
           handleSetAvailable={handleSetAvailable}
           handleSetUnavailable={handleSetUnavailable}
@@ -1221,7 +1452,7 @@ export const Scheduler = ({
           ) : selectedPeriod === "day" ? (
             <DailyView
               selectedDay={selectedDay}
-              hours={hours}
+              gridTimes={gridTimes}
               getSlotDataForHour={getSlotDataForHour}
               handleSetAvailable={handleSetAvailable}
               handleSetUnavailable={handleSetUnavailable}
@@ -1233,16 +1464,20 @@ export const Scheduler = ({
               organizations={organizations}
               t={t}
               countryHasNormalSlots={countryHasNormalSlots}
+              canChangeDuration={countryHas30MinSlots}
+              handleChangeSlotDuration={handleChangeSlotDuration}
             />
           ) : selectedPeriod === "week" ? (
             <Grid classes="scheduler__days-grid">
-              {hours.map((hour, index) => {
+              {gridTimes.map((hour, index) => {
                 return (
                   <React.Fragment
                     key={"week" + hour.toString() + index.toString()}
                   >
                     <GridItem xs={1} classes="scheduler__days-grid__hour-item">
-                      {hour === "07:00" && <div ref={currentHourRef} />}
+                      {hour === SCROLL_ANCHOR_TIME && (
+                        <div ref={currentHourRef} />
+                      )}
                       <p className="scheduler__days-grid__hour-item__text">
                         {hour}
                       </p>
@@ -1254,11 +1489,25 @@ export const Scheduler = ({
                       const organizationId =
                         isAvailable.organizationSlot?.organizationId;
                       const isPastDay = new Date(slotDate) < new Date();
+                      const weekSlotData = getSlotDataForHour(hour, day)?.[0];
 
                       const organizationForSlot =
                         organizations?.find(
                           (x) => x.organizationId === organizationId,
                         ) || null;
+
+                      if (weekSlotData?.isContinuation) {
+                        // Back half of a 60-minute block: painted as part of the
+                        // cell above it, with nothing to interact with.
+                        return (
+                          <GridItem
+                            key={"slot" + day.toString() + dayIndex.toString()}
+                            xs={1}
+                            classes="scheduler__days-grid__continuation"
+                            aria-hidden="true"
+                          />
+                        );
+                      }
 
                       return (
                         <ProviderAvailability
@@ -1277,11 +1526,18 @@ export const Scheduler = ({
                           }) => {
                             handleSetUnavailable(day, hour, cId, oId);
                           }}
+                          durationMinutes={weekSlotData?.durationMinutes}
+                          canChangeDuration={countryHas30MinSlots}
+                          defaultDurationMinutes={gridStepMinutes(gridTimes)}
+                          handleChangeDuration={(minutes) =>
+                            handleChangeSlotDuration(day, hour, minutes)
+                          }
                           handleSetAvailable={({
                             campaignId: cId,
                             organizationId: oId,
+                            durationMinutes: dMinutes,
                           }) => {
-                            handleSetAvailable(day, hour, cId, oId);
+                            handleSetAvailable(day, hour, cId, oId, dMinutes);
                           }}
                           handleCancelConsultation={handleCancelConsultation}
                           handleViewProfile={handleViewProfile}
@@ -1327,7 +1583,7 @@ export const Scheduler = ({
                 Array.isArray(consultations) ? consultations : []
               }
               listTitle={monthListTitle}
-              hours={hours}
+              gridTimes={gridTimes}
               getSlotDataForHour={getSlotDataForHour}
               handleSetAvailable={handleSetAvailable}
               handleSetUnavailable={handleSetUnavailable}
@@ -1349,7 +1605,7 @@ export const Scheduler = ({
 
 const DailyView = ({
   selectedDay,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -1357,13 +1613,15 @@ const DailyView = ({
   handleViewProfile,
   handleJoinConsultation,
   handleProposeConsultation,
+  handleChangeSlotDuration,
+  canChangeDuration,
   validCampaigns,
   organizations,
   t,
   countryHasNormalSlots,
 }) => {
   let firstBookedHour = null;
-  for (const h of hours) {
+  for (const h of gridTimes) {
     const rows = getSlotDataForHour(h);
     if (rows?.some((s) => s.consultation)) {
       firstBookedHour = h;
@@ -1373,26 +1631,43 @@ const DailyView = ({
 
   return (
     <div className="scheduler__daily-view">
-      {hours.map((hour, index) => {
+      {gridTimes.map((hour, index) => {
         const slots = getSlotDataForHour(hour);
         if (!slots || slots.length === 0) return null;
 
         const now = new Date();
         const isToday = isDateToday(selectedDay);
-        const currentHourString = `${String(now.getHours()).padStart(
-          2,
-          "0",
-        )}:00`;
+        // Snap "now" onto the grid so the highlight lands on 16:30 between
+        // 16:30 and 17:00, not on 16:00 for the whole hour.
+        const step = gridStepMinutes(gridTimes);
+        const nowMinutes =
+          Math.floor((now.getHours() * 60 + now.getMinutes()) / step) * step;
+        const currentHourString = `${String(
+          Math.floor(nowMinutes / 60),
+        ).padStart(2, "0")}:${String(nowMinutes % 60).padStart(2, "0")}`;
         const isCurrentHour = isToday && hour === currentHourString;
 
-        const wrappedHandleSetAvailable = ({ campaignId, organizationId }) => {
-          handleSetAvailable(selectedDay, hour, campaignId, organizationId);
+        const wrappedHandleSetAvailable = ({
+          campaignId,
+          organizationId,
+          durationMinutes,
+        }) => {
+          handleSetAvailable(
+            selectedDay,
+            hour,
+            campaignId,
+            organizationId,
+            durationMinutes,
+          );
         };
         const wrappedHandleSetUnavailable = ({
           campaignId,
           organizationId,
         }) => {
           handleSetUnavailable(selectedDay, hour, campaignId, organizationId);
+        };
+        const wrappedHandleChangeDuration = (durationMinutes) => {
+          handleChangeSlotDuration(selectedDay, hour, durationMinutes);
         };
 
         return (
@@ -1415,6 +1690,18 @@ const DailyView = ({
               {slots.map((slotData, slotIndex) => {
                 const { isAvailable, campaignData, enrolledCampaignsForSlot } =
                   mapSlotDataForDailyComponent(slotData, validCampaigns);
+
+                if (slotData.isContinuation) {
+                  // The tail of a 60-minute block. Drawn as part of it: no
+                  // border, no menu, nothing to click.
+                  return (
+                    <div
+                      key={`slot-${hour}-${slotIndex}`}
+                      className="scheduler__daily-slot--continuation"
+                      aria-hidden="true"
+                    />
+                  );
+                }
 
                 return (
                   <DailyAvailabilitySlot
@@ -1441,6 +1728,10 @@ const DailyView = ({
                     organizations={organizations}
                     t={t}
                     countryHasNormalSlots={countryHasNormalSlots}
+                    durationMinutes={slotData.durationMinutes}
+                    canChangeDuration={canChangeDuration}
+                    defaultDurationMinutes={gridStepMinutes(gridTimes)}
+                    handleChangeDuration={wrappedHandleChangeDuration}
                   />
                 );
               })}

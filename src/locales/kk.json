@@ -482,7 +482,11 @@
       "month_available_slots_count_other": "{{count}} қолжетімді слот",
       "month_unavailable_slots_count_one": "{{count}} қолжетімсіз слот",
       "month_unavailable_slots_count_other": "{{count}} қолжетімсіз слот",
-      "month_no_upcoming_slots": "Бұл күнге алдағы уақыт слоттары жоқ."
+      "month_no_upcoming_slots": "Бұл күнге алдағы уақыт слоттары жоқ.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Басталу күні",
@@ -503,7 +507,10 @@
       "campaign_placeholder": "Науқандарды таңдаңыз",
       "organization_placeholder": "Ұйымдарды таңдаңыз",
       "selection_required": "Кемінде бір науқан немесе ұйымды таңдаңыз",
-      "organization_none": "None"
+      "organization_none": "None",
+      "slot_length": "Slot length",
+      "slot_length_30": "30 min",
+      "slot_length_60": "1 hour"
     },
     "cookie-policy": {
       "no_results": "Таңдалған ел мен тіл үшін ештеңе табылмады."

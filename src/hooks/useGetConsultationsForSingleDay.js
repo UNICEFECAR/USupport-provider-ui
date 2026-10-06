@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
+import { DEFAULT_DURATION_MINUTES } from "@USupport-components-library/utils";
 
 export const useGetConsultationsForSingleDay = (date, enabled = true) => {
   const getconsultationsForSingleDay = async () => {
@@ -30,6 +31,10 @@ export const useGetConsultationsForSingleDay = (date, enabled = true) => {
       clientName: consultation.client_name,
       image: consultation.client_image,
       timestamp: new Date(consultation.time).getTime(),
+      // Without this the card falls back to an hour, so a 30-minute
+      // consultation renders an end time it does not have.
+      durationMinutes:
+        Number(consultation.duration_minutes) || DEFAULT_DURATION_MINUTES,
       status: consultation.status,
       price: consultation.price,
       campaignId: consultation.campaign_id,

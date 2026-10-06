@@ -9,6 +9,7 @@ export const ScheduleDaySlotFloatingPicker = ({
   position,
   onClose,
   hour,
+  durationMinutes,
   enrollment,
   orgList,
   campaignList,
@@ -26,6 +27,7 @@ export const ScheduleDaySlotFloatingPicker = ({
         className="schedule-day-slots__picker schedule-day-slots__picker--floating"
         style={{ top: position.top, left: position.left }}
         hour={hour}
+        durationMinutes={durationMinutes}
         enrollment={enrollment}
         orgList={orgList}
         campaignList={campaignList}

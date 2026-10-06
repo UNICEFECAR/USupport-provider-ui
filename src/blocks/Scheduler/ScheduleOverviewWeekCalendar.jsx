@@ -15,7 +15,7 @@ export const ScheduleOverviewWeekCalendar = ({
   openSlotsOnSelect = false,
   onOpenDaySlots,
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   language,
   t,
@@ -33,7 +33,7 @@ export const ScheduleOverviewWeekCalendar = ({
             date={date}
             selected={selected}
             consultationsRaw={consultationsRaw}
-            hours={hours}
+            gridTimes={gridTimes}
             getSlotDataForHour={getSlotDataForHour}
             language={language}
             onClick={() => {

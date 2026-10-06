@@ -56,7 +56,7 @@ export const ScheduleOverviewMonthCalendar = ({
   onSelectDay,
   onOpenDaySlots,
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   language,
   t,
@@ -85,7 +85,7 @@ export const ScheduleOverviewMonthCalendar = ({
             disabled={isDisabled}
             outside={outside}
             consultationsRaw={consultationsRaw}
-            hours={hours}
+            gridTimes={gridTimes}
             getSlotDataForHour={getSlotDataForHour}
             language={language}
             onClick={() => {

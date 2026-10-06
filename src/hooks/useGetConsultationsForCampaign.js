@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
-import { ONE_HOUR } from "../../USupport-components-library/src/utils";
+import {
+  getConsultationEndDate,
+} from "../../USupport-components-library/src/utils";
 
 export default function useGetConsultationsForCampaign(campaignId) {
   const getConsultationsForCampaign = async () => {
@@ -21,10 +23,14 @@ export default function useGetConsultationsForCampaign(campaignId) {
       timestamp: new Date(consultation.time).getTime(),
       status: consultation.status,
       price: consultation.price,
+      durationMinutes: consultation.duration_minutes,
     }));
 
     data.forEach((consultation) => {
-      const endTime = consultation.timestamp + ONE_HOUR;
+      const endTime = getConsultationEndDate(
+        consultation.timestamp,
+        consultation.durationMinutes,
+      ).getTime();
       if (
         consultation.timestamp >= currentDateTs ||
         (currentDateTs >= consultation.timestamp && currentDateTs <= endTime)

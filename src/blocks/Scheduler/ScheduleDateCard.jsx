@@ -31,7 +31,7 @@ const WEEKDAY_KEYS_BY_GETDAY = [
 export const ScheduleDateCard = ({
   date,
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   selected = false,
   disabled = false,
@@ -43,7 +43,7 @@ export const ScheduleDateCard = ({
 }) => {
   const { count, hasAppt, isAvailable } = getDayAvailabilityState({
     consultationsRaw,
-    hours,
+    gridTimes,
     getSlotDataForHour,
     date,
   });

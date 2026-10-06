@@ -482,7 +482,11 @@
       "month_available_slots_count_other": "{{count}} հասանելի ժամանակահատված",
       "month_unavailable_slots_count_one": "{{count}} անհասանելի ժամանակահատված",
       "month_unavailable_slots_count_other": "{{count}} անհասանելի ժամանակահատված",
-      "month_no_upcoming_slots": "Այս օրվա համար առաջիկա ժամանակահատվածներ չկան։"
+      "month_no_upcoming_slots": "Այս օրվա համար առաջիկա ժամանակահատվածներ չկան։",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Մեկնարկի ամսաթիվը",
@@ -503,7 +507,10 @@
       "campaign_placeholder": "Ընտրել արշավներ",
       "organization_placeholder": "Ընտրել կազմակերպություններ",
       "selection_required": "Ընտրեք առնվազն մեկ արշավ կամ կազմակերպություն",
-      "organization_none": "None"
+      "organization_none": "None",
+      "slot_length": "Slot length",
+      "slot_length_30": "30 min",
+      "slot_length_60": "1 hour"
     },
     "cookie-policy": {
       "no_results": "Ընտրված երկրի և լեզվի վերաբերյալ արդյունքներ չեն գտնվել"

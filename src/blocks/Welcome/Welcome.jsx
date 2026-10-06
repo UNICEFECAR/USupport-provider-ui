@@ -149,6 +149,7 @@ export const Welcome = () => {
     } else {
       localStorage.setItem("country", country);
       localStorage.setItem("has_normal_slots", countryObject.hasNormalSlots);
+      localStorage.setItem("has_30_min_slots", countryObject.has30MinSlots);
     }
   };
 

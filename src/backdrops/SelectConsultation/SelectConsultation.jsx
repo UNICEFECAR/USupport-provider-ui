@@ -12,7 +12,7 @@ import {
 import { providerSvc } from "@USupport-components-library/services";
 import {
   getTimestampFromUTC,
-  parseUTCDate,
+  getTimeRangeAsString,
 } from "@USupport-components-library/utils";
 
 import { useGetProviderData } from "#hooks";
@@ -59,34 +59,14 @@ export const SelectConsultation = ({
       getTimestampFromUTC(currentDay)
     );
 
-    const slots = data.map((x) => {
-      if (x.time) {
-        return {
-          time: parseUTCDate(x.time),
-          organization_id: x.organization_id,
-        };
-      }
-      return x;
-    });
-
-    const organizationSlotTimes = slots.reduce((acc, slot) => {
-      if (slot.organization_id) {
-        acc.push(slot.time.getTime());
-      }
-      return acc;
-    }, []);
-
-    // Ensure that there is no overlap between organization slots and regular slots
-    // If there are duplicates, remove the regular slot
-    if (organizationSlotTimes.length > 0) {
-      return slots.filter((slot) => {
-        if (slot.time) return slot;
-        const slotTime = new Date(slot).getTime();
-        return !organizationSlotTimes.includes(slotTime);
-      });
-    }
-
-    return slots;
+    // The API returns { time, duration_minutes, campaign_id, organization_id }
+    // for every slot, with `time` as epoch milliseconds, and has already dropped
+    // slots that overlap one another - that de-duplication used to live here.
+    return data.map((x) => ({
+      time: new Date(x.time),
+      duration_minutes: x.duration_minutes,
+      organization_id: x.organization_id,
+    }));
   };
   const availableSlotsQuery = useQuery(
     ["available-slots", startDate, currentDay, providerId],
@@ -117,14 +97,8 @@ export const SelectConsultation = ({
 
         const value = new Date(slot.time || slot).getTime();
 
-        const getDoubleDigitHour = (hour) =>
-          hour === 24 ? "00" : hour < 10 ? `0${hour}` : hour;
-
-        const displayStartHours = getDoubleDigitHour(slotLocal.getHours());
-        const displayStartMinutes = getDoubleDigitHour(slotLocal.getMinutes());
-        const displayEndHours = getDoubleDigitHour(slotLocal.getHours() + 1);
-        const displayEndMinutes = getDoubleDigitHour(slotLocal.getMinutes());
-        const label = `${displayStartHours}:${displayStartMinutes} - ${displayEndHours}:${displayEndMinutes}`;
+        // "16:00 - 16:30" for a half-hour slot, "16:00 - 17:00" for an hour.
+        const label = getTimeRangeAsString(slotLocal, slot.duration_minutes);
 
         return { label: label, value };
       },
