@@ -482,7 +482,11 @@
       "month_available_slots_count_other": "{{count}} доступних слотів",
       "month_unavailable_slots_count_one": "{{count}} недоступний слот",
       "month_unavailable_slots_count_other": "{{count}} недоступних слотів",
-      "month_no_upcoming_slots": "На цей день немає майбутніх часових слотів."
+      "month_no_upcoming_slots": "На цей день немає майбутніх часових слотів.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Дата початку",
@@ -503,7 +507,10 @@
       "campaign_placeholder": "Виберіть кампанії",
       "organization_placeholder": "Виберіть організації",
       "selection_required": "Виберіть принаймні одну кампанію або організацію",
-      "organization_none": "None"
+      "organization_none": "None",
+      "slot_length": "Slot length",
+      "slot_length_30": "30 min",
+      "slot_length_60": "1 hour"
     },
     "cookie-policy": {
       "no_results": "Для обраної країни й мови немає результатів."

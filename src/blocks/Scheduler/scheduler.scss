@@ -1744,3 +1744,80 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     line-height: 1;
   }
 }
+
+// --- 30-minute grid -------------------------------------------------------
+// A 60-minute slot or consultation covers two rows on the half-hour grid. The
+// second row is drawn as a continuation of the first rather than as a merged
+// cell: the week grid flows GridItems with no explicit row tracks, so a real
+// `grid-row: span 2` would mean restructuring the grid and fighting its
+// responsive rules for no visual gain.
+.scheduler {
+  &__daily-slot--continuation {
+    width: 100%;
+    min-height: 4.9rem;
+    border-radius: 0;
+    @include themify($themes, "background-color", "color_blue_eaf7f9");
+    opacity: 0.55;
+  }
+
+  &__days-grid__continuation {
+    @include themify($themes, "background-color", "color_blue_eaf7f9");
+    opacity: 0.55;
+    border-top: none;
+  }
+}
+
+.schedule-day-slots__badge--continuation {
+  display: none;
+}
+
+// --- hour cell -------------------------------------------------------------
+// One box per hour holding its two half-hour slots, so 05:00-05:30 and
+// 05:30-06:00 read as two halves of the same hour rather than two unrelated
+// rows. The halves keep their own state colours; the box supplies the frame.
+.schedule-hour-cell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  // The day list is a flex column with a max-height, so without this the box
+  // shrinks to fit and `overflow: hidden` clips its rows away entirely - which
+  // is what turned the month modal into a stack of bare hairlines.
+  flex-shrink: 0;
+  border-radius: $border_radius_0_8;
+  overflow: hidden;
+  border-width: 1px;
+  border-style: solid;
+  @include themify($themes, "border-color", "color_blue_c1d7e0");
+
+  &__half {
+    display: flex;
+    flex-direction: column;
+
+    + .schedule-hour-cell__half {
+      border-top-width: 1px;
+      border-top-style: solid;
+      @include themify($themes, "border-top-color", "color_blue_c1d7e0");
+    }
+
+    // The halves sit inside one frame, so they must not draw their own.
+    // Two stacked rows per hour also means each needs to be shorter than a
+    // standalone row, or a day is 24 x 12rem of scrolling.
+    .schedule-day-slots__row {
+      border: none;
+      border-radius: 0;
+      width: 100%;
+      min-height: 4rem;
+      padding: $spacing_0_8 $spacing_1_6;
+    }
+  }
+
+  &__whole .schedule-day-slots__row {
+    border: none;
+    border-radius: 0;
+    width: 100%;
+  }
+}
+
+.schedule-day-slots__list > li.schedule-hour-cell {
+  margin-bottom: 0.6rem;
+}

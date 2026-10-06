@@ -7,7 +7,7 @@ export const ScheduleDaySlotsModal = ({
   isOpen,
   day,
   onClose,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -38,7 +38,7 @@ export const ScheduleDaySlotsModal = ({
     >
       <ScheduleDaySlotsPanel
         day={day}
-        hours={hours}
+        gridTimes={gridTimes}
         getSlotDataForHour={getSlotDataForHour}
         handleSetAvailable={handleSetAvailable}
         handleSetUnavailable={handleSetUnavailable}

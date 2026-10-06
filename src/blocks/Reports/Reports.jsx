@@ -12,8 +12,8 @@ import {
 import {
   getDateView,
   getTimeFromDate,
-  ONE_HOUR,
   downloadCSVFile,
+  getConsultationEndDate,
 } from "@USupport-components-library/utils";
 
 import { useGetProviderActivities } from "#hooks";
@@ -65,7 +65,7 @@ export const Reports = () => {
       const price = row.price ? `${row.price}${currencySymbol}` : t("free");
       csv += "\n";
       csv += `${row.displayName},`;
-      csv += `${getFormattedDate(row.time, false)},`;
+      csv += `${getFormattedDate(row.time, false, row.durationMinutes)},`;
       csv += `${price},`;
       csv += `${row.campaignName || "N/A"}`;
     });
@@ -116,8 +116,8 @@ export const Reports = () => {
     setDataToDisplay(filteredData);
   };
 
-  const getFormattedDate = (date, hasComma = true) => {
-    const endTime = new Date(date.getTime() + ONE_HOUR);
+  const getFormattedDate = (date, hasComma = true, durationMinutes) => {
+    const endTime = getConsultationEndDate(date, durationMinutes);
 
     const displayTime = getTimeFromDate(date);
     const displayEndTime = getTimeFromDate(endTime);
@@ -143,7 +143,11 @@ export const Reports = () => {
   }, [data]);
 
   const rowsData = dataToDisplay?.map((activity) => {
-    const displayTime = getFormattedDate(activity.time);
+    const displayTime = getFormattedDate(
+      activity.time,
+      true,
+      activity.durationMinutes,
+    );
     return [
       <p className="text ">{activity.displayName}</p>,
       <p className="text centered">{displayTime}</p>,

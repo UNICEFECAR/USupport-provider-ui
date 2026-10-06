@@ -14,8 +14,8 @@ export function consultationCountOnDay(consultationsRaw, date) {
   }).length;
 }
 
-export function hasOpenSlotOnDay(hours, getSlotDataForHour, date) {
-  return hours.some((hour) => {
+export function hasOpenSlotOnDay(gridTimes, getSlotDataForHour, date) {
+  return gridTimes.some((hour) => {
     const rows = getSlotDataForHour(hour, date);
     return rows.some(
       (row) =>
@@ -28,13 +28,14 @@ export function hasOpenSlotOnDay(hours, getSlotDataForHour, date) {
 
 export function getDayAvailabilityState({
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   date,
 }) {
   const count = consultationCountOnDay(consultationsRaw, date);
   const hasAppt = count > 0;
-  const isAvailable = hasAppt || hasOpenSlotOnDay(hours, getSlotDataForHour, date);
+  const isAvailable =
+    hasAppt || hasOpenSlotOnDay(gridTimes, getSlotDataForHour, date);
 
   return { count, hasAppt, isAvailable };
 }

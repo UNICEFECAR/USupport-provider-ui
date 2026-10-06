@@ -8,7 +8,10 @@ import {
   createSlotActions,
   getCampaignList,
   hourEnrollment,
-  hourRange,
+  slotRange,
+  gridStepMinutes,
+  hourGridTimes,
+  halvesForHour,
   slotRowKey,
   isVisibleOverviewSlot,
 } from "./scheduleDaySlotsShared.js";
@@ -19,7 +22,7 @@ import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
  */
 export const ScheduleDaySlotsPanel = ({
   day,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -32,8 +35,13 @@ export const ScheduleDaySlotsPanel = ({
   closePickerOnScroll = false,
   t,
 }) => {
-  const { activeKey: activeHour, position, isOpen, open, close } =
-    useFloatingSlotPicker({ closeOnScroll: closePickerOnScroll });
+  const {
+    activeKey: activeHour,
+    position,
+    isOpen,
+    open,
+    close,
+  } = useFloatingSlotPicker({ closeOnScroll: closePickerOnScroll });
 
   const orgList = organizations || [];
   const campaignList = getCampaignList(validCampaigns);
@@ -45,22 +53,30 @@ export const ScheduleDaySlotsPanel = ({
   });
 
   const slotsForHour = (hour) => (day ? getSlotDataForHour(hour, day) : []);
+  const step = gridStepMinutes(gridTimes);
+  // One row per hour; each row splits into the full hour and its halves.
+  const hourRows = hourGridTimes(gridTimes);
 
-  const enrollment = activeHour
-    ? hourEnrollment(slotsData, day, activeHour)
+  // activeKey is "HH:MM-<duration>" so the two regions of an hour stay distinct.
+  const activeTime = activeHour ? String(activeHour).split("-")[0] : null;
+  const enrollment = activeTime
+    ? hourEnrollment(slotsData, day, activeTime)
     : null;
 
-  const openHourPicker = (event, hour, interactive) => {
+  const [pickerDuration, setPickerDuration] = React.useState(null);
+
+  const openHourPicker = (event, hour, interactive, durationMinutes) => {
     if (!interactive) return;
     if (
       orgList.length === 0 &&
       campaignList.length === 0 &&
       countryHasNormalSlots
     ) {
-      slotActions.handleSelectNormal(hour);
+      slotActions.handleSelectNormal(hour, durationMinutes);
       return;
     }
-    open(hour, event.currentTarget);
+    setPickerDuration(durationMinutes);
+    open(`${hour}-${durationMinutes}`, event.currentTarget);
   };
 
   if (isLoading || !day) {
@@ -70,51 +86,103 @@ export const ScheduleDaySlotsPanel = ({
   return (
     <div className="schedule-day-slots">
       <ul className="schedule-day-slots__list">
-        {hours.flatMap((hour) => {
-          const slots = slotsForHour(hour)
-            .filter((slot) => isVisibleOverviewSlot(slot, hideUnavailableSlots));
-          if (!slots.length) return [];
-
-          return slots.map((slot, index) => {
-            const rowKey = slotRowKey(hour, slot, index);
-            const badge = badgeForSlot(slot, campaignList, t);
-            const selected = activeHour === hour;
-            const interactive = canPickForSlot(
-              slot,
-              orgList,
-              campaignList,
-              countryHasNormalSlots,
+        {hourRows.flatMap((hour) => {
+          const renderRegion = (time, durationMinutes, extraClass) => {
+            const slots = slotsForHour(time).filter((slot) =>
+              isVisibleOverviewSlot(slot, hideUnavailableSlots),
             );
+            if (!slots.length) return null;
 
             return (
-              <li key={rowKey}>
-                <button
-                  type="button"
-                  className={[
-                    "schedule-day-slots__row",
-                    `schedule-day-slots__row--${badge.kind}`,
-                    selected && interactive
-                      ? "schedule-day-slots__row--selected"
-                      : "",
-                    !interactive ? "schedule-day-slots__row--disabled" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  disabled={!interactive}
-                  onClick={(event) => openHourPicker(event, hour, interactive)}
-                >
-                  <span className="schedule-day-slots__time">
-                    {hourRange(hour)}
-                  </span>
-                  <span
-                    className={`schedule-day-slots__badge schedule-day-slots__badge--${badge.kind}`}
-                  >
-                    {badge.label}
-                  </span>
-                </button>
-              </li>
+              <div key={`${time}-${durationMinutes}`} className={extraClass}>
+                {slots.map((slot, index) => {
+                  const rowKey = slotRowKey(time, slot, index);
+                  const badge = badgeForSlot(slot, campaignList, t);
+                  const selected = activeHour === `${time}-${durationMinutes}`;
+                  const interactive = canPickForSlot(
+                    slot,
+                    orgList,
+                    campaignList,
+                    countryHasNormalSlots,
+                  );
+
+                  return (
+                    <button
+                      key={rowKey}
+                      type="button"
+                      className={[
+                        "schedule-day-slots__row",
+                        `schedule-day-slots__row--${badge.kind}`,
+                        selected && interactive
+                          ? "schedule-day-slots__row--selected"
+                          : "",
+                        !interactive ? "schedule-day-slots__row--disabled" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      disabled={!interactive}
+                      onClick={(event) =>
+                        openHourPicker(
+                          event,
+                          time,
+                          interactive,
+                          durationMinutes,
+                        )
+                      }
+                    >
+                      <span className="schedule-day-slots__time">
+                        {slot?.isContinuation
+                          ? ""
+                          : slotRange(
+                              time,
+                              slot?.durationMinutes,
+                              durationMinutes,
+                            )}
+                      </span>
+                      <span
+                        className={`schedule-day-slots__badge schedule-day-slots__badge--${badge.kind}`}
+                      >
+                        {badge.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             );
-          });
+          };
+
+          const halves = halvesForHour(hour, step);
+          const firstHalf = slotsForHour(halves[0])[0];
+          const secondHalf =
+            halves.length > 1 ? slotsForHour(halves[1])[0] : null;
+
+          // A whole hour already taken by one block has nothing left to split.
+          const isWholeHourBlock =
+            !secondHalf ||
+            firstHalf?.durationMinutes === 60 ||
+            secondHalf?.isContinuation;
+
+          if (isWholeHourBlock) {
+            const region = renderRegion(
+              halves[0],
+              60,
+              "schedule-hour-cell__whole",
+            );
+            return region ? [<li key={hour}>{region}</li>] : [];
+          }
+
+          // One box per hour holding both halves.
+          const halfRegions = halves
+            .map((time) => renderRegion(time, step, "schedule-hour-cell__half"))
+            .filter(Boolean);
+
+          if (!halfRegions.length) return [];
+
+          return [
+            <li key={hour} className="schedule-hour-cell">
+              {halfRegions}
+            </li>,
+          ];
         })}
       </ul>
 
@@ -122,7 +190,8 @@ export const ScheduleDaySlotsPanel = ({
         isOpen={isOpen}
         position={position}
         onClose={close}
-        hour={activeHour}
+        hour={activeTime}
+        durationMinutes={pickerDuration}
         enrollment={enrollment}
         orgList={orgList}
         campaignList={campaignList}

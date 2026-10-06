@@ -9,7 +9,10 @@ import {
   createSlotActions,
   getCampaignList,
   hourEnrollment,
-  hourRange,
+  slotRange,
+  gridStepMinutes,
+  hourGridTimes,
+  halvesForHour,
   slotRowKey,
 } from "./scheduleDaySlotsShared.js";
 import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
@@ -19,7 +22,7 @@ import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
  */
 export const ScheduleOverviewWeekGrid = ({
   days,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -35,6 +38,9 @@ export const ScheduleOverviewWeekGrid = ({
     useFloatingSlotPicker();
   const orgList = organizations || [];
   const campaignList = getCampaignList(validCampaigns);
+  const step = gridStepMinutes(gridTimes);
+  // One row per hour; the halves live inside the cell.
+  const hourRows = hourGridTimes(gridTimes);
 
   const openCellPicker = (
     event,
@@ -44,13 +50,14 @@ export const ScheduleOverviewWeekGrid = ({
     interactive,
     quickToggleOnly,
     slotActions,
+    durationMinutes,
   ) => {
     if (!interactive) return;
     if (quickToggleOnly) {
-      slotActions.handleSelectNormal(hour);
+      slotActions.handleSelectNormal(hour, durationMinutes);
       return;
     }
-    open(cellKey, event.currentTarget, { day, hour });
+    open(cellKey, event.currentTarget, { day, hour, durationMinutes });
   };
 
   const activeSlotActions = meta
@@ -80,7 +87,7 @@ export const ScheduleOverviewWeekGrid = ({
               date={date}
               interactive={false}
               consultationsRaw={consultationsRaw}
-              hours={hours}
+              gridTimes={gridTimes}
               getSlotDataForHour={getSlotDataForHour}
               language={language}
               t={t}
@@ -90,15 +97,13 @@ export const ScheduleOverviewWeekGrid = ({
       </div>
 
       <div className="schedule-overview-week-grid__body">
-        {hours.map((hour) => (
+        {hourRows.map((hour) => (
           <div key={hour} className="schedule-overview-week-grid__row">
             <div className="schedule-overview-week-grid__hour-label">
               {hour}
             </div>
             {days.map((day) => {
-              const slots = getSlotDataForHour(hour, day) || [];
               const cellKey = cellKeyFor(day, hour);
-              const isActive = activeKey === cellKey;
               const slotActions = createSlotActions({
                 day,
                 slotsData,
@@ -110,66 +115,115 @@ export const ScheduleOverviewWeekGrid = ({
                 campaignList.length === 0 &&
                 countryHasNormalSlots;
 
+              const renderRegion = (time, durationMinutes, extraClass) => {
+                const slots = getSlotDataForHour(time, day) || [];
+                const regionKey = `${cellKey}-${time}-${durationMinutes}`;
+                const isActive = activeKey === regionKey;
+
+                return (
+                  <div key={regionKey} className={extraClass}>
+                    {slots.map((slot, index) => {
+                      const rowKey = slotRowKey(
+                        time,
+                        slot,
+                        index,
+                        String(day.getTime()),
+                      );
+                      const badge = badgeForSlot(slot, campaignList, t);
+                      const interactive = canPickForSlot(
+                        slot,
+                        orgList,
+                        campaignList,
+                        countryHasNormalSlots,
+                      );
+                      const selected = isActive && interactive;
+
+                      return (
+                        <button
+                          key={rowKey}
+                          type="button"
+                          className={[
+                            "schedule-day-slots__row",
+                            "schedule-day-slots__row--compact",
+                            `schedule-day-slots__row--${badge.kind}`,
+                            selected ? "schedule-day-slots__row--selected" : "",
+                            !interactive
+                              ? "schedule-day-slots__row--disabled"
+                              : "",
+                          ]
+                            .filter(Boolean)
+                            .join(" ")}
+                          disabled={!interactive}
+                          onClick={(event) =>
+                            openCellPicker(
+                              event,
+                              regionKey,
+                              day,
+                              time,
+                              interactive,
+                              quickToggleOnly,
+                              slotActions,
+                              durationMinutes,
+                            )
+                          }
+                        >
+                          <span className="schedule-day-slots__time schedule-day-slots__time--compact">
+                            {slot?.isContinuation
+                              ? ""
+                              : slotRange(
+                                  time,
+                                  slot?.durationMinutes,
+                                  durationMinutes,
+                                )}
+                          </span>
+                          <span
+                            className={`schedule-day-slots__badge schedule-day-slots__badge--${badge.kind}`}
+                          >
+                            {badge.label}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              };
+
+              const halves = halvesForHour(hour, step);
+              const firstHalf = (getSlotDataForHour(halves[0], day) || [])[0];
+              const secondHalf =
+                halves.length > 1
+                  ? (getSlotDataForHour(halves[1], day) || [])[0]
+                  : null;
+
+              // An hour already held by one 60-minute block stays a single box -
+              // there are no halves to show.
+              const isWholeHourBlock =
+                !secondHalf ||
+                firstHalf?.durationMinutes === 60 ||
+                secondHalf?.isContinuation;
+
+              if (isWholeHourBlock) {
+                return (
+                  <div
+                    key={cellKey}
+                    className="schedule-overview-week-grid__cell"
+                  >
+                    {renderRegion(halves[0], 60, "schedule-hour-cell__whole")}
+                  </div>
+                );
+              }
+
+              // One box per hour holding both halves. The provider opens
+              // half-hour slots; a client who wants an hour books two adjacent
+              // ones, which the booking side assembles.
               return (
                 <div
                   key={cellKey}
-                  className="schedule-overview-week-grid__cell"
+                  className="schedule-overview-week-grid__cell schedule-hour-cell"
                 >
-                  {slots.map((slot, index) => {
-                    const rowKey = slotRowKey(
-                      hour,
-                      slot,
-                      index,
-                      String(day.getTime()),
-                    );
-                    const badge = badgeForSlot(slot, campaignList, t);
-                    const interactive = canPickForSlot(
-                      slot,
-                      orgList,
-                      campaignList,
-                      countryHasNormalSlots,
-                    );
-                    const selected = isActive && interactive;
-
-                    return (
-                      <button
-                        key={rowKey}
-                        type="button"
-                        className={[
-                          "schedule-day-slots__row",
-                          "schedule-day-slots__row--compact",
-                          `schedule-day-slots__row--${badge.kind}`,
-                          selected ? "schedule-day-slots__row--selected" : "",
-                          !interactive
-                            ? "schedule-day-slots__row--disabled"
-                            : "",
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                        disabled={!interactive}
-                        onClick={(event) =>
-                          openCellPicker(
-                            event,
-                            cellKey,
-                            day,
-                            hour,
-                            interactive,
-                            quickToggleOnly,
-                            slotActions,
-                          )
-                        }
-                      >
-                        <span className="schedule-day-slots__time schedule-day-slots__time--compact">
-                          {hourRange(hour)}
-                        </span>
-                        <span
-                          className={`schedule-day-slots__badge schedule-day-slots__badge--${badge.kind}`}
-                        >
-                          {badge.label}
-                        </span>
-                      </button>
-                    );
-                  })}
+                  {halves.map((time) =>
+                    renderRegion(time, step, "schedule-hour-cell__half"),
+                  )}
                 </div>
               );
             })}
@@ -182,6 +236,7 @@ export const ScheduleOverviewWeekGrid = ({
         position={position}
         onClose={close}
         hour={meta?.hour}
+        durationMinutes={meta?.durationMinutes}
         enrollment={activeEnrollment}
         orgList={orgList}
         campaignList={campaignList}

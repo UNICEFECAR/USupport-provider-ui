@@ -4,6 +4,9 @@ export const ScheduleDaySlotPicker = ({
   className = "schedule-day-slots__picker",
   style,
   hour,
+  // Which length the clicked region of the hour cell represents - the whole
+  // hour, or one half of it.
+  durationMinutes,
   enrollment,
   orgList,
   campaignList,
@@ -34,7 +37,13 @@ export const ScheduleDaySlotPicker = ({
                   ]
                     .filter(Boolean)
                     .join(" ")}
-                  onClick={() => onSelectOrganization(hour, org.organizationId)}
+                  onClick={() =>
+                    onSelectOrganization(
+                      hour,
+                      org.organizationId,
+                      durationMinutes,
+                    )
+                  }
                 >
                   <span>{org.name}</span>
                   {selected && (
@@ -71,7 +80,9 @@ export const ScheduleDaySlotPicker = ({
                   ]
                     .filter(Boolean)
                     .join(" ")}
-                  onClick={() => onSelectCampaign(hour, campaign.campaignId)}
+                  onClick={() =>
+                    onSelectCampaign(hour, campaign.campaignId, durationMinutes)
+                  }
                 >
                   <span>{campaign.campaignName}</span>
                   {selected && (
@@ -101,7 +112,7 @@ export const ScheduleDaySlotPicker = ({
         ]
           .filter(Boolean)
           .join(" ")}
-        onClick={() => onSelectNormal(hour)}
+        onClick={() => onSelectNormal(hour, durationMinutes)}
       >
         <span>{t("slot_available")}</span>
         {enrollment?.hasNormalSlot && (

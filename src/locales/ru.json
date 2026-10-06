@@ -482,7 +482,11 @@
       "month_available_slots_count_other": "{{count}} доступных слотов",
       "month_unavailable_slots_count_one": "{{count}} недоступный слот",
       "month_unavailable_slots_count_other": "{{count}} недоступных слотов",
-      "month_no_upcoming_slots": "На этот день нет предстоящих временных слотов."
+      "month_no_upcoming_slots": "На этот день нет предстоящих временных слотов.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Дата начала",
@@ -503,7 +507,10 @@
       "campaign_placeholder": "Выберите кампании",
       "organization_placeholder": "Выберите организации",
       "selection_required": "Выберите хотя бы одну кампанию или организацию",
-      "organization_none": "None"
+      "organization_none": "None",
+      "slot_length": "Slot length",
+      "slot_length_30": "30 min",
+      "slot_length_60": "1 hour"
     },
     "cookie-policy": {
       "no_results": "Для выбранной страны и языка ничего не нашлось."

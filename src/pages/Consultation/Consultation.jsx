@@ -25,9 +25,9 @@ import {
 
 import {
   useWindowDimensions,
-  ONE_HOUR,
   getDateView,
   systemMessageTypes,
+  getConsultationEndDate,
 } from "@USupport-components-library/utils";
 
 import {
@@ -141,7 +141,11 @@ export const Consultation = () => {
   }, [messages]);
 
   // End of seession alerts
-  useSessionEndReminder(consultation.timestamp, t);
+  useSessionEndReminder(
+    consultation.timestamp,
+    consultation.durationMinutes,
+    t,
+  );
 
   // Calculate all chat history
   useEffect(() => {
@@ -724,9 +728,9 @@ const OptionsContainer = ({
   );
 };
 
-const useSessionEndReminder = (timestamp, t) => {
+const useSessionEndReminder = (timestamp, durationMinutes, t) => {
   useEffect(() => {
-    const endTime = new Date(timestamp + ONE_HOUR);
+    const endTime = getConsultationEndDate(timestamp, durationMinutes);
     let isTenMinAlertShown,
       isFiveMinAlertShown = false;
 

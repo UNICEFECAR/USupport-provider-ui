@@ -482,7 +482,11 @@
       "month_available_slots_count_other": "{{count}} dostępnych slotów",
       "month_unavailable_slots_count_one": "{{count}} niedostępny slot",
       "month_unavailable_slots_count_other": "{{count}} niedostępnych slotów",
-      "month_no_upcoming_slots": "Brak nadchodzących terminów na ten dzień."
+      "month_no_upcoming_slots": "Brak nadchodzących terminów na ten dzień.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Data rozpoczęcia",
@@ -503,7 +507,10 @@
       "campaign_placeholder": "Wybierz kampanie",
       "organization_placeholder": "Wybierz organizacje",
       "selection_required": "Wybierz co najmniej jedną kampanię lub organizację",
-      "organization_none": "None"
+      "organization_none": "None",
+      "slot_length": "Slot length",
+      "slot_length_30": "30 min",
+      "slot_length_60": "1 hour"
     },
     "cookie-policy": {
       "no_results": "Brak wyników dla wybranego kraju i języka."
