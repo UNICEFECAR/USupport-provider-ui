@@ -24,6 +24,7 @@ import {
 import { providerSvc } from "@USupport-components-library/services";
 
 import { useGetProviderData, useError, useGetCampaigns } from "#hooks";
+import { canUseShortSlots } from "#utils/specializations";
 
 import "./scheduler-template.scss";
 
@@ -97,11 +98,12 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const [selectedOrganizationId, setSelectedOrganizationId] = useState("");
   const [showSelectionError, setShowSelectionError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const countryHas30MinSlots =
-    localStorage.getItem("has_30_min_slots") === "true";
+  // Peer-support providers in enabled countries only; everyone else keeps the
+  // hourly grid and never sees the slot-length control.
+  const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
   const gridTimes = useMemo(
-    () => (countryHas30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
-    [countryHas30MinSlots],
+    () => (has30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [has30MinSlots],
   );
   const hoursOptions = useMemo(
     () => gridTimes.map((hour) => ({ label: hour, value: hour })),
@@ -347,7 +349,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
         };
         const startMinutes = toMinutes(start);
         const endMinutes = toMinutes(end);
-        const step = countryHas30MinSlots
+        const step = has30MinSlots
           ? Number(template[daysOfWeek[i]].slotLength) || 60
           : 60;
 
@@ -588,7 +590,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
                       }
                     />
                   </div>
-                  {countryHas30MinSlots && (
+                  {has30MinSlots && (
                     <div className="scheduler-template__day-times__field">
                       <p className="text scheduler-template__day-times__label">
                         {t("slot_length")}

@@ -209,4 +209,38 @@
   &__discard-button {
     margin-top: $spacing_1_2;
   }
+
+  // Specializations are shown but not editable: only an admin may change them.
+  &__readonly-field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing_0_8;
+
+    &__label {
+      font-weight: $font_semi_bold;
+      @include themify($themes, "color", "color_3d527b_white");
+    }
+
+    &__values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing_0_8;
+    }
+
+    &__pill {
+      padding: $spacing_0_8 $spacing_1_6;
+      border-radius: $border_radius_2_4;
+      @include themify($themes, "background-color", "color_green_e6f1f4");
+      @include themify($themes, "color", "color_3d527b_20809e");
+
+      &--empty {
+        @include themify($themes, "background-color", "color_gray_ea");
+        @include themify($themes, "color", "color_gray_66768d");
+      }
+    }
+
+    &__hint {
+      @include themify($themes, "color", "color_gray_92989b");
+    }
+  }
 }

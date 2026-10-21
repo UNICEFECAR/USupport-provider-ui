@@ -241,7 +241,8 @@
       "select": "Ընտրել",
       "remove": "Հեռացնել",
       "video_link_error": "Խնդրում ենք մուտքագրել ճիշտ URL",
-      "peer_support": "Ua U-FRIEND"
+      "peer_support": "Ua U-FRIEND",
+      "specialization_admin_only": "Ձեր մասնագիտացումը կարող է փոխել միայն ադմինիստրատորը։ Թարմացման անհրաժեշտության դեպքում դիմեք աջակցության ծառայությանը։"
     },
     "provider-overview": {
       "earliest_slot_label": "Խորհրդատվության համար ամենամոտ հասանելի ժամանակահատվածը",

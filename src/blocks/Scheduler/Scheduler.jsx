@@ -32,6 +32,7 @@ import { useWindowDimensions } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
 import { useError, useGetProviderData } from "#hooks";
+import { canUseShortSlots } from "#utils/specializations";
 
 import { SchedulerToolbar } from "./SchedulerToolbar.jsx";
 import { SchedulerMonthView } from "./SchedulerMonthView.jsx";
@@ -95,15 +96,6 @@ export const Scheduler = ({
   const { width } = useWindowDimensions();
   const countryHasNormalSlots =
     localStorage.getItem("has_normal_slots") === "true";
-  const countryHas30MinSlots =
-    localStorage.getItem("has_30_min_slots") === "true";
-
-  // With the flag off this is byte-for-byte the old 24-entry `hours` array, so
-  // every view renders exactly as before.
-  const gridTimes = useMemo(
-    () => (countryHas30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
-    [countryHas30MinSlots],
-  );
 
   const today = new Date();
   const currentHourRef = useRef(null);
@@ -111,6 +103,17 @@ export const Scheduler = ({
   const providerQuery = useGetProviderData()[0];
   const providerStatus = providerQuery?.data?.status;
   const organizations = providerQuery?.data?.organizations;
+
+  // 30-minute slots are for peer-support providers in countries that have the
+  // feature switched on. For everyone else this is false and every view below
+  // renders exactly as it did before half-hour slots existed.
+  const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
+
+  // With this off, `gridTimes` is byte-for-byte the old 24-entry `hours` array.
+  const gridTimes = useMemo(
+    () => (has30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [has30MinSlots],
+  );
 
   const { first: startDate, last: endDate } = getStartAndEndOfWeek(today);
   const days = getDatesInRange(new Date(startDate), new Date(endDate));
@@ -309,11 +312,15 @@ export const Scheduler = ({
     availabilityMonthQuery.data,
   ]);
 
-  const slotsLoading = usesWeekAvailability
-    ? availabilityWeekQuery.isLoading
-    : selectedPeriod === "day"
-      ? availabilityDayQuery.isLoading
-      : availabilityMonthQuery.isLoading;
+  const slotsLoading =
+    // The provider query decides the grid step, so drawing before it resolves
+    // would show an hourly grid that then re-flows into half hours.
+    providerQuery.isLoading ||
+    (usesWeekAvailability
+      ? availabilityWeekQuery.isLoading
+      : selectedPeriod === "day"
+        ? availabilityDayQuery.isLoading
+        : availabilityMonthQuery.isLoading);
 
   const invalidateAvailabilityQueries = () => {
     queryClient.invalidateQueries({ queryKey: ["available-slots"] });
@@ -601,7 +608,7 @@ export const Scheduler = ({
    */
   const continuationCells = useMemo(() => {
     const map = new Map();
-    if (!countryHas30MinSlots) return map;
+    if (!has30MinSlots) return map;
 
     const stepMs = SLOT_STEP_MINUTES * 60 * 1000;
 
@@ -635,7 +642,7 @@ export const Scheduler = ({
     });
 
     return map;
-  }, [countryHas30MinSlots, slotsData, consultations]);
+  }, [has30MinSlots, slotsData, consultations]);
 
   // When rendering every single slot check if
   // it exists in the provider's availability
@@ -702,7 +709,7 @@ export const Scheduler = ({
   };
 
   /** The length a newly opened slot gets, unless the provider picks otherwise. */
-  const defaultSlotDuration = countryHas30MinSlots
+  const defaultSlotDuration = has30MinSlots
     ? SLOT_STEP_MINUTES
     : DEFAULT_SLOT_MINUTES;
 
@@ -1046,7 +1053,7 @@ export const Scheduler = ({
     const slotDurationMinutes = consultation
       ? Number(consultation.durationMinutes) || DEFAULT_SLOT_MINUTES
       : durationForSlot(slotDateTime, slotsData?.slotDurations);
-    const slotRowSpan = countryHas30MinSlots
+    const slotRowSpan = has30MinSlots
       ? Math.max(1, Math.round(slotDurationMinutes / SLOT_STEP_MINUTES))
       : 1;
 
@@ -1464,7 +1471,7 @@ export const Scheduler = ({
               organizations={organizations}
               t={t}
               countryHasNormalSlots={countryHasNormalSlots}
-              canChangeDuration={countryHas30MinSlots}
+              canChangeDuration={has30MinSlots}
               handleChangeSlotDuration={handleChangeSlotDuration}
             />
           ) : selectedPeriod === "week" ? (
@@ -1527,7 +1534,7 @@ export const Scheduler = ({
                             handleSetUnavailable(day, hour, cId, oId);
                           }}
                           durationMinutes={weekSlotData?.durationMinutes}
-                          canChangeDuration={countryHas30MinSlots}
+                          canChangeDuration={has30MinSlots}
                           defaultDurationMinutes={gridStepMinutes(gridTimes)}
                           handleChangeDuration={(minutes) =>
                             handleChangeSlotDuration(day, hour, minutes)
