@@ -756,7 +756,6 @@ export const Scheduler = ({
     newStatus,
     campaignId,
     organizationId,
-    durationMinutes,
   ) => {
     if (providerStatus === "inactive") {
       toast(t("provider_inactive"), { type: "error" });
@@ -795,7 +794,8 @@ export const Scheduler = ({
         timestampSlot,
         campaignId,
         organizationId,
-        durationMinutes: durationMinutes || defaultSlotDuration,
+        // Fixed per provider; the cell clicked does not change it.
+        durationMinutes: defaultSlotDuration,
       });
     } else {
       if (Array.isArray(campaignId)) {
@@ -816,21 +816,8 @@ export const Scheduler = ({
     }
   };
 
-  const handleSetAvailable = (
-    date,
-    hour,
-    campaignId,
-    organizationId,
-    durationMinutes,
-  ) => {
-    handleToggleAvailable(
-      date,
-      hour,
-      "available",
-      campaignId,
-      organizationId,
-      durationMinutes,
-    );
+  const handleSetAvailable = (date, hour, campaignId, organizationId) => {
+    handleToggleAvailable(date, hour, "available", campaignId, organizationId);
   };
 
   /**
@@ -1471,7 +1458,7 @@ export const Scheduler = ({
               organizations={organizations}
               t={t}
               countryHasNormalSlots={countryHasNormalSlots}
-              canChangeDuration={has30MinSlots}
+              canChangeDuration={false}
               handleChangeSlotDuration={handleChangeSlotDuration}
             />
           ) : selectedPeriod === "week" ? (
@@ -1534,7 +1521,7 @@ export const Scheduler = ({
                             handleSetUnavailable(day, hour, cId, oId);
                           }}
                           durationMinutes={weekSlotData?.durationMinutes}
-                          canChangeDuration={has30MinSlots}
+                          canChangeDuration={false}
                           defaultDurationMinutes={gridStepMinutes(gridTimes)}
                           handleChangeDuration={(minutes) =>
                             handleChangeSlotDuration(day, hour, minutes)

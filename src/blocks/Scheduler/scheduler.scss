@@ -1813,11 +1813,6 @@ $scheduler-booked-border: rgba(32, 128, 158, 0.3);
     }
   }
 
-  &__whole .schedule-day-slots__row {
-    border: none;
-    border-radius: 0;
-    width: 100%;
-  }
 }
 
 .schedule-day-slots__list > li.schedule-hour-cell {
