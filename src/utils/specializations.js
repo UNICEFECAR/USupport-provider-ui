@@ -9,6 +9,20 @@ export const BASE_SPECIALIZATION_OPTIONS = [
 
 export const isArmeniaCountry = (country) => country?.toUpperCase() === "AM";
 
+/**
+ * May this provider open 30-minute slots?
+ *
+ * Two conditions, both required: the country has the feature switched on
+ * (`country.has_30_min_slots`, mirrored into localStorage on sign-in), and the
+ * provider carries the peer-support specialization. Everyone else keeps the
+ * hour-long slots.
+ * @param {string[]|undefined} specializations the provider's own specializations
+ * @returns {boolean}
+ */
+export const canUseShortSlots = (specializations) =>
+  localStorage.getItem("has_30_min_slots") === "true" &&
+  (specializations || []).includes(PEER_SUPPORT);
+
 export const getSpecializationOptionValues = (country) => {
   if (isArmeniaCountry(country)) {
     return [...BASE_SPECIALIZATION_OPTIONS, PEER_SUPPORT];

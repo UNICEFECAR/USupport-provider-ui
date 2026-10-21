@@ -241,7 +241,8 @@
       "no_data_found": "No data found",
       "select": "Select",
       "remove": "Remove",
-      "peer_support": "U-FRIEND"
+      "peer_support": "U-FRIEND",
+      "specialization_admin_only": "Only an administrator can change your specialization. Contact support if it needs updating."
     },
     "provider-overview": {
       "earliest_slot_label": "Earliest available slot for consultation",

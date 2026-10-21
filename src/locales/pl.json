@@ -241,7 +241,8 @@
       "select": "Wybierz",
       "remove": "Usuń",
       "video_link_error": "Proszę wprowadzić prawidłowy adres URL",
-      "peer_support": "Wsparcie emocjonalne rówieśników"
+      "peer_support": "Wsparcie emocjonalne rówieśników",
+      "specialization_admin_only": "Tylko administrator może zmienić Twoją specjalizację. Skontaktuj się z pomocą techniczną, jeśli wymaga aktualizacji."
     },
     "provider-overview": {
       "earliest_slot_label": "Najwcześniejszy termin konsultacji",
