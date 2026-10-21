@@ -68,7 +68,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
         unavailable: false,
         start: "",
         end: "",
-        slotLength: 60,
       }),
   );
 
@@ -115,13 +114,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const endHoursOptions = useMemo(
     () => [...hoursOptions, { label: "24:00", value: "24:00" }],
     [hoursOptions],
-  );
-  const slotLengthOptions = useMemo(
-    () => [
-      { label: t("slot_length_30"), value: 30 },
-      { label: t("slot_length_60"), value: 60 },
-    ],
-    [t],
   );
 
   const campaignSelectOptions = useMemo(() => {
@@ -349,9 +341,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
         };
         const startMinutes = toMinutes(start);
         const endMinutes = toMinutes(end);
-        const step = has30MinSlots
-          ? Number(template[daysOfWeek[i]].slotLength) || 60
-          : 60;
+        // The length is fixed per provider, not chosen.
+        const step = has30MinSlots ? SLOT_STEP_MINUTES : 60;
 
         // `m + step <= endMinutes` keeps the original meaning of `end`: the end
         // of the last slot, not the start of one more.
@@ -590,24 +581,6 @@ export const SchedulerTemplate = ({ campaignId }) => {
                       }
                     />
                   </div>
-                  {has30MinSlots && (
-                    <div className="scheduler-template__day-times__field">
-                      <p className="text scheduler-template__day-times__label">
-                        {t("slot_length")}
-                      </p>
-                      <Dropdown
-                        disabled={
-                          template[day].unavailable ||
-                          providerStatus !== "active"
-                        }
-                        options={slotLengthOptions}
-                        selected={template[day].slotLength}
-                        setSelected={(value) =>
-                          handleHourChange(Number(value), day, "slotLength")
-                        }
-                      />
-                    </div>
-                  )}
                 </div>
               </div>
             ))}

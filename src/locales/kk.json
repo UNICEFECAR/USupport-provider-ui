@@ -508,10 +508,7 @@
       "campaign_placeholder": "Науқандарды таңдаңыз",
       "organization_placeholder": "Ұйымдарды таңдаңыз",
       "selection_required": "Кемінде бір науқан немесе ұйымды таңдаңыз",
-      "organization_none": "None",
-      "slot_length": "Slot length",
-      "slot_length_30": "30 min",
-      "slot_length_60": "1 hour"
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Таңдалған ел мен тіл үшін ештеңе табылмады."

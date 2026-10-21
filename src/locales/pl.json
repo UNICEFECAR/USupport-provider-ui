@@ -508,10 +508,7 @@
       "campaign_placeholder": "Wybierz kampanie",
       "organization_placeholder": "Wybierz organizacje",
       "selection_required": "Wybierz co najmniej jedną kampanię lub organizację",
-      "organization_none": "None",
-      "slot_length": "Slot length",
-      "slot_length_30": "30 min",
-      "slot_length_60": "1 hour"
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Brak wyników dla wybranego kraju i języka."

@@ -508,10 +508,7 @@
       "campaign_placeholder": "Выберите кампании",
       "organization_placeholder": "Выберите организации",
       "selection_required": "Выберите хотя бы одну кампанию или организацию",
-      "organization_none": "None",
-      "slot_length": "Slot length",
-      "slot_length_30": "30 min",
-      "slot_length_60": "1 hour"
+      "organization_none": "None"
     },
     "cookie-policy": {
       "no_results": "Для выбранной страны и языка ничего не нашлось."
