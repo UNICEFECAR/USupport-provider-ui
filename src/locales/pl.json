@@ -1021,5 +1021,16 @@
   "meta": {
     "title": "uSupport Konsultant",
     "description": "Panel specjalisty do świadczenia opieki, zarządzania harmonogramem, prowadzenia sesji, zarządzania profilami oraz odpowiadania na pytania klientów."
+  },
+  "consultationReport": {
+    "title": "Zgłoś problem",
+    "message_label": "Opisz problem",
+    "send": "Wyślij zgłoszenie",
+    "close": "Zamknij",
+    "success_title": "Zgłoszenie wysłane",
+    "success": "Twoje zgłoszenie zostało wysłane do administratora krajowego.",
+    "error": "Nie udało się wysłać zgłoszenia. Spróbuj ponownie.",
+    "settings": "Ustawienia",
+    "cancel": "Anuluj"
   }
 }

@@ -1013,5 +1013,16 @@
   "meta": {
     "title": "uSupport Provider",
     "description": "Specialist dashboard for providing care, organizing schedules, managing sessions and profiles, and responding to Q&A."
+  },
+  "consultationReport": {
+    "title": "Report a problem",
+    "message_label": "Describe the problem",
+    "send": "Send report",
+    "close": "Close",
+    "success_title": "Report submitted",
+    "success": "Your report has been sent to the country admin.",
+    "error": "Your report could not be sent. Please try again.",
+    "settings": "Settings",
+    "cancel": "Cancel"
   }
 }
