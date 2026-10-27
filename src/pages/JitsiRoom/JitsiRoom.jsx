@@ -24,6 +24,8 @@ import {
   useGetProviderData,
 } from "#hooks";
 
+import { ReportConsultationProblem } from "#backdrops";
+
 import { MessageList } from "./MessageList";
 
 const AMAZON_S3_BUCKET = `${import.meta.env.VITE_AMAZON_S3_BUCKET}`;
@@ -58,6 +60,7 @@ const defaultConfig = {
  * @returns {JSX.Element}
  */
 export const JitsiRoom = () => {
+  const [isReportOpen, setIsReportOpen] = useState(false);
   const [reportMediaErrors, setReportMediaErrors] = useState({
     camera: null,
     microphone: null,
@@ -371,6 +374,26 @@ export const JitsiRoom = () => {
     avatarURL: `${AMAZON_S3_BUCKET}/${providerData?.image}`,
   };
 
+  const getReportCallContext = async () => {
+    const context = {
+      clientPresent: isPeerPresent ?? interfaces.isClientInSession ?? null,
+      providerPresent: null,
+      connectionState: connectionStatus,
+      connectionQuality: callQuality,
+      cameraOn: !!interfaces.videoOn,
+      microphoneOn: !!interfaces.microphoneOn,
+      cameraError: reportMediaErrors.camera,
+      microphoneError: reportMediaErrors.microphone,
+    };
+    const devices = await api.current?.getCurrentDevices().catch(() => null);
+    return {
+      ...context,
+      cameraDevice: devices?.videoInput?.label?.slice(0, 100) || null,
+      microphoneDevice: devices?.audioInput?.label?.slice(0, 100) || null,
+      speakerDevice: devices?.audioOutput?.label?.slice(0, 100) || null,
+    };
+  };
+
   return (
     <Page
       showNavbar={false}
@@ -379,6 +402,16 @@ export const JitsiRoom = () => {
       showGoBackArrow={false}
       classes="page__jitsi-room"
     >
+      {isReportOpen && (
+        <ReportConsultationProblem
+          isOpen
+          onClose={() => setIsReportOpen(false)}
+          consultationId={
+            consultation.consultationId || consultation.consultation_id
+          }
+          getCallContext={getReportCallContext}
+        />
+      )}
       <ConnectionStatus status={connectionStatus} t={t} />
       <div style={{ display: "flex" }}>
         <div style={{ position: "relative" }}>
@@ -416,9 +449,7 @@ export const JitsiRoom = () => {
               connectionQuality={callQuality}
               isHidden={hideControls}
               getJitsiApi={() => api.current}
-              connectionState={connectionStatus}
-              cameraError={reportMediaErrors.camera}
-              microphoneError={reportMediaErrors.microphone}
+              onReportProblem={() => setIsReportOpen(true)}
               isSideChatOpen={interfaces.isChatShownOnTablet}
             />
           </div>
