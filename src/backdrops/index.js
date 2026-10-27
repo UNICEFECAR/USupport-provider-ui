@@ -14,3 +14,4 @@ export * from "./CreateResponse";
 export * from "./ArchiveQuestion";
 export * from "./QuestionDetails";
 export * from "./FilterQuestions";
+export * from "./ReportConsultationProblem";

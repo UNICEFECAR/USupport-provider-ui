@@ -813,7 +813,8 @@
       "controls_speaker": "Динамик",
       "controls_background": "Фон",
       "controls_chat": "Чат",
-      "send_message_button": "Отправить"
+      "send_message_button": "Отправить",
+      "controls_report_problem": "Сообщить о проблеме"
     },
     "reports-page": {
       "heading": "Отчеты"
@@ -1009,6 +1010,17 @@
       "dropdown_label": "Выберите тег",
       "cta_label": "Примените фильтры",
       "secondary_cta_label": "Сбросить фильтры"
+    },
+    "report-consultation-problem": {
+      "title": "Сообщить о проблеме",
+      "message_label": "Опишите проблему",
+      "send": "Отправить сообщение",
+      "close": "Закрыть",
+      "success_title": "Сообщение отправлено",
+      "success": "Ваше сообщение отправлено администратору страны.",
+      "error": "Не удалось отправить сообщение. Попробуйте ещё раз.",
+      "settings": "Настройки",
+      "cancel": "Отмена"
     }
   },
   "routes": {
