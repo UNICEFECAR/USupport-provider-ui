@@ -18,6 +18,7 @@ function rawConsultationToCard(c) {
     clientName: c.client_name,
     status: c.status,
     timestamp: new Date(c.time).getTime(),
+    durationMinutes: c.duration_minutes,
     price: c.price,
     couponPrice: c.coupon_price,
     sponsorImage: c.sponsor_image,
