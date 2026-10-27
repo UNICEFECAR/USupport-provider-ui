@@ -27,6 +27,20 @@ function rawConsultationToCard(c) {
   };
 }
 
+/**
+ * Total open time as "3h 30m" / "2h" / "30m".
+ *
+ * A slot count alone is ambiguous once 30- and 60-minute slots are mixed, so
+ * this is shown next to it.
+ */
+function formatSlotTotal(totalMinutes) {
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  if (h && m) return `${h}h ${m}m`;
+  if (h) return `${h}h`;
+  return `${m}m`;
+}
+
 function isHourVisibleInDayPanel(slotRows) {
   if (!slotRows?.length) return false;
 
@@ -39,7 +53,7 @@ function isHourVisibleInDayPanel(slotRows) {
 function useDayPanelData({
   selectedDay,
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
 }) {
   const dayConsultations = useMemo(
@@ -54,22 +68,28 @@ function useDayPanelData({
           );
         })
         .sort((a, b) => new Date(a.time) - new Date(b.time)),
-    [consultationsRaw, selectedDay]
+    [consultationsRaw, selectedDay],
   );
 
   const visibleHours = useMemo(
     () =>
-      hours.filter((hour) =>
-        isHourVisibleInDayPanel(getSlotDataForHour(hour, selectedDay))
+      gridTimes.filter((hour) =>
+        isHourVisibleInDayPanel(getSlotDataForHour(hour, selectedDay)),
       ),
-    [hours, getSlotDataForHour, selectedDay]
+    [gridTimes, getSlotDataForHour, selectedDay],
   );
 
-  const openSlotsCount = useMemo(() => {
+  // Count slots, and total their length separately. Once 30- and 60-minute slots
+  // are mixed, "5 slots" no longer tells the provider how much time that is, so
+  // we show both rather than overloading one number.
+  const { openSlotsCount, openSlotsMinutes } = useMemo(() => {
     let count = 0;
-    for (const hour of hours) {
+    let minutes = 0;
+    for (const hour of gridTimes) {
       const rows = getSlotDataForHour(hour, selectedDay);
       for (const row of rows) {
+        // A continuation row is the tail of a block already counted at its start.
+        if (row.isContinuation) continue;
         if (
           !row.consultation &&
           (row.availabilityStatus === "available" ||
@@ -77,11 +97,12 @@ function useDayPanelData({
             row.availabilityStatus === "organization")
         ) {
           count += 1;
+          minutes += row.durationMinutes || 60;
         }
       }
     }
-    return count;
-  }, [hours, getSlotDataForHour, selectedDay]);
+    return { openSlotsCount: count, openSlotsMinutes: minutes };
+  }, [gridTimes, getSlotDataForHour, selectedDay]);
 
   const { availableSlotsCount, unavailableSlotsCount } = useMemo(() => {
     let available = 0;
@@ -90,6 +111,7 @@ function useDayPanelData({
     for (const hour of visibleHours) {
       const rows = getSlotDataForHour(hour, selectedDay);
       for (const row of rows) {
+        if (row.isContinuation) continue;
         if (
           row.availabilityStatus === "available" ||
           row.availabilityStatus === "campaign" ||
@@ -102,13 +124,17 @@ function useDayPanelData({
       }
     }
 
-    return { availableSlotsCount: available, unavailableSlotsCount: unavailable };
+    return {
+      availableSlotsCount: available,
+      unavailableSlotsCount: unavailable,
+    };
   }, [visibleHours, getSlotDataForHour, selectedDay]);
 
   return {
     dayConsultations,
     visibleHours,
     openSlotsCount,
+    openSlotsMinutes,
     availableSlotsCount,
     unavailableSlotsCount,
   };
@@ -118,7 +144,7 @@ export const SchedulerMonthAppointmentsBox = ({
   selectedDay,
   listTitle,
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleCancelConsultation,
   handleViewProfile,
@@ -130,12 +156,13 @@ export const SchedulerMonthAppointmentsBox = ({
     keyPrefix: "consultations",
   });
 
-  const { dayConsultations, openSlotsCount } = useDayPanelData({
-    selectedDay,
-    consultationsRaw,
-    hours,
-    getSlotDataForHour,
-  });
+  const { dayConsultations, openSlotsCount, openSlotsMinutes } =
+    useDayPanelData({
+      selectedDay,
+      consultationsRaw,
+      gridTimes,
+      getSlotDataForHour,
+    });
 
   const dateSubtitle = selectedDay.toLocaleDateString(language, {
     weekday: "long",
@@ -151,7 +178,9 @@ export const SchedulerMonthAppointmentsBox = ({
         <div className="scheduler-month__day-panel-heading">
           <h3 className="scheduler-month__day-panel-title">{listTitle}</h3>
           {isToday && (
-            <p className="scheduler-month__day-panel-subtitle">{dateSubtitle}</p>
+            <p className="scheduler-month__day-panel-subtitle">
+              {dateSubtitle}
+            </p>
           )}
         </div>
         <div className="scheduler-month__day-panel-stats">
@@ -167,6 +196,11 @@ export const SchedulerMonthAppointmentsBox = ({
           </span>
           <span className="scheduler-month__stat scheduler-month__stat--slots">
             {t("month_open_slots_count", { count: openSlotsCount })}
+            {openSlotsMinutes > 0 && (
+              <span className="scheduler-month__stat-duration">
+                {` · ${formatSlotTotal(openSlotsMinutes)}`}
+              </span>
+            )}
           </span>
         </div>
       </div>
@@ -181,7 +215,10 @@ export const SchedulerMonthAppointmentsBox = ({
             const consultation = rawConsultationToCard(c);
 
             return (
-              <li key={c.consultation_id} className="scheduler-month__list-item">
+              <li
+                key={c.consultation_id}
+                className="scheduler-month__list-item"
+              >
                 <Consultation
                   consultation={consultation}
                   renderIn="provider"
@@ -209,7 +246,7 @@ export const SchedulerMonthAppointmentsBox = ({
 export const SchedulerMonthAvailabilityBox = ({
   selectedDay,
   consultationsRaw,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -225,7 +262,7 @@ export const SchedulerMonthAvailabilityBox = ({
     useDayPanelData({
       selectedDay,
       consultationsRaw,
-      hours,
+      gridTimes,
       getSlotDataForHour,
     });
 
@@ -274,12 +311,7 @@ export const SchedulerMonthAvailabilityBox = ({
               campaignId,
               organizationId,
             }) => {
-              handleSetAvailable(
-                selectedDay,
-                hour,
-                campaignId,
-                organizationId
-              );
+              handleSetAvailable(selectedDay, hour, campaignId, organizationId);
             };
 
             const wrappedHandleSetUnavailable = ({
@@ -290,7 +322,7 @@ export const SchedulerMonthAvailabilityBox = ({
                 selectedDay,
                 hour,
                 campaignId,
-                organizationId
+                organizationId,
               );
             };
 

@@ -119,6 +119,9 @@ export function normalizeAvailabilityResponse(data) {
   );
 
   const slotsState = {
+    // Keyed by slot start as epoch seconds; an absent key means 60 minutes.
+    // Shared by the normal, campaign and organization pools.
+    slotDurations: data.slot_durations ?? {},
     slots: data.slots ?? [],
     organizationSlots: [
       ...(data.organization_slots ?? []).map((x) => ({

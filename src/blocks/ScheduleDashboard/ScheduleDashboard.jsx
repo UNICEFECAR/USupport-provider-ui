@@ -10,6 +10,7 @@ import {
   Loading,
 } from "@USupport-components-library/src";
 import {
+  getConsultationEndDate,
   getStartAndEndOfWeek,
   getTimestampFromUTC,
 } from "@USupport-components-library/utils";
@@ -25,8 +26,6 @@ import { Scheduler } from "../Scheduler";
 import "./schedule-dashboard.scss";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
-// All consultations are 60 minutes for now.
-const CONSULTATION_DURATION = 60 * 60 * 1000;
 
 function startOfDay(date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -97,10 +96,15 @@ export const ScheduleDashboard = ({
     return count;
   }, [calendarData, today]);
 
+  // A consultation stays in the sidebar until it actually ends, not until it
+  // starts. Filtering on the start dropped it the moment it went live - exactly
+  // when the provider needs the join button - while the client kept showing it.
+  const isStillRelevant = (item) =>
+    getConsultationEndDate(item.timestamp, item.durationMinutes).getTime() >
+    Date.now();
+
   const upcomingConsultations = useMemo(() => {
-    const hasNotEnded = (item) =>
-      item.timestamp + CONSULTATION_DURATION > Date.now();
-    const todayItems = (todayConsultations || []).filter(hasNotEnded);
+    const todayItems = (todayConsultations || []).filter(isStillRelevant);
     const laterItems = upcomingQuery.data?.pages?.flat() || [];
     const seen = new Set();
     return [...todayItems, ...laterItems]
@@ -109,7 +113,7 @@ export const ScheduleDashboard = ({
           return false;
         }
         seen.add(item.consultationId);
-        return hasNotEnded(item);
+        return isStillRelevant(item);
       })
       .sort((a, b) => a.timestamp - b.timestamp);
   }, [todayConsultations, upcomingQuery.data]);

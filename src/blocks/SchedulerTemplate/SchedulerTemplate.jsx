@@ -19,10 +19,12 @@ import {
   getTimestamp,
   getTimestampFromUTC,
   hours,
+  slotTimes,
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
 import { useGetProviderData, useError, useGetCampaigns } from "#hooks";
+import { canUseShortSlots } from "#utils/specializations";
 
 import "./scheduler-template.scss";
 
@@ -33,6 +35,9 @@ import "./scheduler-template.scss";
  *
  * @return {jsx}
  */
+/** The grid providers open availability on when 30-minute slots are enabled. */
+const SLOT_STEP_MINUTES = 30;
+
 export const SchedulerTemplate = ({ campaignId }) => {
   const { t } = useTranslation("blocks", { keyPrefix: "scheduler-template" });
   const hasNormalSlots = localStorage.getItem("has_normal_slots") === "true";
@@ -59,7 +64,11 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const initialTemplate = {};
   daysOfWeek.forEach(
     (day) =>
-      (initialTemplate[day] = { unavailable: false, start: "", end: "" }),
+      (initialTemplate[day] = {
+        unavailable: false,
+        start: "",
+        end: "",
+      }),
   );
 
   const today = new Date();
@@ -88,7 +97,24 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const [selectedOrganizationId, setSelectedOrganizationId] = useState("");
   const [showSelectionError, setShowSelectionError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const hoursOptions = hours.map((hour) => ({ label: hour, value: hour }));
+  // Peer-support providers in enabled countries only; everyone else keeps the
+  // hourly grid and never sees the slot-length control.
+  const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
+  const gridTimes = useMemo(
+    () => (has30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [has30MinSlots],
+  );
+  const hoursOptions = useMemo(
+    () => gridTimes.map((hour) => ({ label: hour, value: hour })),
+    [gridTimes],
+  );
+  // `end` is the end of the last slot, not its start, so midnight has to be
+  // offerable - otherwise the final block of the day is unreachable (the old
+  // list stopped at 23:00, so 23:00-24:00 could never be created).
+  const endHoursOptions = useMemo(
+    () => [...hoursOptions, { label: "24:00", value: "24:00" }],
+    [hoursOptions],
+  );
 
   const campaignSelectOptions = useMemo(() => {
     return providerCampaigns.map((c) => ({
@@ -184,8 +210,10 @@ export const SchedulerTemplate = ({ campaignId }) => {
   }, [templateStartDate]);
 
   const getEndHoursOptions = (startHour) => {
-    const startHourIndex = hoursOptions.findIndex((x) => x.value === startHour);
-    return hoursOptions.slice(startHourIndex + 1);
+    const startHourIndex = endHoursOptions.findIndex(
+      (x) => x.value === startHour,
+    );
+    return endHoursOptions.slice(startHourIndex + 1);
   };
 
   const addTemplateAvailability = async (timestamps) => {
@@ -196,8 +224,8 @@ export const SchedulerTemplate = ({ campaignId }) => {
       selectedCampaignIds?.length > 0
         ? selectedCampaignIds
         : campaignId
-          ? [campaignId]
-          : [];
+        ? [campaignId]
+        : [];
     const finalOrganizationIds = selectedOrganizationId
       ? [selectedOrganizationId]
       : [];
@@ -281,41 +309,51 @@ export const SchedulerTemplate = ({ campaignId }) => {
         const { start, end } = template[daysOfWeek[i]];
         // If the day is marked as unavailable, schedule removal for all hourly slots of that day
         if (isUnavailable) {
-          const finalCampaignIds =
-            selectedCampaignIds?.length > 0
-              ? selectedCampaignIds
-              : campaignId
-                ? [campaignId]
-                : [];
-          const finalOrganizationId = selectedOrganizationId || null;
-          // Use the shared hours list to generate per-hour timestamps for the day
-          for (let j = 0; j < hours.length; j++) {
-            const hour = parseInt(hours[j].split(":")[0]);
-            const currentTimestamp = day + hour * 60 * 60;
+          // Clearing a day is one request per week bucket, not one per slot.
+          // On the half-hour grid the old per-slot loop would have been 48
+          // requests per day per week.
+          const slotsByWeekStart = new Map();
+          for (let j = 0; j < gridTimes.length; j++) {
+            const [h, m] = gridTimes[j].split(":").map(Number);
+            const currentTimestamp = day + (h * 60 + (m || 0)) * 60;
             let targetMondayStart = startDate;
             if (currentTimestamp < startDate) {
               targetMondayStart = startDate - getXDaysInSeconds(7);
             } else if (currentTimestamp > endDate) {
               targetMondayStart = startDate + getXDaysInSeconds(7);
             }
-            removalJobs.push(() =>
-              providerSvc.removeMultipleAvailableSlots(
-                targetMondayStart,
-                currentTimestamp,
-                finalCampaignIds,
-                finalOrganizationId,
-              ),
-            );
+            const bucket = slotsByWeekStart.get(targetMondayStart) || [];
+            bucket.push(currentTimestamp);
+            slotsByWeekStart.set(targetMondayStart, bucket);
           }
+          slotsByWeekStart.forEach((slots, targetMondayStart) => {
+            removalJobs.push(() =>
+              providerSvc.clearAvailabilityDay(targetMondayStart, slots),
+            );
+          });
           continue;
         }
         // Else, add template availability for selected time window
         if (!start || !end) continue;
-        const startHour = parseInt(start.split(":")[0]);
-        const endHour = parseInt(end.split(":")[0]);
-        for (let j = startHour; j < endHour; j++) {
-          const currentTimestamp = day + j * 60 * 60;
-          const currentTimestampStr = JSON.stringify(currentTimestamp);
+        const toMinutes = (value) => {
+          const [h, m] = value.split(":").map(Number);
+          return h * 60 + (m || 0);
+        };
+        const startMinutes = toMinutes(start);
+        const endMinutes = toMinutes(end);
+        // The length is fixed per provider, not chosen.
+        const step = has30MinSlots ? SLOT_STEP_MINUTES : 60;
+
+        // `m + step <= endMinutes` keeps the original meaning of `end`: the end
+        // of the last slot, not the start of one more.
+        for (let m = startMinutes; m + step <= endMinutes; m += step) {
+          const currentTimestamp = day + m * 60;
+          // Sent as an object, not a JSON string: the API accepts either a bare
+          // timestamp (the old hour-long shape) or { time, duration_minutes }.
+          const currentTimestampStr = {
+            time: JSON.stringify(currentTimestamp),
+            duration_minutes: step,
+          };
 
           if (currentTimestamp < startDate) {
             const previousMonday = startDate - getXDaysInSeconds(7);
@@ -563,9 +601,7 @@ export const SchedulerTemplate = ({ campaignId }) => {
               !hasAnyDayConfigured ||
               isSubmitting
             }
-            loading={
-              isSubmitting || addTemplateAvailabilityMutation.isLoading
-            }
+            loading={isSubmitting || addTemplateAvailabilityMutation.isLoading}
           />
         </div>
       </div>

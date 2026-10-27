@@ -25,7 +25,7 @@ export const SchedulerMonthView = ({
   onSelectDay,
   consultationsRaw,
   listTitle,
-  hours,
+  gridTimes,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -51,7 +51,7 @@ export const SchedulerMonthView = ({
     });
 
   const hasOpenSlotOnDay = (date) =>
-    hours.some((hour) => {
+    gridTimes.some((hour) => {
       const rows = getSlotDataForHour(hour, date);
       return rows.some(
         (row) =>
@@ -70,7 +70,7 @@ export const SchedulerMonthView = ({
   const sharedPanelProps = {
     selectedDay: monthSelectedDay,
     consultationsRaw,
-    hours,
+    gridTimes,
     getSlotDataForHour,
     handleSetAvailable,
     handleSetUnavailable,

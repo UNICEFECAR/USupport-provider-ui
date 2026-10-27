@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { providerSvc } from "@USupport-components-library/services";
+import { DEFAULT_DURATION_MINUTES } from "@USupport-components-library/utils";
 
 export default function useGetPastConsultationsByClientId(clientId) {
   const fetchAllConsultations = async () => {
@@ -11,6 +12,8 @@ export default function useGetPastConsultationsByClientId(clientId) {
       clientName: consultation.client_name,
       image: consultation.client_image,
       timestamp: new Date(consultation.time).getTime(),
+      durationMinutes:
+        Number(consultation.duration_minutes) || DEFAULT_DURATION_MINUTES,
       status: consultation.status,
       price: consultation.price,
       campaignId: consultation.campaign_id,

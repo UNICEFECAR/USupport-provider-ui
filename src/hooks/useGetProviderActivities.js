@@ -15,6 +15,9 @@ export const useGetProviderActivities = () => {
         price: activity.price,
         status: activity.status,
         time: new Date(activity.time),
+        // Same whitelist trap as the country-admin activities table: without
+        // this, Reports and its CSV export both render an hour-long range.
+        durationMinutes: activity.duration_minutes,
         type: activity.type,
         createdAt: new Date(activity.created_at),
       };

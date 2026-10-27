@@ -241,7 +241,8 @@
       "select": "Επιλογή",
       "remove": "Κατάργηση",
       "video_link_error": "Παρακαλούμε εισάγετε μια έγκυρη διεύθυνση URL",
-      "peer_support": "Συναισθηματική υποστήριξη μεταξύ ομοτίμων"
+      "peer_support": "Συναισθηματική υποστήριξη μεταξύ ομοτίμων",
+      "specialization_admin_only": "Μόνο ένας διαχειριστής μπορεί να αλλάξει την ειδικότητά σας. Επικοινωνήστε με την υποστήριξη εάν χρειάζεται ενημέρωση."
     },
     "provider-overview": {
       "earliest_slot_label": "Συντομότερο διαθέσιμο ραντεβού για συνεδρία",
@@ -482,7 +483,11 @@
       "month_available_slots_count_other": "{{count}} διαθέσιμα χρονικά διαστήματα",
       "month_unavailable_slots_count_one": "{{count}} μη διαθέσιμο χρονικό διάστημα",
       "month_unavailable_slots_count_other": "{{count}} μη διαθέσιμα χρονικά διαστήματα",
-      "month_no_upcoming_slots": "Δεν υπάρχουν επερχόμενα χρονικά διαστήματα για αυτή την ημέρα."
+      "month_no_upcoming_slots": "Δεν υπάρχουν επερχόμενα χρονικά διαστήματα για αυτή την ημέρα.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Ημερομηνία έναρξης",

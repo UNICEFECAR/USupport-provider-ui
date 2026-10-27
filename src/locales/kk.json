@@ -241,7 +241,8 @@
       "section_professional_information": "Кәсіби ақпарат",
       "section_location": "Орналасқан жері",
       "section_languages_specialties": "Тілдер мен мамандықтар",
-      "peer_support": "Арнатас-тәрелес эмоционалды қолдау"
+      "peer_support": "Арнатас-тәрелес эмоционалды қолдау",
+      "specialization_admin_only": "Мамандығыңызды тек әкімші өзгерте алады. Жаңарту қажет болса, қолдау қызметіне хабарласыңыз."
     },
     "provider-overview": {
       "earliest_slot_label": "Консультация алу үшін жақын арадағы бос уақыт",
@@ -482,7 +483,11 @@
       "month_available_slots_count_other": "{{count}} қолжетімді слот",
       "month_unavailable_slots_count_one": "{{count}} қолжетімсіз слот",
       "month_unavailable_slots_count_other": "{{count}} қолжетімсіз слот",
-      "month_no_upcoming_slots": "Бұл күнге алдағы уақыт слоттары жоқ."
+      "month_no_upcoming_slots": "Бұл күнге алдағы уақыт слоттары жоқ.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Басталу күні",

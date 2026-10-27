@@ -241,7 +241,8 @@
       "no_data_found": "No data found",
       "select": "Select",
       "remove": "Remove",
-      "peer_support": "U-FRIEND"
+      "peer_support": "U-FRIEND",
+      "specialization_admin_only": "Only an administrator can change your specialization. Contact support if it needs updating."
     },
     "provider-overview": {
       "earliest_slot_label": "Earliest available slot for consultation",
@@ -482,7 +483,11 @@
       "month_available_slots_count_other": "{{count}} available slots",
       "month_unavailable_slots_count_one": "{{count}} unavailable slot",
       "month_unavailable_slots_count_other": "{{count}} unavailable slots",
-      "month_no_upcoming_slots": "No upcoming time slots for this day."
+      "month_no_upcoming_slots": "No upcoming time slots for this day.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Start date",

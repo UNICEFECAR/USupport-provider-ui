@@ -10,7 +10,7 @@ import { Controls, Loading } from "@USupport-components-library/src";
 import {
   useWindowDimensions,
   ThemeContext,
-  ONE_HOUR,
+  getConsultationEndDate,
 } from "@USupport-components-library/utils";
 import { messageSvc } from "@USupport-components-library/services";
 
@@ -102,7 +102,11 @@ export const JitsiRoom = () => {
     previousSessions: [],
   });
 
-  useSessionEndReminder(consultation.timestamp, t);
+  useSessionEndReminder(
+    consultation.timestamp,
+    consultation.durationMinutes,
+    t,
+  );
 
   const receiveMessage = (message) => {
     const interfacesCopy = { ...interfacesRef.current };
@@ -684,9 +688,9 @@ export const Chat = ({
   );
 };
 
-const useSessionEndReminder = (timestamp, t) => {
+const useSessionEndReminder = (timestamp, durationMinutes, t) => {
   useEffect(() => {
-    const endTime = new Date(timestamp + ONE_HOUR);
+    const endTime = getConsultationEndDate(timestamp, durationMinutes);
     let isTenMinAlertShown,
       isFiveMinAlertShown = false;
 

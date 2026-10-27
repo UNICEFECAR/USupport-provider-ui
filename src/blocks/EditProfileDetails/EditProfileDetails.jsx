@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -27,10 +27,7 @@ import {
 } from "#hooks";
 import Joi from "joi";
 
-import {
-  buildSpecializationOptions,
-  getNextSpecializations,
-} from "#utils/specializations";
+import { translateSpecializationForDisplay } from "#utils/specializations";
 
 import "./edit-profile-details.scss";
 
@@ -141,11 +138,6 @@ export const EditProfileDetails = ({
 
   const isPriceDisabled = !hasPayments;
 
-  const specializationOptions = useMemo(
-    () => buildSpecializationOptions(selectedCountry, t),
-    [selectedCountry, t]
-  );
-
   useEffect(() => {
     if (providerData && providersQuery.data) {
       const providerDataStringified = JSON.stringify(providerData);
@@ -175,7 +167,10 @@ export const EditProfileDetails = ({
     city: Joi.string().label(t("city_error")),
     postcode: Joi.string().label(t("postcode_error")),
 
-    specializations: Joi.array().min(1).label(t("specializations_error")),
+    // Not editable here - only an admin changes it - so it is passed through
+    // rather than validated. Requiring it would leave a provider whose
+    // specializations are empty unable to save a field they cannot fix.
+    specializations: Joi.any(),
     consultationPrice: Joi.number().min(0).label(t("consultation_price_error")),
     languages: Joi.array().min(1).label(t("languages_error")),
     education: Joi.array().min(1).label(t("education_error")),
@@ -194,22 +189,6 @@ export const EditProfileDetails = ({
     { label: t("sex_unspecified"), value: "unspecified" },
     // { label: t("sex_none"), value: "notMentioned" },
   ];
-
-  const getSpecializationsOptions = useCallback(() => {
-    if (providerData && providerData.specializations) {
-      return specializationOptions.map((option) => {
-        if (providerData.specializations.includes(option.value)) {
-          return {
-            ...option,
-            selected: true,
-            selectedIndex: providerData.specializations.indexOf(option.value),
-          };
-        }
-        return option;
-      });
-    }
-    return specializationOptions;
-  }, [providerData, specializationOptions]);
 
   const getLanguageOptions = useCallback(() => {
     const languageOptions = [];
@@ -321,15 +300,6 @@ export const EditProfileDetails = ({
       .filter((option) => option.selected)
       .map((x) => x.value);
     handleChange(field, selected);
-  };
-
-  const handleSpecializationSelect = (options) => {
-    setErrors({ specializations: null });
-    const nextSpecializations = getNextSpecializations(
-      providerData.specializations || [],
-      options
-    );
-    handleChange("specializations", nextSpecializations);
   };
 
   const handleEducationChange = (options) => {
@@ -673,13 +643,30 @@ export const EditProfileDetails = ({
                 errorMessage={errors.languages}
                 emptyMessage={t("no_data_found")}
               />
-              <PillMultiSelect
-                label={t("specialization_label") + " *"}
-                options={getSpecializationsOptions()}
-                onChange={(options) => handleSpecializationSelect(options)}
-                errorMessage={errors.specializations}
-                emptyMessage={t("no_data_found")}
-              />
+              <div className="edit-profile-details__readonly-field">
+                <p className="edit-profile-details__readonly-field__label">
+                  {t("specialization_label")}
+                </p>
+                <div className="edit-profile-details__readonly-field__values">
+                  {providerData.specializations?.length ? (
+                    providerData.specializations.map((specialization) => (
+                      <span
+                        key={specialization}
+                        className="edit-profile-details__readonly-field__pill"
+                      >
+                        {translateSpecializationForDisplay(t, specialization)}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="edit-profile-details__readonly-field__pill edit-profile-details__readonly-field__pill--empty">
+                      {t("no_data_found")}
+                    </span>
+                  )}
+                </div>
+                <p className="small-text edit-profile-details__readonly-field__hint">
+                  {t("specialization_admin_only")}
+                </p>
+              </div>
               <PillMultiSelect
                 label={t("work_with_label") + " *"}
                 options={getWorkWithOptions()}

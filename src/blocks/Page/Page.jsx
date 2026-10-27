@@ -102,6 +102,7 @@ export const Page = ({
         localStorage.setItem("country_id", country.countryID);
         localStorage.setItem("currency_symbol", country.currencySymbol);
         localStorage.setItem("has_normal_slots", country.hasNormalSlots);
+        localStorage.setItem("has_30_min_slots", country.has30MinSlots);
 
         setSelectedCountry(country);
       } else if (!localStorageCountry || localStorageCountry === "undefined") {
@@ -111,6 +112,10 @@ export const Page = ({
           localStorage.setItem("country", country.value);
           localStorage.setItem("country_id", country.countryID);
           localStorage.setItem("currency_symbol", country.currencySymbol);
+          // The slot flags belong here too: falling into this branch used to
+          // leave them stale from whichever country was selected last.
+          localStorage.setItem("has_normal_slots", country.hasNormalSlots);
+          localStorage.setItem("has_30_min_slots", country.has30MinSlots);
 
           setSelectedCountry(country);
         }
@@ -147,6 +152,7 @@ export const Page = ({
         currencySymbol: x["symbol"],
         localName: x.local_name,
         hasNormalSlots: x.has_normal_slots,
+        has30MinSlots: x.has_30_min_slots,
       };
 
       return countryObject;

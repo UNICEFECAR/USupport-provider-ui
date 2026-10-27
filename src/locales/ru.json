@@ -241,7 +241,8 @@
       "section_professional_information": "Профессиональная информация",
       "section_location": "Местоположение",
       "section_languages_specialties": "Языки и специальности",
-      "peer_support": "U-FRIEND"
+      "peer_support": "U-FRIEND",
+      "specialization_admin_only": "Изменить вашу специализацию может только администратор. Обратитесь в поддержку, если её нужно обновить."
     },
     "provider-overview": {
       "earliest_slot_label": "Самый ранний доступный слот свободного времени для консультации",
@@ -482,7 +483,11 @@
       "month_available_slots_count_other": "{{count}} доступных слотов",
       "month_unavailable_slots_count_one": "{{count}} недоступный слот",
       "month_unavailable_slots_count_other": "{{count}} недоступных слотов",
-      "month_no_upcoming_slots": "На этот день нет предстоящих временных слотов."
+      "month_no_upcoming_slots": "На этот день нет предстоящих временных слотов.",
+      "slot_duration": "Slot length",
+      "duration_one_hour": "1 hour",
+      "duration_minutes": "{{minutes}} min",
+      "slot_duration_updated": "Slot length updated"
     },
     "scheduler-template": {
       "start_date": "Дата начала",
