@@ -809,7 +809,8 @@
       "controls_speaker": "Динамик",
       "controls_background": "Фон",
       "controls_chat": "Чат",
-      "send_message_button": "Жіберу"
+      "send_message_button": "Жіберу",
+      "controls_report_problem": "Мәселе туралы хабарлау"
     },
     "reports-page": {
       "heading": "Есептер"
@@ -1005,6 +1006,17 @@
       "dropdown_label": "Тегті таңдаңыз",
       "cta_label": "Сүзгілерді қолданыңыз",
       "secondary_cta_label": "Сүзгілерді қалпына келтіру"
+    },
+    "report-consultation-problem": {
+      "title": "Мәселе туралы хабарлау",
+      "message_label": "Мәселені сипаттаңыз",
+      "send": "Хабарламаны жіберу",
+      "close": "Жабу",
+      "success_title": "Хабарлама жіберілді",
+      "success": "Хабарламаңыз ел әкімшісіне жіберілді.",
+      "error": "Хабарламаны жіберу мүмкін болмады. Қайталап көріңіз.",
+      "settings": "Баптаулар",
+      "cancel": "Бас тарту"
     }
   },
   "routes": {

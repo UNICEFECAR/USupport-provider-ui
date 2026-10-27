@@ -809,7 +809,8 @@
       "controls_speaker": "Ηχείο",
       "controls_background": "Φόντο",
       "controls_chat": "Συνομιλία",
-      "send_message_button": "Αποστολή"
+      "send_message_button": "Αποστολή",
+      "controls_report_problem": "Αναφορά προβλήματος"
     },
     "reports-page": {
       "heading": "Αναφορές"
@@ -1005,6 +1006,17 @@
       "dropdown_label": "Επιλογή ετικέτας",
       "cta_label": "Εφαρμογή φίλτρων",
       "secondary_cta_label": "Επαναφορά φίλτρων"
+    },
+    "report-consultation-problem": {
+      "title": "Αναφορά προβλήματος",
+      "message_label": "Περιγράψτε το πρόβλημα",
+      "send": "Αποστολή αναφοράς",
+      "close": "Κλείσιμο",
+      "success_title": "Η αναφορά υποβλήθηκε",
+      "success": "Η αναφορά σας στάλθηκε στον διαχειριστή της χώρας.",
+      "error": "Δεν ήταν δυνατή η αποστολή της αναφοράς. Δοκιμάστε ξανά.",
+      "settings": "Ρυθμίσεις",
+      "cancel": "Ακύρωση"
     }
   },
   "routes": {

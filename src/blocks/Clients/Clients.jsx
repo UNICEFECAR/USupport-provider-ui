@@ -121,6 +121,7 @@ export const Clients = ({
             suggested={client.nextConsultationStatus === "suggested"}
             t={t}
             timestamp={client.nextConsultation}
+            durationMinutes={client.nextConsultationDurationMinutes}
             providerStatus={providerStatus}
           />
         </GridItem>

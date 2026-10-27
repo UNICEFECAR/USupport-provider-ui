@@ -12,6 +12,8 @@ export default function useGetAllClients() {
       nextConsultation: new Date(client.next_consultation).getTime(),
       nextConsultationId: client.next_consultation_id,
       nextConsultationStatus: client.next_consultation_status,
+      nextConsultationDurationMinutes:
+        client.next_consultation_duration_minutes,
       nextConsultationPrice: client.next_consultation_price,
       nextConsultationCouponPrice: client.next_consultation_coupon_price,
       nextConsultationCampaignId: client.next_consultation_campaign_id,
