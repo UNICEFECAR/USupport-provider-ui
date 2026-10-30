@@ -331,8 +331,13 @@ export const JitsiRoom = () => {
   };
 
   const leaveConsultationMutation = useLeaveConsultation();
+  const hasLeftRef = useRef(false);
 
   const leaveConsultation = () => {
+    // Root calls this again when the navigation below leaves the consultation page
+    if (hasLeftRef.current) return;
+    hasLeftRef.current = true;
+
     const leaveMessage = {
       time: JSON.stringify(new Date().getTime()),
       content: "provider_left",
