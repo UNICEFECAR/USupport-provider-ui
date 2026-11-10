@@ -18,7 +18,6 @@ import {
   getXDaysInSeconds,
   getTimestamp,
   getTimestampFromUTC,
-  hours,
   slotTimes,
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
@@ -97,13 +96,10 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const [selectedOrganizationId, setSelectedOrganizationId] = useState("");
   const [showSelectionError, setShowSelectionError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // Peer-support providers in enabled countries only; everyone else keeps the
-  // hourly grid and never sees the slot-length control.
+  // Peer-support providers in enabled countries open 30-minute slots, everyone
+  // else 60. Any provider may start on the half hour.
   const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
-  const gridTimes = useMemo(
-    () => (has30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
-    [has30MinSlots],
-  );
+  const gridTimes = useMemo(() => slotTimes(SLOT_STEP_MINUTES), []);
   const hoursOptions = useMemo(
     () => gridTimes.map((hour) => ({ label: hour, value: hour })),
     [gridTimes],

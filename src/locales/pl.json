@@ -6,6 +6,11 @@
       "refresh": "Odśwież",
       "later": "Później"
     },
+    "leave-consultation-modal": {
+      "heading": "Czy na pewno chcesz opuścić konsultację?",
+      "confirm": "Opuść",
+      "cancel": "Anuluj"
+    },
     "page": {
       "page_1": "Pulpit",
       "page_2": "Kalendarz",
