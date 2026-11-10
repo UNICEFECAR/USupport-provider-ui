@@ -23,6 +23,7 @@ import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
 export const ScheduleDaySlotsPanel = ({
   day,
   gridTimes,
+  defaultSlotDuration,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -54,6 +55,8 @@ export const ScheduleDaySlotsPanel = ({
 
   const slotsForHour = (hour) => (day ? getSlotDataForHour(hour, day) : []);
   const step = gridStepMinutes(gridTimes);
+  // What an empty half opens: 60 for most providers, so 10:30 reads 10:30-11:30.
+  const newSlotMinutes = defaultSlotDuration || step;
   // One row per hour; each row splits into the full hour and its halves.
   const hourRows = hourGridTimes(gridTimes);
 
@@ -152,15 +155,11 @@ export const ScheduleDaySlotsPanel = ({
           };
 
           const halves = halvesForHour(hour, step);
-          const firstHalf = slotsForHour(halves[0])[0];
           const secondHalf =
             halves.length > 1 ? slotsForHour(halves[1])[0] : null;
 
-          // A whole hour already taken by one block has nothing left to split.
-          const isWholeHourBlock =
-            !secondHalf ||
-            firstHalf?.durationMinutes === 60 ||
-            secondHalf?.isContinuation;
+          // An hour held by one booking has nothing left to split.
+          const isWholeHourBlock = !secondHalf || secondHalf?.isContinuation;
 
           if (isWholeHourBlock) {
             const region = renderRegion(
@@ -173,7 +172,9 @@ export const ScheduleDaySlotsPanel = ({
 
           // One box per hour holding both halves.
           const halfRegions = halves
-            .map((time) => renderRegion(time, step, "schedule-hour-cell__half"))
+            .map((time) =>
+              renderRegion(time, newSlotMinutes, "schedule-hour-cell__half"),
+            )
             .filter(Boolean);
 
           if (!halfRegions.length) return [];

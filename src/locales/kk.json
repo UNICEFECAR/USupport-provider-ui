@@ -6,6 +6,11 @@
       "refresh": "Жаңарту",
       "later": "Кейінірек"
     },
+    "leave-consultation-modal": {
+      "heading": "Сеанстан шынымен кеткіңіз келе ме?",
+      "confirm": "Шығу",
+      "cancel": "Болдырмау"
+    },
     "page": {
       "page_1": "Аналитика",
       "page_2": "Күнтізбе",

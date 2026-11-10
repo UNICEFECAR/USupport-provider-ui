@@ -23,6 +23,7 @@ import { useFloatingSlotPicker } from "./useFloatingSlotPicker.js";
 export const ScheduleOverviewWeekGrid = ({
   days,
   gridTimes,
+  defaultSlotDuration,
   getSlotDataForHour,
   handleSetAvailable,
   handleSetUnavailable,
@@ -39,6 +40,8 @@ export const ScheduleOverviewWeekGrid = ({
   const orgList = organizations || [];
   const campaignList = getCampaignList(validCampaigns);
   const step = gridStepMinutes(gridTimes);
+  // What an empty half opens: 60 for most providers, so 10:30 reads 10:30-11:30.
+  const newSlotMinutes = defaultSlotDuration || step;
   // One row per hour; the halves live inside the cell.
   const hourRows = hourGridTimes(gridTimes);
 
@@ -189,18 +192,15 @@ export const ScheduleOverviewWeekGrid = ({
               };
 
               const halves = halvesForHour(hour, step);
-              const firstHalf = (getSlotDataForHour(halves[0], day) || [])[0];
               const secondHalf =
                 halves.length > 1
                   ? (getSlotDataForHour(halves[1], day) || [])[0]
                   : null;
 
-              // An hour already held by one 60-minute block stays a single box -
+              // An hour held by one 60-minute booking stays a single box -
               // there are no halves to show.
               const isWholeHourBlock =
-                !secondHalf ||
-                firstHalf?.durationMinutes === 60 ||
-                secondHalf?.isContinuation;
+                !secondHalf || secondHalf?.isContinuation;
 
               if (isWholeHourBlock) {
                 return (
@@ -213,16 +213,18 @@ export const ScheduleOverviewWeekGrid = ({
                 );
               }
 
-              // One box per hour holding both halves. The provider opens
-              // half-hour slots; a client who wants an hour books two adjacent
-              // ones, which the booking side assembles.
+              // One box per hour holding both halves, each a possible start.
               return (
                 <div
                   key={cellKey}
                   className="schedule-overview-week-grid__cell schedule-hour-cell"
                 >
                   {halves.map((time) =>
-                    renderRegion(time, step, "schedule-hour-cell__half"),
+                    renderRegion(
+                      time,
+                      newSlotMinutes,
+                      "schedule-hour-cell__half",
+                    ),
                   )}
                 </div>
               );

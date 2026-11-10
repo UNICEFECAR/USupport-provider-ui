@@ -6,6 +6,11 @@
       "refresh": "Refresh",
       "later": "Later"
     },
+    "leave-consultation-modal": {
+      "heading": "Are you sure you want to leave the consultation?",
+      "confirm": "Leave",
+      "cancel": "Stay"
+    },
     "page": {
       "page_1": "Dashboard",
       "page_2": "Calendar",

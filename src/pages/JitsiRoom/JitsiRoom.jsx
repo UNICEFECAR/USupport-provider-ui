@@ -14,7 +14,7 @@ import {
 } from "@USupport-components-library/utils";
 import { messageSvc } from "@USupport-components-library/services";
 
-import { ConnectionStatus, Page } from "#blocks";
+import { ConnectionStatus, LeaveConsultationModal, Page } from "#blocks";
 import { RootContext } from "#routes";
 import {
   useConsultationSocket,
@@ -61,6 +61,7 @@ const defaultConfig = {
  */
 export const JitsiRoom = () => {
   const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isLeaveConsultationOpen, setIsLeaveConsultationOpen] = useState(false);
   const [reportMediaErrors, setReportMediaErrors] = useState({
     camera: null,
     microphone: null,
@@ -365,6 +366,10 @@ export const JitsiRoom = () => {
     navigate("/consultations");
   };
 
+  const requestLeaveConsultation = () => {
+    setIsLeaveConsultationOpen(true);
+  };
+
   useEffect(() => {
     if (leaveConsultation) {
       leaveConsultationFn.current = leaveConsultation;
@@ -431,7 +436,7 @@ export const JitsiRoom = () => {
               t={t}
               consultation={consultation}
               handleSendMessage={handleSendMessage}
-              leaveConsultation={leaveConsultation}
+              leaveConsultation={requestLeaveConsultation}
               hasUnreadMessages={interfaces.hasUnreadMessages}
               isRoomConnecting={isLoading}
               // The icon state is updated from Jitsi's mute status events,
@@ -607,6 +612,11 @@ export const JitsiRoom = () => {
           backdropMessagesContainerRef={backdropMessagesContainerRef}
         />
       </div>
+      <LeaveConsultationModal
+        isOpen={isLeaveConsultationOpen}
+        onCancel={() => setIsLeaveConsultationOpen(false)}
+        onConfirm={leaveConsultation}
+      />
     </Page>
   );
 };
