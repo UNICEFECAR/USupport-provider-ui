@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   Backdrop,
   ConsultationInformation,
-  Button,
+  NewButton,
 } from "@USupport-components-library/src";
 import { userSvc } from "@USupport-components-library/services";
 import {
@@ -196,7 +196,7 @@ export const CancelConsultation = ({
         isSecondaryCtaDisabled={cancelConsultationMutation.isLoading}
         errorMessage={error}
         customButton={
-          <Button
+          <NewButton
             size="lg"
             label={t("suggest_new_time")}
             onClick={handleSuggestNewTime}
