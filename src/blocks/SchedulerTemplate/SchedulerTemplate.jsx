@@ -338,17 +338,22 @@ export const SchedulerTemplate = ({ campaignId }) => {
         const startMinutes = toMinutes(start);
         const endMinutes = toMinutes(end);
         // The length is fixed per provider, not chosen.
-        const step = has30MinSlots ? SLOT_STEP_MINUTES : 60;
+        const slotMinutes = has30MinSlots ? SLOT_STEP_MINUTES : 60;
 
-        // `m + step <= endMinutes` keeps the original meaning of `end`: the end
-        // of the last slot, not the start of one more.
-        for (let m = startMinutes; m + step <= endMinutes; m += step) {
+        // A slot opens at every half hour, so 60-minute slots overlap (07:30,
+        // 08:00, 08:30, ...) and booking one takes out its neighbours.
+        // `m + slotMinutes <= endMinutes`: the last slot ends by `end`.
+        for (
+          let m = startMinutes;
+          m + slotMinutes <= endMinutes;
+          m += SLOT_STEP_MINUTES
+        ) {
           const currentTimestamp = day + m * 60;
           // Sent as an object, not a JSON string: the API accepts either a bare
           // timestamp (the old hour-long shape) or { time, duration_minutes }.
           const currentTimestampStr = {
             time: JSON.stringify(currentTimestamp),
-            duration_minutes: step,
+            duration_minutes: slotMinutes,
           };
 
           if (currentTimestamp < startDate) {
