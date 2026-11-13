@@ -32,7 +32,10 @@ import { useWindowDimensions } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
 import { useError, useGetProviderData } from "#hooks";
-import { canUseShortSlots } from "#utils/specializations";
+import {
+  canUseShortSlots,
+  countryHasHalfHourSlots,
+} from "#utils/specializations";
 
 import { SchedulerToolbar } from "./SchedulerToolbar.jsx";
 import { SchedulerMonthView } from "./SchedulerMonthView.jsx";
@@ -105,14 +108,16 @@ export const Scheduler = ({
   const organizations = providerQuery?.data?.organizations;
 
   // 30-minute slots are for peer-support providers in countries that have the
-  // feature switched on. For everyone else this is false and every view below
-  // renders exactly as it did before half-hour slots existed.
+  // feature switched on; everyone else opens 60-minute slots.
   const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
 
-  // With this off, `gridTimes` is byte-for-byte the old 24-entry `hours` array.
+  // In `has_30_min_slots` countries every provider gets the half-hour grid, so
+  // an hour-long slot can start on the half hour (10:30-11:30). Elsewhere the
+  // old hourly grid.
+  const halfHourGrid = countryHasHalfHourSlots();
   const gridTimes = useMemo(
-    () => (has30MinSlots ? slotTimes(SLOT_STEP_MINUTES) : hours),
-    [has30MinSlots],
+    () => (halfHourGrid ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [halfHourGrid],
   );
 
   const { first: startDate, last: endDate } = getStartAndEndOfWeek(today);
@@ -313,8 +318,8 @@ export const Scheduler = ({
   ]);
 
   const slotsLoading =
-    // The provider query decides the grid step, so drawing before it resolves
-    // would show an hourly grid that then re-flows into half hours.
+    // The provider query decides the slot length, so new slots and their labels
+    // would be wrong until it resolves.
     providerQuery.isLoading ||
     (usesWeekAvailability
       ? availabilityWeekQuery.isLoading
@@ -599,16 +604,15 @@ export const Scheduler = ({
   /**
    * Which grid cells are the *continuation* of something that started earlier?
    *
-   * A 60-minute slot or consultation starting at 16:00 occupies two cells on a
-   * 30-minute grid. The 16:00 cell is the interactive one; 16:30 is drawn as a
-   * continuation of it - same background, no kebab, not clickable - so the
-   * provider cannot open or book anything inside a block that is already taken.
-   *
-   * Only meaningful on the half-hour grid; on the hourly grid nothing spans.
+   * A 60-minute consultation at 16:00 occupies two cells on a 30-minute grid;
+   * 16:30 is drawn as a continuation of it and cannot be clicked. Open slots
+   * leave the next cell free: 16:00 and 16:30 may both be offered, and booking
+   * one takes the other out.
    */
   const continuationCells = useMemo(() => {
     const map = new Map();
-    if (!has30MinSlots) return map;
+    // On the hourly grid nothing spans more than one cell.
+    if (!halfHourGrid) return map;
 
     const stepMs = SLOT_STEP_MINUTES * 60 * 1000;
 
@@ -618,18 +622,6 @@ export const Scheduler = ({
         map.set(startMs + i * stepMs, { startMs, durationMinutes, origin });
       }
     };
-
-    const durations = slotsData?.slotDurations || {};
-
-    [
-      ...(slotsData?.slots || []),
-      ...(slotsData?.campaignSlots || []).map((x) => x.time),
-      ...(slotsData?.organizationSlots || []).map((x) => x.time),
-    ].forEach((slot) => {
-      const startMs = new Date(slot).getTime();
-      if (Number.isNaN(startMs)) return;
-      cover(startMs, durationForSlot(startMs, durations), "slot");
-    });
 
     (consultations || []).forEach((consultation) => {
       const startMs = new Date(consultation.time).getTime();
@@ -642,7 +634,16 @@ export const Scheduler = ({
     });
 
     return map;
-  }, [has30MinSlots, slotsData, consultations]);
+  }, [halfHourGrid, consultations]);
+
+  // Start times of booked consultations: a new slot must not run into one.
+  const bookedStarts = useMemo(
+    () =>
+      (consultations || [])
+        .map((x) => new Date(x.time).getTime())
+        .filter((time) => !Number.isNaN(time)),
+    [consultations],
+  );
 
   // When rendering every single slot check if
   // it exists in the provider's availability
@@ -1040,7 +1041,7 @@ export const Scheduler = ({
     const slotDurationMinutes = consultation
       ? Number(consultation.durationMinutes) || DEFAULT_SLOT_MINUTES
       : durationForSlot(slotDateTime, slotsData?.slotDurations);
-    const slotRowSpan = has30MinSlots
+    const slotRowSpan = halfHourGrid
       ? Math.max(1, Math.round(slotDurationMinutes / SLOT_STEP_MINUTES))
       : 1;
 
@@ -1174,6 +1175,12 @@ export const Scheduler = ({
         rowSpan: 1,
         isContinuation: false,
         continuationOf: null,
+        // e.g. 10:00 when 10:30 is booked: an hour from here would overlap it.
+        cannotFit: bookedStarts.some(
+          (start) =>
+            start > slotDateTime &&
+            start < slotDateTime + defaultSlotDuration * 60 * 1000,
+        ),
       });
     }
 
@@ -1248,6 +1255,7 @@ export const Scheduler = ({
     };
     const overviewSlotsPanelProps = {
       gridTimes,
+      defaultSlotDuration,
       getSlotDataForHour,
       handleSetAvailable,
       handleSetUnavailable,
@@ -1301,6 +1309,7 @@ export const Scheduler = ({
             <ScheduleOverviewWeekGrid
               days={overviewWeekDays}
               gridTimes={gridTimes}
+              defaultSlotDuration={defaultSlotDuration}
               getSlotDataForHour={getSlotDataForHour}
               handleSetAvailable={handleSetAvailable}
               handleSetUnavailable={handleSetUnavailable}
@@ -1331,6 +1340,7 @@ export const Scheduler = ({
           day={slotsModalDay}
           onClose={() => setSlotsModalDay(null)}
           gridTimes={gridTimes}
+          defaultSlotDuration={defaultSlotDuration}
           getSlotDataForHour={getSlotDataForHour}
           handleSetAvailable={handleSetAvailable}
           handleSetUnavailable={handleSetUnavailable}
@@ -1459,6 +1469,7 @@ export const Scheduler = ({
               t={t}
               countryHasNormalSlots={countryHasNormalSlots}
               canChangeDuration={false}
+              defaultSlotDuration={defaultSlotDuration}
               handleChangeSlotDuration={handleChangeSlotDuration}
             />
           ) : selectedPeriod === "week" ? (
@@ -1522,7 +1533,7 @@ export const Scheduler = ({
                           }}
                           durationMinutes={weekSlotData?.durationMinutes}
                           canChangeDuration={false}
-                          defaultDurationMinutes={gridStepMinutes(gridTimes)}
+                          defaultDurationMinutes={defaultSlotDuration}
                           handleChangeDuration={(minutes) =>
                             handleChangeSlotDuration(day, hour, minutes)
                           }
@@ -1609,6 +1620,7 @@ const DailyView = ({
   handleProposeConsultation,
   handleChangeSlotDuration,
   canChangeDuration,
+  defaultSlotDuration,
   validCampaigns,
   organizations,
   t,
@@ -1724,7 +1736,7 @@ const DailyView = ({
                     countryHasNormalSlots={countryHasNormalSlots}
                     durationMinutes={slotData.durationMinutes}
                     canChangeDuration={canChangeDuration}
-                    defaultDurationMinutes={gridStepMinutes(gridTimes)}
+                    defaultDurationMinutes={defaultSlotDuration}
                     handleChangeDuration={wrappedHandleChangeDuration}
                   />
                 );

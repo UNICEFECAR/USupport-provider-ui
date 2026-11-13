@@ -161,6 +161,7 @@ export function canPickForSlot(
   if (slot.isContinuation) return false;
   if (slot.isPastDay) return false;
   if (slot.consultation) return false;
+  if (slot.cannotFit) return false;
   return (
     orgList.length > 0 || campaignList.length > 0 || countryHasNormalSlots
   );
