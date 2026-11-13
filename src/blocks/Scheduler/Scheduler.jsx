@@ -25,13 +25,17 @@ import {
   getTimestampFromUTC,
   getDateAsFullString,
   isDateToday,
+  hours,
   slotTimes,
 } from "@USupport-components-library/src/utils/date";
 import { useWindowDimensions } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
 import { useError, useGetProviderData } from "#hooks";
-import { canUseShortSlots } from "#utils/specializations";
+import {
+  canUseShortSlots,
+  countryHasHalfHourSlots,
+} from "#utils/specializations";
 
 import { SchedulerToolbar } from "./SchedulerToolbar.jsx";
 import { SchedulerMonthView } from "./SchedulerMonthView.jsx";
@@ -107,9 +111,14 @@ export const Scheduler = ({
   // feature switched on; everyone else opens 60-minute slots.
   const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
 
-  // Every provider gets the half-hour grid, so an hour-long slot can start on
-  // the half hour (10:30-11:30).
-  const gridTimes = useMemo(() => slotTimes(SLOT_STEP_MINUTES), []);
+  // In `has_30_min_slots` countries every provider gets the half-hour grid, so
+  // an hour-long slot can start on the half hour (10:30-11:30). Elsewhere the
+  // old hourly grid.
+  const halfHourGrid = countryHasHalfHourSlots();
+  const gridTimes = useMemo(
+    () => (halfHourGrid ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [halfHourGrid],
+  );
 
   const { first: startDate, last: endDate } = getStartAndEndOfWeek(today);
   const days = getDatesInRange(new Date(startDate), new Date(endDate));
@@ -602,6 +611,8 @@ export const Scheduler = ({
    */
   const continuationCells = useMemo(() => {
     const map = new Map();
+    // On the hourly grid nothing spans more than one cell.
+    if (!halfHourGrid) return map;
 
     const stepMs = SLOT_STEP_MINUTES * 60 * 1000;
 
@@ -623,7 +634,7 @@ export const Scheduler = ({
     });
 
     return map;
-  }, [consultations]);
+  }, [halfHourGrid, consultations]);
 
   // Start times of booked consultations: a new slot must not run into one.
   const bookedStarts = useMemo(
@@ -1030,10 +1041,9 @@ export const Scheduler = ({
     const slotDurationMinutes = consultation
       ? Number(consultation.durationMinutes) || DEFAULT_SLOT_MINUTES
       : durationForSlot(slotDateTime, slotsData?.slotDurations);
-    const slotRowSpan = Math.max(
-      1,
-      Math.round(slotDurationMinutes / SLOT_STEP_MINUTES),
-    );
+    const slotRowSpan = halfHourGrid
+      ? Math.max(1, Math.round(slotDurationMinutes / SLOT_STEP_MINUTES))
+      : 1;
 
     const organizationForSlot =
       organizations?.find((x) => x.organizationId === organizationId) || null;

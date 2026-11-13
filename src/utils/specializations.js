@@ -10,6 +10,14 @@ export const BASE_SPECIALIZATION_OPTIONS = [
 export const isArmeniaCountry = (country) => country?.toUpperCase() === "AM";
 
 /**
+ * Does the country use the half-hour grid? With `country.has_30_min_slots` on,
+ * hour-long slots may also start on the half hour (10:30-11:30) and overlap.
+ * @returns {boolean}
+ */
+export const countryHasHalfHourSlots = () =>
+  localStorage.getItem("has_30_min_slots") === "true";
+
+/**
  * May this provider open 30-minute slots?
  *
  * Two conditions, both required: the country has the feature switched on
@@ -20,8 +28,7 @@ export const isArmeniaCountry = (country) => country?.toUpperCase() === "AM";
  * @returns {boolean}
  */
 export const canUseShortSlots = (specializations) =>
-  localStorage.getItem("has_30_min_slots") === "true" &&
-  (specializations || []).includes(PEER_SUPPORT);
+  countryHasHalfHourSlots() && (specializations || []).includes(PEER_SUPPORT);
 
 export const getSpecializationOptionValues = (country) => {
   if (isArmeniaCountry(country)) {

@@ -18,12 +18,16 @@ import {
   getXDaysInSeconds,
   getTimestamp,
   getTimestampFromUTC,
+  hours,
   slotTimes,
 } from "@USupport-components-library/utils";
 import { providerSvc } from "@USupport-components-library/services";
 
 import { useGetProviderData, useError, useGetCampaigns } from "#hooks";
-import { canUseShortSlots } from "#utils/specializations";
+import {
+  canUseShortSlots,
+  countryHasHalfHourSlots,
+} from "#utils/specializations";
 
 import "./scheduler-template.scss";
 
@@ -97,9 +101,13 @@ export const SchedulerTemplate = ({ campaignId }) => {
   const [showSelectionError, setShowSelectionError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Peer-support providers in enabled countries open 30-minute slots, everyone
-  // else 60. Any provider may start on the half hour.
+  // else 60. In `has_30_min_slots` countries any slot may start on the half hour.
   const has30MinSlots = canUseShortSlots(providerQuery?.data?.specializations);
-  const gridTimes = useMemo(() => slotTimes(SLOT_STEP_MINUTES), []);
+  const halfHourGrid = countryHasHalfHourSlots();
+  const gridTimes = useMemo(
+    () => (halfHourGrid ? slotTimes(SLOT_STEP_MINUTES) : hours),
+    [halfHourGrid],
+  );
   const hoursOptions = useMemo(
     () => gridTimes.map((hour) => ({ label: hour, value: hour })),
     [gridTimes],
@@ -340,13 +348,15 @@ export const SchedulerTemplate = ({ campaignId }) => {
         // The length is fixed per provider, not chosen.
         const slotMinutes = has30MinSlots ? SLOT_STEP_MINUTES : 60;
 
-        // A slot opens at every half hour, so 60-minute slots overlap (07:30,
-        // 08:00, 08:30, ...) and booking one takes out its neighbours.
+        // On the half-hour grid a slot opens at every half hour, so 60-minute
+        // slots overlap (07:30, 08:00, 08:30, ...) and booking one takes out its
+        // neighbours. Elsewhere slots follow each other back to back.
         // `m + slotMinutes <= endMinutes`: the last slot ends by `end`.
+        const stepMinutes = halfHourGrid ? SLOT_STEP_MINUTES : slotMinutes;
         for (
           let m = startMinutes;
           m + slotMinutes <= endMinutes;
-          m += SLOT_STEP_MINUTES
+          m += stepMinutes
         ) {
           const currentTimestamp = day + m * 60;
           // Sent as an object, not a JSON string: the API accepts either a bare
